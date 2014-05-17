@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>RapidGame</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="public/stylesheets/normalize.css" />
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="page">
+
+      <div class="header">
+        
+          
+          <h1 id="rapidgame">RapidGame</h1>
+
+          
+        
+
+        
+          <div class="toc">
+            <h3>Table of Contents</h3>
+            <ol>
+              
+                
+                <li>
+                  <a class="source" href="Config.html">
+                    Config.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="ConfigServer.html">
+                    ConfigServer.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="HelloWorld.html">
+                    HelloWorld.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="SceneHello.html">
+                    SceneHello.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="App.html">
+                    App.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="Server.html">
+                    Server.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="README.html">
+                    README.md
+                  </a>
+                </li>
+              
+            </ol>
+          </div>
+        
+      </div>
+
+      
+        
+        <p>RapidGame is an SDK-agnostic, cross-platform game project creator, library prebuilder and collection of game templates.
+Game templates, including a complete Breakout clone, are included for Cocos2D JS, Unity, Corona and Appcelerator Titanium.</p>
+<h2 id="setup">Setup</h2>
+
+        
+      
+        
+        <ol>
+<li>Make sure you have installed <a href="http://nodejs.org/download/">Node.js</a> and <a href="http://git-scm.com/downloads">Git</a>.</li>
+<li>Install RapidGame: <code>sudo npm install rapidgame -g</code></li>
+<li>Create a Cocos2D JS HelloWorld game project named MyGame: <code>rapidgame MyGame</code></li>
+<li>Create a Unity Breakout clone named BrickMan: <code>rapidgame -e unity -t BrickBreaker BrickMan</code></li>
+<li>For usage instructions: <code>rapidgame --help</code></li>
+</ol>
+<h2 id="prebuilding">Prebuilding</h2>
+
+        
+      
+        
+        <p>The purpose of RapidGame is to make game development a more modern and swift process.
+One of the ways it does this is by prebuild libraries.
+If you’ve ever created a Cocos2D game project, you’ll groan thinking about re-compiling 300+ source files repeatedly.</p>
+<p>RapidGame has custom scripts and project files to automatically download the latest Cocos2D JS source code and build it statically for multiple platforms and architectures.
+Instead of building 900 source files you’ll have 4 or 5 to deal with at most.
+Since you’ll be developing with Javascript, most of the time all that has to be done is to copy the latest resouces (a Javascript file or two) and re-launch the simulator.</p>
+<p>To prebuild Cocos2D JS libraries, run:</p>
+<p><code>rapidgame prebuild</code></p>
+<p>It will take awhile.
+You can watch the progress with <code>tail -f &lt;path-to-build.log&gt;</code>.</p>
+<p>When the command is finished, you’ll have a directory with include files, java files, make files, Javascript bindings and prebuilt debug &amp; release static libraries for iOS, Mac and Android.
+When you create projects with the <code>rapidgame</code> tool, it symlinks to this directory, making game project directories lightweight.</p>
+<h2 id="contributing">Contributing</h2>
+
+        
+      
+        
+        <p>I have much respect for contributors. :) Submit pull requests or open issues as you see fit.</p>
+<h2 id="license">License</h2>
+
+        
+      
+        
+        <p>RapidGame is licensed under the MIT license.</p>
+
+        
+      
+
+        
+          <div>
+            <h4>Table of Contents</h4>
+            <ol>
+              
+                
+                <li>
+                  <a class="source" href="Config.html">
+                    Config.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="ConfigServer.html">
+                    ConfigServer.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="HelloWorld.html">
+                    HelloWorld.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="SceneHello.html">
+                    SceneHello.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="App.html">
+                    App.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="Server.html">
+                    Server.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="README.html">
+                    README.md
+                  </a>
+                </li>
+              
+            </ol>
+          </div>
+        
+
+      <div class="fleur">h</div>
+    </div>
+  </div>
+</body>
+</html>

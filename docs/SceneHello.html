@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>SceneHello.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="public/stylesheets/normalize.css" />
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="page">
+
+      <div class="header">
+        
+          <h1>SceneHello.js</h1>
+        
+
+        
+          <div class="toc">
+            <h3>Table of Contents</h3>
+            <ol>
+              
+                
+                <li>
+                  <a class="source" href="Config.html">
+                    Config.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="ConfigServer.html">
+                    ConfigServer.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="HelloWorld.html">
+                    HelloWorld.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="SceneHello.html">
+                    SceneHello.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="App.html">
+                    App.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="Server.html">
+                    Server.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="README.html">
+                    README.md
+                  </a>
+                </li>
+              
+            </ol>
+          </div>
+        
+      </div>
+
+      
+        
+        
+
+        
+      
+        
+        <h3 id="scenehello">SceneHello</h3>
+<p>The template project’s primary scene. It displays “Hello World” and the result of the server’s <code>api/counter</code> call. Repeating animations make it juicy. Clicking or tapping the screen plays a sound and also plays a droplet-like animation.</p>
+<p>A sub-class of <code>cc.Scene</code>.</p>
+
+        
+          <div class='highlight'><pre><span class="hljs-keyword">var</span> SceneHello = cc.Scene.extend({
+	layer: <span class="hljs-literal">null</span>,</pre></div>
+        
+      
+        
+        <h3 id="scenehello-onenter">SceneHello.onEnter</h3>
+<p>Create the child layer and keep it as a member variable so <code>onXXX</code> callbacks can be triggered via <code>App.callRunningLayer</code>.</p>
+
+        
+          <div class='highlight'><pre>	onEnter: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+		<span class="hljs-keyword">this</span>._super();
+		<span class="hljs-keyword">this</span>.layer = <span class="hljs-keyword">new</span> LayerHello();
+		<span class="hljs-keyword">this</span>.layer.init();
+		<span class="hljs-keyword">this</span>.addChild(<span class="hljs-keyword">this</span>.layer);
+	}
+});</pre></div>
+        
+      
+        
+        <h3 id="layerhello">LayerHello</h3>
+<p>The layer which holds all the Hello World objects and responds to events or callbacks.</p>
+
+        
+          <div class='highlight'><pre><span class="hljs-keyword">var</span> LayerHello = cc.Layer.extend({
+	bg: <span class="hljs-literal">null</span>,
+	labelHello: <span class="hljs-literal">null</span>,
+	labelCounter: <span class="hljs-literal">null</span>,</pre></div>
+        
+      
+        
+        <h3 id="layerhello-init">LayerHello.init</h3>
+<p>Create the text labels and background layer. Start repeating animations. Register for events.</p>
+
+        
+          <div class='highlight'><pre>	init: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+		<span class="hljs-keyword">var</span> self = <span class="hljs-keyword">this</span>,
+			font = App.config[<span class="hljs-string">"font"</span>];
+		<span class="hljs-keyword">this</span>._super();
+
+		<span class="hljs-comment">/* Create background. */</span>
+		<span class="hljs-keyword">this</span>.bg = cc.LayerGradient.create(
+			cc.color(<span class="hljs-number">127</span>,<span class="hljs-number">190</span>,<span class="hljs-number">255</span>,<span class="hljs-number">255</span>),
+			cc.color(<span class="hljs-number">102</span>,<span class="hljs-number">153</span>,<span class="hljs-number">204</span>,<span class="hljs-number">255</span>),
+			cc.p(<span class="hljs-number">0.25</span>,-<span class="hljs-number">1</span>)
+		);
+		<span class="hljs-keyword">this</span>.bg.setAnchorPoint(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>);
+		<span class="hljs-keyword">this</span>.addChild(<span class="hljs-keyword">this</span>.bg, <span class="hljs-number">0</span>);
+		
+		<span class="hljs-comment">/* Create Hello World label. */</span>
+		labelHello = cc.LabelTTF.create(
+			App.getLocalizedString(<span class="hljs-string">"hello-world"</span>),
+			font,
+			App.scale(<span class="hljs-number">120</span>)
+		);
+		labelHello.setPosition(App.centralize(<span class="hljs-number">0</span>, <span class="hljs-number">114</span>));
+		<span class="hljs-keyword">this</span>.addChild(labelHello, <span class="hljs-number">1</span>);
+		labelHello.y += App.winSize.height;
+		labelHello.runAction(
+			cc.EaseOut.create(cc.MoveBy.create(<span class="hljs-number">0.333</span>, cc.p(<span class="hljs-number">0</span>, -App.winSize.height)), <span class="hljs-number">1.1</span>)
+		);
+		labelHello.runAction(cc.RepeatForever.create(cc.Sequence.create(
+			cc.EaseOut.create(cc.ScaleBy.create(<span class="hljs-number">1.0</span>, <span class="hljs-number">0.95</span>), <span class="hljs-number">1.5</span>),
+			cc.EaseOut.create(cc.ScaleBy.create(<span class="hljs-number">3.0</span>, <span class="hljs-number">1.0</span> / <span class="hljs-number">0.95</span>), <span class="hljs-number">1.5</span>)
+		)));
+
+		<span class="hljs-comment">/* Create counter number label. */</span>
+		<span class="hljs-keyword">this</span>.labelCounter = cc.LabelTTF.create(<span class="hljs-string">""</span>, font, App.scale(<span class="hljs-number">75</span>));
+		<span class="hljs-keyword">this</span>.labelCounter.setPosition(App.centralize(<span class="hljs-number">0</span>, -<span class="hljs-number">50</span>));
+		<span class="hljs-keyword">this</span>.addChild(<span class="hljs-keyword">this</span>.labelCounter, <span class="hljs-number">1</span>);
+		<span class="hljs-keyword">this</span>.labelCounter.x += App.winSize.width;
+		<span class="hljs-keyword">this</span>.labelCounter.runAction(cc.Sequence.create(
+			cc.DelayTime.create(<span class="hljs-number">0.25</span>),
+			cc.EaseOut.create(cc.MoveBy.create(<span class="hljs-number">0.333</span>, cc.p(-App.winSize.width, <span class="hljs-number">0</span>)), <span class="hljs-number">1.1</span>),
+			cc.EaseOut.create(cc.ScaleBy.create(<span class="hljs-number">0.1</span>, <span class="hljs-number">1.1</span>), <span class="hljs-number">2.0</span>),
+			cc.EaseOut.create(cc.ScaleBy.create(<span class="hljs-number">0.2</span>, <span class="hljs-number">1</span> / <span class="hljs-number">1.1</span>), <span class="hljs-number">1.5</span>)
+		));
+
+		<span class="hljs-comment">/* Handle touch events. */</span>
+		cc.eventManager.addListener({
+			event: cc.EventListener.TOUCH_ALL_AT_ONCE,
+			onTouchesBegan: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(touches, event)</span> {</span>
+				<span class="hljs-keyword">if</span> (touches) {
+					App.showTouchCircle(self, touches[<span class="hljs-number">0</span>].getLocation());
+					App.playClickSound();
+				}
+			}
+		}, <span class="hljs-keyword">this</span>);
+
+		<span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+	},</pre></div>
+        
+      
+        
+        <h3 id="layerhello-setcounterlabel">LayerHello.setCounterLabel</h3>
+<p>Set the counter label’s string given a counter value.</p>
+
+        
+          <div class='highlight'><pre>	setCounterLabel: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(number)</span> {</span>
+		<span class="hljs-keyword">var</span> string = App.getLocalizedString(<span class="hljs-string">"you-are-player-number"</span>);
+		string = string.replace(<span class="hljs-string">"%d"</span>, number);
+		<span class="hljs-keyword">this</span>.labelCounter.setString(string);
+	},</pre></div>
+        
+      
+        
+        <h3 id="layerhello-onenter">LayerHello.onEnter</h3>
+<p>Set the counter label to 1 and request the current counter from the server.</p>
+
+        
+          <div class='highlight'><pre>	onEnter: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+		<span class="hljs-keyword">this</span>._super();
+		<span class="hljs-keyword">this</span>.setCounterLabel(<span class="hljs-string">"1"</span>);
+		App.requestUrl(<span class="hljs-string">"api/counter"</span>, <span class="hljs-keyword">this</span>.onGetCounter);
+	},</pre></div>
+        
+      
+        
+        <h3 id="layerhello-ongetcounter">LayerHello.onGetCounter</h3>
+<p>Called when the counter label is retrieved from the server. It doesn’t have <code>this</code> context so it gets the running layer.</p>
+
+        
+          <div class='highlight'><pre>	onGetCounter: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(response)</span> {</span>
+		<span class="hljs-keyword">var</span> self = App.getRunningLayer();
+		self.setCounterLabel(<span class="hljs-built_in">parseInt</span>(response));
+	}
+
+});</pre></div>
+        
+      
+
+        
+          <div>
+            <h4>Table of Contents</h4>
+            <ol>
+              
+                
+                <li>
+                  <a class="source" href="Config.html">
+                    Config.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="ConfigServer.html">
+                    ConfigServer.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="HelloWorld.html">
+                    HelloWorld.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="SceneHello.html">
+                    SceneHello.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="App.html">
+                    App.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="Server.html">
+                    Server.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="README.html">
+                    README.md
+                  </a>
+                </li>
+              
+            </ol>
+          </div>
+        
+
+      <div class="fleur">h</div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,17 @@
+{
+  "name": "game-server",
+  "version": "0.1.0",
+  "description": "A game server",
+  "repository": {},
+  "author": {
+    "name": "Nat Weiss",
+    "url": "http://wizardfu.com/"
+  },
+  "dependencies": {
+    "express": ">=4.2.0",
+    "socket.io": ">=0.9.16"
+  },
+  "files": [
+    "server.js"
+  ]
+}

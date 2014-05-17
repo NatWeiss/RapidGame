@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>App.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="public/stylesheets/normalize.css" />
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="page">
+
+      <div class="header">
+        
+          <h1>App.js</h1>
+        
+
+        
+          <div class="toc">
+            <h3>Table of Contents</h3>
+            <ol>
+              
+                
+                <li>
+                  <a class="source" href="Config.html">
+                    Config.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="ConfigServer.html">
+                    ConfigServer.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="HelloWorld.html">
+                    HelloWorld.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="SceneHello.html">
+                    SceneHello.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="App.html">
+                    App.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="Server.html">
+                    Server.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="README.html">
+                    README.md
+                  </a>
+                </li>
+              
+            </ol>
+          </div>
+        
+      </div>
+
+      
+        
+        
+
+        
+      
+        
+        <p>The main App object is a singleton providing boot code, main functions, and other commonly-used, globally-accessible methods.</p>
+<ol>
+<li>All code in this file is applicable to any game project in general.</li>
+<li>If you need to extend the App object with project-specific code, use <a href="HelloWorld.html">HelloWorld.js</a>.</li>
+</ol>
+
+        
+      
+        
+        <h3 id="app">App</h3>
+<p>Get or create the App object.</p>
+
+        
+          <div class='highlight'><pre><span class="hljs-keyword">var</span> App = App || {};</pre></div>
+        
+      
+        
+        <h3 id="app-gettargetframerate">App.getTargetFrameRate</h3>
+<p>Return the target frame rate to use. Scale back in HTML5 mode to save a CPU fan somewhere.</p>
+
+        
+          <div class='highlight'><pre>App.getTargetFrameRate = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+	<span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.isHtml5() ? <span class="hljs-number">30</span> : <span class="hljs-number">60</span>;
+};</pre></div>
+        
+      
+        
+        <h3 id="app-ishtml5">App.isHtml5</h3>
+<p>Return true if the app is running in HTML5 mode.</p>
+
+        
+          <div class='highlight'><pre>App.isHtml5 = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+	<span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> <span class="hljs-keyword">this</span>._isHtml5 === <span class="hljs-string">"undefined"</span>) {
+		App.assert(cc.sys);
+		<span class="hljs-keyword">this</span>._isHtml5 = cc.sys.isNative ? <span class="hljs-literal">false</span> : <span class="hljs-literal">true</span>;
+	}
+	<span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._isHtml5;
+};</pre></div>
+        
+      
+        
+        <h3 id="app-isdesktop">App.isDesktop</h3>
+<p>Return true if the app is running on a native desktop OS.</p>
+
+        
+          <div class='highlight'><pre>App.isDesktop = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+	<span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> <span class="hljs-keyword">this</span>._isDesktop === <span class="hljs-string">"undefined"</span>) {
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.isHtml5()) {
+			<span class="hljs-keyword">this</span>._isDesktop = <span class="hljs-literal">false</span>;
+		} <span class="hljs-keyword">else</span> {
+			<span class="hljs-keyword">this</span>._isDesktop = (cc.sys.os === cc.sys.OS_OSX
+				|| cc.sys.os === cc.sys.OS_WINDOWS
+				|| cc.sys.os === cc.sys.OS_LINUX);
+		}
+	}
+	<span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._isDesktop;
+};</pre></div>
+        
+      
+        
+        <h3 id="app-rand">App.rand</h3>
+<p>Return a random integer between 0 and the given value.</p>
+
+        
+          <div class='highlight'><pre>App.rand = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(mod)</span> {</span>
+	<span class="hljs-keyword">var</span> r = <span class="hljs-built_in">Math</span>.random();
+	<span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> mod !== <span class="hljs-string">'undefined'</span>) {
+		r *= <span class="hljs-number">0xffffff</span>;
+		r = <span class="hljs-built_in">parseInt</span>(r);
+		r %= mod;
+	}
+	<span class="hljs-keyword">return</span> r;
+};</pre></div>
+        
+      
+        
+        <h3 id="app-getwinsize">App.getWinSize</h3>
+<p>Return the current size of the window or screen.</p>
+
+        
+          <div class='highlight'><pre>App.getWinSize = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+	<span class="hljs-keyword">var</span> size = cc.director.getWinSizeInPixels();
+	<span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> <span class="hljs-keyword">this</span>._winSize === <span class="hljs-string">'undefined'</span> || (size.width &amp;&amp; size.height)) {
+		<span class="hljs-keyword">this</span>._winSize = size;
+	}
+	<span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._winSize;
+};</pre></div>
+        
+      
+        
+        <h3 id="app-getresourcedir">App.getResourceDir</h3>
+<p>Return the resource directory (SD, HD or HDR) for this device’s resolution.</p>
+
+        
+          <div class='highlight'><pre>App.getResourceDir = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+	<span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> <span class="hljs-keyword">this</span>._resourceDir === <span class="hljs-string">"undefined"</span>) {
+		<span class="hljs-keyword">var</span> self = <span class="hljs-keyword">this</span>,
+			winSize = <span class="hljs-keyword">this</span>.getWinSize(),
+			maxDimension = <span class="hljs-built_in">Math</span>.max(winSize.width, winSize.height),
+			minDimension = <span class="hljs-built_in">Math</span>.min(winSize.width, winSize.height),
+			setResourceDir = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(dir, contentScaleFactor, scaleFactor)</span>{</span>
+				self._resourceDir = dir;
+				self._contentScaleFactor = contentScaleFactor;
+				self._scaleFactor = scaleFactor;
+			};
+		
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.isHtml5()) {
+			<span class="hljs-keyword">if</span> (minDimension &gt;= <span class="hljs-number">1200</span> &amp;&amp; <span class="hljs-keyword">this</span>._pixelRatio &gt; <span class="hljs-number">1</span>) {
+				setResourceDir(<span class="hljs-string">"hdr"</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>);
+			} <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (minDimension &gt;= <span class="hljs-number">600</span>) {
+				setResourceDir(<span class="hljs-string">"hd"</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>);
+			} <span class="hljs-keyword">else</span> {
+				setResourceDir(<span class="hljs-string">"sd"</span>, <span class="hljs-number">1</span>, <span class="hljs-number">.5</span>);
+			}
+		} <span class="hljs-keyword">else</span> {
+			<span class="hljs-keyword">if</span> (maxDimension &gt; <span class="hljs-number">1600</span>) {
+				setResourceDir(<span class="hljs-string">"hdr"</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>);
+			} <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (maxDimension &gt;= <span class="hljs-number">960</span>) {
+				setResourceDir(<span class="hljs-string">"hd"</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>);
+			} <span class="hljs-keyword">else</span> {
+				setResourceDir(<span class="hljs-string">"sd"</span>, <span class="hljs-number">1</span>, <span class="hljs-number">.5</span>);
+			}
+		}
+	}
+
+	<span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._resourceDir;
+};</pre></div>
+        
+      
+        
+        <h3 id="app-scale">App.scale</h3>
+<p>Scale a number by a factor based on the screen size.</p>
+
+        
+          <div class='highlight'><pre>App.scale = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(floatValue)</span> {</span>
+	<span class="hljs-keyword">return</span> floatValue * <span class="hljs-keyword">this</span>._scaleFactor;
+};</pre></div>
+        
+      
+        
+        <h3 id="app-centralize">App.centralize</h3>
+<p>Return a point relative to the center of the screen and scaled.</p>
+
+        
+          <div class='highlight'><pre>App.centralize = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(x, y)</span> {</span>
+	<span class="hljs-keyword">var</span> winSize = <span class="hljs-keyword">this</span>.getWinSize();
+	<span class="hljs-keyword">return</span> cc.p(<span class="hljs-keyword">this</span>.scale(x) + winSize.width * <span class="hljs-number">.5</span>,
+		<span class="hljs-keyword">this</span>.scale(y) + winSize.height * <span class="hljs-number">.5</span>);
+};</pre></div>
+        
+      
+        
+        <h3 id="app-alert">App.alert</h3>
+<p>Safely call <code>alert</code>.</p>
+
+        
+          <div class='highlight'><pre>App.alert = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(msg)</span> {</span>
+	<span class="hljs-keyword">if</span>(<span class="hljs-keyword">typeof</span> alert === <span class="hljs-string">"function"</span>) {
+		alert(msg);
+	} <span class="hljs-keyword">else</span> {
+		cc.log(msg);
+	}
+};</pre></div>
+        
+      
+        
+        <h3 id="app-assert">App.assert</h3>
+<p>Throw an error if the given object is undefined or boolean is false.</p>
+
+        
+          <div class='highlight'><pre>App.assert = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(objOrBool, errMsg)</span> {</span>
+	<span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> objOrBool === <span class="hljs-string">"undefined"</span>
+	|| (<span class="hljs-keyword">typeof</span> objOrBool === <span class="hljs-string">"boolean"</span> &amp;&amp; !objOrBool)
+	) {
+		errMsg = errMsg || <span class="hljs-string">"Couldn't load the game. Please try a newer browser."</span>;
+		alert(errMsg);
+		debugger;
+		<span class="hljs-keyword">throw</span> errMsg;
+	}
+};</pre></div>
+        
+      
+        
+        <h3 id="app-clone">App.clone</h3>
+<p>Clone an object or array so the original can remained unchanged. If passed an undefined value, an empty array is returned.</p>
+
+        
+          <div class='highlight'><pre>App.clone = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(obj)</span> {</span>
+	<span class="hljs-keyword">if</span>(<span class="hljs-keyword">typeof</span> obj !== <span class="hljs-string">"undefined"</span>) {
+		<span class="hljs-keyword">return</span> <span class="hljs-built_in">JSON</span>.parse(<span class="hljs-built_in">JSON</span>.stringify(obj));
+	}
+	<span class="hljs-keyword">return</span> [];
+};</pre></div>
+        
+      
+        
+        <h3 id="app-localizecurrency">App.localizeCurrency</h3>
+<p>Return the currency amount localized. Currently the method only localizes to the United States currency format.</p>
+
+        
+          <div class='highlight'><pre>App.localizeCurrency = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(amount)</span> {</span>
+	<span class="hljs-keyword">return</span> <span class="hljs-string">"$"</span> + <span class="hljs-built_in">parseFloat</span>(amount).toFixed(<span class="hljs-number">2</span>);
+};</pre></div>
+        
+      
+        
+        <h3 id="app-getlanguagecode">App.getLanguageCode</h3>
+<p>Return the current language code. Example: <code>en</code>.</p>
+
+        
+          <div class='highlight'><pre>App.getLanguageCode = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+	<span class="hljs-keyword">var</span> strings;
+	
+	<span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> <span class="hljs-keyword">this</span>._language === <span class="hljs-string">"undefined"</span>) {
+		<span class="hljs-keyword">this</span>._language = cc.sys.language;
+
+		strings = App.config[<span class="hljs-string">"strings"</span>];
+		<span class="hljs-keyword">if</span> (strings &amp;&amp; <span class="hljs-keyword">typeof</span> strings[<span class="hljs-keyword">this</span>._language] === <span class="hljs-string">"undefined"</span>) {
+			cc.log(<span class="hljs-string">"Don't have strings for language: "</span> + <span class="hljs-keyword">this</span>._language);
+			<span class="hljs-keyword">this</span>._language = <span class="hljs-string">"en"</span>;
+		}
+	}
+	
+	<span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._language;
+};</pre></div>
+        
+      
+        
+        <h3 id="app-getlocalizedstring">App.getLocalizedString</h3>
+<p>Lookup and return a localized string. Configure localized strings in <code>App.config[&quot;strings&quot;][languageCode]</code>.</p>
+
+        
+          <div class='highlight'><pre>App.getLocalizedString = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(key)</span> {</span>
+	<span class="hljs-keyword">var</span> strings,
+		code = <span class="hljs-keyword">this</span>.getLanguageCode();
+	
+	strings = App.config[<span class="hljs-string">"strings"</span>][code];
+	<span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> strings[key] !== <span class="hljs-string">"undefined"</span>) {
+		<span class="hljs-keyword">return</span> strings[key];
+	}
+	<span class="hljs-keyword">if</span> (key &amp;&amp; key.length) {
+		cc.log(<span class="hljs-string">"Couldn't find string["</span> + code + <span class="hljs-string">"]["</span> + key + <span class="hljs-string">"]"</span>);
+	}
+	<span class="hljs-keyword">return</span> <span class="hljs-string">""</span>;
+};</pre></div>
+        
+      
+        
+        <h3 id="app-getrunninglayer">App.getRunningLayer</h3>
+<p>Returns the running scene’s child layer.</p>
+<p>Scenes can create a member variable named <code>layer</code> which will be used by this method.</p>
+
+        
+          <div class='highlight'><pre>App.getRunningLayer = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+	<span class="hljs-keyword">var</span> node = cc.director.getRunningScene();
+	<span class="hljs-keyword">if</span> (node) {
+		<span class="hljs-keyword">if</span> (node.layer) {
+			node = node.layer;
+		}
+	}
+	<span class="hljs-keyword">return</span> node;
+};</pre></div>
+        
+      
+        
+        <h3 id="app-callrunninglayer">App.callRunningLayer</h3>
+<p>Call the running scene’s layer’s method.</p>
+
+        
+          <div class='highlight'><pre>App.callRunningLayer = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(methodName, param1, param2, param3)</span> {</span>
+	<span class="hljs-keyword">var</span> layer = <span class="hljs-keyword">this</span>.getRunningLayer();
+	<span class="hljs-keyword">if</span> (layer &amp;&amp; layer[methodName]) {
+		layer[methodName](param1, param2, param3);
+	} <span class="hljs-keyword">else</span> {
+		<span class="hljs-comment">/*cc.log("Couldn't find method '" + methodName + "' in running scene or layer.");*/</span>
+	}
+};</pre></div>
+        
+      
+        
+        <h3 id="app-getresourcestopreload">App.getResourcesToPreload</h3>
+<p>Return an array of files to preload.</p>
+
+        
+          <div class='highlight'><pre>App.getResourcesToPreload = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+	<span class="hljs-keyword">var</span> dir = <span class="hljs-keyword">this</span>.getResourceDir(),
+		files = App.config[<span class="hljs-string">"preload"</span>],
+		ret = [],
+		i;
+
+	<span class="hljs-keyword">if</span> (files) {
+		<span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; files.length; i += <span class="hljs-number">1</span>) {
+			<span class="hljs-keyword">if</span> (files[i] &amp;&amp; files[i].length) {
+				<span class="hljs-keyword">if</span> (files[i].indexOf(<span class="hljs-string">"/"</span>) &lt; <span class="hljs-number">0</span>) {
+					ret[i] = dir + <span class="hljs-string">"/"</span> + files[i];
+				} <span class="hljs-keyword">else</span> {
+					ret[i] = files[i];
+				}
+			}
+		}
+	}
+	
+	<span class="hljs-keyword">return</span> ret;
+};</pre></div>
+        
+      
+        
+        <h3 id="app-loadresources">App.loadResources</h3>
+<p>Setup and load resources.</p>
+
+        
+          <div class='highlight'><pre>App.loadResources = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+	<span class="hljs-keyword">var</span> sheets = App.config[<span class="hljs-string">"spritesheets"</span>],
+		sheet,
+		i;
+
+	cc.director.setContentScaleFactor(<span class="hljs-keyword">this</span>._contentScaleFactor);
+
+	<span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; sheets.length; i += <span class="hljs-number">1</span>) {
+		sheet = cc.loader.getUrl(<span class="hljs-keyword">this</span>.getResourceDir(), sheets[i]);
+		cc.log(<span class="hljs-string">"Loading spritesheet: "</span> + sheet);
+		cc.spriteFrameCache.addSpriteFrames(sheet);
+	}
+};</pre></div>
+        
+      
+        
+        <h3 id="app-runinitialscene">App.runInitialScene</h3>
+<p>Loads resources and calls the initial scene. Called by <code>App.main</code>.</p>
+
+        
+          <div class='highlight'><pre>App.runInitialScene = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+	<span class="hljs-keyword">var</span> Scene = window[cc.game.config.initialScene],
+		scene;
+	
+	App.loadResources();
+	scene = <span class="hljs-keyword">new</span> Scene;
+	scene.init();
+	cc.director.runScene(scene);
+};</pre></div>
+        
+      
+        
+        <h3 id="app-setcanvassize">App.setCanvasSize</h3>
+<p>Sets the size of the game canvas.</p>
+
+        
+          <div class='highlight'><pre>App.setCanvasSize = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(e, w, h)</span> {</span>
+	<span class="hljs-keyword">var</span> allowHtmlRetina = <span class="hljs-literal">false</span>;
+	<span class="hljs-keyword">this</span>._pixelRatio = (allowHtmlRetina ? window.devicePixelRatio || <span class="hljs-number">1</span> : <span class="hljs-number">1</span>);
+	e = e || document.getElementById(cc.game.config[cc.game.CONFIG_KEY.id]);
+	w = w || document.body.clientWidth; <span class="hljs-comment">// or scrollWidth</span>
+	h = h || document.body.clientHeight;
+
+	e.width = w * <span class="hljs-keyword">this</span>._pixelRatio;
+	e.height = h * <span class="hljs-keyword">this</span>._pixelRatio;
+	e.style.width = w + <span class="hljs-string">"px"</span>;
+	e.style.height = h + <span class="hljs-string">"px"</span>;
+	e.style.backgroundColor = document.body.style.backgroundColor;
+
+	cc.log(<span class="hljs-string">"Set #"</span> + e.getAttribute(<span class="hljs-string">"id"</span>) + <span class="hljs-string">" pixel ratio "</span> + <span class="hljs-keyword">this</span>._pixelRatio +
+		<span class="hljs-string">", size "</span> + e.width + <span class="hljs-string">"x"</span> + e.height +
+		<span class="hljs-string">", style "</span> + e.style.width + <span class="hljs-string">" x "</span> + e.style.height +
+		<span class="hljs-string">", parent "</span> + e.parentNode.getAttribute(<span class="hljs-string">"id"</span>));
+	
+	<span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> <span class="hljs-keyword">this</span>._origCanvasSize === <span class="hljs-string">"undefined"</span>) {
+		<span class="hljs-keyword">this</span>._origCanvasSize = {width: w, height: h};
+	}
+};</pre></div>
+        
+      
+        
+        <h3 id="app-loadsoundenabled">App.loadSoundEnabled</h3>
+<p>Load the <code>soundEnabled</code> preference from local storage.</p>
+
+        
+          <div class='highlight'><pre>App.loadSoundEnabled = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+	<span class="hljs-keyword">var</span> enabled = cc.sys.localStorage.getItem(<span class="hljs-string">"soundEnabled"</span>);
+	<span class="hljs-comment">/*cc.log("Loaded sound enabled: " + enabled);*/</span>
+	
+	<span class="hljs-keyword">if</span> (enabled === <span class="hljs-literal">null</span> || enabled === <span class="hljs-string">""</span>) {
+		<span class="hljs-keyword">this</span>.enableSound(<span class="hljs-literal">true</span>);
+	} <span class="hljs-keyword">else</span> {
+		<span class="hljs-keyword">this</span>._soundEnabled = (enabled === <span class="hljs-string">"true"</span> || enabled === <span class="hljs-literal">true</span>);
+	}
+	<span class="hljs-comment">/*cc.log("Sound enabled is now: " + this._soundEnabled);*/</span>
+};</pre></div>
+        
+      
+        
+        <h3 id="app-enablesound">App.enableSound</h3>
+<p>Enable or disable sound.</p>
+
+        
+          <div class='highlight'><pre>App.enableSound = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(enabled)</span> {</span>
+	<span class="hljs-keyword">this</span>._soundEnabled = enabled ? <span class="hljs-literal">true</span> : <span class="hljs-literal">false</span>;
+	cc.sys.localStorage.setItem(<span class="hljs-string">"soundEnabled"</span>, <span class="hljs-keyword">this</span>._soundEnabled);
+
+	<span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>.isSoundEnabled()) {
+		cc.audioEngine.stopMusic();
+
+		<span class="hljs-comment">/* Check that the music stopped (Chrome bug). */</span>
+		cc.director.getRunningScene().schedule(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+			<span class="hljs-keyword">if</span> (!App.isSoundEnabled()) {
+				cc.audioEngine.stopMusic();
+			}
+		}, <span class="hljs-number">1</span>, <span class="hljs-number">15</span>);
+	}
+};</pre></div>
+        
+      
+        
+        <h3 id="app-togglesoundenabled">App.toggleSoundEnabled</h3>
+<p>Toggle whether sound is enabled.</p>
+
+        
+          <div class='highlight'><pre>App.toggleSoundEnabled = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+	<span class="hljs-keyword">this</span>.enableSound(!<span class="hljs-keyword">this</span>.isSoundEnabled());
+};</pre></div>
+        
+      
+        
+        <h3 id="app-issoundenabled">App.isSoundEnabled</h3>
+<p>Return true if sound is enabled.</p>
+
+        
+          <div class='highlight'><pre>App.isSoundEnabled = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+	<span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._soundEnabled ? <span class="hljs-literal">true</span> : <span class="hljs-literal">false</span>;
+};</pre></div>
+        
+      
+        
+        <h3 id="app-playeffect">App.playEffect</h3>
+<p>Plays the sound effect with the given filename if sound is enabled.</p>
+
+        
+          <div class='highlight'><pre>App.playEffect = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(filename)</span> {</span>
+	<span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.isSoundEnabled()) {
+		<span class="hljs-comment">/* Automatically prefix with resource path. */</span>
+		<span class="hljs-keyword">if</span> (cc.loader.resPath &amp;&amp; filename.indexOf(<span class="hljs-string">"/"</span>) &lt; <span class="hljs-number">0</span>) {
+			filename = cc.loader.resPath + <span class="hljs-string">"/"</span> + filename;
+		}
+		<span class="hljs-keyword">return</span> cc.audioEngine.playEffect(filename);
+	}
+	<span class="hljs-keyword">return</span> -<span class="hljs-number">1</span>;
+};</pre></div>
+        
+      
+        
+        <h3 id="app-stopeffect">App.stopEffect</h3>
+<p>Stops the sound effect with the given id.</p>
+
+        
+          <div class='highlight'><pre>App.stopEffect = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(audioId)</span> {</span>
+	cc.audioEngine.stopEffect(audioId);
+};</pre></div>
+        
+      
+        
+        <h3 id="app-playmusic">App.playMusic</h3>
+<p>Plays the music file with the given filename if sound is enabled.</p>
+
+        
+          <div class='highlight'><pre>App.playMusic = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(filename)</span> {</span>
+	<span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.isSoundEnabled()) {
+		cc.audioEngine.stopMusic();
+		cc.audioEngine.playMusic(filename);
+	}
+};</pre></div>
+        
+      
+        
+        <h3 id="app-boot">App.boot</h3>
+<p>Boot method. Different for HTML5 versus native. Called at the end of this file.</p>
+
+        
+          <div class='highlight'><pre>App.boot = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(global)</span> {</span>
+	<span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.isHtml5()) {
+		App.setCanvasSize();
+		App.setCanvasSize(document.getElementById(<span class="hljs-string">"gameDiv"</span>),
+			<span class="hljs-keyword">this</span>._origCanvasSize.width, <span class="hljs-keyword">this</span>._origCanvasSize.height);
+	} <span class="hljs-keyword">else</span> {
+		<span class="hljs-comment">/* Implement timers. */</span>
+		<span class="hljs-built_in">require</span>(<span class="hljs-string">"js/lib/timers.js"</span>);
+		<span class="hljs-keyword">this</span>.timerLoop = makeWindowTimer(global, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(ms)</span>{</span>});
+		cc.director.getScheduler().scheduleCallbackForTarget(<span class="hljs-keyword">this</span>, <span class="hljs-keyword">this</span>.timerLoop);
+
+	}
+
+	<span class="hljs-comment">/*setTimeout(function(){cc.log("Confirmed setTimeout() works");}, 3333);*/</span>
+
+	<span class="hljs-comment">/* Embed the equivalent of main.js for faster loading. */</span>
+	cc.game.onStart = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+		App.main();
+	};
+
+	<span class="hljs-comment">/*
+	Native client boot happens like this:
+		1. cc.game.run() -&gt;
+		2. cc.game.prepare() -&gt;
+		3. jsb.js -&gt;
+		4. jsb_cocos2d.js, etc...
+	*/</span>
+	cc.game.run();
+};</pre></div>
+        
+      
+        
+        <h3 id="app-main">App.main</h3>
+<p>The main method. Called by <code>cc.game.onStart</code>.</p>
+
+        
+          <div class='highlight'><pre>App.main = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+	<span class="hljs-keyword">var</span> i,
+		size = {},
+		sheets,
+		cacher,
+		dirs = [];
+
+	<span class="hljs-comment">/* Get config */</span>
+	App.config = App.config || {};
+	<span class="hljs-keyword">for</span> (i <span class="hljs-keyword">in</span> cc.game.config) {
+		<span class="hljs-keyword">if</span> (cc.game.config.hasOwnProperty(i)) {
+			App.config[i] = App.clone(cc.game.config[i]);
+		}
+	}
+
+	<span class="hljs-keyword">this</span>.loadSoundEnabled();
+
+	cc.defineGetterSetter(App, <span class="hljs-string">"winSize"</span>, App.getWinSize);
+	size.width = cc.game.config.designWidth || App.winSize.width;
+	size.height = cc.game.config.designHeight || App.winSize.height;
+	cc.director.setDisplayStats(cc.game.config[cc.game.CONFIG_KEY.showFPS]);
+	cc.view.setDesignResolutionSize(size.width, size.height, cc.ResolutionPolicy.SHOW_ALL);
+	cc.view.resizeWithBrowserSize(<span class="hljs-literal">true</span>);
+
+	App.contentHeight = App.winSize.height;
+	App.contentWidth = App.contentHeight * (size.width / size.height);
+	App.contentX = (App.winSize.width - App.contentWidth) * <span class="hljs-number">.5</span>;
+	App.contentY = <span class="hljs-number">0</span>;
+
+	cc.loader.resPath = cc.game.config.resourcePath;
+	cc.director.setAnimationInterval(<span class="hljs-number">1.0</span> / <span class="hljs-keyword">this</span>.getTargetFrameRate());
+	cc.log(<span class="hljs-built_in">parseInt</span>(App.winSize.width) + <span class="hljs-string">" x "</span> + <span class="hljs-built_in">parseInt</span>(App.winSize.height)
+		+ <span class="hljs-string">", resource dir: "</span> + App.getResourceDir()
+		+ <span class="hljs-string">", language: "</span> + App.getLanguageCode()
+		+ <span class="hljs-string">", "</span> + <span class="hljs-built_in">parseInt</span>(<span class="hljs-number">1.0</span> / cc.director.getAnimationInterval()) + <span class="hljs-string">" fps"</span>);
+
+
+	<span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.isHtml5()) {
+		App.addImageData = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>};
+	} <span class="hljs-keyword">else</span> {
+		App.config[<span class="hljs-string">"font"</span>] = <span class="hljs-string">"res/"</span> + App.config[<span class="hljs-string">"font"</span>] + <span class="hljs-string">".ttf"</span>;
+	}
+
+
+	<span class="hljs-comment">/* Preload. */</span>
+	cc.LoaderScene.preload(App.getResourcesToPreload(), App.runInitialScene, <span class="hljs-keyword">this</span>);
+};</pre></div>
+        
+      
+        
+        <h3 id="boot">Boot</h3>
+<p>Call <code>App.boot</code> passing in the global variable.</p>
+
+        
+          <div class='highlight'><pre>App.boot(<span class="hljs-keyword">this</span>);</pre></div>
+        
+      
+
+        
+          <div>
+            <h4>Table of Contents</h4>
+            <ol>
+              
+                
+                <li>
+                  <a class="source" href="Config.html">
+                    Config.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="ConfigServer.html">
+                    ConfigServer.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="HelloWorld.html">
+                    HelloWorld.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="SceneHello.html">
+                    SceneHello.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="App.html">
+                    App.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="Server.html">
+                    Server.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="README.html">
+                    README.md
+                  </a>
+                </li>
+              
+            </ol>
+          </div>
+        
+
+      <div class="fleur">h</div>
+    </div>
+  </div>
+</body>
+</html>

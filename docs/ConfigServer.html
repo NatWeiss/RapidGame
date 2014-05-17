@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>ConfigServer.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="public/stylesheets/normalize.css" />
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="page">
+
+      <div class="header">
+        
+          <h1>ConfigServer.js</h1>
+        
+
+        
+          <div class="toc">
+            <h3>Table of Contents</h3>
+            <ol>
+              
+                
+                <li>
+                  <a class="source" href="Config.html">
+                    Config.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="ConfigServer.html">
+                    ConfigServer.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="HelloWorld.html">
+                    HelloWorld.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="SceneHello.html">
+                    SceneHello.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="App.html">
+                    App.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="Server.html">
+                    Server.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="README.html">
+                    README.md
+                  </a>
+                </li>
+              
+            </ol>
+          </div>
+        
+      </div>
+
+      
+        
+        
+
+        
+      
+        
+        <p>Server config file used by both client and server.</p>
+
+        
+      
+        
+        <h3 id="module">module</h3>
+<p>Get the module object. Use Node.js style <code>module</code> or <code>module.exports</code> for the server. Use the <code>App</code> singleton for client.</p>
+
+        
+          <div class='highlight'><pre><span class="hljs-keyword">var</span> module = (module ? module.exports : (App ? App : {}));</pre></div>
+        
+      
+        
+        <h3 id="module-serveraddress">module.serverAddress</h3>
+<p>Specify the server’s address without protocol (no “http://“). Primarily used by native clients. HTML5 clients can reference <code>window.location</code> to retrieve this programmatically.</p>
+<ol>
+<li>Use <code>localhost</code> for development on a single machine.</li>
+<li>Use the server’s local IP address when other device’s need to connect. Example: <code>192.168.0.1</code> or <code>10.0.0.1</code>.</li>
+<li>Use the server’s address and path when deploying. Example: <code>mycompany.com/mygame</code></li>
+</ol>
+
+        
+          <div class='highlight'><pre>module.serverAddress = <span class="hljs-string">"localhost"</span>;</pre></div>
+        
+      
+        
+        <h3 id="module-serverport">module.serverPort</h3>
+<p>Specify the server’s port. Can be left blank if using HTTP port 80. Reference this list of <a href="http://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers">well-known ports</a> as needed.</p>
+
+        
+          <div class='highlight'><pre>module.serverPort = <span class="hljs-number">8000</span>;</pre></div>
+        
+      
+
+        
+          <div>
+            <h4>Table of Contents</h4>
+            <ol>
+              
+                
+                <li>
+                  <a class="source" href="Config.html">
+                    Config.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="ConfigServer.html">
+                    ConfigServer.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="HelloWorld.html">
+                    HelloWorld.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="SceneHello.html">
+                    SceneHello.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="App.html">
+                    App.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="Server.html">
+                    Server.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="README.html">
+                    README.md
+                  </a>
+                </li>
+              
+            </ol>
+          </div>
+        
+
+      <div class="fleur">h</div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>HelloWorld.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="public/stylesheets/normalize.css" />
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="page">
+
+      <div class="header">
+        
+          <h1>HelloWorld.js</h1>
+        
+
+        
+          <div class="toc">
+            <h3>Table of Contents</h3>
+            <ol>
+              
+                
+                <li>
+                  <a class="source" href="Config.html">
+                    Config.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="ConfigServer.html">
+                    ConfigServer.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="HelloWorld.html">
+                    HelloWorld.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="SceneHello.html">
+                    SceneHello.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="App.html">
+                    App.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="Server.html">
+                    Server.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="README.html">
+                    README.md
+                  </a>
+                </li>
+              
+            </ol>
+          </div>
+        
+      </div>
+
+      
+        
+        
+
+        
+      
+        
+        <p>Extend the <a href="App.html">App</a> object with project-specific functions.</p>
+
+        
+      
+        
+        <h3 id="app">App</h3>
+<p>Get or create the App object.</p>
+
+        
+          <div class='highlight'><pre><span class="hljs-keyword">var</span> App = App || {};</pre></div>
+        
+      
+        
+        <h3 id="app-playclicksound">App.playClickSound</h3>
+<p>Play one of the click sounds in sequential order.</p>
+
+        
+          <div class='highlight'><pre>App.playClickSound = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+	<span class="hljs-keyword">var</span> sounds = App.config[<span class="hljs-string">"click-sounds"</span>];
+	<span class="hljs-keyword">this</span>.clickSound = <span class="hljs-keyword">this</span>.clickSound || <span class="hljs-number">0</span>;
+	
+	App.playEffect(sounds[<span class="hljs-keyword">this</span>.clickSound]);
+	
+	<span class="hljs-keyword">this</span>.clickSound = (<span class="hljs-keyword">this</span>.clickSound + <span class="hljs-number">1</span>) % sounds.length;
+};</pre></div>
+        
+      
+        
+        <h3 id="app-showtouchcircle">App.showTouchCircle</h3>
+<p>Show an expanding, fading circle at the given position or the given item’s position.</p>
+
+        
+          <div class='highlight'><pre>App.showTouchCircle = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(parentNode, pos, item)</span> {</span>
+	<span class="hljs-keyword">var</span> circle;
+	
+	<span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> pos === <span class="hljs-string">"undefined"</span> || pos === <span class="hljs-literal">null</span>) {
+		<span class="hljs-keyword">if</span> (item) {
+			pos = cc.p(
+				item.getPositionX() + (item.getAnchorPoint().x ?
+					<span class="hljs-number">0</span> : item.getContentSize().width * <span class="hljs-number">.5</span>),
+				item.getPositionY() + (item.getAnchorPoint().y ?
+					<span class="hljs-number">0</span> : item.getContentSize().height * <span class="hljs-number">.5</span>)
+			);
+		} <span class="hljs-keyword">else</span> {
+			<span class="hljs-keyword">return</span>;
+		}
+	}
+	
+	circle = cc.Sprite.create(<span class="hljs-string">"#TouchCircle.png"</span>);
+	<span class="hljs-keyword">if</span> (circle === <span class="hljs-literal">null</span>) {
+		<span class="hljs-keyword">return</span>;
+	}
+	circle.setPosition(pos);
+	circle.setScale(<span class="hljs-number">0.5</span>);
+	circle.runAction(cc.Sequence.create(
+		cc.DelayTime.create(<span class="hljs-number">0.5</span>),
+		cc.FadeOut.create(<span class="hljs-number">1</span>),
+		cc.RemoveSelf.create()
+	));
+	parentNode.addChild(circle, <span class="hljs-number">10</span>);
+
+	circle = cc.Sprite.create(<span class="hljs-string">"#TouchCircle.png"</span>);
+	circle.setPosition(pos);
+	circle.setScale(<span class="hljs-number">0.5</span>);
+	circle.runAction(cc.Spawn.create(
+		cc.FadeOut.create(<span class="hljs-number">1.5</span>),
+		cc.Sequence.create(
+			cc.ScaleBy.create(<span class="hljs-number">1.5</span>, <span class="hljs-number">2.5</span>, <span class="hljs-number">2.5</span>),
+			cc.RemoveSelf.create()
+		)
+	));
+	parentNode.addChild(circle, <span class="hljs-number">11</span>);
+};</pre></div>
+        
+      
+
+        
+          <div>
+            <h4>Table of Contents</h4>
+            <ol>
+              
+                
+                <li>
+                  <a class="source" href="Config.html">
+                    Config.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="ConfigServer.html">
+                    ConfigServer.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="HelloWorld.html">
+                    HelloWorld.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="SceneHello.html">
+                    SceneHello.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="App.html">
+                    App.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="Server.html">
+                    Server.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="README.html">
+                    README.md
+                  </a>
+                </li>
+              
+            </ol>
+          </div>
+        
+
+      <div class="fleur">h</div>
+    </div>
+  </div>
+</body>
+</html>

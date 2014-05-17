@@ -1,0 +1,61 @@
+{
+  "name": "rapidgame",
+  "version": "0.8.4",
+  "description": "The platform-agnostic game project creator and library prebuilder.",
+  "author": {
+    "name": "Nat Weiss",
+    "url": "http://wizardfu.com/"
+  },
+  "homepage": "https://github.com/NatWeiss/RapidGame",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/NatWeiss/RapidGame"
+  },
+  "bugs": {
+    "url": "https://github.com/NatWeiss/RapidGame/issues"
+  },
+  "license": "MIT",
+  "os": [
+    "darwin",
+    "linux"
+  ],
+  "preferGlobal": true,
+  "keywords": [
+    "unity",
+    "corona",
+    "cocos2d",
+    "game",
+    "development",
+    "project",
+    "creator"
+  ],
+  "dependencies": {
+    "commander": "~2.2.0",
+    "download": "~0.1.16",
+    "glob": "~3.2.9",
+    "node-uuid": "^1.4.1",
+    "path-extra": "~0.2.0",
+    "replace": "~0.2.9",
+    "universal-analytics": "^0.3.4",
+    "wrench": "^1.5.8"
+  },
+  "main": "./rapidgame",
+  "bin": {
+    "rapidgame": "./bin/rapidgame"
+  },
+  "files": [
+    "bin",
+    "package.json",
+    "rapidgame.js",
+    "prebuild.sh",
+    "templates",
+    "docs",
+    "docs.html",
+    "CHANGELOG.txt",
+    "LICENSE",
+    "README.md",
+    "src/cocos2d.patch",
+    "src/proj.android",
+    "src/proj.ios_mac"
+  ]
+}

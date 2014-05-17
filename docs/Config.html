@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>Config.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="public/stylesheets/normalize.css" />
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="page">
+
+      <div class="header">
+        
+          <h1>Config.js</h1>
+        
+
+        
+          <div class="toc">
+            <h3>Table of Contents</h3>
+            <ol>
+              
+                
+                <li>
+                  <a class="source" href="Config.html">
+                    Config.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="ConfigServer.html">
+                    ConfigServer.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="HelloWorld.html">
+                    HelloWorld.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="SceneHello.html">
+                    SceneHello.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="App.html">
+                    App.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="Server.html">
+                    Server.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="README.html">
+                    README.md
+                  </a>
+                </li>
+              
+            </ol>
+          </div>
+        
+      </div>
+
+      
+        
+        
+
+        
+      
+        
+        <p>The game client’s config file. Used to localize the game, configure plugins and provide other settings and preferences.</p>
+
+        
+          <div class='highlight'><pre><span class="hljs-keyword">var</span> App = App || {};
+
+App.config = {</pre></div>
+        
+      
+        
+        <h3 id="strings">strings</h3>
+<p>Localize your app by providing strings grouped by language code. If a string is not found for the current language code, the default <code>en</code> will be used.</p>
+
+        
+          <div class='highlight'><pre>	<span class="hljs-string">"strings"</span>: {
+		<span class="hljs-string">"en"</span>: {
+			<span class="hljs-string">"hello-world"</span>: <span class="hljs-string">"Hello World!"</span>,
+			<span class="hljs-string">"you-are-player-number"</span>: <span class="hljs-string">"Your magic number is %d."</span>
+		}
+	},</pre></div>
+        
+      
+        
+        <h3 id="preload">preload</h3>
+<p>Specify resources to preload.</p>
+
+        
+          <div class='highlight'><pre>	<span class="hljs-string">"preload"</span>: [
+		<span class="hljs-string">"spritesheet.plist"</span>,
+		<span class="hljs-string">"spritesheet.png"</span>
+	],</pre></div>
+        
+      
+        
+        <h3 id="spritesheets">spritesheets</h3>
+<p>Specify spritesheets to be used.</p>
+
+        
+          <div class='highlight'><pre>	<span class="hljs-string">"spritesheets"</span>: [
+		<span class="hljs-string">"spritesheet.plist"</span>
+	],</pre></div>
+        
+      
+        
+        <h3 id="font">font</h3>
+<p>The font to be used.</p>
+
+        
+          <div class='highlight'><pre>	<span class="hljs-string">"font"</span>: <span class="hljs-string">"Arial"</span>,</pre></div>
+        
+      
+        
+        <h3 id="click-sounds">click-sounds</h3>
+<p>An array of click sounds to be used when tapping the Hello World layer.</p>
+
+        
+          <div class='highlight'><pre>	<span class="hljs-string">"click-sounds"</span>: [
+		<span class="hljs-string">"res/Drop1.wav"</span>,
+		<span class="hljs-string">"res/Drop2.wav"</span>,
+		<span class="hljs-string">"res/Drop3.wav"</span>
+	],</pre></div>
+        
+      
+        
+        <h3 id="loader">loader</h3>
+<p>Settings for the loading scene.</p>
+
+        
+          <div class='highlight'><pre>	<span class="hljs-string">"loader"</span>: {
+		<span class="hljs-string">"bg-color"</span>: cc.color(<span class="hljs-number">253</span>, <span class="hljs-number">252</span>, <span class="hljs-number">255</span>, <span class="hljs-number">255</span>),
+		<span class="hljs-string">"text"</span>: <span class="hljs-string">"L o a d i n g . . ."</span>,
+		<span class="hljs-string">"text-font"</span>: <span class="hljs-string">"Arial"</span>,
+		<span class="hljs-string">"text-color"</span>: cc.color(<span class="hljs-number">180</span>, <span class="hljs-number">180</span>, <span class="hljs-number">180</span>, <span class="hljs-number">255</span>),
+		<span class="hljs-string">"text-size"</span>: <span class="hljs-number">20</span>,
+		<span class="hljs-string">"bar-color"</span>: cc.color(<span class="hljs-number">9</span>, <span class="hljs-number">9</span>, <span class="hljs-number">10</span>, <span class="hljs-number">255</span>),
+		<span class="hljs-string">"image-win-size-percent"</span>: <span class="hljs-number">0.5</span>
+	},
+
+
+	unused: <span class="hljs-literal">null</span>
+};</pre></div>
+        
+      
+
+        
+          <div>
+            <h4>Table of Contents</h4>
+            <ol>
+              
+                
+                <li>
+                  <a class="source" href="Config.html">
+                    Config.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="ConfigServer.html">
+                    ConfigServer.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="HelloWorld.html">
+                    HelloWorld.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="SceneHello.html">
+                    SceneHello.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="App.html">
+                    App.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="Server.html">
+                    Server.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="README.html">
+                    README.md
+                  </a>
+                </li>
+              
+            </ol>
+          </div>
+        
+
+      <div class="fleur">h</div>
+    </div>
+  </div>
+</body>
+</html>

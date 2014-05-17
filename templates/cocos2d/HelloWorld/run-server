@@ -1,0 +1,11 @@
+#!/bin/bash
+
+cd "$(dirname "$0")"
+
+if hash node 2>/dev/null; then
+	node server/Server.js
+else
+	echo "This game server requires Node.js to be installed."
+	echo "Please run the pre-built installer for your system:"
+	echo "    http://nodejs.org/download/"
+fi
