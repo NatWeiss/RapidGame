@@ -9,7 +9,7 @@ To quickly create your own Breakout clone for Cocos2D JS:
 	sudo npm install rapidgame -g
 	rapidgame MyGame -e cocos2d -t BrickBreaker -k com.mycompany.mygame
 
-What the command does is to copy this game template directory, rename the project to your choice of title (`BrickBreaker` becomes `MyGame`), replace all instances of the package name with yours (`com.wizardfu.brickbreaker` becomes `com.mycompany.mygame`). At that point you can begin editing the game to your liking.
+What the command does is to copy this game template directory, rename / replace all instances of the project title (`BrickBreaker` becomes `MyGame`), replace all instances of the package name (`com.wizardfu.brickbreaker` becomes `com.mycompany.mygame`), install Node modules for the server and prebuild Cocos2D X static libraries. At that point you can begin editing the game to your liking.
 
 
 Background
