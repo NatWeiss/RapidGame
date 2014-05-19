@@ -17,18 +17,39 @@ var http = require("http"),
 	packageJson = JSON.parse(fs.readFileSync(path.join(__dirname, "package.json"))),
 	cmdName = packageJson.name,
 	version = packageJson.version,
-	templates = ["HelloWorld", "BrickBreaker"],
-	engines = ["cocos2d", "unity", "corona", "titanium"],
-	defaults = {
-		engine: engines[0],
-		package: "org.mycompany.mygame",
-		template: templates[0],
-		dest: process.cwd(),
-		prefix: __dirname
-	},
 	cocos2djsUrl = "http://cdn.cocos2d-x.org/cocos2d-js-v3.0-alpha2.zip",
 	cocos2dDirGlob = "*ocos2d-js*",
-	category;
+	category,
+	engines = [],
+	templates = [],
+	defaults = {
+		engine: "cocos2d",
+		template: "BrickBreaker",
+		package: "org.mycompany.mygame",
+		dest: process.cwd(),
+		prefix: __dirname
+	};
+
+//
+// list directories (path.join is called on all arguments)
+//
+var listDirectories = function() {
+	var i, src, dirs;
+	for (i = 0; i < arguments.length; i += 1) {
+		src = (src ? path.join(src, arguments[i]) : arguments[i]);
+	}
+	dirs = glob.sync(src);
+	for (i = 0; i < dirs.length; i++) {
+		dirs[i] = path.basename(dirs[i]);
+	}
+	return dirs;
+};
+
+//
+// get engines and templates
+//
+engines = listDirectories(__dirname, "templates", "*");
+templates = listDirectories(__dirname, "templates", "cocos2d", "*");
 
 //
 // Main run method.
@@ -99,29 +120,27 @@ var createProject = function(name) {
 		return 1;
 	}
 
-	// Check engine and template
+	// Check engine
 	if (engines.indexOf(cmd.engine) < 0) {
-		console.log("Engine '" + cmd.engine + "' not found, defaulting to " + defaults.engine);
-		cmd.engine = defaults.engine;
+		console.log("Engine '" + cmd.engine + "' not found");
+		console.log("Available engines are: " + engines.join(", "));
+		cmd.help();
+		return 1;
 	}
-	if (templates.indexOf(cmd.template) < 0) {
-		console.log("Template '" + cmd.template + "' not found, defaulting to " + defaults.template);
-		cmd.template = defaults.template;
-	}
+	
+	// Check template
 	src = path.join(__dirname, "templates", cmd.engine, cmd.template);
 	if (!dirExists(src)) {
 		console.log("Missing template directory: " + src);
-		src = path.join(__dirname, "templates", cmd.engine, "*");
-		files = glob.sync(src);
-		for (i = 0; i < files.length; i++) {
-			files[i] = path.basename(files[i]);
-		}
+		files = listDirectories(__dirname, "templates", cmd.engine, "*");
 		if (files.length > 0) {
 			console.log("Available templates for " + cmd.engine + " are: " + files.join(", ") + ".");
 		}
 		cmd.help();
 		return 1;
 	}
+	
+	// Start
 	report("start", cmd.engine + "/" + cmd.template);
 	console.log("Rapidly creating a game named '" + name + "' with engine " +
 		cmd.engine.charAt(0).toUpperCase() + cmd.engine.slice(1) + " and template " + cmd.template);
