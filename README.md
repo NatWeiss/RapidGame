@@ -2,7 +2,7 @@
 RapidGame
 =========
 
-RapidGame is a cross platform game templating system for Cocos2D JS, Unity, Corona and Appcelerator Titanium.
+RapidGame is a cross-platform game templating system for Cocos2D JS, Unity, Corona and Appcelerator Titanium.
 It can currently output Hello World or a Breakout Clone in your choice of engine.
 
 The primary goal of RapidGame is to make game development more rapid.
