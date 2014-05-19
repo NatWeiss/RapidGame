@@ -121,9 +121,9 @@ if [ "$cmd" == "headers" ] || [ "$cmd" == "all" ]; then
 		rm -r ${dir}
 	fi
 	mkdir -p "${dir}"
-	cp src/cocos2d-js/frameworks/js-bindings/bindings/script/*.js $dir
+	cp src/cocos2d-js/frameworks/js-bindings/bindings/script/*.js $dir #*/
 	cp -r src/cocos2d-js/frameworks/js-bindings/bindings/script/debugger $dir
-	cp src/cocos2d-js/frameworks/js-bindings/bindings/auto/api/*.js $dir
+	cp src/cocos2d-js/frameworks/js-bindings/bindings/auto/api/*.js $dir #*/
 	find ${dir} | xargs xattr -c >> ${logFile} 2>&1
 
 #
@@ -136,17 +136,17 @@ if [ "$cmd" == "headers" ] || [ "$cmd" == "all" ]; then
 	mkdir -p "${dir}"
 	mkdir -p "${dir}/mk"
 	mkdir -p "${dir}/cocos2d-x"
-	cp -r src/cocos2d-js/frameworks/js-bindings/cocos2d-x/cocos/2d/platform/android/java/* ${dir}/cocos2d-x/
+	cp -r src/cocos2d-js/frameworks/js-bindings/cocos2d-x/cocos/2d/platform/android/java/* ${dir}/cocos2d-x/ #*/
 	# .mk and .a
 	(cd src && find . -name '*.mk' -print | tar --create --files-from -) | (cd $dir/mk && tar xvfp - >> ${logFile} 2>&1)
 	(cd src/cocos2d-js/frameworks/js-bindings && find . -name '*.mk' -print | tar --create --files-from -) | (cd $dir/mk && tar xvfp - >> ${logFile} 2>&1)
 	(cd src && find . -name '*.a' -print | grep android | tar --create --files-from -) | (cd $dir/mk && tar xvfp - >> ${logFile} 2>&1)
 	(cd src/cocos2d-js/frameworks/js-bindings && find . -name '*.a' -print | grep android | tar --create --files-from -) | (cd $dir/mk && tar xvfp - >> ${logFile} 2>&1)
-	# bonus: call android/strip on mk/*.a
+	# bonus: call android/strip on mk/*.a #*/
 	if [ -d ${dir}/mk/proj.android ]; then rm -r ${dir}/mk/proj.android; fi
 	if [ -d ${dir}/mk/cocos2d-js ]; then rm -r ${dir}/mk/cocos2d-js; fi
-	rm -rf ${dir}/*/bin
-	rm -rf ${dir}/*/gen
+	rm -rf ${dir}/*/bin #*/
+	rm -rf ${dir}/*/gen #*/
 
 #
 # frameworks
@@ -156,7 +156,6 @@ if [ "$cmd" == "headers" ] || [ "$cmd" == "all" ]; then
 		rm -r ${dir}
 	fi
 	mkdir -p "${dir}"
-	cp -r src/facebook/proj.ios/FacebookSDK.framework $dir
 
 	echo "Done."
 fi
