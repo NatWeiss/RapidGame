@@ -76,7 +76,7 @@ It's possible to create your own game templates. Here's the step-by-step instruc
  
  4. Whenever there's an instance of your package name, replace the beginning with `com.wizardfu.`, lowercase the title and remove any punctuation, so `com.mycompany.zombierevolution` becomes `com.wizardfu.zombierevolution`. This will get changed by the templating system when creating new game projects.
  
- 5. Copy your game template to the `templates/<engine>` directory of RapidGame. On Mac / Linux this is `/usr/local/lib/node_modules/rapidgame`. You can use the `npm prefix -g` command to determine where Node modules are installed on your system. If your on Mac OS X, the template is for Unity and it's called "Zombie Revolution" then the final directory would be `/usr/local/lib/node_modules/rapidgame/templates/unity/Zombie Revolution/`.
+ 5. Copy your game template to the `templates/<engine>` directory of RapidGame. On Mac / Linux this is `/usr/local/lib/node_modules/rapidgame`. You can use the `npm prefix -g` command to determine where Node modules are installed on your system. If you're on Mac OS X, the template is for Unity and it's called "Zombie Revolution" then the final directory would be `/usr/local/lib/node_modules/rapidgame/templates/unity/Zombie Revolution/`.
 
  6. Your template is now ready for testing. Try it out like this: `rapidgame -e unity -t "Zombie Revolution" MyNewGame`.
 

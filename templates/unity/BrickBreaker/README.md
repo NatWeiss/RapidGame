@@ -1,8 +1,8 @@
 The game contained in this directory can be immediately used **as is**. It's a fully functional Breakout clone and does not require any dependencies.
 
 
-History
--------
+Background
+----------
 
 This game originally started as preparation for a blog post published on Binpress called [Selecting a Cross-platform Game Engine](http://www.binpress.com/blog/2014/05/14/selecting-cross-platform-game-engine/).
 
@@ -33,8 +33,5 @@ You might be wondering why you should use RapidGame. Here's a few reasons:
  
  4. Compare cross-platform game engines. Have you ever wondered how a Unity, Corona, Cocos2D JS or Titanium game is structured? How do they stack up? How easy is it to incorporate physics? Because RapidGame implements the same game in multiple engines, one can evaluate for themselves the pros and cons of each.
 
- 5. Save time by using prebuilt static libraries. The Cocos2D JS game engine is unique in that it is the only 100% open-source cross-platform game engine. One gotcha is that compiling all those native source files can be a real pain. Especially when all one has to do is switch from the simulator to device and all of the source files may have to be rebuilt. RapidGame solves this by incorporating a command which automatically downloads the latest Cocos2D JS, patches it so that any obvious bugs have been cleared up, then prebuilds it for all possible platforms, configurations and architectures. It takes awhile but it's worth every second, as it virtually eliminates build / compile / link times. Even better, RapidGame will absolutely symlink to the location of the prebuilt libraries so your game projects stay lightweight and can be moved easily.
- 
-  6. There are plans to add more features to RapidGame which further eliminate common grunt work from game development. For example, a command which takes a single icon file as input and outputs / updates a myriad of differently-sized icon files is planned.
-  
+ 5. Save time by using prebuilt static libraries. The Cocos2D JS game engine is 100% open-source. Compiling all those native source files can be a real pain. Especially when all one has to do is switch from the simulator to device to trigger a rebuild. RapidGame solves this by incorporating a command which automatically downloads the latest Cocos2D JS, patches it to ensure that it's bug-free, then prebuilds it for all possible platforms, configurations and architectures. It takes awhile but it's worth every second, as it virtually eliminates build / compile / link times during day-to-day development. Even better, RapidGame will absolutely symlink to the location of the prebuilt libraries so your game projects stay lightweight and can be moved easily.
   
