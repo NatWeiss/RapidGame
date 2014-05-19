@@ -75,6 +75,16 @@ if [ "$cmd" == "headers" ] || [ "$cmd" == "all" ]; then
 	echo "Building headers..."
 
 #
+# html5
+#
+	dir="${dest}/cocos2d/html"
+	if [ -d "${dir}" ]; then
+		rm -r ${dir}
+	fi
+	mkdir -p ${dir}
+	cp -r src/cocos2d-js/frameworks/cocos2d-html5/* ${dir} # */
+
+#
 # include
 #
 	dir="${dest}/cocos2d/x/include"
