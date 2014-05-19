@@ -55,6 +55,15 @@ var run = function(args) {
 		.description("Prebuild Cocos2D JS static libraries for all platforms and architectures")
 		.action(prebuild);
 
+	cmd.on("--help", function(){
+		console.log("  Examples:");
+		console.log("");
+		console.log("    $ " + cmdName + " -e unity -t BrickBreaker MyBrickBreaker");
+		console.log("    $ " + cmdName + " -e cocos2d -t HelloWorld -k com.mycompany.mygame MyHello");
+		console.log("    $ " + cmdName + " prebuild");
+		console.log("");
+	});
+
 	cmd
 		.parse(args)
 		.name = cmdName;
@@ -73,12 +82,19 @@ var createProject = function(name) {
 		dest,
 		fileCount,
 		i,
-		onFinished;
+		onFinished,
+		files;
 	category = "createProject";
 	
+	if (!checkPrefix()) {
+		cmd.help();
+		return 1;
+	}
+
 	// Check if dirs exist
 	if (dirExists(dir) || fileExists(dir)) {
 		console.log("Output directory already exists: " + dir);
+		cmd.help();
 		return 1;
 	}
 
@@ -91,12 +107,21 @@ var createProject = function(name) {
 		console.log("Template '" + cmd.template + "' not found, defaulting to " + defaults.template);
 		cmd.template = defaults.template;
 	}
-	report("start", cmd.engine + "/" + cmd.template);
 	src = path.join(__dirname, "templates", cmd.engine, cmd.template);
 	if (!dirExists(src)) {
 		console.log("Missing template directory: " + src);
+		src = path.join(__dirname, "templates", cmd.engine, "*");
+		files = glob.sync(src);
+		for (i = 0; i < files.length; i++) {
+			files[i] = path.basename(files[i]);
+		}
+		if (files.length > 0) {
+			console.log("Available templates for " + cmd.engine + " are: " + files.join(", ") + ".");
+		}
+		cmd.help();
 		return 1;
 	}
+	report("start", cmd.engine + "/" + cmd.template);
 	console.log("Rapidly creating a game named '" + name + "' with engine " +
 		cmd.engine.charAt(0).toUpperCase() + cmd.engine.slice(1) + " and template " + cmd.template);
 	
@@ -286,6 +311,7 @@ var prebuild = function(platform, config, arch) {
 	report("start");
 
 	if (!checkPrefix()) {
+		cmd.help();
 		return 1;
 	}
 
@@ -435,31 +461,47 @@ var downloadUrl = function(url, dest, cb) {
 //
 var report = (function() {
 	var ua = require("universal-analytics"),
-		filename = path.join(__dirname, ".id"),
-		uuid,
 		visitor;
 	
-	try {
-		uuid = fs.readFileSync(filename).toString();
-	} catch(e) {
-	}
-	if (uuid && uuid.indexOf("false") >= 0) {
-		console.log("Opted out of automatic bug reporting");
-		return function(){};
-	}
-	if (!uuid || uuid.length < 32 || uuid.indexOf("-") < 0) {
-		console.log("This tool automatically reports bugs & anonymous usage statistics.");
-		console.log("You may opt-out of this feature by setting contents of the file '" + filename + "' to 'false'.");
-		uuid = require("node-uuid").v4();
+	// Get visitor
+	var getVisitor = function() {
+		var uuid,
+			filename = path.join(cmd.prefix, ".id");
+
+		// Read UUID
 		try {
-			fs.writeFileSync(filename, uuid);
+			uuid = fs.readFileSync(filename).toString();
 		} catch(e) {
 		}
-	}
-	//console.log("UUID: " + uuid);
-	visitor = ua("UA-597335-12", uuid);
+		if (uuid && uuid.indexOf("false") >= 0) {
+			console.log("Opted out of automatic bug reporting");
+			return null;
+		}
+	
+		// Generate UUID
+		if (!uuid || uuid.length < 32 || uuid.indexOf("-") < 0) {
+			console.log("");
+			console.log("  This tool automatically reports bugs & anonymous usage statistics.");
+			console.log("  You may opt-out of this feature by setting contents of the file '" + filename + "' to 'false'.");
+			console.log("");
+			uuid = require("node-uuid").v4();
+			try {
+				fs.writeFileSync(filename, uuid);
+			} catch(e) {
+			}
+		}
+		//console.log("UUID: " + uuid);
+		return ua("UA-597335-12", uuid);
+	};
 
 	return function(action, label, value, path) {
+		if (typeof visitor === "undefined") {
+			visitor = getVisitor();
+		}
+		if (visitor === null) {
+			return;
+		}
+
 		category = category || "unknownCategory";
 		action = action || "unknownAction";
 		label = label || "";
@@ -486,9 +528,9 @@ var checkUpdate = function() {
 		response.on("end", function() {
 			newVersion = newVersion.toString().trim();
 			if (newVersion !== packageJson.version) {
-				console.log("\nGood news! An update is available.");
+				console.log("\nAn update is available.");
 				console.log("\t" + packageJson.version + " -> " + newVersion);
-				console.log("Upgrade like this:");
+				console.log("Upgrade instructions:");
 				if (cmdName.indexOf("pro")) {
 					console.log("\tcd " + __dirname + " && npm update");
 				} else {
