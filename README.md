@@ -2,46 +2,79 @@
 RapidGame
 =========
 
-RapidGame is an SDK-agnostic, cross-platform game project creator, library prebuilder and collection of game templates.
-Game templates, including a complete Breakout clone, are included for Cocos2D JS, Unity, Corona and Appcelerator Titanium.
+RapidGame is a cross platform game templating system for Cocos2D JS, Unity, Corona and Appcelerator Titanium.
+It can currently output Hello World or a Breakout Clone in your choice of engine.
+
+The primary goal of RapidGame is to make game development more rapid.
+The templating system is part of that.
+With Cocos2D JS it further helps by prebuilding Cocos2D X libraries statically, which virtually eliminates build / compile / link time.
 
 
-Setup
------
+Prerequisites
+-------------
 
- 1. Make sure you have installed [Node.js](http://nodejs.org/download/) and [Git](http://git-scm.com/downloads).
- 2. Install RapidGame: `sudo npm install rapidgame -g`
- 3. Create a Cocos2D JS HelloWorld game project named MyGame: `rapidgame MyGame`
- 4. Create a Unity Breakout clone named BrickMan: `rapidgame -e unity -t BrickBreaker BrickMan`
- 5. For usage instructions: `rapidgame --help`
+You'll need [Node.js](http://nodejs.org/download/) and [Git](http://git-scm.com/downloads).
 
 
-Prebuilding
+Create a Game in Under 30 Seconds
+---------------------------------
+
+Install RapidGame:
+
+	sudo npm install rapidgame -g
+
+Create a Unity Breakout clone named BrickMan
+
+	rapidgame -e unity -t BrickBreaker BrickMan
+
+
+Run
+---
+
+To run your Unity game just open the project in [Unity](https://unity3d.com/unity/download) and click the triangular Play button. (The Breakout clone currently plays using the arrow keys to move the paddle and spacebar to launch the ball.)
+
+To run your Corona game just open the Corona Simulator and open your `main.lua` file.
+
+To run your Cocos2D JS game in a browser just launch the server `cd MyGame && ./run-server` and visit `[localhost:8000](http://localhost:8000)`.
+
+To run your Cocos2D JS game natively for iOS or Mac, just open `proj.ios_mac/MyGame.xcodeproj` and Run. Note that you will need to have completed the `rapidgame prebuild` command so that Cocos2D X static libraries can be linked against.
+
+To run your Cocos2D JS game for Android: `cd MyGame/proj.android && make && make run`. This also requires Cocos2D X static libraries, so make sure to `rapidgame prebuild`.
+
+
+More About Prebuilding
+----------------------
+
+The command to prebuild Cocos2D X static libraries used by Cocos2D JS on native platforms:
+
+	rapidgame prebuild
+
+It takes awhile but it's worth every second.
+
+When the command is finished, you'll have a directory (`~/Library/Developer/RapidGame` on Macs) with include files, java files, make files, Javascript bindings and prebuilt static libraries for iOS, Mac and Android in Debug and Release mode for all available architectures.
+When you create Cocos2D JS projects with the `rapidgame` tool, it symlinks to this directory, making game project directories lightweight.
+
+
+Pro Version
 -----------
 
-The purpose of RapidGame is to make game development a more modern and swift process.
-One of the ways it does this is by prebuild libraries.
-If you've ever created a Cocos2D game project, you'll groan thinking about re-compiling 300+ source files repeatedly.
+If you need cross-platform monetization, in-app purchasing, virtual economies, social networking, async multiplayer, analytics and/or ads, check out [RapidGame Pro](http://www.binpress.com/app/rapidgame-pro-for-ios-android-facebook/1802). It has an example game called Lemonade Exchange written using the Cocos2D JS engine which includes all of the previously mentioned features and works on Facebook, iOS, Mac and Android. More platforms are planned.
 
-RapidGame has custom scripts and project files to automatically download the latest Cocos2D JS source code and build it statically for multiple platforms and architectures.
-Instead of building 900 source files you'll have 4 or 5 to deal with at most.
-Since you'll be developing with Javascript, most of the time all that has to be done is to copy the latest resouces (a Javascript file or two) and re-launch the simulator.
 
-To prebuild Cocos2D JS libraries, run:
+Project Status
+--------------
 
-`rapidgame prebuild`
+The `rapidgame` command runs on Mac or Linux. Windows support is planned.
 
-It will take awhile.
-You can watch the progress with `tail -f <path-to-build.log>`.
+Breakout clones have been written for Unity, Corona, Cocos2D JS and Titanium.
 
-When the command is finished, you'll have a directory with include files, java files, make files, Javascript bindings and prebuilt debug & release static libraries for iOS, Mac and Android.
-When you create projects with the `rapidgame` tool, it symlinks to this directory, making game project directories lightweight.
+Hello World has been written for Cocos2D JS including project files for iOS, Android and Mac. Win32 and Linux project files are planned.
 
 
 Contributing
 ------------
 
-I have much respect for contributors. :) Submit pull requests or open issues as you see fit.
+Submit pull requests or open issues as you see fit.
 
 
 License

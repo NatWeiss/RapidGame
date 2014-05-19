@@ -1,7 +1,7 @@
 {
   "name": "rapidgame",
-  "version": "0.8.4",
-  "description": "The platform-agnostic game project creator and library prebuilder.",
+  "version": "0.8.5",
+  "description": "A cross platform game templating system for Cocos2D JS, Unity, Corona and Appcelerator Titanium. A library prebuilder for Cocos2D JS.",
   "author": {
     "name": "Nat Weiss",
     "url": "http://wizardfu.com/"

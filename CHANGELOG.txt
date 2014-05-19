@@ -1,7 +1,18 @@
+Version 0.8.5 - May 18, 2014
+
+	Updated README.
+	Fixed an erroneous character in Unity `.js` files.
+	Fixed command's usage of `.id` file and made auto bug reporting opt-out instructions more prevalent.
+	Cleaned up command's usage instructions.
+
 Version 0.8.4 - May 16, 2014
 
-	Created commandline application which creates projects and prebuilds Cocos2D JS
-	Added game templates for a Breakout clone written in Cocos2D JS, Unity, Corona and Appcelerator Titanium.
+	Created the `rapidgame` / `rapidgamepro` commandline application which creates projects and prebuilds Cocos2D JS.
+	Finished Breakout clone for Unity.
+	Finished Breakout clone for Corona.
+	Finished Breakout clone for Cocos2D JS.
+	Finished Breakout clone for Appcelerator Titanium.
+	Wrote a blog post comparing the above mentioned [cross-platform game engines](http://www.binpress.com/blog/2014/05/14/selecting-cross-platform-game-engine/).
 
 Version 0.8.3 - April 17, 2014
 
