@@ -28,18 +28,26 @@ Create a Unity Breakout clone named BrickMan
 	rapidgame -e unity -t BrickBreaker BrickMan
 
 
+Pro Version
+-----------
+
+If you need cross-platform monetization, in-app purchasing, virtual economies, social networking, async multiplayer, analytics and/or ads then get [RapidGame Pro](http://www.binpress.com/app/rapidgame-pro-for-ios-android-facebook/1802). It has an example game called Lemonade Exchange written using the Cocos2D JS engine which includes all of the previously mentioned features and works on Facebook, iOS, Mac and Android. Support for more platforms is planned.
+
+
 Run
 ---
 
-To run your Unity game just open the project in [Unity](https://unity3d.com/unity/download) and click the triangular Play button. (The Breakout clone currently plays using the arrow keys to move the paddle and spacebar to launch the ball.)
+To run your Unity game just open the project in [Unity](https://unity3d.com/unity/download) and click the triangular Play button. The Breakout clone currently plays using the arrow keys to move the paddle and spacebar to launch the ball.
 
-To run your Corona game just open the Corona Simulator and open your `main.lua` file.
+To run your [Corona](http://coronalabs.com/products/corona-sdk/starter/) game just run the Corona Simulator then open your `main.lua` file.
 
-To run your Cocos2D JS game in a browser just launch the server `cd MyGame && ./run-server` and visit `[localhost:8000](http://localhost:8000)`.
+To run your [Cocos2D JS](http://cocos2d-x.org/product#cocos2dx-js) game in a browser just launch the server `cd MyGame && ./run-server` and visit [localhost:8000](http://localhost:8000).
 
 To run your Cocos2D JS game natively for iOS or Mac, just open `proj.ios_mac/MyGame.xcodeproj` and Run. Note that you will need to have completed the `rapidgame prebuild` command so that Cocos2D X static libraries can be linked against.
 
 To run your Cocos2D JS game for Android: `cd MyGame/proj.android && make && make run`. This also requires Cocos2D X static libraries, so make sure to `rapidgame prebuild`.
+
+To run your [Titanium](http://www.appcelerator.com/titanium/) game just open Titanium Studio and File > Import... > Existing Projects into Workspace. Select your MyGame directory. Make sure you have the [Platino](http://lanica.co/products/platino/engine/) SDK installed.
 
 
 More About Prebuilding
@@ -53,12 +61,6 @@ It takes awhile but it's worth every second.
 
 When the command is finished, you'll have a directory (`~/Library/Developer/RapidGame` on Macs) with include files, java files, make files, Javascript bindings and prebuilt static libraries for iOS, Mac and Android in Debug and Release mode for all available architectures.
 When you create Cocos2D JS projects with the `rapidgame` tool, it symlinks to this directory, making game project directories lightweight.
-
-
-Pro Version
------------
-
-If you need cross-platform monetization, in-app purchasing, virtual economies, social networking, async multiplayer, analytics and/or ads, check out [RapidGame Pro](http://www.binpress.com/app/rapidgame-pro-for-ios-android-facebook/1802). It has an example game called Lemonade Exchange written using the Cocos2D JS engine which includes all of the previously mentioned features and works on Facebook, iOS, Mac and Android. More platforms are planned.
 
 
 Project Status
