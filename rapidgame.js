@@ -83,7 +83,8 @@ var createProject = function(name) {
 		fileCount,
 		i,
 		onFinished,
-		files;
+		files,
+		isCocos2d = false;
 	category = "createProject";
 	
 	if (!checkPrefix()) {
@@ -124,6 +125,7 @@ var createProject = function(name) {
 	report("start", cmd.engine + "/" + cmd.template);
 	console.log("Rapidly creating a game named '" + name + "' with engine " +
 		cmd.engine.charAt(0).toUpperCase() + cmd.engine.slice(1) + " and template " + cmd.template);
+	isCocos2d = (cmd.engine.indexOf("cocos") >= 0);
 	
 	// Copy all template files to destination
 	dest = dir;
@@ -174,7 +176,7 @@ var createProject = function(name) {
 	}
 	
 	// Symlink
-	if (cmd.engine.indexOf("cocos") >= 0) {
+	if (isCocos2d) {
 		src = cmd.prefix;
 		dest = path.join(dir, "lib");
 		console.log("Symlinking from " + src + " to " + dest);
@@ -191,6 +193,10 @@ var createProject = function(name) {
 	onFinished = function(){
 		console.log("Done creating project " + name);
 		report("done");
+		if (isCocos2d && !dirExists(path.join(cmd.prefix, "cocos2d"))) {
+			console.log("Automatically prebuilding Cocos2D libraries");
+			prebuild();
+		}
 	};
 	if (dirExists(dest) && !dirExists(path.join(dest, "node_modules"))) {
 		console.log("Installing node modules");
@@ -366,6 +372,10 @@ var downloadCocos = function(callback) {
 							console.log("Applying patch file: " + src);
 							child_process.exec("git apply --whitespace=nowarn " + src, {cwd: dest, env: process.env}, function(a, b, c){
 								execCallback(a, b, c);
+								
+								// Delete patch
+								fs.unlinkSync(src);
+								
 								callback();
 							});
 						} catch(e) {
