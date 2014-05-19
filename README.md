@@ -23,7 +23,7 @@ Install RapidGame:
 
 	sudo npm install rapidgame -g
 
-Create a Unity Breakout clone named BrickMan
+Create a Unity Breakout clone named BrickMan:
 
 	rapidgame -e unity -t BrickBreaker BrickMan
 
@@ -61,6 +61,24 @@ It takes awhile but it's worth every second.
 
 When the command is finished, you'll have a directory (`~/Library/Developer/RapidGame` on Macs) with include files, java files, make files, Javascript bindings and prebuilt static libraries for iOS, Mac and Android in Debug and Release mode for all available architectures.
 When you create Cocos2D JS projects with the `rapidgame` tool, it symlinks to this directory, making game project directories lightweight.
+
+
+Create Your Own Templates
+-------------------------
+
+It's possible to create your own game templates. Here's the step-by-step instructions:
+
+ 1. Create your game in a directory with the game name as the directory name. If your game is called "Zombie Revolution", name the directory `Zombie Revolution`, including the space.
+ 
+ 2. Use the name of your game (e.g. "Zombie Revolution") including any space or punctation freely throughout your game project. RapidGame is smart enough to automatically rename your game's title in most types of source files.
+ 
+ 3. If you'd like a file or directory renamed, make sure it starts with your game's title. For example, if you have `Zombie Revolution.xcodeproj` it will get changed to `MyNewGame.xcodeproj`.
+ 
+ 4. Whenever there's an instance of your package name, replace the beginning with `com.wizardfu.`, lowercase the title and remove any punctuation, so `com.mycompany.zombierevolution` becomes `com.wizardfu.zombierevolution`. This will get changed by the templating system when creating new game projects.
+ 
+ 5. Copy your game template to the `templates/<engine>` directory of RapidGame. On Mac / Linux this is `/usr/local/lib/node_modules/rapidgame`. You can use the `npm prefix -g` command to determine where Node modules are installed on your system. If your on Mac OS X, the template is for Unity and it's called "Zombie Revolution" then the final directory would be `/usr/local/lib/node_modules/rapidgame/templates/unity/Zombie Revolution/`.
+
+ 6. Your template is now ready for testing. Try it out like this: `rapidgame -e unity -t "Zombie Revolution" MyNewGame`.
 
 
 Project Status

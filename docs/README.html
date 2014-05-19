@@ -98,7 +98,7 @@ With Cocos2D JS it further helps by prebuilding Cocos2D X libraries statically, 
         
         <p>Install RapidGame:</p>
 <p>sudo npm install rapidgame -g</p>
-<p>Create a Unity Breakout clone named BrickMan</p>
+<p>Create a Unity Breakout clone named BrickMan:</p>
 <p>rapidgame -e unity -t BrickBreaker BrickMan</p>
 <h2 id="pro-version">Pro Version</h2>
 
@@ -127,6 +127,26 @@ With Cocos2D JS it further helps by prebuilding Cocos2D X libraries statically, 
 <p>It takes awhile but it’s worth every second.</p>
 <p>When the command is finished, you’ll have a directory (<code>~/Library/Developer/RapidGame</code> on Macs) with include files, java files, make files, Javascript bindings and prebuilt static libraries for iOS, Mac and Android in Debug and Release mode for all available architectures.
 When you create Cocos2D JS projects with the <code>rapidgame</code> tool, it symlinks to this directory, making game project directories lightweight.</p>
+<h2 id="create-your-own-templates">Create Your Own Templates</h2>
+
+        
+      
+        
+        <p>It’s possible to create your own game templates. Here’s the step-by-step instructions:</p>
+<ol>
+<li><p>Create your game in a directory with the game name as the directory name. If your game is called “Zombie Revolution”, name the directory <code>Zombie Revolution</code>, including the space.</p>
+</li>
+<li><p>Use the name of your game (e.g. “Zombie Revolution”) including any space or punctation freely throughout your game project. RapidGame is smart enough to automatically rename your game’s title in most types of source files.</p>
+</li>
+<li><p>If you’d like a file or directory renamed, make sure it starts with your game’s title. For example, if you have <code>Zombie Revolution.xcodeproj</code> it will get changed to <code>MyNewGame.xcodeproj</code>.</p>
+</li>
+<li><p>Whenever there’s an instance of your package name, replace the beginning with <code>com.wizardfu.</code>, lowercase the title and remove any punctuation, so <code>com.mycompany.zombierevolution</code> becomes <code>com.wizardfu.zombierevolution</code>. This will get changed by the templating system when creating new game projects.</p>
+</li>
+<li><p>Copy your game template to the <code>templates/&lt;engine&gt;</code> directory of RapidGame. On Mac / Linux this is <code>/usr/local/lib/node_modules/rapidgame</code>. You can use the <code>npm prefix -g</code> command to determine where Node modules are installed on your system. If your on Mac OS X, the template is for Unity and it’s called “Zombie Revolution” then the final directory would be <code>/usr/local/lib/node_modules/rapidgame/templates/unity/Zombie Revolution/</code>.</p>
+</li>
+<li><p>Your template is now ready for testing. Try it out like this: <code>rapidgame -e unity -t &quot;Zombie Revolution&quot; MyNewGame</code>.</p>
+</li>
+</ol>
 <h2 id="project-status">Project Status</h2>
 
         
