@@ -3,7 +3,7 @@
 //  See the `LICENSE` file for the license governing this code.
 //  Developed by Nat Weiss.
 //
-﻿
+
 public var ballPrefab : GameObject;
 public var ballRigidbody : Rigidbody;
 public var paddleSound : AudioClip;

@@ -3,7 +3,7 @@
 //  See the `LICENSE` file for the license governing this code.
 //  Developed by Nat Weiss.
 //
-﻿
+
 public var quit = false;
 
 function Start() {

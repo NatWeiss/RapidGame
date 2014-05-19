@@ -3,7 +3,7 @@
 //  See the `LICENSE` file for the license governing this code.
 //  Developed by Nat Weiss.
 //
-﻿
+
 static var score : int = 0;
 static var lives : int = 3;
 

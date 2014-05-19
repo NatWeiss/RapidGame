@@ -3,7 +3,7 @@
 //  See the `LICENSE` file for the license governing this code.
 //  Developed by Nat Weiss.
 //
-﻿
+
 public var ball : GameObject;
 public var dieSound : AudioClip;
 public var blockSound : AudioClip;
