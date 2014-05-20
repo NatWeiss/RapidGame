@@ -80,23 +80,35 @@
 
       
         
-        <p>RapidGame is a cross-platform game templating system for Cocos2D JS, Unity, Corona and Appcelerator Titanium.
-It can currently output Hello World or a Breakout Clone in your choice of engine.</p>
-<p>The primary goal of RapidGame is to make game development more rapid.
-The templating system is part of that.
-With Cocos2D JS it further helps by prebuilding Cocos2D X libraries statically, which virtually eliminates build / compile / link time.</p>
-<h2 id="prerequisites">Prerequisites</h2>
-
-        
-      
-        
-        <p>You’ll need <a href="http://nodejs.org/download/">Node.js</a> and <a href="http://git-scm.com/downloads">Git</a>.</p>
+        <p>RapidGame is a suite of tools that takes the grunt work out of game development.</p>
+<p>More specifically:</p>
+<ol>
+<li>A collection of game project templates for Cocos2D JS, Unity, Corona and Appcelerator Titanium</li>
+<li>A cross-platform game project creator</li>
+<li>A library prebuilder for Cocos2D X that virtually eliminates build / compile / link time</li>
+</ol>
+<p>The templates have:</p>
+<ol>
+<li>Cross-platform project files</li>
+<li>Resolution / ratio-independence</li>
+<li>Viewport setup</li>
+<li>Multiple scenes</li>
+<li>Sprites</li>
+<li>Sound</li>
+<li>Music</li>
+<li>Physics</li>
+<li>Simple asychronous game servers (HTML5-based platforms)</li>
+</ol>
+<p>The project creator makes a copy of one of the templates, does a search and replace on the game title &amp; package name, then installs any required Node modules. Viola. Your own rapidly-created game ready to go with scenes, sprites, physics, etc.</p>
+<p>The library prebuilder creates <code>.a</code> files that virtually eliminate build times for the Cocos2D X engine. (Cocos2D X is the native portion of Cocos2D JS, a 100% open-source, cross-platform game engine). The first time you compile Cocos2D X for iOS you’ll wait at least five minutes while nearly a thousand source files are compiled. This can be a real time sink, especially when all one has to do is switch from the simulator to device to trigger a rebuild.</p>
+<p>The prebuilder automatically downloads the latest Cocos2D JS, patches it to ensure that it’s bug-free, then prebuild the Cocos2D X part for all possible platforms, configurations and architectures. It takes awhile but it’s worth every second. Even better, the project creator will absolutely symlink to the location of the prebuilt libraries so your game projects stay lightweight and can be moved easily.</p>
 <h2 id="create-a-game-in-under-30-seconds">Create a Game in Under 30 Seconds</h2>
 
         
       
         
-        <p>Install RapidGame:</p>
+        <p>You’ll first need <a href="http://nodejs.org/download/">Node.js</a> and <a href="http://git-scm.com/downloads">Git</a>.</p>
+<p>Install RapidGame:</p>
 <p>sudo npm install rapidgame -g</p>
 <p>Create a Unity Breakout clone named BrickMan:</p>
 <p>rapidgame -e unity -t BrickBreaker BrickMan</p>
@@ -124,9 +136,7 @@ With Cocos2D JS it further helps by prebuilding Cocos2D X libraries statically, 
         
         <p>The command to prebuild Cocos2D X static libraries used by Cocos2D JS on native platforms:</p>
 <p>rapidgame prebuild</p>
-<p>It takes awhile but it’s worth every second.</p>
-<p>When the command is finished, you’ll have a directory (<code>~/Library/Developer/RapidGame</code> on Macs) with include files, java files, make files, Javascript bindings and prebuilt static libraries for iOS, Mac and Android in Debug and Release mode for all available architectures.
-When you create Cocos2D JS projects with the <code>rapidgame</code> tool, it symlinks to this directory, making game project directories lightweight.</p>
+<p>When the command is finished, you’ll have a directory (<code>~/Library/Developer/RapidGame</code> on Macs) with include files, java files, make files, Javascript bindings and prebuilt static libraries for iOS, Mac and Android in Debug and Release mode for all available architectures.</p>
 <h2 id="create-your-own-templates">Create Your Own Templates</h2>
 
         
