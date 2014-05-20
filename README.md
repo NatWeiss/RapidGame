@@ -72,7 +72,7 @@ The command to prebuild Cocos2D X static libraries used by Cocos2D JS on native 
 
 	rapidgame prebuild
 
-When the command is finished, you'll have a directory (`~/Library/Developer/RapidGame` on Macs) with include files, java files, make files, Javascript bindings and prebuilt static libraries for iOS, Mac and Android in Debug and Release mode for all available architectures.
+When the command is finished, you'll have a directory (`~/Library/Developer/RapidGame` on Macs) with include files, java files, make files, Javascript bindings and library files for iOS, Mac and Android in Debug and Release mode for all available architectures.
 
 
 Create Your Own Templates

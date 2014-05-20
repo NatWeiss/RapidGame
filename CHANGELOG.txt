@@ -1,3 +1,11 @@
+Version 0.8.6 - May 19, 2014
+
+	Command now dynamically determines available engines and templates.
+	Command now automatically prebuilds Cocos2D libraries when creating a Cocos2D JS game project for the first time.
+	Fixed prebuild script to copy Cocos2D HTML5 files.
+	Fixed prebuild schemes.
+	Updated readme files.
+
 Version 0.8.5 - May 18, 2014
 
 	Updated README.
