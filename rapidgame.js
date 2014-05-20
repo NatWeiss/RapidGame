@@ -333,13 +333,13 @@ var prebuild = function(platform, config, arch) {
 	platform = platform || "";
 	config = config || "";
 	arch = arch || "";
-	report("start");
 
 	if (!checkPrefix()) {
 		cmd.help();
 		return 1;
 	}
 
+	report("start");
 	copySrcFiles(function() {
 		downloadCocos(function() {
 			runPrebuild(platform, config, arch, function() {
