@@ -17,10 +17,11 @@ The templates have:
  3. Viewport setup
  4. Multiple scenes
  5. Sprites
- 6. Sound
- 7. Music
- 8. Physics
- 9. Simple asychronous game servers (HTML5-based platforms)
+ 6. Custom TTF fonts
+ 7. Sound
+ 8. Music
+ 9. Physics
+ 10. HTTP / Socket.io game servers (HTML5-based platforms)
 
 The project creator makes a copy of one of the templates, does a search and replace on the game title & package name, then installs any required modules. Viola. Your own rapidly-created game ready to go with scenes, sprites, physics, etc.
 
@@ -34,13 +35,21 @@ Create a Game in Under 30 Seconds
 
 You'll first need [Node.js](http://nodejs.org/download/) and [Git](http://git-scm.com/downloads).
 
-Install RapidGame:
+There's no need to clone this repo, just install RapidGame:
 
 	sudo npm install rapidgame -g
 
-Create a Unity Breakout clone named BrickMan:
+And, create a Unity game named "Zombie Matrix":
 
-	rapidgame -e unity -t BrickBreaker BrickMan
+	rapidgame -e unity "Zombie Matrix"
+
+Or, a Cocos2D JS game named "Heck Yeah":
+
+	rapidgame -e cocos2d "Heck Yeah"
+
+For usage instructions:
+
+	rapidgame --help
 
 
 Pro Version

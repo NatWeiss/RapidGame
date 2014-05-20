@@ -94,10 +94,11 @@
 <li>Viewport setup</li>
 <li>Multiple scenes</li>
 <li>Sprites</li>
+<li>Custom TTF fonts</li>
 <li>Sound</li>
 <li>Music</li>
 <li>Physics</li>
-<li>Simple asychronous game servers (HTML5-based platforms)</li>
+<li>HTTP / Socket.io game servers (HTML5-based platforms)</li>
 </ol>
 <p>The project creator makes a copy of one of the templates, does a search and replace on the game title &amp; package name, then installs any required modules. Viola. Your own rapidly-created game ready to go with scenes, sprites, physics, etc.</p>
 <p>The library prebuilder creates static libraries that virtually eliminate build times for the Cocos2D X engine (the native portion of Cocos2D JS). With hundreds of source files to be compiled, building Cocos2D X for just one platform can take at least five minutes. This can be a real time sink, especially when switching from the simulator to device triggers a rebuild.</p>
@@ -108,10 +109,14 @@
       
         
         <p>You’ll first need <a href="http://nodejs.org/download/">Node.js</a> and <a href="http://git-scm.com/downloads">Git</a>.</p>
-<p>Install RapidGame:</p>
+<p>There’s no need to clone this repo, just install RapidGame:</p>
 <p>sudo npm install rapidgame -g</p>
-<p>Create a Unity Breakout clone named BrickMan:</p>
-<p>rapidgame -e unity -t BrickBreaker BrickMan</p>
+<p>And, create a Unity game named “Zombie Matrix”:</p>
+<p>rapidgame -e unity “Zombie Matrix”</p>
+<p>Or, a Cocos2D JS game named “Heck Yeah”:</p>
+<p>rapidgame -e cocos2d “Heck Yeah”</p>
+<p>For usage instructions:</p>
+<p>rapidgame —help</p>
 <h2 id="pro-version">Pro Version</h2>
 
         
