@@ -6,7 +6,7 @@ RapidGame is a suite of tools that takes the grunt work out of game development.
 
 More specifically:
 
- 1. A collection of game project templates for Cocos2D JS, Unity, Corona and Appcelerator Titanium
+ 1. Tested game project templates for Cocos2D-JS, Unity, Corona and Appcelerator Titanium
  2. A cross-platform game project creator
  3. A library prebuilder for Cocos2D X that virtually eliminates build / compile / link time
 
@@ -22,11 +22,11 @@ The templates have:
  8. Physics
  9. Simple asychronous game servers (HTML5-based platforms)
 
-The project creator makes a copy of one of the templates, does a search and replace on the game title & package name, then installs any required Node modules. Viola. Your own rapidly-created game ready to go with scenes, sprites, physics, etc.
+The project creator makes a copy of one of the templates, does a search and replace on the game title & package name, then installs any required modules. Viola. Your own rapidly-created game ready to go with scenes, sprites, physics, etc.
 
-The library prebuilder creates `.a` files that virtually eliminate build times for the Cocos2D X engine (the native portion of Cocos2D JS). With hundreds of source files to be compiled, building Cocos2D X for just one platform can take at least five minutes. This can be a real time sink, especially when all one has to do is switch from the simulator to device to trigger a rebuild.
+The library prebuilder creates static libraries that virtually eliminate build times for the Cocos2D X engine (the native portion of Cocos2D JS). With hundreds of source files to be compiled, building Cocos2D X for just one platform can take at least five minutes. This can be a real time sink, especially when switching from the simulator to device triggers a rebuild.
 
-The prebuilder automatically downloads the latest Cocos2D JS, patches it to ensure that it's bug-free, then prebuilds Cocos2D X for all possible platforms, configurations and architectures. It takes awhile but it's worth every second. Even better, the project creator will absolutely symlink to the location of the prebuilt libraries so your game projects stay lightweight and can be moved easily.
+The prebuilder automatically downloads the latest Cocos2D JS, patches it to ensure that it is bug-free, then prebuilds Cocos2D X for all possible platforms, configurations and architectures. It is then possible to compile and link native Cocos2D X games in seconds. Even better, the project creator will absolutely symlink to the location of the prebuilt libraries so your game projects stay lightweight and can be moved easily.
 
 
 Create a Game in Under 30 Seconds
