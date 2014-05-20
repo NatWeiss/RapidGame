@@ -2,13 +2,23 @@
 RapidGame
 =========
 
-RapidGame is a suite of tools that takes the grunt work out of game development.
+A Node-based templating system for rapidly creating cross-platform games for a variety of game engines, including Cocos2D-JS, Unity, Corona and Appcelerator Titanium.
 
-More specifically:
+What it does:
 
- 1. Tested game project templates for Cocos2D-JS, Unity, Corona and Appcelerator Titanium
+* Creates new cross-platform game projects from provided or custom templates, which includes scenes, sprites, physics, sound and more. 
+
+* Prebuilds libraries for Cocos2D X that virtually eliminate build, compile and link time, saving in aggregate hours during development, and allowing for more rapid development cycle without having to wait - hence the name RapidGame.
+
+
+No More Grunt Work
+------------------
+
+RapidGame provides:
+
+ 1. Tested game project templates for Cocos2D-JS, Unity, Corona and Titanium
  2. A cross-platform game project creator
- 3. A library prebuilder for Cocos2D X that virtually eliminates build / compile / link time
+ 3. A library prebuilder for Cocos2D X
 
 The templates have:
 
@@ -43,9 +53,9 @@ And, create a Unity game named "Zombie Matrix":
 
 	rapidgame -e unity "Zombie Matrix"
 
-Or, a Cocos2D JS game named "Heck Yeah":
+Or, a Cocos2D JS game named "Heck Yeah" with a custom package name:
 
-	rapidgame -e cocos2d "Heck Yeah"
+	rapidgame -e cocos2d "Heck Yeah" -n org.mycompany.heckyeah
 
 For usage instructions:
 
@@ -89,17 +99,17 @@ Create Your Own Templates
 
 It's possible to create your own game templates. Here's the step-by-step instructions:
 
- 1. Create your game in a directory with the game name as the directory name. If your game is called "Zombie Revolution", name the directory `Zombie Revolution`, including the space.
+ 1. Create your game in a directory with the game name as the directory name. If your game is called "Zombie Matrix", name the directory `Zombie Matrix`, including the space.
  
- 2. Use the name of your game (e.g. "Zombie Revolution") including any space or punctation freely throughout your game project. RapidGame is smart enough to automatically rename your game's title in most types of source files.
+ 2. Use the name of your game (e.g. "Zombie Matrix") including any space or punctation freely throughout your game project. RapidGame is smart enough to automatically rename your game's title in most types of source files.
  
- 3. If you'd like a file or directory renamed, make sure it starts with your game's title. For example, if you have `Zombie Revolution.xcodeproj` it will get changed to `MyNewGame.xcodeproj`.
+ 3. If you'd like a file or directory renamed, make sure it starts with your game's title. For example, if you have `Zombie Matrix.xcodeproj` it will get changed to `MyNewGame.xcodeproj`.
  
  4. Whenever there's an instance of your package name, replace the beginning with `com.wizardfu.`, lowercase the title and remove any punctuation, so `com.mycompany.zombierevolution` becomes `com.wizardfu.zombierevolution`. This will get changed by the templating system when creating new game projects.
  
- 5. Copy your game template to the `templates/<engine>` directory of RapidGame. On Mac / Linux this is `/usr/local/lib/node_modules/rapidgame`. You can use the `npm prefix -g` command to determine where Node modules are installed on your system. If you're on Mac OS X, the template is for Unity and it's called "Zombie Revolution" then the final directory would be `/usr/local/lib/node_modules/rapidgame/templates/unity/Zombie Revolution/`.
+ 5. Copy your game template to the `templates/<engine>` directory of RapidGame. On Mac / Linux this is `/usr/local/lib/node_modules/rapidgame`. You can use the `npm prefix -g` command to determine where Node modules are installed on your system. If you're on Mac OS X, the template is for Unity and it's called "Zombie Matrix" then the final directory would be `/usr/local/lib/node_modules/rapidgame/templates/unity/Zombie Matrix/`.
 
- 6. Your template is now ready for testing. Try it out like this: `rapidgame -e unity -t "Zombie Revolution" MyNewGame`.
+ 6. Your template is now ready for testing. Try it out like this: `rapidgame -e unity -t "Zombie Matrix" MyNewGame`.
 
 
 Project Status

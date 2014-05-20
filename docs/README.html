@@ -80,12 +80,24 @@
 
       
         
-        <p>RapidGame is a suite of tools that takes the grunt work out of game development.</p>
-<p>More specifically:</p>
+        <p>A Node-based templating system for rapidly creating cross-platform games for a variety of game engines, including Cocos2D-JS, Unity, Corona and Appcelerator Titanium.</p>
+<p>What it does:</p>
+<ul>
+<li><p>Creates new cross-platform game projects from provided or custom templates, which includes scenes, sprites, physics, sound and more. </p>
+</li>
+<li><p>Prebuilds libraries for Cocos2D X that virtually eliminate build, compile and link time, saving in aggregate hours during development, and allowing for more rapid development cycle without having to wait - hence the name RapidGame.</p>
+</li>
+</ul>
+<h2 id="no-more-grunt-work">No More Grunt Work</h2>
+
+        
+      
+        
+        <p>RapidGame provides:</p>
 <ol>
-<li>Tested game project templates for Cocos2D-JS, Unity, Corona and Appcelerator Titanium</li>
+<li>Tested game project templates for Cocos2D-JS, Unity, Corona and Titanium</li>
 <li>A cross-platform game project creator</li>
-<li>A library prebuilder for Cocos2D X that virtually eliminates build / compile / link time</li>
+<li>A library prebuilder for Cocos2D X</li>
 </ol>
 <p>The templates have:</p>
 <ol>
@@ -113,8 +125,8 @@
 <p>sudo npm install rapidgame -g</p>
 <p>And, create a Unity game named “Zombie Matrix”:</p>
 <p>rapidgame -e unity “Zombie Matrix”</p>
-<p>Or, a Cocos2D JS game named “Heck Yeah”:</p>
-<p>rapidgame -e cocos2d “Heck Yeah”</p>
+<p>Or, a Cocos2D JS game named “Heck Yeah” with a custom package name:</p>
+<p>rapidgame -e cocos2d “Heck Yeah” -n org.mycompany.heckyeah</p>
 <p>For usage instructions:</p>
 <p>rapidgame —help</p>
 <h2 id="pro-version">Pro Version</h2>
@@ -149,17 +161,17 @@
         
         <p>It’s possible to create your own game templates. Here’s the step-by-step instructions:</p>
 <ol>
-<li><p>Create your game in a directory with the game name as the directory name. If your game is called “Zombie Revolution”, name the directory <code>Zombie Revolution</code>, including the space.</p>
+<li><p>Create your game in a directory with the game name as the directory name. If your game is called “Zombie Matrix”, name the directory <code>Zombie Matrix</code>, including the space.</p>
 </li>
-<li><p>Use the name of your game (e.g. “Zombie Revolution”) including any space or punctation freely throughout your game project. RapidGame is smart enough to automatically rename your game’s title in most types of source files.</p>
+<li><p>Use the name of your game (e.g. “Zombie Matrix”) including any space or punctation freely throughout your game project. RapidGame is smart enough to automatically rename your game’s title in most types of source files.</p>
 </li>
-<li><p>If you’d like a file or directory renamed, make sure it starts with your game’s title. For example, if you have <code>Zombie Revolution.xcodeproj</code> it will get changed to <code>MyNewGame.xcodeproj</code>.</p>
+<li><p>If you’d like a file or directory renamed, make sure it starts with your game’s title. For example, if you have <code>Zombie Matrix.xcodeproj</code> it will get changed to <code>MyNewGame.xcodeproj</code>.</p>
 </li>
 <li><p>Whenever there’s an instance of your package name, replace the beginning with <code>com.wizardfu.</code>, lowercase the title and remove any punctuation, so <code>com.mycompany.zombierevolution</code> becomes <code>com.wizardfu.zombierevolution</code>. This will get changed by the templating system when creating new game projects.</p>
 </li>
-<li><p>Copy your game template to the <code>templates/&lt;engine&gt;</code> directory of RapidGame. On Mac / Linux this is <code>/usr/local/lib/node_modules/rapidgame</code>. You can use the <code>npm prefix -g</code> command to determine where Node modules are installed on your system. If you’re on Mac OS X, the template is for Unity and it’s called “Zombie Revolution” then the final directory would be <code>/usr/local/lib/node_modules/rapidgame/templates/unity/Zombie Revolution/</code>.</p>
+<li><p>Copy your game template to the <code>templates/&lt;engine&gt;</code> directory of RapidGame. On Mac / Linux this is <code>/usr/local/lib/node_modules/rapidgame</code>. You can use the <code>npm prefix -g</code> command to determine where Node modules are installed on your system. If you’re on Mac OS X, the template is for Unity and it’s called “Zombie Matrix” then the final directory would be <code>/usr/local/lib/node_modules/rapidgame/templates/unity/Zombie Matrix/</code>.</p>
 </li>
-<li><p>Your template is now ready for testing. Try it out like this: <code>rapidgame -e unity -t &quot;Zombie Revolution&quot; MyNewGame</code>.</p>
+<li><p>Your template is now ready for testing. Try it out like this: <code>rapidgame -e unity -t &quot;Zombie Matrix&quot; MyNewGame</code>.</p>
 </li>
 </ol>
 <h2 id="project-status">Project Status</h2>
