@@ -24,9 +24,9 @@ The templates have:
 
 The project creator makes a copy of one of the templates, does a search and replace on the game title & package name, then installs any required Node modules. Viola. Your own rapidly-created game ready to go with scenes, sprites, physics, etc.
 
-The library prebuilder creates `.a` files that virtually eliminate build times for the Cocos2D X engine. (Cocos2D X is the native portion of Cocos2D JS, a 100% open-source, cross-platform game engine). The first time you compile Cocos2D X for iOS you'll wait at least five minutes while nearly a thousand source files are compiled. This can be a real time sink, especially when all one has to do is switch from the simulator to device to trigger a rebuild.
+The library prebuilder creates `.a` files that virtually eliminate build times for the Cocos2D X engine (the native portion of Cocos2D JS). The first time you compile Cocos2D X for iOS you'll wait at least five minutes while nearly a thousand source files are compiled. This can be a real time sink, especially when all one has to do is switch from the simulator to device to trigger a rebuild.
 
-The prebuilder automatically downloads the latest Cocos2D JS, patches it to ensure that it's bug-free, then prebuild the Cocos2D X part for all possible platforms, configurations and architectures. It takes awhile but it's worth every second. Even better, the project creator will absolutely symlink to the location of the prebuilt libraries so your game projects stay lightweight and can be moved easily.
+The prebuilder automatically downloads the latest Cocos2D JS, patches it to ensure that it's bug-free, then prebuilds Cocos2D X for all possible platforms, configurations and architectures. It takes awhile but it's worth every second. Even better, the project creator will absolutely symlink to the location of the prebuilt libraries so your game projects stay lightweight and can be moved easily.
 
 
 Create a Game in Under 30 Seconds
