@@ -180,7 +180,7 @@ if [ "$cmd" == "ios" ] || [ "$cmd" == "all" ]; then
 						archSetting="-arch i386"
 					fi
 				fi
-				xcodebuild -project src/proj.ios_mac/${proj}.xcodeproj -target "iOS" -configuration ${config} -sdk ${sdk} ${archSetting} ${xcodeSettings} >> ${logFile} 2>&1
+				xcodebuild -project src/proj.ios_mac/${proj}.xcodeproj -scheme "iOS" -configuration ${config} -sdk ${sdk} ${archSetting} ${xcodeSettings} >> ${logFile} 2>&1
 				res="$?"
 				if [ "$res" == "0" ]; then
 					echo "Succeeded."
@@ -209,7 +209,7 @@ if [ "$cmd" == "mac" ] || [ "$cmd" == "all" ]; then
 				if [ "${small}" == "1" ]; then
 					archSetting="-arch i386"
 				fi
-				xcodebuild -project src/proj.ios_mac/${proj}.xcodeproj -target "Mac" -configuration ${config} -sdk ${sdk} ${archSetting} ${xcodeSettings} >> ${logFile} 2>&1
+				xcodebuild -project src/proj.ios_mac/${proj}.xcodeproj -scheme "Mac" -configuration ${config} -sdk ${sdk} ${archSetting} ${xcodeSettings} >> ${logFile} 2>&1
 				res="$?"
 				if [ "$res" == "0" ]; then
 					echo "Succeeded."
