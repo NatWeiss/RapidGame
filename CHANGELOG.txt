@@ -1,3 +1,13 @@
+Version 0.8.7 - May 20, 2014
+
+	New templates incorporate two scenes, sprites, sound, physics, etc.
+	Simplifed project create command.
+	Added init command.
+	Fixed templating system so spaces and punctuation are allowed in the project name for Cocos2D JS projects.
+	Fixed a compilation error in Cocos2D JS iOS project.
+	Simplified command output.
+	Simplified Cocos2D project layout.
+
 Version 0.8.6 - May 19, 2014
 
 	Command now dynamically determines available engines and templates.

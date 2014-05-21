@@ -2,7 +2,7 @@
 
 <html>
 <head>
-  <title>Server.js</title>
+  <title>server.js</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <link rel="stylesheet" media="all" href="public/stylesheets/normalize.css" />
   <link rel="stylesheet" media="all" href="docco.css" />
@@ -13,7 +13,7 @@
 
       <div class="header">
         
-          <h1>Server.js</h1>
+          <h1>server.js</h1>
         
 
         
@@ -23,43 +23,29 @@
               
                 
                 <li>
-                  <a class="source" href="Config.html">
-                    Config.js
+                  <a class="source" href="GameScene.html">
+                    GameScene.js
                   </a>
                 </li>
               
                 
                 <li>
-                  <a class="source" href="ConfigServer.html">
-                    ConfigServer.js
+                  <a class="source" href="MenuScene.html">
+                    MenuScene.js
                   </a>
                 </li>
               
                 
                 <li>
-                  <a class="source" href="HelloWorld.html">
-                    HelloWorld.js
+                  <a class="source" href="Game.html">
+                    Game.js
                   </a>
                 </li>
               
                 
                 <li>
-                  <a class="source" href="SceneHello.html">
-                    SceneHello.js
-                  </a>
-                </li>
-              
-                
-                <li>
-                  <a class="source" href="App.html">
-                    App.js
-                  </a>
-                </li>
-              
-                
-                <li>
-                  <a class="source" href="Server.html">
-                    Server.js
+                  <a class="source" href="server.html">
+                    server.js
                   </a>
                 </li>
               
@@ -82,62 +68,32 @@
         
       
         
-        <p>A simple Node.js game server that:</p>
-<ol>
-<li>Sends static files as requested.</li>
-<li>Provides a basic API to game clients.</li>
-</ol>
-<p>Keep it running on your own host using <a href="http://blog.nodejitsu.com/keep-a-nodejs-server-up-with-forever/">forever</a>. Remember the -g option on install.</p>
-<p>Here’s a <a href="http://stackoverflow.com/a/14272874">post</a> about using SSL and some example code:</p>
+        <p>A simple Node.js game server that sends static files as requested.</p>
 
         
-          <div class='highlight'><pre><span class="hljs-comment">/*
-var https = require("https");
-var fs = require("fs");
-var protocolHttps = https.createServer({
-	key: fs.readFileSync("key.pem"),
-	cert: fs.readFileSync("cert.pem")
-}, server).listen(443);
-*/</span></pre></div>
-        
-      
-        
-        <h3 id="setup">Setup</h3>
-
-        
-          <div class='highlight'><pre><span class="hljs-keyword">var</span> config = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../js/ConfigServer"</span>),
-	express = <span class="hljs-built_in">require</span>(<span class="hljs-string">"express"</span>),
+          <div class='highlight'><pre><span class="hljs-keyword">var</span> express = <span class="hljs-built_in">require</span>(<span class="hljs-string">"express"</span>),
+	fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">"fs"</span>),
+	path = <span class="hljs-built_in">require</span>(<span class="hljs-string">"path"</span>),
 	server = express(),
-	protocolHttp = server.listen(config.serverPort || <span class="hljs-number">8000</span>),
-	io = <span class="hljs-built_in">require</span>(<span class="hljs-string">"socket.io"</span>),
-	sockets = io.listen(protocolHttp),
-	self = {};
+	port = <span class="hljs-number">8000</span>,
+	protocolHttp = server.listen(port);
 
-console.log(<span class="hljs-string">"Started server on port: "</span> + config.serverPort);</pre></div>
-        
-      
-        
-        <h3 id="static-files">Static Files</h3>
-<p>Serve static files as requested.</p>
-
-        
-          <div class='highlight'><pre>server.use(<span class="hljs-string">"/"</span>, express.static(__dirname + <span class="hljs-string">"/../proj.html5/"</span>));
+server.use(<span class="hljs-string">"/"</span>, express.static(__dirname + <span class="hljs-string">"/../Projects/html/"</span>));
+server.use(<span class="hljs-string">"/project.json"</span>, express.static(__dirname + <span class="hljs-string">"/../project.json"</span>));
 server.use(<span class="hljs-string">"/lib/"</span>, express.static(__dirname + <span class="hljs-string">"/../lib/"</span>));
-server.use(<span class="hljs-string">"/res/"</span>, express.static(__dirname + <span class="hljs-string">"/../res/"</span>));
-server.use(<span class="hljs-string">"/js/"</span>, express.static(__dirname + <span class="hljs-string">"/../js/"</span>));
-server.get(<span class="hljs-string">"/"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(req,res)</span>{</span>res.sendfile(<span class="hljs-string">"index.html"</span>);});</pre></div>
-        
-      
-        
-        <h3 id="public-api">Public API</h3>
-<p>Provide <code>api/counter</code> which increments the visitor number and returns it.</p>
+server.use(<span class="hljs-string">"/Assets/"</span>, express.static(__dirname + <span class="hljs-string">"/../Assets/"</span>));
+server.get(<span class="hljs-string">"/"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(req,res)</span>{</span>
+	res.sendfile(<span class="hljs-string">"index.html"</span>);
+});
+server.get(<span class="hljs-string">"/project.json"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(req,res)</span>{</span>
+	<span class="hljs-keyword">try</span> {
+		res.send(<span class="hljs-built_in">JSON</span>.parse(fs.readFileSync(path.join(__dirname, <span class="hljs-string">".."</span>, <span class="hljs-string">"project.json"</span>))));
+	} <span class="hljs-keyword">catch</span>(e) {
+		console.log(<span class="hljs-string">"Error reading project.json"</span>);
+	}
+});
 
-        
-          <div class='highlight'><pre>self.counter = <span class="hljs-number">0</span>;
-server.get(<span class="hljs-string">"/api/counter"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(req,res)</span>{</span>
-	self.counter = self.counter + <span class="hljs-number">1</span>;
-	res.send(self.counter + <span class="hljs-string">""</span>);
-});</pre></div>
+console.log(<span class="hljs-string">"Started server on port: "</span> + port);</pre></div>
         
       
 
@@ -148,43 +104,29 @@ server.get(<span class="hljs-string">"/api/counter"</span>, <span class="hljs-fu
               
                 
                 <li>
-                  <a class="source" href="Config.html">
-                    Config.js
+                  <a class="source" href="GameScene.html">
+                    GameScene.js
                   </a>
                 </li>
               
                 
                 <li>
-                  <a class="source" href="ConfigServer.html">
-                    ConfigServer.js
+                  <a class="source" href="MenuScene.html">
+                    MenuScene.js
                   </a>
                 </li>
               
                 
                 <li>
-                  <a class="source" href="HelloWorld.html">
-                    HelloWorld.js
+                  <a class="source" href="Game.html">
+                    Game.js
                   </a>
                 </li>
               
                 
                 <li>
-                  <a class="source" href="SceneHello.html">
-                    SceneHello.js
-                  </a>
-                </li>
-              
-                
-                <li>
-                  <a class="source" href="App.html">
-                    App.js
-                  </a>
-                </li>
-              
-                
-                <li>
-                  <a class="source" href="Server.html">
-                    Server.js
+                  <a class="source" href="server.html">
+                    server.js
                   </a>
                 </li>
               

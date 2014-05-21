@@ -1,12 +1,12 @@
 {
   "name": "rapidgame",
-  "version": "0.8.6",
-  "description": "A suite of tools that takes the grunt work out of game development.",
+  "version": "0.8.7",
+  "description": "A templating system for rapidly creating cross-platform games with Cocos2D-JS, Unity, Corona and Titanium.",
   "author": {
     "name": "Nat Weiss",
     "url": "http://wizardfu.com/"
   },
-  "homepage": "https://github.com/NatWeiss/RapidGame",
+  "homepage": "http://wizardfu.com/rapidgame",
   "repository": {
     "type": "git",
     "url": "http://github.com/NatWeiss/RapidGame"

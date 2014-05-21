@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>Game.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="public/stylesheets/normalize.css" />
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="page">
+
+      <div class="header">
+        
+          <h1>Game.js</h1>
+        
+
+        
+          <div class="toc">
+            <h3>Table of Contents</h3>
+            <ol>
+              
+                
+                <li>
+                  <a class="source" href="GameScene.html">
+                    GameScene.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="MenuScene.html">
+                    MenuScene.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="Game.html">
+                    Game.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="server.html">
+                    server.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="README.html">
+                    README.md
+                  </a>
+                </li>
+              
+            </ol>
+          </div>
+        
+      </div>
+
+      
+        
+        
+
+        
+      
+        
+        <p>The main Game object is a singleton providing boot code, main functions, and other commonly-used, globally-accessible methods.</p>
+<ol>
+<li>All code in this file is applicable to any game project in general.</li>
+<li>If you need to extend the Game object with project-specific code, use <a href="TwoScene.html">TwoScene.js</a>.</li>
+</ol>
+
+        
+      
+        
+        <h3 id="game">Game</h3>
+<p>Get or create the Game object.</p>
+
+        
+          <div class='highlight'><pre><span class="hljs-keyword">var</span> Game = Game || {};</pre></div>
+        
+      
+        
+        <h3 id="game-gettargetframerate">Game.getTargetFrameRate</h3>
+<p>Return the target frame rate to use. Scale back in HTML5 mode to save a CPU fan somewhere.</p>
+
+        
+          <div class='highlight'><pre>Game.getTargetFrameRate = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+	<span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.isHtml5() ? <span class="hljs-number">30</span> : <span class="hljs-number">60</span>;
+};</pre></div>
+        
+      
+        
+        <h3 id="game-ishtml5">Game.isHtml5</h3>
+<p>Return true if the game is running in HTML5 mode.</p>
+
+        
+          <div class='highlight'><pre>Game.isHtml5 = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+	<span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> <span class="hljs-keyword">this</span>._isHtml5 === <span class="hljs-string">"undefined"</span>) {
+		Game.assert(cc.sys);
+		<span class="hljs-keyword">this</span>._isHtml5 = cc.sys.isNative ? <span class="hljs-literal">false</span> : <span class="hljs-literal">true</span>;
+	}
+	<span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._isHtml5;
+};</pre></div>
+        
+      
+        
+        <h3 id="game-isdesktop">Game.isDesktop</h3>
+<p>Return true if the game is running on a native desktop OS.</p>
+
+        
+          <div class='highlight'><pre>Game.isDesktop = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+	<span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> <span class="hljs-keyword">this</span>._isDesktop === <span class="hljs-string">"undefined"</span>) {
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.isHtml5()) {
+			<span class="hljs-keyword">this</span>._isDesktop = <span class="hljs-literal">false</span>;
+		} <span class="hljs-keyword">else</span> {
+			<span class="hljs-keyword">this</span>._isDesktop = (cc.sys.os === cc.sys.OS_OSX
+				|| cc.sys.os === cc.sys.OS_WINDOWS
+				|| cc.sys.os === cc.sys.OS_LINUX);
+		}
+	}
+	<span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._isDesktop;
+};</pre></div>
+        
+      
+        
+        <h3 id="game-rand">Game.rand</h3>
+<p>Return a random integer between 0 and the given value.</p>
+
+        
+          <div class='highlight'><pre>Game.rand = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(mod)</span> {</span>
+	<span class="hljs-keyword">var</span> r = <span class="hljs-built_in">Math</span>.random();
+	<span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> mod !== <span class="hljs-string">'undefined'</span>) {
+		r *= <span class="hljs-number">0xffffff</span>;
+		r = <span class="hljs-built_in">parseInt</span>(r);
+		r %= mod;
+	}
+	<span class="hljs-keyword">return</span> r;
+};</pre></div>
+        
+      
+        
+        <h3 id="game-getwinsize">Game.getWinSize</h3>
+<p>Return the current size of the window or screen.</p>
+
+        
+          <div class='highlight'><pre>Game.getWinSize = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+	<span class="hljs-keyword">var</span> size = cc.director.getWinSizeInPixels();
+	<span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> <span class="hljs-keyword">this</span>._winSize === <span class="hljs-string">'undefined'</span> || (size.width &amp;&amp; size.height)) {
+		<span class="hljs-keyword">this</span>._winSize = size;
+	}
+	<span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._winSize;
+};</pre></div>
+        
+      
+        
+        <h3 id="game-centralize">Game.centralize</h3>
+<p>Return a point relative to the center of the screen and scaled.</p>
+
+        
+          <div class='highlight'><pre>Game.centralize = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(x, y)</span> {</span>
+	<span class="hljs-keyword">var</span> winSize = <span class="hljs-keyword">this</span>.getWinSize();
+	<span class="hljs-keyword">return</span> cc.p(x + winSize.width * <span class="hljs-number">.5</span>,
+		y + winSize.height * <span class="hljs-number">.5</span>);
+};</pre></div>
+        
+      
+        
+        <h3 id="game-alert">Game.alert</h3>
+<p>Safely call <code>alert</code>.</p>
+
+        
+          <div class='highlight'><pre>Game.alert = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(msg)</span> {</span>
+	<span class="hljs-keyword">if</span>(<span class="hljs-keyword">typeof</span> alert === <span class="hljs-string">"function"</span>) {
+		alert(msg);
+	} <span class="hljs-keyword">else</span> {
+		cc.log(msg);
+	}
+};</pre></div>
+        
+      
+        
+        <h3 id="game-assert">Game.assert</h3>
+<p>Throw an error if the given object is undefined or boolean is false.</p>
+
+        
+          <div class='highlight'><pre>Game.assert = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(objOrBool, errMsg)</span> {</span>
+	<span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> objOrBool === <span class="hljs-string">"undefined"</span>
+	|| (<span class="hljs-keyword">typeof</span> objOrBool === <span class="hljs-string">"boolean"</span> &amp;&amp; !objOrBool)
+	) {
+		errMsg = errMsg || <span class="hljs-string">"Couldn't load the game. Please try a newer browser."</span>;
+		alert(errMsg);
+		debugger;
+		<span class="hljs-keyword">throw</span> errMsg;
+	}
+};</pre></div>
+        
+      
+        
+        <h3 id="game-clone">Game.clone</h3>
+<p>Clone an object or array so the original can remained unchanged. If passed an undefined value, an empty array is returned.</p>
+
+        
+          <div class='highlight'><pre>Game.clone = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(obj)</span> {</span>
+	<span class="hljs-keyword">if</span>(<span class="hljs-keyword">typeof</span> obj !== <span class="hljs-string">"undefined"</span>) {
+		<span class="hljs-keyword">return</span> <span class="hljs-built_in">JSON</span>.parse(<span class="hljs-built_in">JSON</span>.stringify(obj));
+	}
+	<span class="hljs-keyword">return</span> [];
+};</pre></div>
+        
+      
+        
+        <h3 id="game-localizecurrency">Game.localizeCurrency</h3>
+<p>Return the currency amount localized. Currently the method only localizes to the United States currency format.</p>
+
+        
+          <div class='highlight'><pre>Game.localizeCurrency = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(amount)</span> {</span>
+	<span class="hljs-keyword">return</span> <span class="hljs-string">"$"</span> + <span class="hljs-built_in">parseFloat</span>(amount).toFixed(<span class="hljs-number">2</span>);
+};</pre></div>
+        
+      
+        
+        <h3 id="game-getlanguagecode">Game.getLanguageCode</h3>
+<p>Return the current language code. Example: <code>en</code>.</p>
+
+        
+          <div class='highlight'><pre>Game.getLanguageCode = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+	<span class="hljs-keyword">var</span> strings;
+	
+	<span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> <span class="hljs-keyword">this</span>._language === <span class="hljs-string">"undefined"</span>) {
+		<span class="hljs-keyword">this</span>._language = cc.sys.language;
+
+		strings = Game.config[<span class="hljs-string">"strings"</span>];
+		<span class="hljs-keyword">if</span> (strings &amp;&amp; <span class="hljs-keyword">typeof</span> strings[<span class="hljs-keyword">this</span>._language] === <span class="hljs-string">"undefined"</span>) {
+			cc.log(<span class="hljs-string">"Don't have strings for language: "</span> + <span class="hljs-keyword">this</span>._language);
+			<span class="hljs-keyword">this</span>._language = <span class="hljs-string">"en"</span>;
+		}
+	}
+	
+	<span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._language;
+};</pre></div>
+        
+      
+        
+        <h3 id="game-getlocalizedstring">Game.getLocalizedString</h3>
+<p>Lookup and return a localized string. Configure localized strings in <code>Game.config[&quot;strings&quot;][languageCode]</code>.</p>
+
+        
+          <div class='highlight'><pre>Game.getLocalizedString = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(key)</span> {</span>
+	<span class="hljs-keyword">var</span> strings,
+		code = <span class="hljs-keyword">this</span>.getLanguageCode();
+	
+	strings = Game.config[<span class="hljs-string">"strings"</span>][code];
+	<span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> strings[key] !== <span class="hljs-string">"undefined"</span>) {
+		<span class="hljs-keyword">return</span> strings[key];
+	}
+	<span class="hljs-keyword">if</span> (key &amp;&amp; key.length) {
+		cc.log(<span class="hljs-string">"Couldn't find string["</span> + code + <span class="hljs-string">"]["</span> + key + <span class="hljs-string">"]"</span>);
+	}
+	<span class="hljs-keyword">return</span> <span class="hljs-string">""</span>;
+};</pre></div>
+        
+      
+        
+        <h3 id="game-addtouchlisteners">Game.addTouchListeners</h3>
+<p>Add touch listeners. Callback will get eventType, touches and event parameters.</p>
+
+        
+          <div class='highlight'><pre>Game.addTouchListeners = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(layer, callback)</span> {</span>
+	cc.eventManager.addListener({
+		event: cc.EventListener.TOUCH_ALL_AT_ONCE,
+		onTouchesBegan: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(touches, event)</span> {</span><span class="hljs-keyword">if</span>(touches) {callback(<span class="hljs-string">"began"</span>, touches, event);}},
+		onTouchesMoved: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(touches, event)</span> {</span><span class="hljs-keyword">if</span>(touches) {callback(<span class="hljs-string">"moved"</span>, touches, event);}},
+		onTouchesEnded: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(touches, event)</span> {</span><span class="hljs-keyword">if</span>(touches) {callback(<span class="hljs-string">"ended"</span>, touches, event);}},
+		onTouchesCancelled: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(touches, event)</span> {</span><span class="hljs-keyword">if</span>(touches) {callback(<span class="hljs-string">"cancelled"</span>, touches, event);}}
+	}, layer);
+};</pre></div>
+        
+      
+        
+        <h3 id="game-getrunninglayer">Game.getRunningLayer</h3>
+<p>Returns the running scene’s child layer.</p>
+<p>Scenes can create a member variable named <code>layer</code> which will be used by this method.</p>
+
+        
+          <div class='highlight'><pre>Game.getRunningLayer = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+	<span class="hljs-keyword">var</span> node = cc.director.getRunningScene();
+	<span class="hljs-keyword">if</span> (node) {
+		<span class="hljs-keyword">if</span> (node.layer) {
+			node = node.layer;
+		}
+	}
+	<span class="hljs-keyword">return</span> node;
+};</pre></div>
+        
+      
+        
+        <h3 id="game-callrunninglayer">Game.callRunningLayer</h3>
+<p>Call the running scene’s layer’s method.</p>
+
+        
+          <div class='highlight'><pre>Game.callRunningLayer = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(methodName, param1, param2, param3)</span> {</span>
+	<span class="hljs-keyword">var</span> layer = <span class="hljs-keyword">this</span>.getRunningLayer();
+	<span class="hljs-keyword">if</span> (layer &amp;&amp; layer[methodName]) {
+		layer[methodName](param1, param2, param3);
+	} <span class="hljs-keyword">else</span> {
+		<span class="hljs-comment">/*cc.log("Couldn't find method '" + methodName + "' in running scene or layer.");*/</span>
+	}
+};</pre></div>
+        
+      
+        
+        <h3 id="game-getresourcestopreload">Game.getResourcesToPreload</h3>
+<p>Return an array of files to preload.</p>
+
+        
+          <div class='highlight'><pre>Game.getResourcesToPreload = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+	<span class="hljs-keyword">var</span> files = Game.config[<span class="hljs-string">"preload"</span>],
+		ret = [],
+		i;
+
+	<span class="hljs-keyword">if</span> (files) {
+		<span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; files.length; i += <span class="hljs-number">1</span>) {
+			<span class="hljs-keyword">if</span> (files[i] &amp;&amp; files[i].length) {
+				ret[i] = files[i];
+			}
+		}
+	}
+
+	<span class="hljs-keyword">return</span> ret;
+};</pre></div>
+        
+      
+        
+        <h3 id="game-runinitialscene">Game.runInitialScene</h3>
+<p>Loads resources and calls the initial scene. Called by <code>Game.main</code>.</p>
+
+        
+          <div class='highlight'><pre>Game.runInitialScene = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+	<span class="hljs-keyword">var</span> Scene = window[cc.game.config.initialScene],
+		scene;
+	
+	scene = <span class="hljs-keyword">new</span> Scene;
+	scene.init();
+	cc.director.runScene(scene);
+};</pre></div>
+        
+      
+        
+        <h3 id="game-setcanvassize">Game.setCanvasSize</h3>
+<p>Sets the size of the game canvas.</p>
+
+        
+          <div class='highlight'><pre>Game.setCanvasSize = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(e, w, h)</span> {</span>
+	<span class="hljs-keyword">var</span> allowHtmlRetina = <span class="hljs-literal">false</span>;
+	<span class="hljs-keyword">this</span>._pixelRatio = (allowHtmlRetina ? window.devicePixelRatio || <span class="hljs-number">1</span> : <span class="hljs-number">1</span>);
+	e = e || document.getElementById(cc.game.config[cc.game.CONFIG_KEY.id]);
+	w = w || document.body.clientWidth; <span class="hljs-comment">// or scrollWidth</span>
+	h = h || document.body.clientHeight;
+
+	e.width = w * <span class="hljs-keyword">this</span>._pixelRatio;
+	e.height = h * <span class="hljs-keyword">this</span>._pixelRatio;
+	e.style.width = w + <span class="hljs-string">"px"</span>;
+	e.style.height = h + <span class="hljs-string">"px"</span>;
+	e.style.backgroundColor = document.body.style.backgroundColor;
+
+	cc.log(<span class="hljs-string">"Set #"</span> + e.getAttribute(<span class="hljs-string">"id"</span>) + <span class="hljs-string">" pixel ratio "</span> + <span class="hljs-keyword">this</span>._pixelRatio +
+		<span class="hljs-string">", size "</span> + e.width + <span class="hljs-string">"x"</span> + e.height +
+		<span class="hljs-string">", style "</span> + e.style.width + <span class="hljs-string">" x "</span> + e.style.height +
+		<span class="hljs-string">", parent "</span> + e.parentNode.getAttribute(<span class="hljs-string">"id"</span>));
+	
+	<span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> <span class="hljs-keyword">this</span>._origCanvasSize === <span class="hljs-string">"undefined"</span>) {
+		<span class="hljs-keyword">this</span>._origCanvasSize = {width: w, height: h};
+	}
+};</pre></div>
+        
+      
+        
+        <h3 id="game-loadsoundenabled">Game.loadSoundEnabled</h3>
+<p>Load the <code>soundEnabled</code> preference from local storage.</p>
+
+        
+          <div class='highlight'><pre>Game.loadSoundEnabled = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+	<span class="hljs-keyword">var</span> enabled = cc.sys.localStorage.getItem(<span class="hljs-string">"soundEnabled"</span>);
+	<span class="hljs-comment">/*cc.log("Loaded sound enabled: " + enabled);*/</span>
+	
+	<span class="hljs-keyword">if</span> (enabled === <span class="hljs-literal">null</span> || enabled === <span class="hljs-string">""</span>) {
+		<span class="hljs-keyword">this</span>.enableSound(<span class="hljs-literal">true</span>);
+	} <span class="hljs-keyword">else</span> {
+		<span class="hljs-keyword">this</span>._soundEnabled = (enabled === <span class="hljs-string">"true"</span> || enabled === <span class="hljs-literal">true</span>);
+	}
+	<span class="hljs-comment">/*cc.log("Sound enabled is now: " + this._soundEnabled);*/</span>
+};</pre></div>
+        
+      
+        
+        <h3 id="game-enablesound">Game.enableSound</h3>
+<p>Enable or disable sound.</p>
+
+        
+          <div class='highlight'><pre>Game.enableSound = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(enabled)</span> {</span>
+	<span class="hljs-keyword">this</span>._soundEnabled = enabled ? <span class="hljs-literal">true</span> : <span class="hljs-literal">false</span>;
+	cc.sys.localStorage.setItem(<span class="hljs-string">"soundEnabled"</span>, <span class="hljs-keyword">this</span>._soundEnabled);
+
+	<span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>.isSoundEnabled()) {
+		cc.audioEngine.stopMusic();
+
+		<span class="hljs-comment">/* Check that the music stopped (Chrome bug). */</span>
+		cc.director.getRunningScene().schedule(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+			<span class="hljs-keyword">if</span> (!Game.isSoundEnabled()) {
+				cc.audioEngine.stopMusic();
+			}
+		}, <span class="hljs-number">1</span>, <span class="hljs-number">15</span>);
+	}
+};</pre></div>
+        
+      
+        
+        <h3 id="game-togglesoundenabled">Game.toggleSoundEnabled</h3>
+<p>Toggle whether sound is enabled.</p>
+
+        
+          <div class='highlight'><pre>Game.toggleSoundEnabled = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+	<span class="hljs-keyword">this</span>.enableSound(!<span class="hljs-keyword">this</span>.isSoundEnabled());
+};</pre></div>
+        
+      
+        
+        <h3 id="game-issoundenabled">Game.isSoundEnabled</h3>
+<p>Return true if sound is enabled.</p>
+
+        
+          <div class='highlight'><pre>Game.isSoundEnabled = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+	<span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._soundEnabled ? <span class="hljs-literal">true</span> : <span class="hljs-literal">false</span>;
+};</pre></div>
+        
+      
+        
+        <h3 id="game-playeffect">Game.playEffect</h3>
+<p>Plays the sound effect with the given filename if sound is enabled.</p>
+
+        
+          <div class='highlight'><pre>Game.playEffect = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(filename)</span> {</span>
+	<span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.isSoundEnabled()) {
+		<span class="hljs-comment">/* Automatically prefix with resource path. */</span>
+		<span class="hljs-keyword">if</span> (cc.loader.resPath &amp;&amp; filename.indexOf(<span class="hljs-string">"/"</span>) &lt; <span class="hljs-number">0</span>) {
+			filename = cc.loader.resPath + <span class="hljs-string">"/"</span> + filename;
+		}
+		<span class="hljs-keyword">return</span> cc.audioEngine.playEffect(filename);
+	}
+	<span class="hljs-keyword">return</span> -<span class="hljs-number">1</span>;
+};</pre></div>
+        
+      
+        
+        <h3 id="game-stopeffect">Game.stopEffect</h3>
+<p>Stops the sound effect with the given id.</p>
+
+        
+          <div class='highlight'><pre>Game.stopEffect = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(audioId)</span> {</span>
+	cc.audioEngine.stopEffect(audioId);
+};</pre></div>
+        
+      
+        
+        <h3 id="game-playmusic">Game.playMusic</h3>
+<p>Plays the music file with the given filename if sound is enabled.</p>
+
+        
+          <div class='highlight'><pre>Game.playMusic = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(filename)</span> {</span>
+	<span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.isSoundEnabled()) {
+		<span class="hljs-comment">/* Automatically prefix with resource path. */</span>
+		<span class="hljs-keyword">if</span> (cc.loader.resPath &amp;&amp; filename.indexOf(<span class="hljs-string">"/"</span>) &lt; <span class="hljs-number">0</span>) {
+			filename = cc.loader.resPath + <span class="hljs-string">"/"</span> + filename;
+		}
+		cc.audioEngine.stopMusic();
+		cc.audioEngine.playMusic(filename, <span class="hljs-literal">true</span>);
+	}
+};</pre></div>
+        
+      
+        
+        <h3 id="game-startphysics">Game.startPhysics</h3>
+<p>Start the physics engine.</p>
+
+        
+          <div class='highlight'><pre>Game.startPhysics = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(gravity)</span> {</span>
+	<span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.space !== <span class="hljs-string">"undefined"</span>) {
+		<span class="hljs-keyword">this</span>.space = <span class="hljs-literal">null</span>;
+	}
+
+	<span class="hljs-keyword">this</span>.space = <span class="hljs-keyword">new</span> cp.Space();
+	<span class="hljs-keyword">this</span>.space.gravity = cp.v(gravity.x, gravity.y);
+	<span class="hljs-keyword">this</span>._physicsAccumulator = <span class="hljs-number">0</span>;
+	
+	<span class="hljs-keyword">if</span> (cc.game.config.debugPhysics) {
+		<span class="hljs-keyword">this</span>._physicsDebugNode = cc.PhysicsDebugNode.create(<span class="hljs-keyword">this</span>.space);
+		cc.director.getRunningScene().addChild(<span class="hljs-keyword">this</span>._physicsDebugNode, <span class="hljs-number">100</span>);
+	}
+};</pre></div>
+        
+      
+        
+        <h3 id="game-stepphysics">Game.stepPhysics</h3>
+<p>Step the physics engine.</p>
+
+        
+          <div class='highlight'><pre>Game.stepPhysics = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(delta)</span> {</span>
+	<span class="hljs-keyword">var</span> step = <span class="hljs-number">1</span> / <span class="hljs-number">60</span>;
+	<span class="hljs-keyword">this</span>._physicsAccumulator += delta;
+	<span class="hljs-keyword">while</span> (<span class="hljs-keyword">this</span>._physicsAccumulator &gt; step) {
+		Game.space.step(step);
+		<span class="hljs-keyword">this</span>._physicsAccumulator -= step;
+	}
+};</pre></div>
+        
+      
+        
+        <h3 id="game-createphysicsbox">Game.createPhysicsBox</h3>
+<p>Create a static physics box.</p>
+
+        
+          <div class='highlight'><pre>Game.createPhysicsBox = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(_x1, _y1, _x2, _y2, elasticity, friction, collisionType)</span> {</span>
+	<span class="hljs-keyword">var</span> w = (_x2 - _x1) || <span class="hljs-number">2</span>,
+		h = (_y2 - _y1) || <span class="hljs-number">2</span>,
+		box = <span class="hljs-keyword">new</span> cp.BoxShape(<span class="hljs-keyword">this</span>.space.staticBody, <span class="hljs-built_in">Math</span>.abs(w), <span class="hljs-built_in">Math</span>.abs(h));
+	box.body.setPos(cp.v(_x1 + w * <span class="hljs-number">.5</span>, _y1 + h * <span class="hljs-number">.5</span>));
+	box.setElasticity(elasticity || <span class="hljs-number">1</span>);
+	box.setFriction(friction || <span class="hljs-number">0</span>);
+	box.setCollisionType(collisionType || <span class="hljs-number">0</span>);
+	<span class="hljs-keyword">this</span>.space.addStaticShape(box);
+	<span class="hljs-keyword">return</span> box;
+};</pre></div>
+        
+      
+        
+        <h3 id="game-createphysicssprite">Game.createPhysicsSprite</h3>
+<p>Create a dynamic physics sprite.</p>
+
+        
+          <div class='highlight'><pre>Game.createPhysicsSprite = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(filename, elasticity, friction, isCircle, collisionType)</span> {</span>
+	<span class="hljs-keyword">var</span> sprite = cc.PhysicsSprite.create(filename),
+		body,
+		shape,
+		w = sprite.width || <span class="hljs-number">1</span>,
+		h = sprite.height || <span class="hljs-number">1</span>;
+
+	body = <span class="hljs-keyword">new</span> cp.Body(<span class="hljs-number">1</span>, cp.momentForBox(<span class="hljs-number">1</span>, w, h))
+	<span class="hljs-keyword">this</span>.space.addBody(body);
+
+	<span class="hljs-keyword">if</span> (isCircle) {
+		shape = <span class="hljs-keyword">new</span> cp.CircleShape(body, w * <span class="hljs-number">.5</span>, cp.v(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>));
+	} <span class="hljs-keyword">else</span> {
+		shape = <span class="hljs-keyword">new</span> cp.BoxShape(body, w, h);
+	}
+	shape.setElasticity(elasticity || <span class="hljs-number">1</span>);
+	shape.setFriction(friction || <span class="hljs-number">0</span>);
+	shape.setCollisionType(collisionType || <span class="hljs-number">0</span>);
+	<span class="hljs-keyword">this</span>.space.addShape(shape);
+
+	sprite.setBody(body);
+
+	<span class="hljs-keyword">return</span> sprite;
+};</pre></div>
+        
+      
+        
+        <h3 id="game-boot">Game.boot</h3>
+<p>Boot method. Different for HTML5 versus native. Called at the end of this file.</p>
+
+        
+          <div class='highlight'><pre>Game.boot = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(global)</span> {</span>
+	cc.loader.resPath = cc.game.config.resourcePath;
+	<span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.isHtml5()) {
+		Game.setCanvasSize();
+		Game.setCanvasSize(document.getElementById(<span class="hljs-string">"gameDiv"</span>),
+			<span class="hljs-keyword">this</span>._origCanvasSize.width, <span class="hljs-keyword">this</span>._origCanvasSize.height);
+	} <span class="hljs-keyword">else</span> {
+		<span class="hljs-comment">/* Implement timers. */</span>
+		<span class="hljs-built_in">require</span>(cc.loader.resPath + <span class="hljs-string">"/lib/timers.js"</span>);
+		<span class="hljs-keyword">this</span>.timerLoop = makeWindowTimer(global, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(ms)</span>{</span>});
+		cc.director.getScheduler().scheduleCallbackForTarget(<span class="hljs-keyword">this</span>, <span class="hljs-keyword">this</span>.timerLoop);
+	}
+
+	<span class="hljs-comment">/*setTimeout(function(){cc.log("Confirmed setTimeout() works");}, 3333);*/</span>
+
+	<span class="hljs-comment">/* Embed the equivalent of main.js for faster loading. */</span>
+	cc.game.onStart = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+		Game.main();
+	};
+
+	<span class="hljs-comment">/*
+	Native client boot happens like this:
+		1. cc.game.run() -&gt;
+		2. cc.game.prepare() -&gt;
+		3. jsb.js -&gt;
+		4. jsb_cocos2d.js, etc...
+	*/</span>
+	cc.game.run();
+};</pre></div>
+        
+      
+        
+        <h3 id="game-main">Game.main</h3>
+<p>The main method. Called by <code>cc.game.onStart</code>.</p>
+
+        
+          <div class='highlight'><pre>Game.main = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+	<span class="hljs-keyword">var</span> i,
+		size = {},
+		sheets,
+		cacher,
+		dirs = [];
+
+	<span class="hljs-comment">/* Get config */</span>
+	Game.config = Game.config || {};
+	<span class="hljs-keyword">for</span> (i <span class="hljs-keyword">in</span> cc.game.config) {
+		<span class="hljs-keyword">if</span> (cc.game.config.hasOwnProperty(i)) {
+			Game.config[i] = Game.clone(cc.game.config[i]);
+		}
+	}
+
+	<span class="hljs-keyword">this</span>.loadSoundEnabled();
+
+	cc.defineGetterSetter(Game, <span class="hljs-string">"winSize"</span>, Game.getWinSize);
+	Game.contentWidth = cc.game.config.designWidth || Game.winSize.width;
+	Game.contentHeight = cc.game.config.designHeight || Game.winSize.height;
+	<span class="hljs-keyword">if</span> (Game.winSize.width &gt; Game.winSize.height) {
+		size.width = (Game.contentHeight / Game.winSize.height) * Game.winSize.width;
+		size.height = Game.contentHeight;
+		Game.contentX = (size.width - Game.contentWidth) * <span class="hljs-number">.5</span>;
+		Game.contentY = <span class="hljs-number">0</span>;
+	} <span class="hljs-keyword">else</span> {
+		size.width = Game.contentWidth;
+		size.height = (Game.contentWidth / Game.winSize.width) * Game.winSize.height;
+		Game.contentX = <span class="hljs-number">0</span>;
+		Game.contentY = (size.height - Game.contentHeight) * <span class="hljs-number">.5</span>;
+	}
+	cc.director.setDisplayStats(cc.game.config[cc.game.CONFIG_KEY.showFPS]);
+	cc.view.setDesignResolutionSize(size.width, size.height, cc.ResolutionPolicy.SHOW_ALL);
+	cc.view.resizeWithBrowserSize(<span class="hljs-literal">true</span>);
+
+	cc.director.setAnimationInterval(<span class="hljs-number">1.0</span> / <span class="hljs-keyword">this</span>.getTargetFrameRate());
+	cc.log(<span class="hljs-built_in">parseInt</span>(Game.winSize.width) + <span class="hljs-string">"x"</span> + <span class="hljs-built_in">parseInt</span>(Game.winSize.height)
+		+ <span class="hljs-string">" ["</span> + <span class="hljs-built_in">parseInt</span>(Game.contentX) + <span class="hljs-string">","</span> + <span class="hljs-built_in">parseInt</span>(Game.contentY) + <span class="hljs-string">" "</span>
+		+ <span class="hljs-built_in">parseInt</span>(Game.contentWidth) + <span class="hljs-string">"x"</span> + <span class="hljs-built_in">parseInt</span>(Game.contentHeight) + <span class="hljs-string">"]"</span>
+		+ <span class="hljs-string">", language: "</span> + Game.getLanguageCode()
+		+ <span class="hljs-string">", "</span> + <span class="hljs-built_in">parseInt</span>(<span class="hljs-number">1.0</span> / cc.director.getAnimationInterval()) + <span class="hljs-string">" fps"</span>);
+
+	<span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.isHtml5()) {
+		Game.addImageData = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>};
+	} <span class="hljs-keyword">else</span> {
+		Game.config[<span class="hljs-string">"font"</span>] = cc.loader.resPath + <span class="hljs-string">"/"</span> + Game.config[<span class="hljs-string">"font"</span>] + <span class="hljs-string">".ttf"</span>;
+	}
+
+	<span class="hljs-comment">/* Preload. */</span>
+	cc.LoaderScene.preload(Game.getResourcesToPreload(), Game.runInitialScene, <span class="hljs-keyword">this</span>);
+};</pre></div>
+        
+      
+        
+        <h3 id="boot">Boot</h3>
+<p>Call <code>Game.boot</code> passing in the global variable.</p>
+
+        
+          <div class='highlight'><pre>Game.boot(<span class="hljs-keyword">this</span>);</pre></div>
+        
+      
+
+        
+          <div>
+            <h4>Table of Contents</h4>
+            <ol>
+              
+                
+                <li>
+                  <a class="source" href="GameScene.html">
+                    GameScene.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="MenuScene.html">
+                    MenuScene.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="Game.html">
+                    Game.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="server.html">
+                    server.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="README.html">
+                    README.md
+                  </a>
+                </li>
+              
+            </ol>
+          </div>
+        
+
+      <div class="fleur">h</div>
+    </div>
+  </div>
+</body>
+</html>

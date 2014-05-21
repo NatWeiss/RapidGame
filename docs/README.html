@@ -26,43 +26,29 @@
               
                 
                 <li>
-                  <a class="source" href="Config.html">
-                    Config.js
+                  <a class="source" href="GameScene.html">
+                    GameScene.js
                   </a>
                 </li>
               
                 
                 <li>
-                  <a class="source" href="ConfigServer.html">
-                    ConfigServer.js
+                  <a class="source" href="MenuScene.html">
+                    MenuScene.js
                   </a>
                 </li>
               
                 
                 <li>
-                  <a class="source" href="HelloWorld.html">
-                    HelloWorld.js
+                  <a class="source" href="Game.html">
+                    Game.js
                   </a>
                 </li>
               
                 
                 <li>
-                  <a class="source" href="SceneHello.html">
-                    SceneHello.js
-                  </a>
-                </li>
-              
-                
-                <li>
-                  <a class="source" href="App.html">
-                    App.js
-                  </a>
-                </li>
-              
-                
-                <li>
-                  <a class="source" href="Server.html">
-                    Server.js
+                  <a class="source" href="server.html">
+                    server.js
                   </a>
                 </li>
               
@@ -83,19 +69,19 @@
         <p>A Node-based templating system for rapidly creating cross-platform games for a variety of game engines, including Cocos2D-JS, Unity, Corona and Appcelerator Titanium.</p>
 <p>What it does:</p>
 <ul>
-<li><p>Creates new cross-platform game projects from provided or custom templates, which includes scenes, sprites, physics, sound and more. </p>
+<li><p>Creates new cross-platform game projects from provided or custom templates, which include scenes, sprites, physics, sound and more. </p>
 </li>
-<li><p>Prebuilds libraries for Cocos2D X that virtually eliminate build, compile and link time, saving in aggregate hours during development, and allowing for more rapid development cycle without having to wait - hence the name RapidGame.</p>
+<li><p>Prebuilds libraries for Cocos2D X that virtually eliminate build, compile and link time, saving in aggregate hours during development, and allowing for a more rapid development cycle without having to wait - hence the name RapidGame.</p>
 </li>
 </ul>
-<h2 id="no-more-grunt-work">No More Grunt Work</h2>
+<h2 id="eliminate-grunt-work">Eliminate Grunt Work</h2>
 
         
       
         
         <p>RapidGame provides:</p>
 <ol>
-<li>Tested game project templates for Cocos2D-JS, Unity, Corona and Titanium</li>
+<li>Tested game project templates for Cocos2D JS, Unity, Corona and Titanium</li>
 <li>A cross-platform game project creator</li>
 <li>A library prebuilder for Cocos2D X</li>
 </ol>
@@ -104,15 +90,28 @@
 <li>Cross-platform project files</li>
 <li>Resolution / ratio-independence</li>
 <li>Viewport setup</li>
-<li>Multiple scenes</li>
+<li>Menu &amp; Game scenes</li>
 <li>Sprites</li>
 <li>Custom TTF fonts</li>
 <li>Sound</li>
 <li>Music</li>
 <li>Physics</li>
-<li>HTTP / Socket.io game servers (HTML5-based platforms)</li>
+<li>HTTP game servers (HTML5-based platforms)</li>
 </ol>
-<p>The project creator makes a copy of one of the templates, does a search and replace on the game title &amp; package name, then installs any required modules. Viola. Your own rapidly-created game ready to go with scenes, sprites, physics, etc.</p>
+<p>The project creator makes a copy of one of the templates, does a search and replace on the game title &amp; package name, then installs any required modules. Viola. Your own rapidly-created game ready to go. Here’s some example output from running the project creator:</p>
+<p>$ rapidgamepro create Corona “Sword Ball” org.myorg.swordball
+Rapidly creating a game
+Engine: Corona
+Template: TwoScene
+Copying project files
+Setting project name: Sword Ball
+Setting package name: org.myorg.swordball
+Done</p>
+<p>Congratulations on creating a Corona game!
+Run it by opening the <code>main.lua</code> file in the Corona Simulator.
+Ready to code? Start with the <code>main.lua</code> file.
+Link to get Corona free:
+<a href="http://coronalabs.com/products/corona-sdk/starter/">http://coronalabs.com/products/corona-sdk/starter/</a></p>
 <p>The library prebuilder creates static libraries that virtually eliminate build times for the Cocos2D X engine (the native portion of Cocos2D JS). With hundreds of source files to be compiled, building Cocos2D X for just one platform can take at least five minutes. This can be a real time sink, especially when switching from the simulator to device triggers a rebuild.</p>
 <p>The prebuilder automatically downloads the latest Cocos2D JS, patches it to ensure that it is bug-free, then prebuilds Cocos2D X for all possible platforms, configurations and architectures. It is then possible to compile and link native Cocos2D X games in seconds. Even better, the project creator will absolutely symlink to the location of the prebuilt libraries so your game projects stay lightweight and can be moved easily.</p>
 <h2 id="create-a-game-in-under-30-seconds">Create a Game in Under 30 Seconds</h2>
@@ -124,9 +123,9 @@
 <p>There’s no need to clone this repo, just install RapidGame:</p>
 <p>sudo npm install rapidgame -g</p>
 <p>And, create a Unity game named “Zombie Matrix”:</p>
-<p>rapidgame -e unity “Zombie Matrix”</p>
-<p>Or, a Cocos2D JS game named “Heck Yeah” with a custom package name:</p>
-<p>rapidgame -e cocos2d “Heck Yeah” -n org.mycompany.heckyeah</p>
+<p>rapidgame create unity “Zombie Matrix” com.myompany.zombiematrix</p>
+<p>Or, a Cocos2D JS game named “Heck Yeah”:</p>
+<p>rapidgame create cocos2d “Heck Yeah” org.myorg.heckyeah</p>
 <p>For usage instructions:</p>
 <p>rapidgame —help</p>
 <h2 id="pro-version">Pro Version</h2>
@@ -135,17 +134,6 @@
       
         
         <p>If you need cross-platform monetization, in-app purchasing, virtual economies, social networking, async multiplayer, analytics and/or ads then get <a href="http://www.binpress.com/app/rapidgame-pro-for-ios-android-facebook/1802">RapidGame Pro</a>. It has an example game called Lemonade Exchange written using the Cocos2D JS engine which includes all of the previously mentioned features and works on Facebook, iOS, Mac and Android. Support for more platforms is planned.</p>
-<h2 id="run">Run</h2>
-
-        
-      
-        
-        <p>To run your Unity game just open the project in <a href="https://unity3d.com/unity/download">Unity</a> and click the triangular Play button. The Breakout clone currently plays using the arrow keys to move the paddle and spacebar to launch the ball.</p>
-<p>To run your <a href="http://coronalabs.com/products/corona-sdk/starter/">Corona</a> game just run the Corona Simulator then open your <code>main.lua</code> file.</p>
-<p>To run your <a href="http://cocos2d-x.org/product#cocos2dx-js">Cocos2D JS</a> game in a browser just launch the server <code>cd MyGame &amp;&amp; ./run-server</code> and visit <a href="http://localhost:8000">localhost:8000</a>.</p>
-<p>To run your Cocos2D JS game natively for iOS or Mac, just open <code>proj.ios_mac/MyGame.xcodeproj</code> and Run. Note that you will need to have completed the <code>rapidgame prebuild</code> command so that Cocos2D X static libraries can be linked against.</p>
-<p>To run your Cocos2D JS game for Android: <code>cd MyGame/proj.android &amp;&amp; make &amp;&amp; make run</code>. This also requires Cocos2D X static libraries, so make sure to <code>rapidgame prebuild</code>.</p>
-<p>To run your <a href="http://www.appcelerator.com/titanium/">Titanium</a> game just open Titanium Studio and File &gt; Import… &gt; Existing Projects into Workspace. Select your MyGame directory. Make sure you have the <a href="http://lanica.co/products/platino/engine/">Platino</a> SDK installed.</p>
 <h2 id="more-about-prebuilding">More About Prebuilding</h2>
 
         
@@ -154,6 +142,16 @@
         <p>The command to prebuild Cocos2D X static libraries used by Cocos2D JS on native platforms:</p>
 <p>rapidgame prebuild</p>
 <p>When the command is finished, you’ll have a directory (<code>~/Library/Developer/RapidGame</code> on Macs) with include files, java files, make files, Javascript bindings and library files for iOS, Mac and Android in Debug and Release mode for all available architectures.</p>
+<h2 id="custom-cocos2d-projects">Custom Cocos2D Projects</h2>
+
+        
+      
+        
+        <p>If you are just using Cocos2D X or you have your own custom project layout, you can still use the prebuilt libraries. Use this command to create a symlink to the libraries directory:</p>
+<p>cd MyGame &amp;&amp; rapidgame init .</p>
+<p>Then setup your Xcode target to reference the libraries and headers. Example:</p>
+<p>LIBRARY_SEARCH_PATHS = $(SRCROOT)/../lib/cocos2d/x/lib/$(CONFIGURATION)-iOS/$(PLATFORM_NAME)
+USER_HEADER_SEARCH_PATHS = $(inherited) $(SRCROOT)/../lib/cocos2d/x/include/cocos/2d/platform/ios …</p>
 <h2 id="create-your-own-templates">Create Your Own Templates</h2>
 
         
@@ -161,9 +159,9 @@
         
         <p>It’s possible to create your own game templates. Here’s the step-by-step instructions:</p>
 <ol>
-<li><p>Create your game in a directory with the game name as the directory name. If your game is called “Zombie Matrix”, name the directory <code>Zombie Matrix</code>, including the space.</p>
+<li><p>Create your game directory. If your game is called “Zombie Matrix”, name the directory <code>Zombie Matrix</code>, including the space.</p>
 </li>
-<li><p>Use the name of your game (e.g. “Zombie Matrix”) including any space or punctation freely throughout your game project. RapidGame is smart enough to automatically rename your game’s title in most types of source files.</p>
+<li><p>Use the name of your game including any whitespace or punctation throughout your game project. RapidGame will automatically search and replace the title in most types of source and project files.</p>
 </li>
 <li><p>If you’d like a file or directory renamed, make sure it starts with your game’s title. For example, if you have <code>Zombie Matrix.xcodeproj</code> it will get changed to <code>MyNewGame.xcodeproj</code>.</p>
 </li>
@@ -171,7 +169,7 @@
 </li>
 <li><p>Copy your game template to the <code>templates/&lt;engine&gt;</code> directory of RapidGame. On Mac / Linux this is <code>/usr/local/lib/node_modules/rapidgame</code>. You can use the <code>npm prefix -g</code> command to determine where Node modules are installed on your system. If you’re on Mac OS X, the template is for Unity and it’s called “Zombie Matrix” then the final directory would be <code>/usr/local/lib/node_modules/rapidgame/templates/unity/Zombie Matrix/</code>.</p>
 </li>
-<li><p>Your template is now ready for testing. Try it out like this: <code>rapidgame -e unity -t &quot;Zombie Matrix&quot; MyNewGame</code>.</p>
+<li><p>Your template is now ready for testing. Try it out like this: <code>rapidgame create &lt;engine&gt; MyNewGame com.mycompany.mynewgame -t &quot;Zombie Matrix&quot;</code>.</p>
 </li>
 </ol>
 <h2 id="project-status">Project Status</h2>
@@ -180,8 +178,7 @@
       
         
         <p>The <code>rapidgame</code> command runs on Mac or Linux. Windows support is planned.</p>
-<p>Breakout clones have been written for Unity, Corona, Cocos2D JS and Titanium.</p>
-<p>Hello World has been written for Cocos2D JS including project files for iOS, Android and Mac. Win32 and Linux project files are planned.</p>
+<p>Cocos2D JS win32 and linux project files are planned.</p>
 <h2 id="contributing">Contributing</h2>
 
         
@@ -205,43 +202,29 @@
               
                 
                 <li>
-                  <a class="source" href="Config.html">
-                    Config.js
+                  <a class="source" href="GameScene.html">
+                    GameScene.js
                   </a>
                 </li>
               
                 
                 <li>
-                  <a class="source" href="ConfigServer.html">
-                    ConfigServer.js
+                  <a class="source" href="MenuScene.html">
+                    MenuScene.js
                   </a>
                 </li>
               
                 
                 <li>
-                  <a class="source" href="HelloWorld.html">
-                    HelloWorld.js
+                  <a class="source" href="Game.html">
+                    Game.js
                   </a>
                 </li>
               
                 
                 <li>
-                  <a class="source" href="SceneHello.html">
-                    SceneHello.js
-                  </a>
-                </li>
-              
-                
-                <li>
-                  <a class="source" href="App.html">
-                    App.js
-                  </a>
-                </li>
-              
-                
-                <li>
-                  <a class="source" href="Server.html">
-                    Server.js
+                  <a class="source" href="server.html">
+                    server.js
                   </a>
                 </li>
               

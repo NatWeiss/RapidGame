@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>MenuScene.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="public/stylesheets/normalize.css" />
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="page">
+
+      <div class="header">
+        
+          <h1>MenuScene.js</h1>
+        
+
+        
+          <div class="toc">
+            <h3>Table of Contents</h3>
+            <ol>
+              
+                
+                <li>
+                  <a class="source" href="GameScene.html">
+                    GameScene.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="MenuScene.html">
+                    MenuScene.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="Game.html">
+                    Game.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="server.html">
+                    server.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="README.html">
+                    README.md
+                  </a>
+                </li>
+              
+            </ol>
+          </div>
+        
+      </div>
+
+      
+        
+        
+
+        
+          <div class='highlight'><pre>
+<span class="hljs-keyword">var</span> MenuScene = cc.Scene.extend({
+	layer: <span class="hljs-literal">null</span>,
+	
+	onEnter: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+		<span class="hljs-keyword">this</span>._super();
+		<span class="hljs-keyword">this</span>.layer = <span class="hljs-keyword">new</span> MenuLayer();
+		<span class="hljs-keyword">this</span>.layer.init();
+		<span class="hljs-keyword">this</span>.addChild(<span class="hljs-keyword">this</span>.layer);
+	}
+});
+
+<span class="hljs-keyword">var</span> MenuLayer = cc.Layer.extend({
+	bg: <span class="hljs-literal">null</span>,
+	bg2: <span class="hljs-literal">null</span>,
+	logo: <span class="hljs-literal">null</span>,
+	logoLabel: <span class="hljs-literal">null</span>,
+	menu: <span class="hljs-literal">null</span>,
+	playButton: <span class="hljs-literal">null</span>,
+	exitButton: <span class="hljs-literal">null</span>,
+	
+	init: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+		<span class="hljs-keyword">var</span> self = <span class="hljs-keyword">this</span>,
+			font = Game.config[<span class="hljs-string">"font"</span>],
+			logoText,
+			x, y;
+
+		<span class="hljs-keyword">this</span>._super();
+
+		logoText = <span class="hljs-string">"TwoScene"</span>;
+		Game.playEffect(<span class="hljs-string">"Intro.mp3"</span>);</pre></div>
+        
+      
+        
+        <p>Background</p>
+
+        
+          <div class='highlight'><pre>		<span class="hljs-keyword">this</span>.bg = cc.LayerColor.create(cc.color(<span class="hljs-number">218</span>, <span class="hljs-number">214</span>, <span class="hljs-number">212</span>, <span class="hljs-number">255</span>));
+		<span class="hljs-keyword">this</span>.addChild(<span class="hljs-keyword">this</span>.bg, -<span class="hljs-number">1</span>);</pre></div>
+        
+      
+        
+        <p>Logo</p>
+
+        
+          <div class='highlight'><pre>		y = <span class="hljs-number">24</span>;
+		<span class="hljs-keyword">this</span>.logo = cc.Sprite.create(<span class="hljs-string">"Logo.png"</span>);
+		<span class="hljs-keyword">this</span>.logo.setPosition(Game.centralize(<span class="hljs-number">0</span>, <span class="hljs-number">228</span>));
+		<span class="hljs-keyword">this</span>.addChild(<span class="hljs-keyword">this</span>.logo, <span class="hljs-number">1</span>);
+		<span class="hljs-keyword">this</span>.logo.y -= y * <span class="hljs-number">.5</span>;
+		<span class="hljs-keyword">this</span>.logo.runAction(cc.RepeatForever.create(cc.Sequence.create(
+			cc.EaseInOut.create(cc.MoveBy.create(<span class="hljs-number">2</span>, cc.p(<span class="hljs-number">0</span>, y)), <span class="hljs-number">1.2</span>),
+			cc.EaseInOut.create(cc.MoveBy.create(<span class="hljs-number">2</span>, cc.p(<span class="hljs-number">0</span>, -y)), <span class="hljs-number">1.2</span>)
+		)));</pre></div>
+        
+      
+        
+        <p>Title</p>
+
+        
+          <div class='highlight'><pre>		<span class="hljs-keyword">this</span>.logoLabel = cc.LabelTTF.create(
+			Game.getLocalizedString(<span class="hljs-string">"title"</span>),
+			font,
+			<span class="hljs-number">200</span>
+		);
+		<span class="hljs-keyword">this</span>.logoLabel.setColor(cc.color(<span class="hljs-number">128</span>, <span class="hljs-number">128</span>, <span class="hljs-number">128</span>));
+		<span class="hljs-keyword">this</span>.logoLabel.setPosition(Game.centralize(<span class="hljs-number">0</span>, <span class="hljs-number">228</span>));
+		<span class="hljs-keyword">this</span>.addChild(<span class="hljs-keyword">this</span>.logoLabel, <span class="hljs-number">1</span>);</pre></div>
+        
+      
+        
+        <p>Menu</p>
+
+        
+          <div class='highlight'><pre>		<span class="hljs-keyword">this</span>.menu = cc.Menu.create();
+		<span class="hljs-keyword">this</span>.menu.setPosition(cc.p());
+		<span class="hljs-keyword">this</span>.addChild(<span class="hljs-keyword">this</span>.menu, <span class="hljs-number">1</span>);</pre></div>
+        
+      
+        
+        <p>Buttons</p>
+
+        
+          <div class='highlight'><pre>		<span class="hljs-keyword">this</span>.playLabel = cc.MenuItemFont.create(<span class="hljs-string">"Play"</span>, <span class="hljs-keyword">this</span>.onPlayButton, <span class="hljs-keyword">this</span>);
+		<span class="hljs-keyword">this</span>.playLabel.setPosition(Game.centralize(<span class="hljs-number">0</span>, -<span class="hljs-number">400</span>));
+		<span class="hljs-keyword">this</span>.playLabel.setFontSize(<span class="hljs-number">120</span>);
+		<span class="hljs-keyword">this</span>.playLabel.setFontName(font);
+		<span class="hljs-keyword">this</span>.playLabel.setColor(cc.color(<span class="hljs-number">196</span>, <span class="hljs-number">196</span>, <span class="hljs-number">196</span>));
+		<span class="hljs-keyword">this</span>.menu.addChild(<span class="hljs-keyword">this</span>.playLabel);
+		
+		<span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+	},
+	
+	onPlayButton: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+		<span class="hljs-keyword">var</span> scene = <span class="hljs-keyword">new</span> GameScene;
+		scene.init();
+		cc.director.runScene(scene);
+	}
+
+});</pre></div>
+        
+      
+
+        
+          <div>
+            <h4>Table of Contents</h4>
+            <ol>
+              
+                
+                <li>
+                  <a class="source" href="GameScene.html">
+                    GameScene.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="MenuScene.html">
+                    MenuScene.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="Game.html">
+                    Game.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="server.html">
+                    server.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="README.html">
+                    README.md
+                  </a>
+                </li>
+              
+            </ol>
+          </div>
+        
+
+      <div class="fleur">h</div>
+    </div>
+  </div>
+</body>
+</html>
