@@ -47,8 +47,6 @@ The project creator makes a copy of one of the templates, does a search and repl
 	  Congratulations on creating a Corona game!
 	  Run it by opening the `main.lua` file in the Corona Simulator.
 	  Ready to code? Start with the `main.lua` file.
-	  Link to get Corona free:
-	  	http://coronalabs.com/products/corona-sdk/starter/
 	  
 
 The library prebuilder creates static libraries that virtually eliminate build times for the Cocos2D X engine (the native portion of Cocos2D JS). With hundreds of source files to be compiled, building Cocos2D X for just one platform can take at least five minutes. This can be a real time sink, especially when switching from the simulator to device triggers a rebuild.
@@ -84,6 +82,12 @@ Pro Version
 If you need cross-platform monetization, in-app purchasing, virtual economies, social networking, async multiplayer, analytics and/or ads then get [RapidGame Pro](http://www.binpress.com/app/rapidgame-pro-for-ios-android-facebook/1802). It has an example game called Lemonade Exchange written using the Cocos2D JS engine which includes all of the previously mentioned features and works on Facebook, iOS, Mac and Android. Support for more platforms is planned.
 
 
+Breakout Clones
+---------------
+
+To test the validity of RapidGame, four Breakout clones were written for Unity, Corona, Cocos2D JS and Titanium. I found that using RapidGame can save up to ~80% of development time for simple games. To read more about the findings, see [Selecting a Cross-platform Game Engine](http://www.binpress.com/blog/2014/05/14/selecting-cross-platform-game-engine/).
+
+
 More About Prebuilding
 ----------------------
 
@@ -104,7 +108,7 @@ If you are just using Cocos2D X or you have your own custom project layout, you 
 Then setup your Xcode target to reference the libraries and headers. Example:
 
 	LIBRARY_SEARCH_PATHS = $(SRCROOT)/../lib/cocos2d/x/lib/$(CONFIGURATION)-iOS/$(PLATFORM_NAME)
-	USER_HEADER_SEARCH_PATHS = $(inherited) $(SRCROOT)/../lib/cocos2d/x/include/cocos/2d/platform/ios ...
+	USER_HEADER_SEARCH_PATHS = $(inherited) $(SRCROOT)/../lib/cocos2d/x/include/cocos ...
 
 
 Create Your Own Templates
