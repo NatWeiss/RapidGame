@@ -609,11 +609,13 @@ var checkUpdate = function() {
 		});
 		response.on("end", function() {
 			newVersion = newVersion.toString().trim();
-			if (newVersion !== packageJson.version) {
+			var n1 = packageJson.version.substring(packageJson.version.lastIndexOf(".")+1),
+				n2 = newVersion.substring(newVersion.lastIndexOf(".")+1);
+			if (newVersion !== packageJson.version && n1 < n2) {
 				console.log("\nAn update is available.");
 				console.log("\t" + packageJson.version + " -> " + newVersion);
 				console.log("Upgrade instructions:");
-				if (cmdName.indexOf("pro")) {
+				if (cmdName.indexOf("pro") >= 0) {
 					console.log("\tcd " + __dirname + " && npm update");
 				} else {
 					console.log("\tsudo npm update " + cmdName + " -g");
