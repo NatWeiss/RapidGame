@@ -1,0 +1,11 @@
+fileFormatVersion: 2
+guid: cd76ab85dc6cb4318a974fe45c8f93af
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - guiSkin: {instanceID: 0}
+  - introSound: {fileID: 8300000, guid: 1727495df212a485c977cf017d8f9b88, type: 3}
+  - logo: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
