@@ -107,7 +107,10 @@ If you are just using Cocos2D X or you have your own custom project layout, you 
 
 Then setup your Xcode target to reference the headers. Example:
 
-	USER_HEADER_SEARCH_PATHS = $(inherited) $(SRCROOT)/../lib/cocos2d/x/include/cocos $(SRCROOT)/../lib/cocos2d/x/include/cocos/2d ...
+	USER_HEADER_SEARCH_PATHS = $(inherited)
+		$(SRCROOT)/../lib/cocos2d/x/include/cocos
+		$(SRCROOT)/../lib/cocos2d/x/include/cocos/2d
+		...
 
 And the libraries:
 
