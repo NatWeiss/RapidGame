@@ -105,10 +105,13 @@ If you are just using Cocos2D X or you have your own custom project layout, you 
 
 	cd MyGame && rapidgame init .
 
-Then setup your Xcode target to reference the libraries and headers. Example:
+Then setup your Xcode target to reference the headers. Example:
+
+	USER_HEADER_SEARCH_PATHS = $(inherited) $(SRCROOT)/../lib/cocos2d/x/include/cocos $(SRCROOT)/../lib/cocos2d/x/include/cocos/2d ...
+
+And the libraries:
 
 	LIBRARY_SEARCH_PATHS = $(SRCROOT)/../lib/cocos2d/x/lib/$(CONFIGURATION)-iOS/$(PLATFORM_NAME)
-	USER_HEADER_SEARCH_PATHS = $(inherited) $(SRCROOT)/../lib/cocos2d/x/include/cocos ...
 
 Then link with the library:
 
