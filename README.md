@@ -110,6 +110,10 @@ Then setup your Xcode target to reference the libraries and headers. Example:
 	LIBRARY_SEARCH_PATHS = $(SRCROOT)/../lib/cocos2d/x/lib/$(CONFIGURATION)-iOS/$(PLATFORM_NAME)
 	USER_HEADER_SEARCH_PATHS = $(inherited) $(SRCROOT)/../lib/cocos2d/x/include/cocos ...
 
+Then link with the library:
+
+	OTHER_LDFLAGS = -lcocos2dx-prebuilt
+
 
 Create Your Own Templates
 -------------------------
