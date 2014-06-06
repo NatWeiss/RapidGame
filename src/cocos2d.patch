@@ -1,3 +1,16 @@
+diff --git a/frameworks/js-bindings/cocos2d-x/cocos/2d/CCActionManager.cpp b/frameworks/js-bindings/cocos2d-x/cocos/2d/CCActionManager.cpp
+index 0fb432a..e2d15c1 100644
+--- a/frameworks/js-bindings/cocos2d-x/cocos/2d/CCActionManager.cpp
++++ b/frameworks/js-bindings/cocos2d-x/cocos/2d/CCActionManager.cpp
+@@ -312,7 +312,7 @@ Action* ActionManager::getActionByTag(int tag, const Node *target) const
+                 }
+             }
+         }
+-        CCLOG("cocos2d : getActionByTag(tag = %d): Action not found", tag);
++        //CCLOG("cocos2d : getActionByTag(tag = %d): Action not found", tag);
+     }
+     else
+     {
 diff --git a/frameworks/js-bindings/cocos2d-x/cocos/platform/mac/CCDevice.mm b/frameworks/js-bindings/cocos2d-x/cocos/platform/mac/CCDevice.mm
 index 0d13a3a..4cb0460 100644
 --- a/frameworks/js-bindings/cocos2d-x/cocos/platform/mac/CCDevice.mm
