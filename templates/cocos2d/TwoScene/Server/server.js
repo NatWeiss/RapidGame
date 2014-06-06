@@ -5,15 +5,31 @@
 //
 
 //
-// A simple Node.js game server that sends static files as requested.
+// A simple Node.js game server that:
+// 1. Sends static files as requested.
+// 2. Provides a basic API to game clients.
 //
-var express = require("express"),
+// Keep it running on your own host using [forever](http://blog.nodejitsu.com/keep-a-nodejs-server-up-with-forever/). Remember the -g option on install.
+//
+
+//
+// ### Setup
+//
+var config = {},
+	express = require("express"),
 	fs = require("fs"),
 	path = require("path"),
 	server = express(),
-	port = 8000,
-	protocolHttp = server.listen(port);
+	port = config.serverPort || 8000,
+	protocolHttp = server.listen(port),
+	self = {};
+console.log("Started server on port: " + port);
 
+//
+// ###  Static Files
+//
+// Serve static files as requested.
+//
 server.use("/", express.static(__dirname + "/../Projects/html/"));
 server.use("/project.json", express.static(__dirname + "/../project.json"));
 server.use("/lib/", express.static(__dirname + "/../lib/"));
@@ -29,4 +45,13 @@ server.get("/project.json", function(req,res){
 	}
 });
 
-console.log("Started server on port: " + port);
+//
+// ###  Public API
+//
+// Provide `api/counter` which increments the visitor number and returns it.
+//
+self.counter = 0;
+server.get("/api/counter", function(req,res){
+	self.counter = self.counter + 1;
+	res.send(self.counter + "");
+});

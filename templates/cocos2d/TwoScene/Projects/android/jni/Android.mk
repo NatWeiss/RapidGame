@@ -12,6 +12,7 @@ LOCAL_MODULE := libcocos2dx-prebuilt
 LOCAL_SRC_FILES := ../../../lib/cocos2d/x/lib/$(CONFIG)-Android/$(TARGET_ARCH_ABI)/libcocos2dx-prebuilt.a
 include $(PREBUILT_STATIC_LIBRARY)
 
+
 include $(CLEAR_VARS)
 LOCAL_MODULE := cocos2djs_shared
 LOCAL_MODULE_FILENAME := libcocos2djs
@@ -19,7 +20,7 @@ LOCAL_MODULE_FILENAME := libcocos2djs
 LOCAL_SRC_FILES := main.cpp \
                    ../../AppDelegate.cpp
 
-LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../ \
+LOCAL_C_INCLUDES := $(LOCAL_PATH)/../.. \
 				$(LOCAL_PATH)/../../../lib/cocos2d/x/include \
 				$(LOCAL_PATH)/../../../lib/cocos2d/x/include/cocos \
 				$(LOCAL_PATH)/../../../lib/cocos2d/x/include/cocos/base \
@@ -36,7 +37,7 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../ \
 				$(LOCAL_PATH)/../../../lib/cocos2d/x/include/bindings/auto \
 				$(LOCAL_PATH)/../../../lib/cocos2d/x/include/bindings/manual \
 				$(LOCAL_PATH)/../../../lib/cocos2d/x/include/bindings/cocosbuilder \
-				$(LOCAL_PATH)/../../../lib/cocos2d/x/include/cocos/2d/platform/android \
+				$(LOCAL_PATH)/../../../lib/cocos2d/x/include/cocos/platform/android \
 				$(LOCAL_PATH)/../../../lib/cocos2d/x/include/plugin/protocols/platform/android \
 				$(LOCAL_PATH)/../../../lib/cocos2d/x/include/external/spidermonkey/include/android
 
@@ -63,14 +64,14 @@ LOCAL_LDLIBS := -lGLESv1_CM \
 include $(BUILD_SHARED_LIBRARY)
 
 
-$(call import-module,2d)
+#$(call import-module,2d)
 $(call import-module,audio/android)
 $(call import-module,bindings)
 $(call import-module,bindings/manual/chipmunk)
-$(call import-module,bindings/manual/cocosbuilder)
-$(call import-module,bindings/manual/cocostudio)
 $(call import-module,bindings/manual/extension)
 $(call import-module,bindings/manual/localstorage)
 $(call import-module,bindings/manual/network)
-$(call import-module,bindings/manual/spine)
+$(call import-module,bindings/manual/cocosbuilder)
 $(call import-module,bindings/manual/ui)
+$(call import-module,bindings/manual/cocostudio)
+$(call import-module,bindings/manual/spine)

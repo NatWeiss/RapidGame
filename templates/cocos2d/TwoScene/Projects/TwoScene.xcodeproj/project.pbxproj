@@ -30,6 +30,7 @@
 		412F337B192C36E1007F51FD /* project.json in Resources */ = {isa = PBXBuildFile; fileRef = 412F3379192C36E1007F51FD /* project.json */; };
 		412F337D192C3712007F51FD /* Assets in Resources */ = {isa = PBXBuildFile; fileRef = 412F337C192C3712007F51FD /* Assets */; };
 		412F337E192C3712007F51FD /* Assets in Resources */ = {isa = PBXBuildFile; fileRef = 412F337C192C3712007F51FD /* Assets */; };
+		413369C11940554300258BC8 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 413369C01940554300258BC8 /* Security.framework */; };
 		4152B89018949C3F00BEF730 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4152B88318949C3F00BEF730 /* AppController.mm */; };
 		4152B89918949C3F00BEF730 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4152B88C18949C3F00BEF730 /* main.m */; };
 		4152B89A18949C3F00BEF730 /* RootViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4152B88F18949C3F00BEF730 /* RootViewController.mm */; };
@@ -353,6 +354,7 @@
 		412F3379192C36E1007F51FD /* project.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = project.json; path = ../project.json; sourceTree = "<group>"; };
 		412F337C192C3712007F51FD /* Assets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Assets; path = ../Assets; sourceTree = "<group>"; };
 		412F3380192C37F4007F51FD /* index.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = index.html; path = html/index.html; sourceTree = "<group>"; };
+		413369C01940554300258BC8 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
 		4152B88218949C3F00BEF730 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
 		4152B88318949C3F00BEF730 /* AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppController.mm; sourceTree = "<group>"; };
 		4152B88B18949C3F00BEF730 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -434,6 +436,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				413369C11940554300258BC8 /* Security.framework in Frameworks */,
 				419E8E6118A9922800232A34 /* UIKit.framework in Frameworks */,
 				419E8E5F18A9921800232A34 /* OpenGLES.framework in Frameworks */,
 				419E8E5D18A991E700232A34 /* CoreMotion.framework in Frameworks */,
@@ -1286,6 +1289,7 @@
 		4152B64E1894756E00BEF730 /* frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				413369C01940554300258BC8 /* Security.framework */,
 				419E8EA018A9C68100232A34 /* libcurl.dylib */,
 				419E8E6018A9922800232A34 /* UIKit.framework */,
 				419E8E5E18A9921800232A34 /* OpenGLES.framework */,
@@ -1606,7 +1610,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = TwoScene;
 				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../lib/cocos2d/x/include/cocos/2d/platform/mac $(SRCROOT)/../lib/cocos2d/x/include/cocos/scripting/javascript/bindings $(SRCROOT)/../lib/cocos2d/x/include/cocos/scripting/auto-generated/js-bindings $(SRCROOT)/../lib/cocos2d/x/include/external/spidermonkey/include/mac $(SRCROOT)/../lib/cocos2d/x/include/external/glfw3/include/mac";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../lib/cocos2d/x/include/cocos/platform/mac $(SRCROOT)/../lib/cocos2d/x/include/cocos/scripting/javascript/bindings $(SRCROOT)/../lib/cocos2d/x/include/cocos/scripting/auto-generated/js-bindings $(SRCROOT)/../lib/cocos2d/x/include/external/spidermonkey/include/mac $(SRCROOT)/../lib/cocos2d/x/include/external/glfw3/include/mac";
 			};
 			name = Debug;
 		};
@@ -1624,7 +1628,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = TwoScene;
 				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../lib/cocos2d/x/include/cocos/2d/platform/mac $(SRCROOT)/../lib/cocos2d/x/include/cocos/scripting/javascript/bindings $(SRCROOT)/../lib/cocos2d/x/include/cocos/scripting/auto-generated/js-bindings $(SRCROOT)/../lib/cocos2d/x/include/external/spidermonkey/include/mac $(SRCROOT)/../lib/cocos2d/x/include/external/glfw3/include/mac";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../lib/cocos2d/x/include/cocos/platform/mac $(SRCROOT)/../lib/cocos2d/x/include/cocos/scripting/javascript/bindings $(SRCROOT)/../lib/cocos2d/x/include/cocos/scripting/auto-generated/js-bindings $(SRCROOT)/../lib/cocos2d/x/include/external/spidermonkey/include/mac $(SRCROOT)/../lib/cocos2d/x/include/external/glfw3/include/mac";
 			};
 			name = Release;
 		};
@@ -1637,7 +1641,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../lib/frameworks";
+				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_OPTIMIZATION_LEVEL = 1;
@@ -1679,7 +1683,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../lib/frameworks";
+				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1730,7 +1734,7 @@
 				PRODUCT_NAME = TwoScene;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../lib/cocos2d/x/include/cocos/2d/platform/ios $(SRCROOT)/../lib/cocos2d/x/include/external/spidermonkey/include/ios";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../lib/cocos2d/x/include/cocos/platform/ios $(SRCROOT)/../lib/cocos2d/x/include/external/spidermonkey/include/ios";
 			};
 			name = Debug;
 		};
@@ -1753,7 +1757,7 @@
 				PRODUCT_NAME = TwoScene;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../lib/cocos2d/x/include/cocos/2d/platform/ios $(SRCROOT)/../lib/cocos2d/x/include/external/spidermonkey/include/ios";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../lib/cocos2d/x/include/cocos/platform/ios $(SRCROOT)/../lib/cocos2d/x/include/external/spidermonkey/include/ios";
 			};
 			name = Release;
 		};

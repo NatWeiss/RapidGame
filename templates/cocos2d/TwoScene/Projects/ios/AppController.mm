@@ -92,4 +92,3 @@ void __openURL(const char* urlCstr)
 	}
 
 @end
-

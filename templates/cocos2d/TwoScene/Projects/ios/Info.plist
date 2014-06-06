@@ -63,5 +63,18 @@
 	<array>
 		<string>Assets/DolceVita.ttf</string>
 	</array>
+	<key>FacebookAppID</key>
+	<string>MyFacebookAppID</string>
+	<key>FacebookDisplayName</key>
+	<string>TwoScene</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>fbMyFacebookAppID</string>
+			</array>
+		</dict>
+	</array>
 </dict>
 </plist>

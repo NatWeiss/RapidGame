@@ -27,7 +27,8 @@
 
 	"strings": {
 		"en": {
-			"title": "TwoScene"
+			"title": "TwoScene",
+			"you-are-player-number": "Your magic number is %d."
 		}
 	},
 	
