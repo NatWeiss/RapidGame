@@ -153,9 +153,15 @@ Ready to code? Start with the <code>main.lua</code> file.</p>
         
         <p>If you are just using Cocos2D X or you have your own custom project layout, you can still use the prebuilt libraries. Use this command to create a symlink to the libraries directory:</p>
 <p>cd MyGame &amp;&amp; rapidgame init .</p>
-<p>Then setup your Xcode target to reference the libraries and headers. Example:</p>
-<p>LIBRARY_SEARCH_PATHS = $(SRCROOT)/../lib/cocos2d/x/lib/$(CONFIGURATION)-iOS/$(PLATFORM_NAME)
-USER_HEADER_SEARCH_PATHS = $(inherited) $(SRCROOT)/../lib/cocos2d/x/include/cocos …</p>
+<p>Then setup your Xcode target to reference the headers. Example:</p>
+<p>USER_HEADER_SEARCH_PATHS = $(inherited)
+$(SRCROOT)/../lib/cocos2d/x/include/cocos
+$(SRCROOT)/../lib/cocos2d/x/include/cocos/2d
+…</p>
+<p>And the libraries:</p>
+<p>LIBRARY_SEARCH_PATHS = $(SRCROOT)/../lib/cocos2d/x/lib/$(CONFIGURATION)-iOS/$(PLATFORM_NAME)</p>
+<p>Then link with the library:</p>
+<p>OTHER_LDFLAGS = -lcocos2dx-prebuilt</p>
 <h2 id="create-your-own-templates">Create Your Own Templates</h2>
 
         
@@ -176,13 +182,6 @@ USER_HEADER_SEARCH_PATHS = $(inherited) $(SRCROOT)/../lib/cocos2d/x/include/coco
 <li><p>Your template is now ready for testing. Try it out like this: <code>rapidgame create &lt;engine&gt; MyNewGame com.mycompany.mynewgame -t &quot;Zombie Matrix&quot;</code>.</p>
 </li>
 </ol>
-<h2 id="project-status">Project Status</h2>
-
-        
-      
-        
-        <p>The <code>rapidgame</code> command runs on Mac or Linux. Windows support is planned.</p>
-<p>Cocos2D JS win32 and linux project files are planned.</p>
 <h2 id="contributing">Contributing</h2>
 
         

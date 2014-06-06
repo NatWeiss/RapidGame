@@ -23,6 +23,13 @@
               
                 
                 <li>
+                  <a class="source" href="README.html">
+                    README.md
+                  </a>
+                </li>
+              
+                
+                <li>
                   <a class="source" href="GameScene.html">
                     GameScene.js
                   </a>
@@ -46,13 +53,6 @@
                 <li>
                   <a class="source" href="server.html">
                     server.js
-                  </a>
-                </li>
-              
-                
-                <li>
-                  <a class="source" href="README.html">
-                    README.md
                   </a>
                 </li>
               
@@ -68,17 +68,36 @@
         
       
         
-        <p>A simple Node.js game server that sends static files as requested.</p>
+        <p>A simple Node.js game server that:</p>
+<ol>
+<li>Sends static files as requested.</li>
+<li>Provides a basic API to game clients.</li>
+</ol>
+<p>Keep it running on your own host using <a href="http://blog.nodejitsu.com/keep-a-nodejs-server-up-with-forever/">forever</a>. Remember the -g option on install.</p>
 
         
-          <div class='highlight'><pre><span class="hljs-keyword">var</span> express = <span class="hljs-built_in">require</span>(<span class="hljs-string">"express"</span>),
+      
+        
+        <h3 id="setup">Setup</h3>
+
+        
+          <div class='highlight'><pre><span class="hljs-keyword">var</span> config = {},
+	express = <span class="hljs-built_in">require</span>(<span class="hljs-string">"express"</span>),
 	fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">"fs"</span>),
 	path = <span class="hljs-built_in">require</span>(<span class="hljs-string">"path"</span>),
 	server = express(),
-	port = <span class="hljs-number">8000</span>,
-	protocolHttp = server.listen(port);
+	port = config.serverPort || <span class="hljs-number">8000</span>,
+	protocolHttp = server.listen(port),
+	self = {};
+console.log(<span class="hljs-string">"Started server on port: "</span> + port);</pre></div>
+        
+      
+        
+        <h3 id="static-files">Static Files</h3>
+<p>Serve static files as requested.</p>
 
-server.use(<span class="hljs-string">"/"</span>, express.static(__dirname + <span class="hljs-string">"/../Projects/html/"</span>));
+        
+          <div class='highlight'><pre>server.use(<span class="hljs-string">"/"</span>, express.static(__dirname + <span class="hljs-string">"/../Projects/html/"</span>));
 server.use(<span class="hljs-string">"/project.json"</span>, express.static(__dirname + <span class="hljs-string">"/../project.json"</span>));
 server.use(<span class="hljs-string">"/lib/"</span>, express.static(__dirname + <span class="hljs-string">"/../lib/"</span>));
 server.use(<span class="hljs-string">"/Assets/"</span>, express.static(__dirname + <span class="hljs-string">"/../Assets/"</span>));
@@ -91,9 +110,19 @@ server.get(<span class="hljs-string">"/project.json"</span>, <span class="hljs-f
 	} <span class="hljs-keyword">catch</span>(e) {
 		console.log(<span class="hljs-string">"Error reading project.json"</span>);
 	}
-});
+});</pre></div>
+        
+      
+        
+        <h3 id="public-api">Public API</h3>
+<p>Provide <code>api/counter</code> which increments the visitor number and returns it.</p>
 
-console.log(<span class="hljs-string">"Started server on port: "</span> + port);</pre></div>
+        
+          <div class='highlight'><pre>self.counter = <span class="hljs-number">0</span>;
+server.get(<span class="hljs-string">"/api/counter"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(req,res)</span>{</span>
+	self.counter = self.counter + <span class="hljs-number">1</span>;
+	res.send(self.counter + <span class="hljs-string">""</span>);
+});</pre></div>
         
       
 
@@ -101,6 +130,13 @@ console.log(<span class="hljs-string">"Started server on port: "</span> + port);
           <div>
             <h4>Table of Contents</h4>
             <ol>
+              
+                
+                <li>
+                  <a class="source" href="README.html">
+                    README.md
+                  </a>
+                </li>
               
                 
                 <li>
@@ -127,13 +163,6 @@ console.log(<span class="hljs-string">"Started server on port: "</span> + port);
                 <li>
                   <a class="source" href="server.html">
                     server.js
-                  </a>
-                </li>
-              
-                
-                <li>
-                  <a class="source" href="README.html">
-                    README.md
                   </a>
                 </li>
               

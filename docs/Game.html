@@ -23,6 +23,13 @@
               
                 
                 <li>
+                  <a class="source" href="README.html">
+                    README.md
+                  </a>
+                </li>
+              
+                
+                <li>
                   <a class="source" href="GameScene.html">
                     GameScene.js
                   </a>
@@ -46,13 +53,6 @@
                 <li>
                   <a class="source" href="server.html">
                     server.js
-                  </a>
-                </li>
-              
-                
-                <li>
-                  <a class="source" href="README.html">
-                    README.md
                   </a>
                 </li>
               
@@ -484,6 +484,16 @@
         
       
         
+        <h3 id="game-stopmusic">Game.stopMusic</h3>
+<p>Stop music.</p>
+
+        
+          <div class='highlight'><pre>Game.stopMusic = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+	cc.audioEngine.stopMusic();
+};</pre></div>
+        
+      
+        
         <h3 id="game-startphysics">Game.startPhysics</h3>
 <p>Start the physics engine.</p>
 
@@ -575,6 +585,7 @@
         
           <div class='highlight'><pre>Game.boot = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(global)</span> {</span>
 	cc.loader.resPath = cc.game.config.resourcePath;
+
 	<span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.isHtml5()) {
 		Game.setCanvasSize();
 		Game.setCanvasSize(document.getElementById(<span class="hljs-string">"gameDiv"</span>),
@@ -587,7 +598,7 @@
 	}
 
 	<span class="hljs-comment">/*setTimeout(function(){cc.log("Confirmed setTimeout() works");}, 3333);*/</span>
-
+	
 	<span class="hljs-comment">/* Embed the equivalent of main.js for faster loading. */</span>
 	cc.game.onStart = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
 		Game.main();
@@ -656,6 +667,10 @@
 	} <span class="hljs-keyword">else</span> {
 		Game.config[<span class="hljs-string">"font"</span>] = cc.loader.resPath + <span class="hljs-string">"/"</span> + Game.config[<span class="hljs-string">"font"</span>] + <span class="hljs-string">".ttf"</span>;
 	}
+	
+	<span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> Game.initPro === <span class="hljs-string">"function"</span>) {
+		Game.initPro();
+	}
 
 	<span class="hljs-comment">/* Preload. */</span>
 	cc.LoaderScene.preload(Game.getResourcesToPreload(), Game.runInitialScene, <span class="hljs-keyword">this</span>);
@@ -675,6 +690,13 @@
           <div>
             <h4>Table of Contents</h4>
             <ol>
+              
+                
+                <li>
+                  <a class="source" href="README.html">
+                    README.md
+                  </a>
+                </li>
               
                 
                 <li>
@@ -701,13 +723,6 @@
                 <li>
                   <a class="source" href="server.html">
                     server.js
-                  </a>
-                </li>
-              
-                
-                <li>
-                  <a class="source" href="README.html">
-                    README.md
                   </a>
                 </li>
               

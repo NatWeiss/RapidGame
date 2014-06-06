@@ -139,14 +139,6 @@ It's possible to create your own game templates. Here's the step-by-step instruc
  6. Your template is now ready for testing. Try it out like this: `rapidgame create <engine> MyNewGame com.mycompany.mynewgame -t "Zombie Matrix" `.
 
 
-Project Status
---------------
-
-The `rapidgame` command runs on Mac or Linux. Windows support is planned.
-
-Cocos2D JS win32 and linux project files are planned.
-
-
 Contributing
 ------------
 
