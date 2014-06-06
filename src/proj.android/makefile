@@ -1,5 +1,7 @@
 SHELL=/bin/bash
 
+all:
+	./build.sh
 clean:
 	rm -rf libs
 	rm -rf obj

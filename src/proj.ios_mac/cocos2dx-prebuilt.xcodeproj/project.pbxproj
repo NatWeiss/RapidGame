@@ -339,7 +339,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "outputDir=\"${SRCROOT}/../../cocos2d/x/lib/${CONFIGURATION}-iOS/${PLATFORM_NAME}\"\necho \"outputDir=$outputDir\"\nmkdir -p \"${outputDir}\"\n\nlibName=\"lib${PROJECT_NAME}.a\"\ntag=\"${CONFIGURATION}-${PLATFORM_NAME}\"\nlibtool -static -o ${outputDir}/${libName} ${BUILD_DIR}/${tag}/*.a\n";
+			shellScript = "outputDir=\"${SRCROOT}/../../latest/cocos2d/x/lib/${CONFIGURATION}-iOS/${PLATFORM_NAME}\"\necho \"outputDir=$outputDir\"\nmkdir -p \"${outputDir}\"\n\nlibName=\"lib${PROJECT_NAME}.a\"\ntag=\"${CONFIGURATION}-${PLATFORM_NAME}\"\nlibtool -static -o ${outputDir}/${libName} ${BUILD_DIR}/${tag}/*.a\n";
 		};
 		419E8E9E18A9BB3400232A34 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -352,7 +352,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "outputDir=\"${SRCROOT}/../../cocos2d/x/lib/${CONFIGURATION}-Mac/${PLATFORM_NAME}\"\necho \"outputDir=$outputDir\"\nmkdir -p \"${outputDir}\"\n\nlibName=\"lib${PROJECT_NAME}.a\"\ntag=\"${CONFIGURATION}\"\nlibtool -static -o ${outputDir}/${libName} ${BUILD_DIR}/${tag}/*.a\n";
+			shellScript = "outputDir=\"${SRCROOT}/../../latest/cocos2d/x/lib/${CONFIGURATION}-Mac/${PLATFORM_NAME}\"\necho \"outputDir=$outputDir\"\nmkdir -p \"${outputDir}\"\n\nlibName=\"lib${PROJECT_NAME}.a\"\ntag=\"${CONFIGURATION}\"\nlibtool -static -o ${outputDir}/${libName} ${BUILD_DIR}/${tag}/*.a\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

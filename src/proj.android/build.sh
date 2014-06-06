@@ -105,7 +105,7 @@ fi
 src=$(cd ${src}; pwd)
 echo "SRC=${src}"
 
-dest=../../cocos2d/x/lib/${config}-Android/${arch}
+dest=../../latest/cocos2d/x/lib/${config}-Android/${arch}
 mkdir -p ${dest}
 dest=$(cd ${dest}; pwd)
 echo "DEST=${dest}"

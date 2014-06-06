@@ -1,6 +1,6 @@
 {
   "name": "rapidgame",
-  "version": "0.8.7",
+  "version": "0.8.8",
   "description": "A templating system for rapidly creating cross-platform games with Cocos2D-JS, Unity, Corona and Titanium.",
   "author": {
     "name": "Nat Weiss",
@@ -17,7 +17,8 @@
   "license": "MIT",
   "os": [
     "darwin",
-    "linux"
+    "linux",
+    "win32"
   ],
   "preferGlobal": true,
   "keywords": [
@@ -37,6 +38,7 @@
     "path-extra": "~0.2.0",
     "replace": "~0.2.9",
     "universal-analytics": "^0.3.4",
+    "winreg": "0.0.12",
     "wrench": "^1.5.8"
   },
   "main": "./rapidgame",
@@ -47,7 +49,6 @@
     "bin",
     "package.json",
     "rapidgame.js",
-    "prebuild.sh",
     "templates",
     "docs",
     "docs.html",
