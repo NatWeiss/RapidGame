@@ -22,8 +22,8 @@
 		4110F72618C7ED7F004E9231 /* Icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4110F71818C7ED7F004E9231 /* Icon-72@2x.png */; };
 		4110F72718C7ED7F004E9231 /* Icon-76.png in Resources */ = {isa = PBXBuildFile; fileRef = 4110F71918C7ED7F004E9231 /* Icon-76.png */; };
 		4110F72818C7ED7F004E9231 /* Icon-76@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4110F71A18C7ED7F004E9231 /* Icon-76@2x.png */; };
-		412F317F192330CB007F51FD /* jsb in Resources */ = {isa = PBXBuildFile; fileRef = 412F317E192330CB007F51FD /* jsb */; };
-		412F3180192330CB007F51FD /* jsb in Resources */ = {isa = PBXBuildFile; fileRef = 412F317E192330CB007F51FD /* jsb */; };
+		411C1A78199D692E001D212A /* script in Resources */ = {isa = PBXBuildFile; fileRef = 411C1A77199D692E001D212A /* script */; };
+		411C1A79199D692E001D212A /* script in Resources */ = {isa = PBXBuildFile; fileRef = 411C1A77199D692E001D212A /* script */; };
 		412F3377192C36D2007F51FD /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 412F3375192C36D2007F51FD /* AppDelegate.cpp */; };
 		412F3378192C36D2007F51FD /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 412F3375192C36D2007F51FD /* AppDelegate.cpp */; };
 		412F337A192C36E1007F51FD /* project.json in Resources */ = {isa = PBXBuildFile; fileRef = 412F3379192C36E1007F51FD /* project.json */; };
@@ -97,7 +97,7 @@
 		4110F71818C7ED7F004E9231 /* Icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72@2x.png"; sourceTree = "<group>"; };
 		4110F71918C7ED7F004E9231 /* Icon-76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-76.png"; sourceTree = "<group>"; };
 		4110F71A18C7ED7F004E9231 /* Icon-76@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-76@2x.png"; sourceTree = "<group>"; };
-		412F317E192330CB007F51FD /* jsb */ = {isa = PBXFileReference; lastKnownFileType = folder; name = jsb; path = ../lib/cocos2d/x/jsb; sourceTree = "<group>"; };
+		411C1A77199D692E001D212A /* script */ = {isa = PBXFileReference; lastKnownFileType = folder; name = script; path = ../../../../0.8.9/cocos2d/x/script; sourceTree = "<group>"; };
 		412F3181192330E3007F51FD /* AUTHORS.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = AUTHORS.txt; sourceTree = "<group>"; };
 		412F3182192330E3007F51FD /* Base64Images.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = Base64Images.js; sourceTree = "<group>"; };
 		412F3183192330E3007F51FD /* CCBoot.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = CCBoot.js; sourceTree = "<group>"; };
@@ -1269,7 +1269,7 @@
 				41301001191D7AE800DA3406 /* html */,
 				4152B88118949C3E00BEF730 /* ios */,
 				41F1A4D81894BBA8006E818E /* mac */,
-				412F317E192330CB007F51FD /* jsb */,
+				411C1A77199D692E001D212A /* script */,
 				4152B64E1894756E00BEF730 /* frameworks */,
 				A922753E1517C094001B78AA /* Products */,
 			);
@@ -1399,8 +1399,8 @@
 		A92275321517C094001B78AA = {
 			isa = PBXGroup;
 			children = (
-				412F3375192C36D2007F51FD /* AppDelegate.cpp */,
 				412F3376192C36D2007F51FD /* AppDelegate.h */,
+				412F3375192C36D2007F51FD /* AppDelegate.cpp */,
 				412F3379192C36E1007F51FD /* project.json */,
 				412F337C192C3712007F51FD /* Assets */,
 				412F337F192C37C4007F51FD /* Projects */,
@@ -1486,8 +1486,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				411C1A79199D692E001D212A /* script in Resources */,
 				41F1A4E81894BBE3006E818E /* Icon.icns in Resources */,
-				412F3180192330CB007F51FD /* jsb in Resources */,
 				41F1A4BC1894BB33006E818E /* Default-568h@2x.png in Resources */,
 				412F337B192C36E1007F51FD /* project.json in Resources */,
 				41F1A4E71894BBE3006E818E /* MainMenu.xib in Resources */,
@@ -1503,9 +1503,9 @@
 				4110F71F18C7ED7F004E9231 /* Icon-50.png in Resources */,
 				412F337D192C3712007F51FD /* Assets in Resources */,
 				4110F72618C7ED7F004E9231 /* Icon-72@2x.png in Resources */,
+				411C1A78199D692E001D212A /* script in Resources */,
 				41F1A3E11894BA38006E818E /* Default-568h@2x.png in Resources */,
 				4110F71B18C7ED7F004E9231 /* Icon-29.png in Resources */,
-				412F317F192330CB007F51FD /* jsb in Resources */,
 				4110F72418C7ED7F004E9231 /* Icon-60@2x.png in Resources */,
 				4110F72118C7ED7F004E9231 /* Icon-57.png in Resources */,
 				4110F72018C7ED7F004E9231 /* Icon-50@2x.png in Resources */,

@@ -17,7 +17,7 @@ var http = require("http"),
 	packageJson = JSON.parse(fs.readFileSync(path.join(__dirname, "package.json"))),
 	cmdName = packageJson.name,
 	version = packageJson.version,
-	cocos2djsUrl = "http://cdn.cocos2d-x.org/cocos2d-js-v3.0-beta.zip", // "http://www.cocos2d-x.org/filedown/cocos2d-js-v3.0-beta.zip
+	cocos2djsUrl = "http://www.cocos2d-x.org/filedown/cocos2d-js-v3.0-rc2.zip",
 	cocos2dDirGlob = "*ocos2d-js*",
 	category,
 	engines = [],
@@ -395,6 +395,9 @@ var downloadCocos = function(callback) {
 	if (dirExists(src)) {
 		console.log("WARNING: Directory " + src + " may prevent cocos2d-js from being patched with git apply");
 	}
+	
+	// copy latest patch
+	copyGlobbed(path.join(__dirname, "src"), dir, "*.patch");
 
 	// download
 	downloadUrl(cocos2djsUrl, dir, function(success) {
@@ -452,7 +455,7 @@ var setupPrebuild = function(platform, callback) {
 	// reset cocos2d dir
 	ver = path.join(cmd.prefix, version);
 	dest = path.join(ver, "cocos2d");
-	files = ["html", path.join("x", "include"), path.join("x", "java"), path.join("x", "jsb")];
+	files = ["html", path.join("x", "include"), path.join("x", "java"), path.join("x", "script")];
 	try {
 		for (i = 0; i < files.length; i += 1) {
 			src = path.join(dest, files[i]);
@@ -505,7 +508,7 @@ var setupPrebuild = function(platform, callback) {
 	}
 
 	// jsb
-	dest = path.join(ver, "cocos2d", "x", "jsb");
+	dest = path.join(ver, "cocos2d", "x", "script");
 	src = path.join(frameworks, "js-bindings", "bindings", "script");
 	copyGlobbed(src, dest, '*.js');
 	src = path.join(frameworks, "js-bindings", "bindings", "auto", "api");
@@ -1354,12 +1357,12 @@ module.exports = {
 To make a Cocos2d patch:
 
 	cd /tmp
-	cp -r ~/Downloads/cocos2d-js-v3.0-beta .
-	cd cocos2d-js-v3.0-beta
+	cp -r ~/path/to/cocos2d-js-latest .
+	cd cocos2d-js-latest
 	git init .
 	git add *
 	git commit -a
-	cp -r ~/code/RapidGamePro/src/cocos2d-js/* .
+	cp -r ~/path/to/cocos2d-js-patched/* .
 	git diff > patch
 	git diff --staged --binary >> patch
 

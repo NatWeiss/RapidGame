@@ -52,14 +52,12 @@ bool AppDelegate::applicationDidFinishLaunching()
 
 	// set search paths
 	auto fileUtils = FileUtils::getInstance();
-	std::vector<std::string> searchPaths;
 	const char* paths[] =
 	{
-		"jsb",
+		"script",
 	};
 	for(auto& path : paths)
-		searchPaths.push_back(path);
-	fileUtils->setSearchPaths(searchPaths);
+		fileUtils->addSearchPath(path);
 
 	// setup jsb
 	auto sc = ScriptingCore::getInstance();
