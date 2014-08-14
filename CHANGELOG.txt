@@ -1,3 +1,8 @@
+Version 0.8.9 - August 14, 2014
+
+	Upgraded to Cocos2d JS 3.0 RC2 (Cocos2d-X 3.2).
+	Prebuild now copies latest cocos2d.patch so an outdated one is not accidentally used.
+
 Version 0.8.8 - June 5, 2014
 
 	Upgraded to Cocos2d X 3.1 / Cocos2d JS 3.0 beta
