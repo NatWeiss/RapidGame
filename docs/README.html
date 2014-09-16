@@ -6,11 +6,13 @@
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <link rel="stylesheet" media="all" href="public/stylesheets/normalize.css" />
   <link rel="stylesheet" media="all" href="docco.css" />
+  <meta name="robots" content="noindex">
 </head>
 <body>
   <div class="container">
     <div class="page">
-
+		<h2 class="title">Wizard Fu's RapidGame &amp; RapidGamePro</h2>
+		<h2 class="contact"><a href="mailto:&#119;&#105;&#122;&#97;&#114;&#100;&#64;&#119;&#105;&#122;&#97;&#114;&#100;&#102;&#117;&#46;&#99;&#111;&#109;">&#119;&#105;&#122;&#97;&#114;&#100;&#64;&#119;&#105;&#122;&#97;&#114;&#100;&#102;&#117;&#46;&#99;&#111;&#109;</a></h2>
       <div class="header">
         
           
@@ -20,47 +22,8 @@
         
 
         
-          <div class="toc">
-            <h3>Table of Contents</h3>
-            <ol>
-              
-                
-                <li>
-                  <a class="source" href="README.html">
-                    README.md
-                  </a>
-                </li>
-              
-                
-                <li>
-                  <a class="source" href="GameScene.html">
-                    GameScene.js
-                  </a>
-                </li>
-              
-                
-                <li>
-                  <a class="source" href="MenuScene.html">
-                    MenuScene.js
-                  </a>
-                </li>
-              
-                
-                <li>
-                  <a class="source" href="Game.html">
-                    Game.js
-                  </a>
-                </li>
-              
-                
-                <li>
-                  <a class="source" href="server.html">
-                    server.js
-                  </a>
-                </li>
-              
-            </ol>
-          </div>
+			<div class="toc"><a href="#toc">Jump to Table of Contents</a></div>
+          
         
       </div>
 
@@ -73,6 +36,14 @@
 </li>
 <li><p>Prebuilds libraries for Cocos2D X that virtually eliminate build, compile and link time, saving in aggregate hours during development, and allowing for a more rapid development cycle without having to wait - hence the name RapidGame.</p>
 </li>
+</ul>
+<h2 id="updates">Updates</h2>
+
+        
+      
+        
+        <ul>
+<li>Aug 14, 2014: Prebuilder updated for Cocos2d JS 3.0 rc2 / Cocos2d-x 3.2.</li>
 </ul>
 <h2 id="eliminate-grunt-work">Eliminate Grunt Work</h2>
 
@@ -99,18 +70,24 @@
 <li>HTTP game servers (HTML5-based platforms)</li>
 </ol>
 <p>The project creator makes a copy of one of the templates, does a search and replace on the game title &amp; package name, then installs any required modules. Viola. Your own rapidly-created game ready to go. Here’s some example output from running the project creator:</p>
-<p>$ rapidgamepro create Corona “Sword Ball” org.myorg.swordball
+
+        
+          <div class='highlight'><pre>$ rapidgamepro create Corona <span class="hljs-string">"Sword Ball"</span> org.myorg.swordball
 Rapidly creating a game
-Engine: Corona
-Template: TwoScene
+<span class="hljs-attribute">Engine</span>: Corona
+<span class="hljs-attribute">Template</span>: TwoScene
 Copying project files
-Setting project name: Sword Ball
-Setting package name: org.myorg.swordball
-Done</p>
-<p>Congratulations on creating a Corona game!
-Run it by opening the <code>main.lua</code> file in the Corona Simulator.
-Ready to code? Start with the <code>main.lua</code> file.</p>
-<p>The library prebuilder creates static libraries that virtually eliminate build times for the Cocos2D X engine (the native portion of Cocos2D JS). With hundreds of source files to be compiled, building Cocos2D X for just one platform can take at least five minutes. This can be a real time sink, especially when switching from the simulator to device triggers a rebuild.</p>
+Setting project <span class="hljs-attribute">name</span>: Sword Ball
+Setting package <span class="hljs-attribute">name</span>: org.myorg.swordball
+Done
+
+  Congratulations <span class="hljs-literal">on</span> creating a Corona game!
+  Run it <span class="hljs-keyword">by</span> opening the `<span class="javascript">main.lua</span>` file <span class="hljs-keyword">in</span> the Corona Simulator.
+  Ready to code? Start <span class="hljs-reserved">with</span> the `<span class="javascript">main.lua</span>` file.</pre></div>
+        
+      
+        
+        <p>The library prebuilder creates static libraries that virtually eliminate build times for the Cocos2D X engine (the native portion of Cocos2D JS). With hundreds of source files to be compiled, building Cocos2D X for just one platform can take at least five minutes. This can be a real time sink, especially when switching from the simulator to device triggers a rebuild.</p>
 <p>The prebuilder automatically downloads the latest Cocos2D JS, patches it to ensure that it is bug-free, then prebuilds Cocos2D X for all possible platforms, configurations and architectures. It is then possible to compile and link native Cocos2D X games in seconds. Even better, the project creator will absolutely symlink to the location of the prebuilt libraries so your game projects stay lightweight and can be moved easily.</p>
 <h2 id="create-a-game-in-under-30-seconds">Create a Game in Under 30 Seconds</h2>
 
@@ -119,14 +96,34 @@ Ready to code? Start with the <code>main.lua</code> file.</p>
         
         <p>You’ll first need <a href="http://nodejs.org/download/">Node.js</a> and <a href="http://git-scm.com/downloads">Git</a>.</p>
 <p>There’s no need to clone this repo, just install RapidGame:</p>
-<p>sudo npm install rapidgame -g</p>
-<p>And, create a Unity game named “Zombie Matrix”:</p>
-<p>rapidgame create unity “Zombie Matrix” com.myompany.zombiematrix</p>
-<p>Or, a Cocos2D JS game named “Heck Yeah”:</p>
-<p>rapidgame create cocos2d “Heck Yeah” org.myorg.heckyeah</p>
-<p>For usage instructions:</p>
-<p>rapidgame —help</p>
-<h2 id="pro-version">Pro Version</h2>
+
+        
+          <div class='highlight'><pre>sudo <span class="hljs-built_in">npm</span> install rapidgame -g</pre></div>
+        
+      
+        
+        <p>And, create a Unity game named “Zombie Matrix”:</p>
+
+        
+          <div class='highlight'><pre>rapidgame create unity <span class="hljs-string">"Zombie Matrix"</span> com.myompany.zombiematrix</pre></div>
+        
+      
+        
+        <p>Or, a Cocos2D JS game named “Heck Yeah”:</p>
+
+        
+          <div class='highlight'><pre>rapidgame create cocos2d <span class="hljs-string">"Heck Yeah"</span> org.myorg.heckyeah</pre></div>
+        
+      
+        
+        <p>For usage instructions:</p>
+
+        
+          <div class='highlight'><pre>rapidgame --help</pre></div>
+        
+      
+        
+        <h2 id="pro-version">Pro Version</h2>
 
         
       
@@ -144,25 +141,50 @@ Ready to code? Start with the <code>main.lua</code> file.</p>
       
         
         <p>The command to prebuild Cocos2D X static libraries used by Cocos2D JS on native platforms:</p>
-<p>rapidgame prebuild</p>
-<p>When the command is finished, you’ll have a directory (<code>~/Library/Developer/RapidGame</code> on Macs) with include files, java files, make files, Javascript bindings and library files for iOS, Mac and Android in Debug and Release mode for all available architectures.</p>
+
+        
+          <div class='highlight'><pre>rapidgame prebuild</pre></div>
+        
+      
+        
+        <p>When the command is finished, you’ll have a directory (<code>~/Library/Developer/RapidGame</code> on Macs) with include files, java files, make files, Javascript bindings and library files for iOS, Mac and Android in Debug and Release mode for all available architectures.</p>
 <h2 id="custom-cocos2d-projects">Custom Cocos2D Projects</h2>
 
         
       
         
         <p>If you are just using Cocos2D X or you have your own custom project layout, you can still use the prebuilt libraries. Use this command to create a symlink to the libraries directory:</p>
-<p>cd MyGame &amp;&amp; rapidgame init .</p>
-<p>Then setup your Xcode target to reference the headers. Example:</p>
-<p>USER_HEADER_SEARCH_PATHS = $(inherited)
-$(SRCROOT)/../lib/cocos2d/x/include/cocos
-$(SRCROOT)/../lib/cocos2d/x/include/cocos/2d
-…</p>
-<p>And the libraries:</p>
-<p>LIBRARY_SEARCH_PATHS = $(SRCROOT)/../lib/cocos2d/x/lib/$(CONFIGURATION)-iOS/$(PLATFORM_NAME)</p>
-<p>Then link with the library:</p>
-<p>OTHER_LDFLAGS = -lcocos2dx-prebuilt</p>
-<h2 id="create-your-own-templates">Create Your Own Templates</h2>
+
+        
+          <div class='highlight'><pre>cd MyGame &amp;&amp; rapidgame init .</pre></div>
+        
+      
+        
+        <p>Then setup your Xcode target to reference the headers. Example:</p>
+
+        
+          <div class='highlight'><pre>USER_HEADER_SEARCH_PATHS = $(inherited)
+	$(SRCROOT)/../lib/cocos2d/x/include/cocos
+	$(SRCROOT)/../lib/cocos2d/x/include/cocos/<span class="hljs-number">2</span>d
+	...</pre></div>
+        
+      
+        
+        <p>And the libraries:</p>
+
+        
+          <div class='highlight'><pre>LIBRARY_SEARCH_PATHS = $(SRCROOT)<span class="hljs-regexp">/../lib/cocos2d/x/lib/</span>$(CONFIGURATION)-iOS/$(PLATFORM_NAME)</pre></div>
+        
+      
+        
+        <p>Then link with the library:</p>
+
+        
+          <div class='highlight'><pre>OTHER_LDFLAGS = -lcocos2dx-prebuilt</pre></div>
+        
+      
+        
+        <h2 id="create-your-own-templates">Create Your Own Templates</h2>
 
         
       
@@ -199,16 +221,10 @@ $(SRCROOT)/../lib/cocos2d/x/include/cocos/2d
       
 
         
-          <div>
-            <h4>Table of Contents</h4>
+		  <a name="toc">&nbsp;</a>
+          <div id="bottom-toc">
+			<h3>Table of Contents</h3>
             <ol>
-              
-                
-                <li>
-                  <a class="source" href="README.html">
-                    README.md
-                  </a>
-                </li>
               
                 
                 <li>
@@ -233,8 +249,15 @@ $(SRCROOT)/../lib/cocos2d/x/include/cocos/2d
               
                 
                 <li>
-                  <a class="source" href="server.html">
-                    server.js
+                  <a class="source" href="Server.html">
+                    Server.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="README.html">
+                    README.litcoffee
                   </a>
                 </li>
               
@@ -245,5 +268,6 @@ $(SRCROOT)/../lib/cocos2d/x/include/cocos/2d
       <div class="fleur">h</div>
     </div>
   </div>
+
 </body>
 </html>

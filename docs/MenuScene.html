@@ -6,64 +6,29 @@
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <link rel="stylesheet" media="all" href="public/stylesheets/normalize.css" />
   <link rel="stylesheet" media="all" href="docco.css" />
+  <meta name="robots" content="noindex">
 </head>
 <body>
   <div class="container">
     <div class="page">
-
+		<h2 class="title">Wizard Fu's RapidGame &amp; RapidGamePro</h2>
+		<h2 class="contact"><a href="mailto:&#119;&#105;&#122;&#97;&#114;&#100;&#64;&#119;&#105;&#122;&#97;&#114;&#100;&#102;&#117;&#46;&#99;&#111;&#109;">&#119;&#105;&#122;&#97;&#114;&#100;&#64;&#119;&#105;&#122;&#97;&#114;&#100;&#102;&#117;&#46;&#99;&#111;&#109;</a></h2>
       <div class="header">
         
           <h1>MenuScene.js</h1>
         
 
         
-          <div class="toc">
-            <h3>Table of Contents</h3>
-            <ol>
-              
-                
-                <li>
-                  <a class="source" href="README.html">
-                    README.md
-                  </a>
-                </li>
-              
-                
-                <li>
-                  <a class="source" href="GameScene.html">
-                    GameScene.js
-                  </a>
-                </li>
-              
-                
-                <li>
-                  <a class="source" href="MenuScene.html">
-                    MenuScene.js
-                  </a>
-                </li>
-              
-                
-                <li>
-                  <a class="source" href="Game.html">
-                    Game.js
-                  </a>
-                </li>
-              
-                
-                <li>
-                  <a class="source" href="server.html">
-                    server.js
-                  </a>
-                </li>
-              
-            </ol>
-          </div>
+			<div class="toc"><a href="#toc">Jump to Table of Contents</a></div>
+          
         
       </div>
 
       
         
-        
+        <blockquote>
+<p>Created using <a href="http://wizardfu.com/rapidgame">RapidGame</a>. See the <code>LICENSE</code> file for the license governing this code.</p>
+</blockquote>
 
         
           <div class='highlight'><pre>
@@ -96,22 +61,14 @@
 		<span class="hljs-keyword">this</span>._super();
 
 		logoText = <span class="hljs-string">"TwoScene"</span>;
-		Game.playEffect(<span class="hljs-string">"Intro.mp3"</span>);</pre></div>
-        
-      
-        
-        <p>Background</p>
+		Game.playEffect(<span class="hljs-string">"Intro.mp3"</span>);
 
-        
-          <div class='highlight'><pre>		<span class="hljs-keyword">this</span>.bg = cc.LayerColor.create(cc.color(<span class="hljs-number">218</span>, <span class="hljs-number">214</span>, <span class="hljs-number">212</span>, <span class="hljs-number">255</span>));
-		<span class="hljs-keyword">this</span>.addChild(<span class="hljs-keyword">this</span>.bg, -<span class="hljs-number">1</span>);</pre></div>
-        
-      
-        
-        <p>Logo</p>
-
-        
-          <div class='highlight'><pre>		y = <span class="hljs-number">24</span>;
+		<span class="hljs-comment">// Background</span>
+		<span class="hljs-keyword">this</span>.bg = cc.LayerColor.create(cc.color(<span class="hljs-number">218</span>, <span class="hljs-number">214</span>, <span class="hljs-number">212</span>, <span class="hljs-number">255</span>));
+		<span class="hljs-keyword">this</span>.addChild(<span class="hljs-keyword">this</span>.bg, -<span class="hljs-number">1</span>);
+		
+		<span class="hljs-comment">// Logo</span>
+		y = <span class="hljs-number">24</span>;
 		<span class="hljs-keyword">this</span>.logo = cc.Sprite.create(<span class="hljs-string">"Logo.png"</span>);
 		<span class="hljs-keyword">this</span>.logo.setPosition(Game.centralize(<span class="hljs-number">0</span>, <span class="hljs-number">228</span>));
 		<span class="hljs-keyword">this</span>.addChild(<span class="hljs-keyword">this</span>.logo, <span class="hljs-number">1</span>);
@@ -119,37 +76,25 @@
 		<span class="hljs-keyword">this</span>.logo.runAction(cc.RepeatForever.create(cc.Sequence.create(
 			cc.EaseInOut.create(cc.MoveBy.create(<span class="hljs-number">2</span>, cc.p(<span class="hljs-number">0</span>, y)), <span class="hljs-number">1.2</span>),
 			cc.EaseInOut.create(cc.MoveBy.create(<span class="hljs-number">2</span>, cc.p(<span class="hljs-number">0</span>, -y)), <span class="hljs-number">1.2</span>)
-		)));</pre></div>
-        
-      
-        
-        <p>Title</p>
+		)));
 
-        
-          <div class='highlight'><pre>		<span class="hljs-keyword">this</span>.logoLabel = cc.LabelTTF.create(
+		<span class="hljs-comment">// Title</span>
+		<span class="hljs-keyword">this</span>.logoLabel = cc.LabelTTF.create(
 			Game.getLocalizedString(<span class="hljs-string">"title"</span>),
 			font,
 			<span class="hljs-number">200</span>
 		);
 		<span class="hljs-keyword">this</span>.logoLabel.setColor(cc.color(<span class="hljs-number">128</span>, <span class="hljs-number">128</span>, <span class="hljs-number">128</span>));
 		<span class="hljs-keyword">this</span>.logoLabel.setPosition(Game.centralize(<span class="hljs-number">0</span>, <span class="hljs-number">228</span>));
-		<span class="hljs-keyword">this</span>.addChild(<span class="hljs-keyword">this</span>.logoLabel, <span class="hljs-number">1</span>);</pre></div>
-        
-      
-        
-        <p>Menu</p>
+		<span class="hljs-keyword">this</span>.addChild(<span class="hljs-keyword">this</span>.logoLabel, <span class="hljs-number">1</span>);
 
-        
-          <div class='highlight'><pre>		<span class="hljs-keyword">this</span>.menu = cc.Menu.create();
+		<span class="hljs-comment">// Menu</span>
+		<span class="hljs-keyword">this</span>.menu = cc.Menu.create();
 		<span class="hljs-keyword">this</span>.menu.setPosition(cc.p());
-		<span class="hljs-keyword">this</span>.addChild(<span class="hljs-keyword">this</span>.menu, <span class="hljs-number">1</span>);</pre></div>
-        
-      
-        
-        <p>Buttons</p>
+		<span class="hljs-keyword">this</span>.addChild(<span class="hljs-keyword">this</span>.menu, <span class="hljs-number">1</span>);
 
-        
-          <div class='highlight'><pre>		<span class="hljs-keyword">this</span>.playLabel = cc.MenuItemFont.create(<span class="hljs-string">"Play"</span>, <span class="hljs-keyword">this</span>.onPlayButton, <span class="hljs-keyword">this</span>);
+		<span class="hljs-comment">// Buttons</span>
+		<span class="hljs-keyword">this</span>.playLabel = cc.MenuItemFont.create(<span class="hljs-string">"Play"</span>, <span class="hljs-keyword">this</span>.onPlayButton, <span class="hljs-keyword">this</span>);
 		<span class="hljs-keyword">this</span>.playLabel.setPosition(Game.centralize(<span class="hljs-number">0</span>, -<span class="hljs-number">400</span>));
 		<span class="hljs-keyword">this</span>.playLabel.setFontSize(<span class="hljs-number">120</span>);
 		<span class="hljs-keyword">this</span>.playLabel.setFontName(font);
@@ -170,16 +115,10 @@
       
 
         
-          <div>
-            <h4>Table of Contents</h4>
+		  <a name="toc">&nbsp;</a>
+          <div id="bottom-toc">
+			<h3>Table of Contents</h3>
             <ol>
-              
-                
-                <li>
-                  <a class="source" href="README.html">
-                    README.md
-                  </a>
-                </li>
               
                 
                 <li>
@@ -204,8 +143,15 @@
               
                 
                 <li>
-                  <a class="source" href="server.html">
-                    server.js
+                  <a class="source" href="Server.html">
+                    Server.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="README.html">
+                    README.litcoffee
                   </a>
                 </li>
               
@@ -216,5 +162,6 @@
       <div class="fleur">h</div>
     </div>
   </div>
+
 </body>
 </html>

@@ -6,64 +6,29 @@
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <link rel="stylesheet" media="all" href="public/stylesheets/normalize.css" />
   <link rel="stylesheet" media="all" href="docco.css" />
+  <meta name="robots" content="noindex">
 </head>
 <body>
   <div class="container">
     <div class="page">
-
+		<h2 class="title">Wizard Fu's RapidGame &amp; RapidGamePro</h2>
+		<h2 class="contact"><a href="mailto:&#119;&#105;&#122;&#97;&#114;&#100;&#64;&#119;&#105;&#122;&#97;&#114;&#100;&#102;&#117;&#46;&#99;&#111;&#109;">&#119;&#105;&#122;&#97;&#114;&#100;&#64;&#119;&#105;&#122;&#97;&#114;&#100;&#102;&#117;&#46;&#99;&#111;&#109;</a></h2>
       <div class="header">
         
           <h1>GameScene.js</h1>
         
 
         
-          <div class="toc">
-            <h3>Table of Contents</h3>
-            <ol>
-              
-                
-                <li>
-                  <a class="source" href="README.html">
-                    README.md
-                  </a>
-                </li>
-              
-                
-                <li>
-                  <a class="source" href="GameScene.html">
-                    GameScene.js
-                  </a>
-                </li>
-              
-                
-                <li>
-                  <a class="source" href="MenuScene.html">
-                    MenuScene.js
-                  </a>
-                </li>
-              
-                
-                <li>
-                  <a class="source" href="Game.html">
-                    Game.js
-                  </a>
-                </li>
-              
-                
-                <li>
-                  <a class="source" href="server.html">
-                    server.js
-                  </a>
-                </li>
-              
-            </ol>
-          </div>
+			<div class="toc"><a href="#toc">Jump to Table of Contents</a></div>
+          
         
       </div>
 
       
         
-        
+        <blockquote>
+<p>Created using <a href="http://wizardfu.com/rapidgame">RapidGame</a>. See the <code>LICENSE</code> file for the license governing this code.</p>
+</blockquote>
 
         
           <div class='highlight'><pre>
@@ -105,32 +70,20 @@
 		<span class="hljs-keyword">this</span>.x1 = Game.contentX + <span class="hljs-keyword">this</span>.wallThickness;
 		<span class="hljs-keyword">this</span>.x2 = <span class="hljs-keyword">this</span>.x1 + Game.contentWidth - <span class="hljs-keyword">this</span>.wallThickness * <span class="hljs-number">2</span>;
 		<span class="hljs-keyword">this</span>.y1 = Game.contentY + <span class="hljs-keyword">this</span>.wallThickness;
-		<span class="hljs-keyword">this</span>.y2 = <span class="hljs-keyword">this</span>.y1 + Game.contentHeight - <span class="hljs-keyword">this</span>.wallThickness * <span class="hljs-number">2</span>;</pre></div>
-        
-      
-        
-        <p>Stretched big background</p>
+		<span class="hljs-keyword">this</span>.y2 = <span class="hljs-keyword">this</span>.y1 + Game.contentHeight - <span class="hljs-keyword">this</span>.wallThickness * <span class="hljs-number">2</span>;
 
-        
-          <div class='highlight'><pre>		<span class="hljs-keyword">this</span>.bg2 = cc.LayerColor.create(cc.color(<span class="hljs-number">208</span>, <span class="hljs-number">204</span>, <span class="hljs-number">202</span>, <span class="hljs-number">255</span>));
+		<span class="hljs-comment">// Stretched big background</span>
+		<span class="hljs-keyword">this</span>.bg2 = cc.LayerColor.create(cc.color(<span class="hljs-number">208</span>, <span class="hljs-number">204</span>, <span class="hljs-number">202</span>, <span class="hljs-number">255</span>));
 		<span class="hljs-keyword">this</span>.bg2.scale = <span class="hljs-number">2</span>;
-		<span class="hljs-keyword">this</span>.addChild(<span class="hljs-keyword">this</span>.bg2, -<span class="hljs-number">1</span>);</pre></div>
-        
-      
-        
-        <p>Actual background</p>
+		<span class="hljs-keyword">this</span>.addChild(<span class="hljs-keyword">this</span>.bg2, -<span class="hljs-number">1</span>);
 
-        
-          <div class='highlight'><pre>		<span class="hljs-keyword">this</span>.bg = cc.LayerColor.create(cc.color(<span class="hljs-number">218</span>, <span class="hljs-number">214</span>, <span class="hljs-number">212</span>, <span class="hljs-number">255</span>), Game.contentWidth, Game.contentHeight);
+		<span class="hljs-comment">// Actual background</span>
+		<span class="hljs-keyword">this</span>.bg = cc.LayerColor.create(cc.color(<span class="hljs-number">218</span>, <span class="hljs-number">214</span>, <span class="hljs-number">212</span>, <span class="hljs-number">255</span>), Game.contentWidth, Game.contentHeight);
 		<span class="hljs-keyword">this</span>.bg.attr({x: Game.contentX, y: Game.contentY});
-		<span class="hljs-keyword">this</span>.addChild(<span class="hljs-keyword">this</span>.bg, <span class="hljs-number">0</span>);</pre></div>
-        
-      
-        
-        <p>Labels</p>
-
-        
-          <div class='highlight'><pre>		<span class="hljs-keyword">this</span>.scoreLabel = cc.LabelTTF.create(<span class="hljs-string">"Score: "</span> + Game.score.toString(), Game.config[<span class="hljs-string">"font"</span>], <span class="hljs-number">45</span>);
+		<span class="hljs-keyword">this</span>.addChild(<span class="hljs-keyword">this</span>.bg, <span class="hljs-number">0</span>);
+		
+		<span class="hljs-comment">// Labels</span>
+		<span class="hljs-keyword">this</span>.scoreLabel = cc.LabelTTF.create(<span class="hljs-string">"Score: "</span> + Game.score.toString(), Game.config[<span class="hljs-string">"font"</span>], <span class="hljs-number">45</span>);
 		<span class="hljs-keyword">this</span>.scoreLabel.setAnchorPoint(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>);
 		<span class="hljs-keyword">this</span>.scoreLabel.setPosition(<span class="hljs-keyword">this</span>.x1 + <span class="hljs-keyword">this</span>.labelPadding, <span class="hljs-keyword">this</span>.y2 - <span class="hljs-keyword">this</span>.labelPadding);
 		<span class="hljs-keyword">this</span>.scoreLabel.setColor(cc.color(<span class="hljs-number">128</span>, <span class="hljs-number">128</span>, <span class="hljs-number">128</span>));
@@ -151,73 +104,45 @@
 
 		<span class="hljs-keyword">if</span> (Game.config.playMusic) {
 			Game.playMusic(<span class="hljs-string">"Song.mp3"</span>);
-		}</pre></div>
-        
-      
-        
-        <p>Start physics</p>
-
-        
-          <div class='highlight'><pre>		Game.startPhysics(cc.p(<span class="hljs-number">0</span>, <span class="hljs-keyword">this</span>.gravity));</pre></div>
-        
-      
-        
-        <p>Walls</p>
-
-        
-          <div class='highlight'><pre>		walls = [
+		}
+		
+		<span class="hljs-comment">// Start physics</span>
+		Game.startPhysics(cc.p(<span class="hljs-number">0</span>, <span class="hljs-keyword">this</span>.gravity));
+		
+		<span class="hljs-comment">// Walls</span>
+		walls = [
 			Game.createPhysicsBox(<span class="hljs-keyword">this</span>.x1, <span class="hljs-keyword">this</span>.y1, <span class="hljs-keyword">this</span>.x2, Game.contentY, <span class="hljs-number">0.9</span>, <span class="hljs-number">0</span>, <span class="hljs-keyword">this</span>.collisionTypeWall), <span class="hljs-comment">// bottom</span>
 			Game.createPhysicsBox(<span class="hljs-keyword">this</span>.x1, <span class="hljs-keyword">this</span>.y2, <span class="hljs-keyword">this</span>.x2, <span class="hljs-keyword">this</span>.y2 + <span class="hljs-keyword">this</span>.wallThickness, <span class="hljs-number">0.9</span>, <span class="hljs-number">0</span>, <span class="hljs-keyword">this</span>.collisionTypeWall), <span class="hljs-comment">// top</span>
 			Game.createPhysicsBox(Game.contentX, Game.contentY, <span class="hljs-keyword">this</span>.x1, <span class="hljs-keyword">this</span>.y2 + <span class="hljs-keyword">this</span>.wallThickness, <span class="hljs-number">0.9</span>, <span class="hljs-number">0</span>, <span class="hljs-keyword">this</span>.collisionTypeWall), <span class="hljs-comment">// left</span>
 			Game.createPhysicsBox(<span class="hljs-keyword">this</span>.x2, Game.contentY, <span class="hljs-keyword">this</span>.x2 + <span class="hljs-keyword">this</span>.wallThickness, <span class="hljs-keyword">this</span>.y2 + <span class="hljs-keyword">this</span>.wallThickness, <span class="hljs-number">0.9</span>, <span class="hljs-number">0</span>, <span class="hljs-keyword">this</span>.collisionTypeWall) <span class="hljs-comment">// right</span>
-		];</pre></div>
-        
-      
-        
-        <p>Ball</p>
-
-        
-          <div class='highlight'><pre>		<span class="hljs-keyword">this</span>.ball = Game.createPhysicsSprite(<span class="hljs-string">"Ball.png"</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-literal">true</span>, <span class="hljs-keyword">this</span>.collisionTypeBall);
+		];
+	
+		<span class="hljs-comment">// Ball</span>
+		<span class="hljs-keyword">this</span>.ball = Game.createPhysicsSprite(<span class="hljs-string">"Ball.png"</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-literal">true</span>, <span class="hljs-keyword">this</span>.collisionTypeBall);
 		<span class="hljs-keyword">this</span>.ball.body.setPos(cp.v(Game.winSize.width * <span class="hljs-number">.5</span>, Game.winSize.height * <span class="hljs-number">.5</span>));
-		<span class="hljs-keyword">this</span>.addChild(<span class="hljs-keyword">this</span>.ball, <span class="hljs-number">1</span>);</pre></div>
-        
-      
-        
-        <p>Handle collision events</p>
-
-        
-          <div class='highlight'><pre>		Game.space.addCollisionHandler(<span class="hljs-keyword">this</span>.collisionTypeBall, <span class="hljs-keyword">this</span>.collisionTypeWall, <span class="hljs-literal">null</span>, <span class="hljs-literal">null</span>, <span class="hljs-literal">null</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(arbiter, space)</span>{</span>
+		<span class="hljs-keyword">this</span>.addChild(<span class="hljs-keyword">this</span>.ball, <span class="hljs-number">1</span>);
+		
+		<span class="hljs-comment">// Handle collision events</span>
+		Game.space.addCollisionHandler(<span class="hljs-keyword">this</span>.collisionTypeBall, <span class="hljs-keyword">this</span>.collisionTypeWall, <span class="hljs-literal">null</span>, <span class="hljs-literal">null</span>, <span class="hljs-literal">null</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(arbiter, space)</span>{</span>
 			Game.score += <span class="hljs-number">10</span>;
 			self.scoreLabel.setString(<span class="hljs-string">"Score: "</span> + Game.score);
 			Game.playEffect(<span class="hljs-string">"Wall.mp3"</span>);
-		});</pre></div>
-        
-      
-        
-        <p>Handle touch events</p>
-
-        
-          <div class='highlight'><pre>		Game.addTouchListeners(<span class="hljs-keyword">this</span>, <span class="hljs-keyword">this</span>.touchHandler);</pre></div>
-        
-      
-        
-        <p>World update</p>
-
-        
-          <div class='highlight'><pre>		<span class="hljs-keyword">this</span>.scheduleUpdate();
+		});
+		
+		<span class="hljs-comment">// Handle touch events</span>
+		Game.addTouchListeners(<span class="hljs-keyword">this</span>, <span class="hljs-keyword">this</span>.touchHandler);
+		
+		<span class="hljs-comment">// World update</span>
+		<span class="hljs-keyword">this</span>.scheduleUpdate();
 
 		<span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
 	},
 	
 	update: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(delta)</span> {</span>
-		Game.stepPhysics(delta);</pre></div>
-        
-      
-        
-        <p>Move ball sprite with body</p>
-
-        
-          <div class='highlight'><pre>		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.ball) {
+		Game.stepPhysics(delta);
+		
+		<span class="hljs-comment">// Move ball sprite with body</span>
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.ball) {
 			<span class="hljs-keyword">var</span> v = <span class="hljs-keyword">this</span>.ball.body.getPos();
 			v = cp.v(v.x, v.y);
 			<span class="hljs-keyword">this</span>.ball.setPosition(v);
@@ -245,16 +170,10 @@
       
 
         
-          <div>
-            <h4>Table of Contents</h4>
+		  <a name="toc">&nbsp;</a>
+          <div id="bottom-toc">
+			<h3>Table of Contents</h3>
             <ol>
-              
-                
-                <li>
-                  <a class="source" href="README.html">
-                    README.md
-                  </a>
-                </li>
               
                 
                 <li>
@@ -279,8 +198,15 @@
               
                 
                 <li>
-                  <a class="source" href="server.html">
-                    server.js
+                  <a class="source" href="Server.html">
+                    Server.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="README.html">
+                    README.litcoffee
                   </a>
                 </li>
               
@@ -291,5 +217,6 @@
       <div class="fleur">h</div>
     </div>
   </div>
+
 </body>
 </html>

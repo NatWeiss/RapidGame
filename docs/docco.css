@@ -1,36 +1,6 @@
 /*--------------------- Typography ----------------------------*/
 
 @font-face {
-    font-family: 'aller-light';
-    src: url('public/fonts/aller-light.eot');
-    src: url('public/fonts/aller-light.eot?#iefix') format('embedded-opentype'),
-         url('public/fonts/aller-light.woff') format('woff'),
-         url('public/fonts/aller-light.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'aller-bold';
-    src: url('public/fonts/aller-bold.eot');
-    src: url('public/fonts/aller-bold.eot?#iefix') format('embedded-opentype'),
-         url('public/fonts/aller-bold.woff') format('woff'),
-         url('public/fonts/aller-bold.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'novecento-bold';
-    src: url('public/fonts/novecento-bold.eot');
-    src: url('public/fonts/novecento-bold.eot?#iefix') format('embedded-opentype'),
-         url('public/fonts/novecento-bold.woff') format('woff'),
-         url('public/fonts/novecento-bold.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
     font-family: 'fleurons';
     src: url('public/fonts/fleurons.eot');
     src: url('public/fonts/fleurons.eot?#iefix') format('embedded-opentype'),
@@ -43,9 +13,8 @@
 /*--------------------- Base Styles ----------------------------*/
 
 body {
-  font-family: "aller-light";
-  background: url('public/images/gray.png') #fff;
-  background-size: 322px;
+  font-family: 'Helvetica Neue', Helvetica, sans-serif;
+  background: #fefdfc;
   margin: 0;
 }
 
@@ -56,10 +25,8 @@ hr {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  color: #112233;
+  color: #432;
   font-weight: normal;
-  font-family: "novecento-bold";
-  text-transform: uppercase;
   line-height: 1em;
   margin-top: 50px;
 }
@@ -68,29 +35,61 @@ h1, h2, h3, h4, h5, h6 {
     text-align: center;
   }
   h2 {
-    font-size: 1.3em;
+    font-size: 2em;
   }
   h3 {
     text-transform: none;
-    font-variant: small-caps;
-    font-size: 1.5em;
+    font-size: 2em;
   }
   h1:after {
     content: "8";
     display: block;
     font-family: "fleurons";
-    color: #999;
+    color: #ccc;
     font-size: 80px;
     padding: 10px 0 25px;
   }
 
+  .title, .contact, .title a, .contact a {
+    	color: #ccc;
+   }
+  .title, .contact {
+	  position: absolute;
+	  top: 0;
+	  font-size: 14px;
+	  margin: 0 0 30px 0;
+	text-align: left;
+  }
+  .title {
+	  left: 0;
+  	z-index: 1000;
+  }
+  .contact {
+	  position: absolute;
+	  top: 0;
+	  right: 0;
+	  text-align: right;
+	  width: 50%;
+  }
+  @media all and (max-width: 600px) {.contact {top: 1.5em;}}
+  .class-hierarchy {
+	  width: 900px;
+	  height: 545px;
+	  max-width: 90%;
+  }
+
 a {
-  color: #000;
+  color: #226;
 }
 
 b, strong {
   font-weight: normal;
-  font-family: "aller-bold";
+}
+
+img {
+	display: inline-block;
+	margin: 0 auto;
+	max-width: 100%;
 }
 
 blockquote {
@@ -100,19 +99,25 @@ blockquote {
 }
   .page blockquote p {
     font-family: Menlo, Consolas, Monaco, monospace;
-    font-size: 14px; line-height: 19px;
-    color: #999;
+    font-size: 13px; line-height: 20px;
+    color: #bbb;
     margin: 10px 0 0;
     white-space: pre-wrap;
+	font-weight: 100;
+  }
+  .page blockquote a {
+	  color: #bbb;
+	  font-weight: 200;
   }
 
 pre, tt, code {
-  font-family: Menlo, Consolas, Monaco, monospace;
+  font-family: Menlo, Consolas, Monaco, 'Courier New', monospace;
+  font-weight: normal;
   font-size: 12px;
   display: inline-block;
-  border: 1px solid #EAEAEA;
+  border: 1px solid #efefef;
   background: #f8f8f8;
-  color: #555;
+  color: #777;
   padding: 0 5px;
   line-height: 20px;
   tab-size: 3;
@@ -121,13 +126,19 @@ pre, tt, code {
 }
   .page pre {
     margin: 0;
-    width: 608px;
-    padding: 10px 15px;
-    background: #fcfcfc;
-    -moz-box-shadow:    inset 0 0 10px rgba(0,0,0,0.1);
-    -webkit-box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
-    box-shadow:         inset 0 0 10px rgba(0,0,0,0.1);
+    width: 100%;
+    padding: 15px 15px;
+    background: #f7f6f5;
+    -moz-box-shadow:    inset 0 2px 10px rgba(0,0,0,0.1);
+    -webkit-box-shadow: inset 0 2px 10px rgba(0,0,0,0.1);
+    box-shadow:         inset 0 2px 10px rgba(0,0,0,0.1);
     overflow-x: auto;
+	background: -webkit-linear-gradient(top, #f7f6f5 0%, #fcfbfa 100%), transparent;
+	background: -moz-linear-gradient(top, #f7f6f5 0%, #fcfbfa 100%), transparent;
+	background: -o-linear-gradient(top, #f7f6f5 0%, #fcfbfa 100%), transparent;
+	background: -ms-linear-gradient(top, #f7f6f5 0%, #fcfbfa 100%), transparent;
+	background: linear-gradient(top, #f7f6f5 0%, #fcfbfa 100%), transparent;
+
   }
     .page pre code {
       border: 0;
@@ -146,24 +157,30 @@ pre, tt, code {
 /*--------------------- Layout ----------------------------*/
 
 .container {
-  width: 760px;
+  width: 900px;
+  max-width: 90%;
   margin: 0 auto;
   background: #fff;
   background: rgba(255,255,255, 0.4);
   overflow: hidden;
 }
   .page {
-    width: 640px;
-    padding: 30px;
-    margin: 30px;
-    background: #fff;
+    position: relative;
+    padding: 60px 5%;
+    margin: 5%;
+/*	background: #fff;*/
     font-size: 17px;
     line-height: 26px;
+	font-weight: 300;
   }
-    .page p {
-      color: #30404f;
-      margin: 26px 0;
+    .page p, .page li {
+      color: #665647;
     }
+	.page p, .page ul, .page ol {
+        margin: 26px 0;
+	}
+
+	
 
 ul.sections {
   list-style: none;
@@ -196,14 +213,29 @@ ul.sections {
     display: inline-block;
     text-align: left;
     list-style-type: upper-roman;
+	color: #aaa;
   }
     .toc li {
-      font-family: 'novecento-bold';
     }
       .toc li a {
-        font-family: 'aller-light';
       }
 
+/*#bottom-toc {text-align: center;}*/
+#bottom-toc ol {
+  font-size: 0.8em;
+  list-style-type: upper-roman;
+  color: #aaa;
+}
+#bottom-toc div {
+	float: left;
+	width: 25%;
+}
+#bottom-toc p {
+	margin-top: 0;
+	color: #999;
+	font-weight: 200;
+}
+@media all and (max-width: 700px) {#bottom-toc div {float: none; width: 100%;}}
 
 /*---------------------- Syntax Highlighting -----------------------------*/
 
@@ -238,7 +270,6 @@ pre .hljs-javascript .hljs-title,
 pre .hljs-lisp .hljs-title,
 pre .hljs-subst {
   color: #954121;
-  /*font-weight: bold*/
 }
 
 pre .hljs-number,
@@ -321,7 +352,6 @@ pre .hljs-doctype,
 pre .hljs-shebang,
 pre .hljs-cdata {
   color: #999;
-  font-weight: bold
 }
 
 pre .hljs-deletion {
