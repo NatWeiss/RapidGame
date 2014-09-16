@@ -16,6 +16,6 @@
 using namespace cocos2d;
 
 void cocos_android_app_init (JNIEnv* env, jobject thiz) {
-	LOGD("TwoScene Android app init");
+	LOGD("Cocos2dx Android app init");
 	AppDelegate* pAppDelegate = new AppDelegate();
 }
