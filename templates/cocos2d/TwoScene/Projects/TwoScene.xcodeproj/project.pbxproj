@@ -59,8 +59,6 @@
 		41F1A4B51894BB33006E818E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922754F1517C094001B78AA /* CoreGraphics.framework */; };
 		41F1A4BC1894BB33006E818E /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41F1A3E01894BA38006E818E /* Default-568h@2x.png */; };
 		41F1A4E51894BBE3006E818E /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 41F1A4DA1894BBE3006E818E /* AppController.mm */; };
-		41F1A4E61894BBE3006E818E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 41F1A4DC1894BBE3006E818E /* InfoPlist.strings */; };
-		41F1A4E71894BBE3006E818E /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41F1A4DE1894BBE3006E818E /* MainMenu.xib */; };
 		41F1A4E81894BBE3006E818E /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 41F1A4E01894BBE3006E818E /* Icon.icns */; };
 		41F1A4EA1894BBE3006E818E /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 41F1A4E21894BBE3006E818E /* main.mm */; };
 		41F1A5071894BF71006E818E /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41F1A5061894BF71006E818E /* AppKit.framework */; };
@@ -97,7 +95,7 @@
 		4110F71818C7ED7F004E9231 /* Icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72@2x.png"; sourceTree = "<group>"; };
 		4110F71918C7ED7F004E9231 /* Icon-76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-76.png"; sourceTree = "<group>"; };
 		4110F71A18C7ED7F004E9231 /* Icon-76@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-76@2x.png"; sourceTree = "<group>"; };
-		411C1A77199D692E001D212A /* script */ = {isa = PBXFileReference; lastKnownFileType = folder; name = script; path = ../../../../0.8.9/cocos2d/x/script; sourceTree = "<group>"; };
+		411C1A77199D692E001D212A /* script */ = {isa = PBXFileReference; lastKnownFileType = folder; name = script; path = ../../../../latest/cocos2d/x/script; sourceTree = "<group>"; };
 		412F3181192330E3007F51FD /* AUTHORS.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = AUTHORS.txt; sourceTree = "<group>"; };
 		412F3182192330E3007F51FD /* Base64Images.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = Base64Images.js; sourceTree = "<group>"; };
 		412F3183192330E3007F51FD /* CCBoot.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = CCBoot.js; sourceTree = "<group>"; };
@@ -376,12 +374,12 @@
 		419E8E6018A9922800232A34 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		419E8EA018A9C68100232A34 /* libcurl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.dylib; path = usr/lib/libcurl.dylib; sourceTree = SDKROOT; };
 		419E924E18AC3BDC00232A34 /* server.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = server.js; path = ../server/server.js; sourceTree = "<group>"; };
+		41C1BC2B19C6BADD00ADF25E /* minified-footer.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = "minified-footer.js"; path = "html/minified-footer.js"; sourceTree = "<group>"; };
+		41C1BC2E19C6BBEE00ADF25E /* build.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = build.xml; path = html/build.xml; sourceTree = "<group>"; };
 		41F1A3E01894BA38006E818E /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		41F1A4D61894BB33006E818E /* TwoScene.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TwoScene.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		41F1A4D91894BBE3006E818E /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppController.h; path = mac/AppController.h; sourceTree = "<group>"; };
 		41F1A4DA1894BBE3006E818E /* AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppController.mm; path = mac/AppController.mm; sourceTree = "<group>"; };
-		41F1A4DD1894BBE3006E818E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = InfoPlist.strings; sourceTree = "<group>"; };
-		41F1A4DF1894BBE3006E818E /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = MainMenu.xib; sourceTree = "<group>"; };
 		41F1A4E01894BBE3006E818E /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = Icon.icns; path = mac/Icon.icns; sourceTree = "<group>"; };
 		41F1A4E11894BBE3006E818E /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = mac/Info.plist; sourceTree = "<group>"; };
 		41F1A4E21894BBE3006E818E /* main.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = main.mm; path = mac/main.mm; sourceTree = "<group>"; };
@@ -1281,6 +1279,8 @@
 			children = (
 				412F3380192C37F4007F51FD /* index.html */,
 				419E924E18AC3BDC00232A34 /* server.js */,
+				41C1BC2E19C6BBEE00ADF25E /* build.xml */,
+				41C1BC2B19C6BADD00ADF25E /* minified-footer.js */,
 				416E8E461905CE0400F9B283 /* cocos2d */,
 			);
 			name = html;
@@ -1377,23 +1377,12 @@
 			children = (
 				41F1A4D91894BBE3006E818E /* AppController.h */,
 				41F1A4DA1894BBE3006E818E /* AppController.mm */,
-				41F1A4DB1894BBE3006E818E /* en.lproj */,
 				41F1A4E01894BBE3006E818E /* Icon.icns */,
 				41F1A4E11894BBE3006E818E /* Info.plist */,
 				41F1A4E21894BBE3006E818E /* main.mm */,
 				41F1A4EC1894BCAE006E818E /* Prefix.pch */,
 			);
 			name = mac;
-			sourceTree = "<group>";
-		};
-		41F1A4DB1894BBE3006E818E /* en.lproj */ = {
-			isa = PBXGroup;
-			children = (
-				41F1A4DC1894BBE3006E818E /* InfoPlist.strings */,
-				41F1A4DE1894BBE3006E818E /* MainMenu.xib */,
-			);
-			name = en.lproj;
-			path = mac/en.lproj;
 			sourceTree = "<group>";
 		};
 		A92275321517C094001B78AA = {
@@ -1490,8 +1479,6 @@
 				41F1A4E81894BBE3006E818E /* Icon.icns in Resources */,
 				41F1A4BC1894BB33006E818E /* Default-568h@2x.png in Resources */,
 				412F337B192C36E1007F51FD /* project.json in Resources */,
-				41F1A4E71894BBE3006E818E /* MainMenu.xib in Resources */,
-				41F1A4E61894BBE3006E818E /* InfoPlist.strings in Resources */,
 				412F337E192C3712007F51FD /* Assets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1575,25 +1562,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		41F1A4DC1894BBE3006E818E /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				41F1A4DD1894BBE3006E818E /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		41F1A4DE1894BBE3006E818E /* MainMenu.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				41F1A4DF1894BBE3006E818E /* en */,
-			);
-			name = MainMenu.xib;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		41F1A4D41894BB33006E818E /* Debug */ = {

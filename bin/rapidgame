@@ -2,5 +2,5 @@
 
 var path = require('path');
 var fs = require('fs');
-var dir = path.join(path.dirname(fs.realpathSync(__filename)), '../');
-require(dir + 'rapidgame.js').run();
+var file = path.join(path.dirname(fs.realpathSync(__filename)), '..', 'rapidgame.js');
+require(file).run();

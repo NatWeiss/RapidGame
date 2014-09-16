@@ -1,6 +1,4 @@
 SHELL=/bin/bash
-NAME=TwoScene
-PACKAGE_NAME=com.wizardfu.twoscene
 PLUGIN_DIR=$$(cd ../../lib/cocos2d/x/java && pwd)
 
 all:
@@ -16,27 +14,27 @@ release:
 distribution:
 	export CONFIG="release" && ./build_native.py
 	ant -Dsdk.dir=${ANDROID_HOME} -Dplugin.dir=${PLUGIN_DIR} release
-	zipalign -f 4 bin/${NAME}-release-unsigned.apk bin/${NAME}-release-aligned.apk
+	zipalign -f 4 bin/`cat .name`-release-unsigned.apk bin/`cat .name`-release-aligned.apk
 start-emulator:
 	android avd
 run-emulator:
-	adb -e install bin/${NAME}-debug.apk
+	adb -e install bin/`cat .name`-debug.apk
 	adb -e logcat -s
 	adb -e logcat -v raw
 run:
-	#adb -d uninstall ${PACKAGE_NAME}
-	adb -d install -r bin/${NAME}-debug.apk
+	#adb -d uninstall `cat .identifier`
+	adb -d install -r bin/`cat .name`-debug.apk
 	#adb -d logcat -s
 	echo
 	adb -d logcat -v raw *:d
 run-release:
-	#adb -d uninstall ${PACKAGE_NAME}
-	adb -d install bin/${NAME}-debug.apk
+	#adb -d uninstall `cat .identifier`
+	adb -d install bin/`cat .name`-debug.apk
 	#adb -d logcat -s
 	adb -d logcat -v raw *:d
 run-distribution:
-	#adb -d uninstall ${PACKAGE_NAME}
-	adb -d install bin/${NAME}-release-aligned.apk
+	#adb -d uninstall `cat .identifier`
+	adb -d install bin/`cat .name`-release-aligned.apk
 	#adb -d logcat -s
 	adb -d logcat -v raw *:d
 clean:

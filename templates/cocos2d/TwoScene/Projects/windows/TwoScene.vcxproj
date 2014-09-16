@@ -97,9 +97,9 @@ echo Copying Art Resources...
 xcopy /Y /D "$(ProjectDir)..\..\project.json" $(OutDir)
 if not exist "$(OutDir)Assets" mkdir "$(OutDir)Assets"
 xcopy /Y /D /E "$(ProjectDir)..\..\Assets\*" "$(OutDir)Assets"
-echo Copying JSB files...
-if not exist "$(OutDir)jsb" mkdir "$(OutDir)jsb"
-xcopy /Y /D /E "$(ProjectDir)..\..\lib\cocos2d\x\jsb\*" "$(OutDir)jsb"</Command>
+echo Copying Script files...
+if not exist "$(OutDir)script" mkdir "$(OutDir)script"
+xcopy /Y /D /E "$(ProjectDir)..\..\lib\cocos2d\x\script\*" "$(OutDir)script"</Command>
     </PreLinkEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -142,9 +142,9 @@ echo Copying Art Resources...
 xcopy /Y /D "$(ProjectDir)..\..\project.json" $(OutDir)
 if not exist "$(OutDir)Assets" mkdir "$(OutDir)Assets"
 xcopy /Y /D /E "$(ProjectDir)..\..\Assets\*" "$(OutDir)Assets"
-echo Copying JSB files...
-if not exist "$(OutDir)jsb" mkdir "$(OutDir)jsb"
-xcopy /Y /D /E "$(ProjectDir)..\..\lib\cocos2d\x\jsb\*" "$(OutDir)jsb"</Command>
+echo Copying Script files...
+if not exist "$(OutDir)script" mkdir "$(OutDir)script"
+xcopy /Y /D /E "$(ProjectDir)..\..\lib\cocos2d\x\script\*" "$(OutDir)script"</Command>
     </PreLinkEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

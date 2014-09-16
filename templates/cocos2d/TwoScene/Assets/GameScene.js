@@ -1,8 +1,6 @@
-//
-//  Created using [RapidGame](http://wizardfu.com/rapidgame).
-//  See the `LICENSE` file for the license governing this code.
-//  Developed by Nat Weiss.
-//
+///
+/// > Created using [RapidGame](http://wizardfu.com/rapidgame). See the `LICENSE` file for the license governing this code.
+///
 
 var GameScene = cc.Scene.extend({
 	layer: null,

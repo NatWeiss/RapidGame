@@ -15,7 +15,7 @@
 		<meta-data android:name="android.app.lib_name" android:value="cocos2djs" />
 
 
-		<activity android:name="org.cocos2dx.cpp.AppActivity"
+		<activity android:name="org.cocos2dx.javascript.AppActivity"
 			android:label="@string/app_name"
 			android:screenOrientation="landscape"
 			android:theme="@android:style/Theme.NoTitleBar.Fullscreen"

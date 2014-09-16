@@ -1,37 +1,35 @@
-//
-//  Created using [RapidGame](http://wizardfu.com/rapidgame).
-//  See the `LICENSE` file for the license governing this code.
-//  Developed by Nat Weiss.
-//
+///
+/// > Created using [RapidGame](http://wizardfu.com/rapidgame). See the `LICENSE` file for the license governing this code.
+///
 
-//
-// The main Game object is a singleton providing boot code, main functions, and other commonly-used, globally-accessible methods.
-//
-// 1. All code in this file is applicable to any game project in general.
-// 2. If you need to extend the Game object with project-specific code, use [TwoScene.js](TwoScene.html).
-//
+///
+/// The main Game object is a singleton providing boot code, main functions, and other commonly-used, globally-accessible methods.
+///
+/// 1. All code in this file is applicable to any game project in general.
+/// 2. If you need to extend the Game object with project-specific code, use [TwoScene.js](TwoScene.html).
+///
 
-//
-// ###  Game
-//
-// Get or create the Game object.
-//
+///
+/// ###  Game
+///
+/// Get or create the Game object.
+///
 var Game = Game || {};
 
-//
-// ###  Game.getTargetFrameRate
-//
-// Return the target frame rate to use. Scale back in HTML5 mode to save a CPU fan somewhere.
-//
+///
+/// ###  Game.getTargetFrameRate
+///
+/// Return the target frame rate to use. Scale back in HTML5 mode to save a CPU fan somewhere.
+///
 Game.getTargetFrameRate = function() {
 	return this.isHtml5() ? 30 : 60;
 };
 
-//
-// ###  Game.isHtml5
-//
-// Return true if the game is running in HTML5 mode.
-//
+///
+/// ###  Game.isHtml5
+///
+/// Return true if the game is running in HTML5 mode.
+///
 Game.isHtml5 = function() {
 	if (typeof this._isHtml5 === "undefined") {
 		Game.assert(cc.sys);
@@ -40,11 +38,11 @@ Game.isHtml5 = function() {
 	return this._isHtml5;
 };
 
-//
-// ###  Game.isDesktop
-//
-// Return true if the game is running on a native desktop OS.
-//
+///
+/// ###  Game.isDesktop
+///
+/// Return true if the game is running on a native desktop OS.
+///
 Game.isDesktop = function() {
 	if (typeof this._isDesktop === "undefined") {
 		if (this.isHtml5()) {
@@ -58,11 +56,11 @@ Game.isDesktop = function() {
 	return this._isDesktop;
 };
 
-//
-// ###  Game.rand
-//
-// Return a random integer between 0 and the given value.
-//
+///
+/// ###  Game.rand
+///
+/// Return a random integer between 0 and the given value.
+///
 Game.rand = function(mod) {
 	var r = Math.random();
 	if (typeof mod !== 'undefined') {
@@ -73,11 +71,11 @@ Game.rand = function(mod) {
 	return r;
 };
 
-//
-// ###  Game.getWinSize
-//
-// Return the current size of the window or screen.
-//
+///
+/// ###  Game.getWinSize
+///
+/// Return the current size of the window or screen.
+///
 Game.getWinSize = function() {
 	var size = cc.director.getWinSizeInPixels();
 	if (typeof this._winSize === 'undefined' || (size.width && size.height)) {
@@ -86,22 +84,33 @@ Game.getWinSize = function() {
 	return this._winSize;
 };
 
-//
-// ###  Game.centralize
-//
-// Return a point relative to the center of the screen and scaled.
-//
-Game.centralize = function(x, y) {
-	var winSize = this.getWinSize();
-	return cc.p(x + winSize.width * .5,
-		y + winSize.height * .5);
+///
+/// ###  Game.scale
+///
+/// Scale a number by a factor based on the screen size.
+///
+Game.scale = function(floatValue) {
+	if (typeof this._scaleFactor === "undefined")
+		this._scaleFactor = 1.0;
+	return floatValue * this._scaleFactor;
 };
 
-//
-// ###  Game.alert
-//
-// Safely call `alert`.
-//
+///
+/// ###  Game.centralize
+///
+/// Return a point relative to the center of the screen and scaled.
+///
+Game.centralize = function(x, y) {
+	var winSize = this.getWinSize();
+	return cc.p(Game.scale(x) + winSize.width * .5,
+		Game.scale(y) + winSize.height * .5);
+};
+
+///
+/// ###  Game.alert
+///
+/// Safely call `alert`.
+///
 Game.alert = function(msg) {
 	if(typeof alert === "function") {
 		alert(msg);
@@ -110,11 +119,11 @@ Game.alert = function(msg) {
 	}
 };
 
-//
-// ###  Game.assert
-//
-// Throw an error if the given object is undefined or boolean is false.
-//
+///
+/// ###  Game.assert
+///
+/// Throw an error if the given object is undefined or boolean is false.
+///
 Game.assert = function(objOrBool, errMsg) {
 	if (typeof objOrBool === "undefined"
 	|| (typeof objOrBool === "boolean" && !objOrBool)
@@ -126,11 +135,11 @@ Game.assert = function(objOrBool, errMsg) {
 	}
 };
 
-//
-// ###  Game.clone
-//
-// Clone an object or array so the original can remained unchanged. If passed an undefined value, an empty array is returned.
-//
+///
+/// ###  Game.clone
+///
+/// Clone an object or array so the original can remained unchanged. If passed an undefined value, an empty array is returned.
+///
 Game.clone = function(obj) {
 	if(typeof obj !== "undefined") {
 		return JSON.parse(JSON.stringify(obj));
@@ -138,20 +147,20 @@ Game.clone = function(obj) {
 	return [];
 };
 
-//
-// ###  Game.localizeCurrency
-//
-// Return the currency amount localized. Currently the method only localizes to the United States currency format.
-//
+///
+/// ###  Game.localizeCurrency
+///
+/// Return the currency amount localized. Currently the method only localizes to the United States currency format.
+///
 Game.localizeCurrency = function(amount) {
 	return "$" + parseFloat(amount).toFixed(2);
 };
 
-//
-// ###  Game.getLanguageCode
-//
-// Return the current language code. Example: `en`.
-//
+///
+/// ###  Game.getLanguageCode
+///
+/// Return the current language code. Example: `en`.
+///
 Game.getLanguageCode = function() {
 	var strings;
 	
@@ -168,11 +177,11 @@ Game.getLanguageCode = function() {
 	return this._language;
 };
 
-//
-// ###  Game.getLocalizedString
-//
-// Lookup and return a localized string. Configure localized strings in `Game.config["strings"][languageCode]`.
-//
+///
+/// ###  Game.getLocalizedString
+///
+/// Lookup and return a localized string. Configure localized strings in `Game.config["strings"][languageCode]`.
+///
 Game.getLocalizedString = function(key) {
 	var strings,
 		code = this.getLanguageCode();
@@ -187,11 +196,11 @@ Game.getLocalizedString = function(key) {
 	return "";
 };
 
-//
-// ###  Game.addTouchListeners
-//
-// Add touch listeners. Callback will get eventType, touches and event parameters.
-//
+///
+/// ###  Game.addTouchListeners
+///
+/// Add touch listeners. Callback will get eventType, touches and event parameters.
+///
 Game.addTouchListeners = function(layer, callback) {
 	cc.eventManager.addListener({
 		event: cc.EventListener.TOUCH_ALL_AT_ONCE,
@@ -202,13 +211,13 @@ Game.addTouchListeners = function(layer, callback) {
 	}, layer);
 };
 
-//
-// ###  Game.getRunningLayer
-//
-// Returns the running scene's child layer.
-//
-// Scenes can create a member variable named `layer` which will be used by this method.
-//
+///
+/// ###  Game.getRunningLayer
+///
+/// Returns the running scene's child layer.
+///
+/// Scenes can create a member variable named `layer` which will be used by this method.
+///
 Game.getRunningLayer = function() {
 	var node = cc.director.getRunningScene();
 	if (node) {
@@ -219,11 +228,11 @@ Game.getRunningLayer = function() {
 	return node;
 };
 
-//
-// ###  Game.callRunningLayer
-//
-// Call the running scene's layer's method.
-//
+///
+/// ###  Game.callRunningLayer
+///
+/// Call the running scene's layer's method.
+///
 Game.callRunningLayer = function(methodName, param1, param2, param3) {
 	var layer = this.getRunningLayer();
 	if (layer && layer[methodName]) {
@@ -233,20 +242,21 @@ Game.callRunningLayer = function(methodName, param1, param2, param3) {
 	}
 };
 
-//
-// ###  Game.getResourcesToPreload
-//
-// Return an array of files to preload.
-//
+///
+/// ###  Game.getResourcesToPreload
+///
+/// Return an array of files to preload.
+///
 Game.getResourcesToPreload = function() {
-	var files = Game.config["preload"],
+	var dir = (typeof(Game.getResourceDir) === "function" ? Game.getResourceDir() : ""),
+		files = Game.config["preload"],
 		ret = [],
 		i;
 
 	if (files) {
 		for (i = 0; i < files.length; i += 1) {
 			if (files[i] && files[i].length) {
-				ret[i] = files[i];
+				ret[i] = dir + files[i];
 			}
 		}
 	}
@@ -254,25 +264,28 @@ Game.getResourcesToPreload = function() {
 	return ret;
 };
 
-//
-// ###  Game.runInitialScene
-//
-// Loads resources and calls the initial scene. Called by `Game.main`.
-//
+///
+/// ###  Game.runInitialScene
+///
+/// Loads resources and calls the initial scene. Called by `Game.main`.
+///
 Game.runInitialScene = function() {
 	var Scene = window[cc.game.config.initialScene],
 		scene;
-	
+
+	if (typeof Game.loadResources === "function")
+		Game.loadResources();
+
 	scene = new Scene;
 	scene.init();
 	cc.director.runScene(scene);
 };
 
-//
-// ###  Game.setCanvasSize
-//
-// Sets the size of the game canvas.
-//
+///
+/// ###  Game.setCanvasSize
+///
+/// Sets the size of the game canvas.
+///
 Game.setCanvasSize = function(e, w, h) {
 	var allowHtmlRetina = false;
 	this._pixelRatio = (allowHtmlRetina ? window.devicePixelRatio || 1 : 1);
@@ -296,11 +309,11 @@ Game.setCanvasSize = function(e, w, h) {
 	}
 };
 
-//
-// ###  Game.loadSoundEnabled
-//
-// Load the `soundEnabled` preference from local storage.
-//
+///
+/// ###  Game.loadSoundEnabled
+///
+/// Load the `soundEnabled` preference from local storage.
+///
 Game.loadSoundEnabled = function() {
 	var enabled = cc.sys.localStorage.getItem("soundEnabled");
 	/*cc.log("Loaded sound enabled: " + enabled);*/
@@ -313,11 +326,11 @@ Game.loadSoundEnabled = function() {
 	/*cc.log("Sound enabled is now: " + this._soundEnabled);*/
 };
 
-//
-// ###  Game.enableSound
-//
-// Enable or disable sound.
-//
+///
+/// ###  Game.enableSound
+///
+/// Enable or disable sound.
+///
 Game.enableSound = function(enabled) {
 	this._soundEnabled = enabled ? true : false;
 	cc.sys.localStorage.setItem("soundEnabled", this._soundEnabled);
@@ -334,29 +347,29 @@ Game.enableSound = function(enabled) {
 	}
 };
 
-//
-// ###  Game.toggleSoundEnabled
-//
-// Toggle whether sound is enabled.
-//
+///
+/// ###  Game.toggleSoundEnabled
+///
+/// Toggle whether sound is enabled.
+///
 Game.toggleSoundEnabled = function() {
 	this.enableSound(!this.isSoundEnabled());
 };
 
-//
-// ###  Game.isSoundEnabled
-//
-// Return true if sound is enabled.
-//
+///
+/// ###  Game.isSoundEnabled
+///
+/// Return true if sound is enabled.
+///
 Game.isSoundEnabled = function() {
 	return this._soundEnabled ? true : false;
 };
 
-//
-// ###  Game.playEffect
-//
-// Plays the sound effect with the given filename if sound is enabled.
-//
+///
+/// ###  Game.playEffect
+///
+/// Plays the sound effect with the given filename if sound is enabled.
+///
 Game.playEffect = function(filename) {
 	if (this.isSoundEnabled()) {
 		/* Automatically prefix with resource path. */
@@ -368,20 +381,20 @@ Game.playEffect = function(filename) {
 	return -1;
 };
 
-//
-// ###  Game.stopEffect
-//
-// Stops the sound effect with the given id.
-//
+///
+/// ###  Game.stopEffect
+///
+/// Stops the sound effect with the given id.
+///
 Game.stopEffect = function(audioId) {
 	cc.audioEngine.stopEffect(audioId);
 };
 
-//
-// ###  Game.playMusic
-//
-// Plays the music file with the given filename if sound is enabled.
-//
+///
+/// ###  Game.playMusic
+///
+/// Plays the music file with the given filename if sound is enabled.
+///
 Game.playMusic = function(filename) {
 	if (this.isSoundEnabled()) {
 		/* Automatically prefix with resource path. */
@@ -393,20 +406,20 @@ Game.playMusic = function(filename) {
 	}
 };
 
-//
-// ###  Game.stopMusic
-//
-// Stop music.
-//
+///
+/// ###  Game.stopMusic
+///
+/// Stop music.
+///
 Game.stopMusic = function() {
 	cc.audioEngine.stopMusic();
 };
 
-//
-// ###  Game.startPhysics
-//
-// Start the physics engine.
-//
+///
+/// ###  Game.startPhysics
+///
+/// Start the physics engine.
+///
 Game.startPhysics = function(gravity) {
 	if (this.space !== "undefined") {
 		this.space = null;
@@ -422,11 +435,11 @@ Game.startPhysics = function(gravity) {
 	}
 };
 
-//
-// ###  Game.stepPhysics
-//
-// Step the physics engine.
-//
+///
+/// ###  Game.stepPhysics
+///
+/// Step the physics engine.
+///
 Game.stepPhysics = function(delta) {
 	var step = 1 / 60;
 	this._physicsAccumulator += delta;
@@ -436,11 +449,11 @@ Game.stepPhysics = function(delta) {
 	}
 };
 
-//
-// ###  Game.createPhysicsBox
-//
-// Create a static physics box.
-//
+///
+/// ###  Game.createPhysicsBox
+///
+/// Create a static physics box.
+///
 Game.createPhysicsBox = function(_x1, _y1, _x2, _y2, elasticity, friction, collisionType) {
 	var w = (_x2 - _x1) || 2,
 		h = (_y2 - _y1) || 2,
@@ -453,11 +466,11 @@ Game.createPhysicsBox = function(_x1, _y1, _x2, _y2, elasticity, friction, colli
 	return box;
 };
 
-//
-// ###  Game.createPhysicsSprite
-//
-// Create a dynamic physics sprite.
-//
+///
+/// ###  Game.createPhysicsSprite
+///
+/// Create a dynamic physics sprite.
+///
 Game.createPhysicsSprite = function(filename, elasticity, friction, isCircle, collisionType) {
 	var sprite = cc.PhysicsSprite.create(filename),
 		body,
@@ -484,11 +497,11 @@ Game.createPhysicsSprite = function(filename, elasticity, friction, isCircle, co
 };
 
 
-//
-// ###  Game.boot
-//
-// Boot method. Different for HTML5 versus native. Called at the end of this file.
-//
+///
+/// ###  Game.boot
+///
+/// Boot method. Different for HTML5 versus native. Called at the end of this file.
+///
 Game.boot = function(global) {
 	cc.loader.resPath = cc.game.config.resourcePath;
 
@@ -520,11 +533,11 @@ Game.boot = function(global) {
 	cc.game.run();
 };
 
-//
-// ###  Game.main
-//
-// The main method. Called by `cc.game.onStart`.
-//
+///
+/// ###  Game.main
+///
+/// The main method. Called by `cc.game.onStart`.
+///
 Game.main = function() {
 	var i,
 		size = {},
@@ -581,9 +594,9 @@ Game.main = function() {
 	cc.LoaderScene.preload(Game.getResourcesToPreload(), Game.runInitialScene, this);
 };
 
-//
-// ###  Boot
-//
-// Call `Game.boot` passing in the global variable.
-//
+///
+/// ###  Boot
+///
+/// Call `Game.boot` passing in the global variable.
+///
 Game.boot(this);

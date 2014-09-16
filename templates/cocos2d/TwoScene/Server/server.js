@@ -1,20 +1,18 @@
-//
-//  Created using [RapidGame](http://wizardfu.com/rapidgame).
-//  See the `LICENSE` file for the license governing this code.
-//  Developed by Nat Weiss.
-//
+///
+/// > Created using [RapidGame](http://wizardfu.com/rapidgame). See the `LICENSE` file for the license governing this code.
+///
 
-//
-// A simple Node.js game server that:
-// 1. Sends static files as requested.
-// 2. Provides a basic API to game clients.
-//
-// Keep it running on your own host using [forever](http://blog.nodejitsu.com/keep-a-nodejs-server-up-with-forever/). Remember the -g option on install.
-//
+///
+/// A simple Node.js game server that:
+/// 1. Sends static files as requested.
+/// 2. Provides a basic API to game clients.
+///
+/// Keep it running on your own host using [forever](http://blog.nodejitsu.com/keep-a-nodejs-server-up-with-forever/). Remember the -g option on install.
+///
 
-//
-// ### Setup
-//
+///
+/// ### Setup
+///
 var config = {},
 	express = require("express"),
 	fs = require("fs"),
@@ -25,11 +23,11 @@ var config = {},
 	self = {};
 console.log("Started server on port: " + port);
 
-//
-// ###  Static Files
-//
-// Serve static files as requested.
-//
+///
+/// ###  Static Files
+///
+/// Serve static files as requested.
+///
 server.use("/", express.static(__dirname + "/../Projects/html/"));
 server.use("/project.json", express.static(__dirname + "/../project.json"));
 server.use("/lib/", express.static(__dirname + "/../lib/"));
@@ -45,11 +43,11 @@ server.get("/project.json", function(req,res){
 	}
 });
 
-//
-// ###  Public API
-//
-// Provide `api/counter` which increments the visitor number and returns it.
-//
+///
+/// ###  Public API
+///
+/// Provide `api/counter` which increments the visitor number and returns it.
+///
 self.counter = 0;
 server.get("/api/counter", function(req,res){
 	self.counter = self.counter + 1;

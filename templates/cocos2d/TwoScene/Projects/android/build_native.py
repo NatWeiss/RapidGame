@@ -131,7 +131,7 @@ def copy_resources(app_android_root):
 
     # copy asset directories
     copy_asset_dir(app_android_root, "../../Assets", "Assets")
-    copy_asset_dir(app_android_root, "../../lib/cocos2d/x/jsb", "jsb")
+    copy_asset_dir(app_android_root, "../../lib/cocos2d/x/script", "script")
 
     # copy main
     main_file = os.path.join(app_android_root, "../../project.json")
@@ -144,7 +144,7 @@ def build(ndk_build_param,android_platform,build_mode):
     sdk_root = None
     select_toolchain_version()
 
-    current_dir = os.path.dirname(os.path.realpath(__file__))
+    current_dir = os.path.dirname(os.path.abspath(__file__))
     cocos_root = os.path.join(current_dir, "../../lib/cocos2d/x/java/mk/cocos2d-x")
 
     app_android_root = current_dir

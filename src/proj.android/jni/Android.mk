@@ -25,7 +25,8 @@ LOCAL_WHOLE_STATIC_LIBRARIES += jsb_spine_static
 #LOCAL_WHOLE_STATIC_LIBRARIES += box2d_static
 #LOCAL_WHOLE_STATIC_LIBRARIES += cocos_jsb_static
 #LOCAL_WHOLE_STATIC_LIBRARIES += cocosbuilder_static
-#LOCAL_WHOLE_STATIC_LIBRARIES += cocostudio_static
+LOCAL_WHOLE_STATIC_LIBRARIES += cocostudio_static
+LOCAL_WHOLE_STATIC_LIBRARIES += cocos_extension_static
 #LOCAL_WHOLE_STATIC_LIBRARIES += spine_static
 
 

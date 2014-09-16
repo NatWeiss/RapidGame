@@ -11,6 +11,12 @@ What it does:
 * Prebuilds libraries for Cocos2D X that virtually eliminate build, compile and link time, saving in aggregate hours during development, and allowing for a more rapid development cycle without having to wait - hence the name RapidGame.
 
 
+Updates
+-------
+
+* Aug 14, 2014: Prebuilder updated for Cocos2d JS 3.0 rc2 / Cocos2d-x 3.2.
+
+
 Eliminate Grunt Work
 --------------------
 
