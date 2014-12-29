@@ -4,7 +4,7 @@
 
 #import "RootViewController.h"
 #import "cocos2d.h"
-#import "CCEAGLView.h"
+#import "CCEAGLView-ios.h"
 
 using namespace cocos2d;
 
@@ -72,11 +72,17 @@ using namespace cocos2d;
 	-(void) didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 	{
 		[super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-
-		CCEAGLView* view = (CCEAGLView*)self.view;
-		CGSize s = CGSizeMake([view getWidth], [view getHeight]);
-
-		Application::getInstance()->applicationScreenSizeChanged((int)s.width, (int)s.height);
+		
+		cocos2d::GLView* glview = cocos2d::Director::getInstance()->getOpenGLView();
+		if (glview)
+		{
+			CCEAGLView* view = (CCEAGLView*)glview->getEAGLView();
+			if (view)
+			{
+				CGSize s = CGSizeMake([view getWidth], [view getHeight]);
+				cocos2d::Application::getInstance()->applicationScreenSizeChanged((int)s.width, (int)s.height);
+			}
+		}
 	}
 
 	-(BOOL) prefersStatusBarHidden

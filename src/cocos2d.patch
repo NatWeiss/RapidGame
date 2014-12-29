@@ -1,100 +1,18 @@
-diff --git a/frameworks/js-bindings/cocos2d-x/cocos/2d/CCActionManager.cpp b/frameworks/js-bindings/cocos2d-x/cocos/2d/CCActionManager.cpp
-index abc3b85..dd13ef6 100644
---- a/frameworks/js-bindings/cocos2d-x/cocos/2d/CCActionManager.cpp
-+++ b/frameworks/js-bindings/cocos2d-x/cocos/2d/CCActionManager.cpp
-@@ -312,7 +312,7 @@ Action* ActionManager::getActionByTag(int tag, const Node *target) const
-                 }
-             }
-         }
--        CCLOG("cocos2d : getActionByTag(tag = %d): Action not found", tag);
-+        //CCLOG("cocos2d : getActionByTag(tag = %d): Action not found", tag);
-     }
-     else
-     {
-diff --git a/frameworks/js-bindings/cocos2d-x/cocos/base/CCDirector.cpp b/frameworks/js-bindings/cocos2d-x/cocos/base/CCDirector.cpp
-index fe22bef..9e8c76c 100644
---- a/frameworks/js-bindings/cocos2d-x/cocos/base/CCDirector.cpp
-+++ b/frameworks/js-bindings/cocos2d-x/cocos/base/CCDirector.cpp
-@@ -631,7 +631,7 @@ void Director::setProjection(Projection projection)
-             }
- #endif
-             // issue #1334
--            Mat4::createPerspective(60, (GLfloat)size.width/size.height, 10, zeye+size.height/2, &matrixPerspective);
-+            Mat4::createPerspective(60, (GLfloat)size.width/size.height, 10, zeye+size.height*8, &matrixPerspective);
+diff --git a/frameworks/js-bindings/bindings/Android.mk b/frameworks/js-bindings/bindings/Android.mk
+index 6ea045a..db0cf4b 100644
+--- a/frameworks/js-bindings/bindings/Android.mk
++++ b/frameworks/js-bindings/bindings/Android.mk
+@@ -6,6 +6,8 @@ LOCAL_MODULE := cocos_jsb_static
  
-             multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, matrixPerspective);
+ LOCAL_MODULE_FILENAME := libcocos2dxjsb
  
-diff --git a/frameworks/js-bindings/cocos2d-x/cocos/base/ccConfig.h b/frameworks/js-bindings/cocos2d-x/cocos/base/ccConfig.h
-index 1249819..6952e43 100644
---- a/frameworks/js-bindings/cocos2d-x/cocos/base/ccConfig.h
-+++ b/frameworks/js-bindings/cocos2d-x/cocos/base/ccConfig.h
-@@ -89,7 +89,7 @@ To enabled set it to 1. Disabled by default.
- @since v0.99.5
- */
- #ifndef CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
--#define CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL 0
-+#define CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL 1
- #endif
- 
- /** @def CC_DIRECTOR_FPS_INTERVAL
-diff --git a/frameworks/js-bindings/cocos2d-x/cocos/platform/mac/CCDevice.mm b/frameworks/js-bindings/cocos2d-x/cocos/platform/mac/CCDevice.mm
-index 0d13a3a..2e43ddc 100644
---- a/frameworks/js-bindings/cocos2d-x/cocos/platform/mac/CCDevice.mm
-+++ b/frameworks/js-bindings/cocos2d-x/cocos/platform/mac/CCDevice.mm
-@@ -118,7 +118,6 @@ static bool _initWithString(const char * text, Device::TextAlign align, const ch
- 				NSMutableString *lineBreak = [[[NSMutableString alloc] init] autorelease];
- 				NSUInteger length = [string length];
- 				NSRange range = NSMakeRange(0, 1);
--                CGSize textSize;
- 				NSUInteger lastBreakLocation = 0;
-                 NSUInteger insertCount = 0;
- 				for (NSUInteger i = 0; i < length; i++) {
-@@ -128,7 +127,7 @@ static bool _initWithString(const char * text, Device::TextAlign align, const ch
- 					if ([@"!?.,-= " rangeOfString:character].location != NSNotFound) {
-                         lastBreakLocation = i + insertCount;
-                     }
--                    textSize = [lineBreak sizeWithAttributes:tokenAttributesDict];
-+                    auto textSize = [lineBreak sizeWithAttributes:tokenAttributesDict];
-                     if(textSize.height > info->height)
-                         break;
- 					if (textSize.width > info->width) {
-diff --git a/frameworks/js-bindings/cocos2d-x/extensions/GUI/CCEditBox/CCEditBoxImplMac.h b/frameworks/js-bindings/cocos2d-x/extensions/GUI/CCEditBox/CCEditBoxImplMac.h
-index a5b93c4..0a35a7a 100644
---- a/frameworks/js-bindings/cocos2d-x/extensions/GUI/CCEditBox/CCEditBoxImplMac.h
-+++ b/frameworks/js-bindings/cocos2d-x/extensions/GUI/CCEditBox/CCEditBoxImplMac.h
-@@ -39,6 +39,8 @@
- 
- @interface CCEditBoxImplMac : NSObject <NSTextFieldDelegate>
- {
-+    NSTextField* textField_;
-+    NSSecureTextField *secureTextField_;
-     void* editBox_;
-     BOOL editState_;
-     NSMutableDictionary* placeholderAttributes_;
-diff --git a/frameworks/js-bindings/cocos2d-x/extensions/GUI/CCEditBox/CCEditBoxImplMac.mm b/frameworks/js-bindings/cocos2d-x/extensions/GUI/CCEditBox/CCEditBoxImplMac.mm
-index 8ca0fd5..52bd713 100644
---- a/frameworks/js-bindings/cocos2d-x/extensions/GUI/CCEditBox/CCEditBoxImplMac.mm
-+++ b/frameworks/js-bindings/cocos2d-x/extensions/GUI/CCEditBox/CCEditBoxImplMac.mm
-@@ -324,7 +324,7 @@ void EditBoxImplMac::setPlaceholderFont(const char* pFontName, int fontSize)
-         return;
-     }
-     
--    _sysEdit.placeholderAttributes[NSFontAttributeName] = font;
-+    [_sysEdit.placeholderAttributes setObject:font forKey:NSFontAttributeName];
-     
-     /* reload placeholder */
-     const char *placeholder = [_sysEdit.textField.cell placeholderAttributedString].string.UTF8String;
-@@ -343,7 +343,7 @@ void EditBoxImplMac::setFontColor(const Color3B& color)
- void EditBoxImplMac::setPlaceholderFontColor(const Color3B& color)
- {
-     NSColor *nsColor = [NSColor colorWithCalibratedRed:color.r/255.f green:color.g / 255.f blue:color.b / 255.f alpha:1.0f];
--    _sysEdit.placeholderAttributes[NSForegroundColorAttributeName] = nsColor;
-+	[_sysEdit.placeholderAttributes setObject:nsColor forKey:NSForegroundColorAttributeName];
-     
-     /* reload placeholder */
-     const char *placeholder = [_sysEdit.textField.cell placeholderAttributedString].string.UTF8String;
++LOCAL_ARM_MODE := arm
++
+ LOCAL_SRC_FILES := auto/jsb_cocos2dx_auto.cpp \
+                    auto/jsb_cocos2dx_builder_auto.cpp \
+                    auto/jsb_cocos2dx_extension_auto.cpp \
 diff --git a/frameworks/js-bindings/cocos2d-x/external/Box2D/Common/b2Draw.h b/frameworks/js-bindings/cocos2d-x/external/Box2D/Common/b2Draw.h
-index 20359c9..8c5f8ab 100644
+index 20359c9..8c5f8ab 100755
 --- a/frameworks/js-bindings/cocos2d-x/external/Box2D/Common/b2Draw.h
 +++ b/frameworks/js-bindings/cocos2d-x/external/Box2D/Common/b2Draw.h
 @@ -25,7 +25,7 @@
@@ -107,7 +25,7 @@ index 20359c9..8c5f8ab 100644
  	float32 r, g, b;
  };
 diff --git a/frameworks/js-bindings/cocos2d-x/external/Box2D/Common/b2Math.h b/frameworks/js-bindings/cocos2d-x/external/Box2D/Common/b2Math.h
-index 755c519..0986c9f 100644
+index 755c519..0986c9f 100755
 --- a/frameworks/js-bindings/cocos2d-x/external/Box2D/Common/b2Math.h
 +++ b/frameworks/js-bindings/cocos2d-x/external/Box2D/Common/b2Math.h
 @@ -56,7 +56,7 @@ struct b2Vec2
@@ -128,62 +46,28 @@ index 755c519..0986c9f 100644
  
  	/// Set this vector to all zeros.
  	void SetZero() { x = 0.0f; y = 0.0f; z = 0.0f; }
-diff --git a/frameworks/js-bindings/cocos2d-x/external/Box2D/Dynamics/Contacts/b2Contact.cpp b/frameworks/js-bindings/cocos2d-x/external/Box2D/Dynamics/Contacts/b2Contact.cpp
-index d9f1021..8cbce21 100644
---- a/frameworks/js-bindings/cocos2d-x/external/Box2D/Dynamics/Contacts/b2Contact.cpp
-+++ b/frameworks/js-bindings/cocos2d-x/external/Box2D/Dynamics/Contacts/b2Contact.cpp
-@@ -163,7 +163,7 @@ void b2Contact::Update(b2ContactListener* listener)
- 	b2Manifold oldManifold = m_manifold;
- 
- 	// Re-enable this contact.
--	m_flags |= e_enabledFlag;
-+	//m_flags |= e_enabledFlag;
- 
- 	bool touching = false;
- 	bool wasTouching = (m_flags & e_touchingFlag) == e_touchingFlag;
 diff --git a/frameworks/js-bindings/cocos2d-x/external/Box2D/Dynamics/b2World.cpp b/frameworks/js-bindings/cocos2d-x/external/Box2D/Dynamics/b2World.cpp
-index a3a6a1e..58b2f41 100644
+index a3a6a1e..4840e43 100755
 --- a/frameworks/js-bindings/cocos2d-x/external/Box2D/Dynamics/b2World.cpp
 +++ b/frameworks/js-bindings/cocos2d-x/external/Box2D/Dynamics/b2World.cpp
-@@ -1146,6 +1146,12 @@ void b2World::DrawDebugData()
+@@ -1145,6 +1145,11 @@ void b2World::DrawDebugData()
+ 	{
  		for (b2Body* b = m_bodyList; b; b = b->GetNext())
  		{
- 			const b2Transform& xf = b->GetTransform();
-+			
 +			bool hasContacts = false;
 +			for (b2ContactEdge* edge = b->GetContactList(); edge; edge = edge->next)
 +				if (edge->contact->IsEnabled() && edge->contact->IsTouching())
 +					{hasContacts = true; break;}
-+			
++
+ 			const b2Transform& xf = b->GetTransform();
  			for (b2Fixture* f = b->GetFixtureList(); f; f = f->GetNext())
  			{
- 				if (b->IsActive() == false)
-@@ -1154,7 +1160,10 @@ void b2World::DrawDebugData()
+@@ -1154,7 +1159,7 @@ void b2World::DrawDebugData()
  				}
  				else if (b->GetType() == b2_staticBody)
  				{
 -					DrawShape(f, xf, b2Color(0.5f, 0.9f, 0.5f));
-+					if (hasContacts)
-+						DrawShape(f, xf, b2Color(0.9f, 0.1f, 0.1f));
-+					else
-+						DrawShape(f, xf, b2Color(0.5f, 0.9f, 0.5f));
++					DrawShape(f, xf, hasContacts ? b2Color(0.9f, 0.1f, 0.1f) : b2Color(0.5f, 0.9f, 0.5f));
  				}
  				else if (b->GetType() == b2_kinematicBody)
  				{
-diff --git a/frameworks/js-bindings/cocos2d-x/plugin/jsbindings/script/jsb_pluginx.js b/frameworks/js-bindings/cocos2d-x/plugin/jsbindings/script/jsb_pluginx.js
-index 323564b..4543883 100644
---- a/frameworks/js-bindings/cocos2d-x/plugin/jsbindings/script/jsb_pluginx.js
-+++ b/frameworks/js-bindings/cocos2d-x/plugin/jsbindings/script/jsb_pluginx.js
-@@ -1,4 +1,5 @@
- var plugin = plugin || {PluginParam: {}, ProtocolAds: {}, ProtocolIAP: {}, ProtocolShare: {}, ProtocolSocial: {}, ProtocolUser: {}};
-+plugin.PluginParam = plugin.PluginParam || {};
- 
- plugin.PluginParam.ParamType = {};
- plugin.PluginParam.ParamType.TypeInt = 1;
-@@ -79,4 +80,4 @@ plugin.FacebookAgent.prototype.requestAccessToken = function(callback){
- 
- plugin.FacebookAgent.prototype.getSDKVersion = function(){
-     return "Facebook SDK for Cocos2d-JS 1.0 alpha";
--}
-\ No newline at end of file
-+}

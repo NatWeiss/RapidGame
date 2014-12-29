@@ -42,9 +42,9 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 	// set the view
 	GLView* view = nullptr;
 	if (fullscreen)
-		view = GLView::createWithFullScreen("TwoScene");
+		view = GLViewImpl::createWithFullScreen("TwoScene");
 	else
-		view = GLView::createWithRect("TwoScene", Rect(0, 0, 1024, 768));
+		view = GLViewImpl::createWithRect("TwoScene", Rect(0, 0, 1024, 768));
 	Director::getInstance()->setOpenGLView(view);
 
 	return Application::getInstance()->run();

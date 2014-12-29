@@ -50,6 +50,7 @@
 		419E8EBA18A9F60900232A34 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A92275471517C094001B78AA /* AudioToolbox.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		419E8EBB18A9F67C00232A34 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A92275451517C094001B78AA /* OpenAL.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		419E8ECB18A9F75900232A34 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A92275491517C094001B78AA /* AVFoundation.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		41EA56161A4FEB7300D8764B /* GameController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41EA56151A4FEB7300D8764B /* GameController.framework */; };
 		41F1A3E11894BA38006E818E /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41F1A3E01894BA38006E818E /* Default-568h@2x.png */; };
 		41F1A4AA1894BB33006E818E /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A82F5FA169AC92500C4B13A /* libsqlite3.dylib */; };
 		41F1A4AB1894BB33006E818E /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D454520B156E22BD00887EB5 /* libz.dylib */; };
@@ -376,6 +377,7 @@
 		419E924E18AC3BDC00232A34 /* server.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = server.js; path = ../server/server.js; sourceTree = "<group>"; };
 		41C1BC2B19C6BADD00ADF25E /* minified-footer.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = "minified-footer.js"; path = "html/minified-footer.js"; sourceTree = "<group>"; };
 		41C1BC2E19C6BBEE00ADF25E /* build.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = build.xml; path = html/build.xml; sourceTree = "<group>"; };
+		41EA56151A4FEB7300D8764B /* GameController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameController.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.1.sdk/System/Library/Frameworks/GameController.framework; sourceTree = DEVELOPER_DIR; };
 		41F1A3E01894BA38006E818E /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		41F1A4D61894BB33006E818E /* TwoScene.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TwoScene.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		41F1A4D91894BBE3006E818E /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppController.h; path = mac/AppController.h; sourceTree = "<group>"; };
@@ -434,6 +436,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				41EA56161A4FEB7300D8764B /* GameController.framework in Frameworks */,
 				413369C11940554300258BC8 /* Security.framework in Frameworks */,
 				419E8E6118A9922800232A34 /* UIKit.framework in Frameworks */,
 				419E8E5F18A9921800232A34 /* OpenGLES.framework in Frameworks */,
@@ -1289,6 +1292,7 @@
 		4152B64E1894756E00BEF730 /* frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				41EA56151A4FEB7300D8764B /* GameController.framework */,
 				413369C01940554300258BC8 /* Security.framework */,
 				419E8EA018A9C68100232A34 /* libcurl.dylib */,
 				419E8E6018A9922800232A34 /* UIKit.framework */,
@@ -1450,7 +1454,7 @@
 		A92275341517C094001B78AA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0510;
+				LastUpgradeCheck = 0610;
 			};
 			buildConfigurationList = A92275371517C094001B78AA /* Build configuration list for PBXProject "TwoScene" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1568,6 +1572,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREFIX_HEADER = mac/Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					CC_TARGET_OS_MAC,
@@ -1586,6 +1591,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREFIX_HEADER = mac/Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					CC_TARGET_OS_MAC,

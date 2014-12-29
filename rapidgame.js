@@ -17,7 +17,7 @@ var http = require("http"),
 	packageJson = JSON.parse(fs.readFileSync(path.join(__dirname, "package.json"))),
 	cmdName = packageJson.name,
 	version = packageJson.version,
-	cocos2djsUrl = "http://www.cocos2d-x.org/filedown/cocos2d-js-v3.0-rc2.zip",
+	cocos2djsUrl = "http://www.cocos2d-x.org/filedown/cocos2d-js-v3.2-rc0.zip",
 	cocos2dDirGlob = "*ocos2d-js*",
 	category,
 	engines = [],
@@ -569,6 +569,10 @@ var runPrebuild = function(platform, config, arch, callback) {
 			prebuildMac("Mac", config, arch, function(){
 				callback();
 			});
+		} else if (platform === "android") {
+			prebuildAndroid(config, arch, function(){
+				callback();
+			});
 		} else {
 			prebuildMac("iOS", config, arch, function(){
 				prebuildMac("Mac", config, arch, function(){
@@ -646,13 +650,12 @@ var prebuildWin = function(config, arch, callback) {
 		builds = [];
 		for (i = 0; i < configs.length; i += 1) {
 			command = path.join(msBuildPath, "MSBuild.exe");
-			targets = ["libcocos2d", "libAudio", "libBox2D", "libchipmunk", "libCocosBuilder", "libCocosStudio",
-				"libExtensions", "libGUI", "libLocalStorage"/*, "liblua"*/, "libNetwork", "libSpine"];
+			targets = ["libcocos2d", "libBox2D", "libSpine"];
 			args = [
 				path.join(jsbindings, "cocos2d-x", "build", "cocos2d-win32.vc2012.sln"),
 				"/nologo",
 				"/maxcpucount:4",
-				"/t:" + targets.join(";"),
+				//"/t:" + targets.join(";"),
 				//"/p:VisualStudioVersion=12.0",
 				//"/p:PlatformTarget=x86",
 				//"/verbosity:diag",
@@ -768,7 +771,10 @@ var linkWin = function(config, callback) {
 		jsbindings = path.join(cmd.prefix, "src", "cocos2d-js", "frameworks", "js-bindings"),
 		libDirs = [
 			path.join(jsbindings, "cocos2d-x", "build", config + ".win32"),
+			path.join(jsbindings, "cocos2d-x", "cocos", "2d", config + ".win32"),
 			path.join(jsbindings, "bindings", "proj.win32", config + ".win32"),
+			path.join(jsbindings, "cocos2d-x", "cocos", "editor-support", "spine", "proj.win32", config + ".win32"),
+			path.join(jsbindings, "cocos2d-x", "external", "Box2D", "proj.win32", config + ".win32"),
 			path.join(jsbindings, "external", "spidermonkey", "prebuilt", "win32"),
 			path.join(jsbindings, "cocos2d-x", "external", "websockets", "prebuilt", "win32")
 		],
@@ -779,6 +785,7 @@ var linkWin = function(config, callback) {
 		dest = path.join(cmd.prefix, version, "cocos2d", "x", "lib", config + "-win32", "x86"),
 		command = '"' + getVCBinDir() + 'lib.exe" ' +
 			'/NOLOGO ' +
+			'/IGNORE:4006 ' +
 			//'/OPT:REF ' +
 			//'/OPT:ICF ' +
 			'"/OUT:' + path.join(dest, "libcocos2dx-prebuilt.lib") + '"';
@@ -787,6 +794,7 @@ var linkWin = function(config, callback) {
 	wrench.mkdirSyncRecursive(dest);
 	for (i = 0; i < libDirs.length; i += 1) {
 		copyGlobbed(libDirs[i], dest, "*.dll");
+		//copyGlobbed(libDirs[i], dest, "*.pdb");
 		command += " " + path.join(libDirs[i], "*.lib");
 	}
 	copyGlobbed(path.join(cmd.prefix, "src", "cocos2d-js", "templates", "js-template-runtime", "runtime", "win32"), dest, "*.dll");
@@ -1359,6 +1367,7 @@ To make a Cocos2d patch:
 	cd /tmp
 	cp -r ~/path/to/cocos2d-js-latest .
 	cd cocos2d-js-latest
+	find . -name .gitignore -delete
 	git init .
 	git add *
 	git commit -a

@@ -1,3 +1,8 @@
+Version 0.9.0 - December 28, 2014
+
+	Upgraded to cocos2d-js 3.2 RC0 (cocos2d-x 3.3).
+	Prebuild can now solely build Android on Mac.
+
 Version 0.8.9 - August 14, 2014
 
 	Upgraded to Cocos2d JS 3.0 RC2 (Cocos2d-X 3.2).

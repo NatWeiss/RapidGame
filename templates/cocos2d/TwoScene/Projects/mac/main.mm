@@ -24,9 +24,9 @@ int main(int argc, char *argv[])
 	// create the gl view
 	auto name = [[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleName"] UTF8String];
 	if (fullscreen)
-		view = GLView::createWithFullScreen(name);
+		view = GLViewImpl::createWithFullScreen(name);
 	else
-		view = GLView::createWithRect(name, cocos2d::Rect(0, 0, 960, 640));
+		view = GLViewImpl::createWithRect(name, cocos2d::Rect(0, 0, 960, 640));
 	Director::getInstance()->setOpenGLView(view);
 	
 	// run the app

@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "CCApplication.h"
+#include "cocos2d.h"
 
 class AppDelegate : private cocos2d::Application
 {
@@ -12,6 +12,7 @@ class AppDelegate : private cocos2d::Application
 		AppDelegate();
 		virtual ~AppDelegate();
 
+		void initGLContextAttrs() override;
 		virtual bool applicationDidFinishLaunching();
 		virtual void applicationDidEnterBackground();
 		virtual void applicationWillEnterForeground();
