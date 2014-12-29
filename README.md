@@ -1,8 +1,11 @@
+__________              .__    .___________                       
+\______   \____  ______ |__| __| _/  _____/_____    _____   ____  
+ |       _|__  \ \____ \|  |/ __ /   \  ___\__  \  /     \_/ __ \ 
+ |    |   \/ __ \|  |_> >  / /_/ \    \_\  \/ __ \|  Y Y  \  ___/ 
+ |____|_  (____  /   __/|__\____ |\______  (____  /__|_|  /\___  >
+        \/     \/|__|           \/       \/     \/      \/     \/ 
 
-RapidGame
-=========
-
-A commandline tool for Mac and Windows (Linux support is planned) which:
+RapidGame is a commandline tool for Mac and Windows (Linux support is planned) which:
 
 1. Prebuilds cocos2d-x / cocos2d-js libraries for Mac, iOS, Android and Windows for multiple architectures and configurations, virtually eliminating the need to ever rebuild cocos2d-x or the Javascript bindings.
 
