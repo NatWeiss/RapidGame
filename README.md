@@ -15,6 +15,7 @@ RapidGame is a commandline tool for Mac and Windows (Linux support is planned) w
 Updates
 -------
 
+* Feb 7, 2015: Prebuilder updated for cocos2d-js 3.2 final / cocos2d-x 3.3.
 * Dec 28, 2014: Prebuilder updated for cocos2d-js 3.2 rc0 / cocos2d-x 3.3.
 * Aug 14, 2014: Prebuilder updated for cocos2d-js 3.0 rc2 / cocos2d-x 3.2.
 
