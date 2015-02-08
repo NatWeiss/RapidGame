@@ -17,7 +17,7 @@ var http = require("http"),
 	packageJson = JSON.parse(fs.readFileSync(path.join(__dirname, "package.json"))),
 	cmdName = packageJson.name,
 	version = packageJson.version,
-	cocos2djsUrl = "http://cdn.cocos2d-x.org/cocos2d-js-v3.2-rc0.zip",
+	cocos2djsUrl = "http://cdn.cocos2d-x.org/cocos2d-js-v3.2.zip",
 	cocos2dDirGlob = "*ocos2d-js*",
 	category,
 	engines = [],
@@ -574,8 +574,8 @@ var runPrebuild = function(platform, config, arch, callback) {
 				callback();
 			});
 		} else {
-			prebuildMac("iOS", config, arch, function(){
-				prebuildMac("Mac", config, arch, function(){
+			prebuildMac("Mac", config, arch, function(){
+				prebuildMac("iOS", config, arch, function(){
 					prebuildAndroid(config, arch, function(){
 						callback();
 					});
