@@ -1,3 +1,7 @@
+Version 0.9.3 - February 19, 2015
+
+	Fixed a bug in Xcode projects (reference to the script folder).
+
 Version 0.9.2 - February 7, 2015
 
 	Upgraded to cocos2d-js 3.2 (cocos2d-x 3.3).

@@ -96,7 +96,7 @@
 		4110F71818C7ED7F004E9231 /* Icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72@2x.png"; sourceTree = "<group>"; };
 		4110F71918C7ED7F004E9231 /* Icon-76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-76.png"; sourceTree = "<group>"; };
 		4110F71A18C7ED7F004E9231 /* Icon-76@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-76@2x.png"; sourceTree = "<group>"; };
-		411C1A77199D692E001D212A /* script */ = {isa = PBXFileReference; lastKnownFileType = folder; name = script; path = ../../../../latest/cocos2d/x/script; sourceTree = "<group>"; };
+		411C1A77199D692E001D212A /* script */ = {isa = PBXFileReference; lastKnownFileType = folder; name = script; path = ../lib/cocos2d/x/script; sourceTree = "<group>"; };
 		412F3181192330E3007F51FD /* AUTHORS.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = AUTHORS.txt; sourceTree = "<group>"; };
 		412F3182192330E3007F51FD /* Base64Images.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = Base64Images.js; sourceTree = "<group>"; };
 		412F3183192330E3007F51FD /* CCBoot.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = CCBoot.js; sourceTree = "<group>"; };
