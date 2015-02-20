@@ -34,6 +34,10 @@ There's no need to clone this repo, just install RapidGame:
 
 	sudo npm install rapidgame -g
 
+Or, on Windows leave off the `sudo`:
+
+	npm install rapidgame -g
+
 And, create a Unity game named "Zombie Matrix":
 
 	rapidgame create unity "Zombie Matrix" com.myompany.zombiematrix
