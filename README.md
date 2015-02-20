@@ -1,15 +1,19 @@
-	__________              .__    .___________                       
-	\______   \____  ______ |__| __| _/  _____/_____    _____   ____  
-	 |       _|__  \ \____ \|  |/ __ /   \  ___\__  \  /     \_/ __ \ 
-	 |    |   \/ __ \|  |_> >  / /_/ \    \_\  \/ __ \|  Y Y  \  ___/ 
+[![](http://wizardfu.com/assets/RapidGame.jpg)](http://youtu.be/SOJs2DwIxOU)
+
+	__________              .__    .___________
+	\______   \____  ______ |__| __| _/  _____/_____    _____   ____
+	 |       _|__  \ \____ \|  |/ __ /   \  ___\__  \  /     \_/ __ \
+	 |    |   \/ __ \|  |_> >  / /_/ \    \_\  \/ __ \|  Y Y  \  ___/
 	 |____|_  (____  /   __/|__\____ |\______  (____  /__|_|  /\___  >
-	        \/     \/|__|           \/       \/     \/      \/     \/ 
+	        \/     \/|__|           \/       \/     \/      \/     \/
 
 RapidGame is a commandline tool for Mac and Windows (Linux support is planned) which:
 
 1. Prebuilds cocos2d-x / cocos2d-js libraries for Mac, iOS, Android and Windows for multiple architectures and configurations, virtually eliminating the need to ever rebuild cocos2d-x or the Javascript bindings.
 
 2. A game project templating system for creating cross-platform games for a variety of game engines, including cocos2d-x, cocos2d-js, Unity, Corona and Appcelerator Titanium. The default game template creates a simple Breakout clone with a menu and game scene.
+
+Prefer somebody explaining and showing it? Check out the [overview video](http://youtu.be/SOJs2DwIxOU).
 
 
 Updates
