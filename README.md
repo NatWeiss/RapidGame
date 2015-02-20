@@ -1,4 +1,4 @@
-[![](http://wizardfu.com/assets/RapidGame.jpg)](http://youtu.be/SOJs2DwIxOU)
+[![](https://raw.githubusercontent.com/NatWeiss/RapidGame/master/RapidGame.jpg)](http://youtu.be/SOJs2DwIxOU)
 
 	__________              .__    .___________
 	\______   \____  ______ |__| __| _/  _____/_____    _____   ____
