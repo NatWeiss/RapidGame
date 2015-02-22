@@ -97,13 +97,7 @@
         
       
         
-        <h2 id="pro-version">Pro Version</h2>
-
-        
-      
-        
-        <p>If you need cross-platform monetization, in-app purchasing, virtual economies, social networking, async multiplayer, analytics and/or ads then get <a href="http://www.binpress.com/app/rapidgame-pro-for-ios-android-facebook/1802">RapidGamePro</a>. It has an example game called Lemonade Exchange written using the cocos2d-js engine which includes all of the previously mentioned features and works on Facebook, iOS, Mac and Android. Support for more platforms is planned.</p>
-<h2 id="eliminate-grunt-work">Eliminate Grunt Work</h2>
+        <h2 id="eliminate-grunt-work">Eliminate Grunt Work</h2>
 
         
       
@@ -184,12 +178,6 @@ Server/ - The server which provides an API <span class="hljs-keyword">and</span>
         
         <p>Inside the project files there are other differences. Take the Xcode project as an example. The normal cocos2d-js project is setup to build all of cocos2d-x, depends on several sub-projects (Targets &gt; Build Phases &gt; Target Dependencies) and references several <strong>User Header Search Paths</strong> (example: <code>$(SRCROOT)/../../js-bindings/cocos2d-x</code>) within the <code>frameworks</code> folder.</p>
 <p>The RapidGame project is more efficient, relying on the symlinked <code>lib</code> folder. Instead of depending on sub-projects and rebuilding all of cocos2d-x, it uses two <strong>Other Linker Flags</strong> to include the prebuilt cocos2d-x libraries (<code>-lcocos2dx-prebuilt</code>) and specifies an additional <strong>Library Search Path</strong> in which to find them: <code>$(SRCROOT)/../lib/cocos2d/x/lib/$(CONFIGURATION)-iOS/$(PLATFORM_NAME)</code>. <strong>User Header Search Paths</strong> also use the symlink, <code>$(SRCROOT)/../lib/cocos2d/x/include/cocos</code>, so that by simply swapping the <code>lib</code> folder one can upgrade to a newer prebuilt version of cocos2d-js/x.</p>
-<h2 id="breakout-clones">Breakout Clones</h2>
-
-        
-      
-        
-        <p>To test the validity of RapidGame, four Breakout clones were written for Unity, Corona, cocos2d-js and Titanium. I found that using RapidGame can save up to ~80% of development time for simple games. To read more about the findings, see <a href="http://www.binpress.com/blog/2014/05/14/selecting-cross-platform-game-engine/">Selecting a Cross-platform Game Engine</a>.</p>
 <h2 id="more-about-prebuilding">More About Prebuilding</h2>
 
         
@@ -215,7 +203,7 @@ Server/ - The server which provides an API <span class="hljs-keyword">and</span>
 <li>Windows</li>
 </ul>
 <p>Linux support is planned.</p>
-<h2 id="custom-cocos2d-projects">Custom Cocos2D Projects</h2>
+<h2 id="custom-cocos2d-x-js-projects">Custom cocos2d-x/js Projects</h2>
 
         
       

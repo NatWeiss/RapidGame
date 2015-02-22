@@ -51,12 +51,6 @@ For usage instructions:
 	rapidgame --help
 
 
-Pro Version
------------
-
-If you need cross-platform monetization, in-app purchasing, virtual economies, social networking, async multiplayer, analytics and/or ads then get [RapidGamePro](http://www.binpress.com/app/rapidgame-pro-for-ios-android-facebook/1802). It has an example game called Lemonade Exchange written using the cocos2d-js engine which includes all of the previously mentioned features and works on Facebook, iOS, Mac and Android. Support for more platforms is planned.
-
-
 Eliminate Grunt Work
 --------------------
 
@@ -131,12 +125,6 @@ Inside the project files there are other differences. Take the Xcode project as 
 The RapidGame project is more efficient, relying on the symlinked `lib` folder. Instead of depending on sub-projects and rebuilding all of cocos2d-x, it uses two **Other Linker Flags** to include the prebuilt cocos2d-x libraries (`-lcocos2dx-prebuilt`) and specifies an additional **Library Search Path** in which to find them: `$(SRCROOT)/../lib/cocos2d/x/lib/$(CONFIGURATION)-iOS/$(PLATFORM_NAME)`. **User Header Search Paths** also use the symlink, `$(SRCROOT)/../lib/cocos2d/x/include/cocos`, so that by simply swapping the `lib` folder one can upgrade to a newer prebuilt version of cocos2d-js/x.
 
 
-Breakout Clones
----------------
-
-To test the validity of RapidGame, four Breakout clones were written for Unity, Corona, cocos2d-js and Titanium. I found that using RapidGame can save up to ~80% of development time for simple games. To read more about the findings, see [Selecting a Cross-platform Game Engine](http://www.binpress.com/blog/2014/05/14/selecting-cross-platform-game-engine/).
-
-
 More About Prebuilding
 ----------------------
 
@@ -160,8 +148,8 @@ The cocos2dx library prebuilder currently works on the following development pla
 Linux support is planned.
 
 
-Custom Cocos2D Projects
------------------------
+Custom cocos2d-x/js Projects
+----------------------------
 
 If you are just using cocos2d-x or you have your own custom project layout, you can still use the prebuilt libraries. Use this command to create a symlink to the libraries directory:
 
