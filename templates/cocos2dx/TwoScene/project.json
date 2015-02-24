@@ -1,0 +1,53 @@
+{
+    "engineDir": "lib/cocos2d/html",
+	"designWidth": 2048,
+	"designHeight": 1536,
+	"initialScene": "MenuScene",
+	"resourcePath": "Assets",
+	"debugPhysics": false,
+	"playMusic": true,
+
+    "project_type": "javascript",
+    "debugMode": 1,
+    "showFPS": false,
+    "frameRate": 60,
+    "id": "gameCanvas",
+    "renderMode": 0,
+
+    "modules": [
+		"cocos2d",
+		"chipmunk"
+	],
+
+    "jsList": [
+		"Assets/Config.js",
+		"Assets/lib/Pro.js",
+		"Assets/MenuScene.js",
+		"Assets/GameScene.js",
+		"Assets/lib/Loader.js"
+    ],
+
+	"strings": {
+		"en": {
+			"title": "TwoScene",
+			"you-are-player-number": "Your magic number is %d."
+		}
+	},
+	
+	"preload": [
+		"Ball.png",
+		"Logo.png"
+	],
+
+	"font": "DolceVita",
+	
+	"loader": {
+		"bg-color": {"r": 218, "g": 214, "b": 212, "a": 255},
+		"text": "L o a d i n g . . .",
+		"text-font": "Arial",
+		"text-color": {"r": 128, "g": 128, "b": 128, "a": 255},
+		"text-size": 40,
+		"bar-color": {"r": 9, "g": 9, "b": 10, "a": 255},
+		"image-win-size-percent": 0.5
+	}
+}

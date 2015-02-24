@@ -1,0 +1,164 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{76A39BB2-9B84-4C65-98A5-654D86B86F2A}</ProjectGuid>
+    <RootNamespace>test_win32</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '10.0'">v100</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0'">v110</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v110_xp</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0'">v120</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v120_xp</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '10.0'">v100</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0'">v110</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v110_xp</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0'">v120</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v120_xp</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.40219.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)$(Configuration).win32\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration).win32\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)$(Configuration).win32\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration).win32\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LibraryPath>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LibraryPath>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..;$(ProjectDir)..\Classes;$(ProjectDir)..\..\lib\cocos2d\x\include;$(ProjectDir)..\..\lib\cocos2d\x\include\cocos;$(ProjectDir)..\..\lib\cocos2d\x\include\cocos\2d;$(ProjectDir)..\..\lib\cocos2d\x\include\cocos\base;$(ProjectDir)..\..\lib\cocos2d\x\include\cocos\renderer;$(ProjectDir)..\..\lib\cocos2d\x\include\cocos\physics;$(ProjectDir)..\..\lib\cocos2d\x\include\cocos\math\kazmath;$(ProjectDir)..\..\lib\cocos2d\x\include\external\win32-specific\gles\include\OGLES;$(ProjectDir)..\..\lib\cocos2d\x\include\external\glfw3\include\win32;$(ProjectDir)..\..\lib\cocos2d\x\include\cocos\platform;$(ProjectDir)..\..\lib\cocos2d\x\include\cocos\platform\win32;$(ProjectDir)..\..\lib\cocos2d\x\include\external;$(ProjectDir)..\..\lib\cocos2d\x\include\external\Box2D;$(ProjectDir)..\..\lib\cocos2d\x\include\cocos\audio\include;$(ProjectDir)..\..\lib\cocos2d\x\include\cocos\audio\win32;$(ProjectDir)..\..\lib\cocos2d\x\include\cocos\extensions;$(ProjectDir)..\..\lib\cocos2d\x\include\cocos\editor-support;$(ProjectDir)..\..\lib\cocos2d\x\include\bindings\manual;$(ProjectDir)..\..\lib\cocos2d\x\include\bindings\auto;$(ProjectDir)..\..\lib\cocos2d\x\include\external\spidermonkey\include\win32;$(ProjectDir)..\..\lib\cocos2d\x\include\external\chipmunk\include\chipmunk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES;CC_ENABLE_CHIPMUNK_INTEGRATION=1;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;KIT_LOG_MESSAGES=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <DisableSpecificWarnings>4267;4251;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>libcocos2dx-prebuilt.lib;opengl32.lib;ws2_32.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)$(ProjectName).exe</OutputFile>
+      <AdditionalLibraryDirectories>$(OutDir);$(ProjectDir)..\..\lib\cocos2d\x\lib\$(Configuration)-win32\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Command>echo Making EXE DEP-compatible...
+call "$(DevEnvDir)..\tools\vsvars32.bat"
+editbin.exe /NXCOMPAT:NO "$(TargetPath)"</Command>
+    </PostBuildEvent>
+    <PreLinkEvent>
+      <Command>echo Making output directory...
+if not exist "$(OutDir)" mkdir "$(OutDir)"
+echo Copying Win32 Libraries...
+xcopy /Y /Q "$(ProjectDir)..\..\lib\cocos2d\x\lib\$(Configuration)-win32\x86\*.dll" "$(OutDir)"
+echo Copying Art Resources...
+xcopy /Y /D "$(ProjectDir)..\..\project.json" $(OutDir)
+if not exist "$(OutDir)Assets" mkdir "$(OutDir)Assets"
+xcopy /Y /D /E "$(ProjectDir)..\..\Assets\*" "$(OutDir)Assets"
+echo Copying Script files...
+if not exist "$(OutDir)script" mkdir "$(OutDir)script"
+xcopy /Y /D /E "$(ProjectDir)..\..\lib\cocos2d\x\script\*" "$(OutDir)script"</Command>
+    </PreLinkEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..;$(ProjectDir)..\Classes;$(ProjectDir)..\..\lib\cocos2d\x\include;$(ProjectDir)..\..\lib\cocos2d\x\include\cocos;$(ProjectDir)..\..\lib\cocos2d\x\include\cocos\2d;$(ProjectDir)..\..\lib\cocos2d\x\include\cocos\base;$(ProjectDir)..\..\lib\cocos2d\x\include\cocos\renderer;$(ProjectDir)..\..\lib\cocos2d\x\include\cocos\physics;$(ProjectDir)..\..\lib\cocos2d\x\include\cocos\math\kazmath;$(ProjectDir)..\..\lib\cocos2d\x\include\external\win32-specific\gles\include\OGLES;$(ProjectDir)..\..\lib\cocos2d\x\include\external\glfw3\include\win32;$(ProjectDir)..\..\lib\cocos2d\x\include\cocos\platform;$(ProjectDir)..\..\lib\cocos2d\x\include\cocos\platform\win32;$(ProjectDir)..\..\lib\cocos2d\x\include\external;$(ProjectDir)..\..\lib\cocos2d\x\include\external\Box2D;$(ProjectDir)..\..\lib\cocos2d\x\include\cocos\audio\include;$(ProjectDir)..\..\lib\cocos2d\x\include\cocos\audio\win32;$(ProjectDir)..\..\lib\cocos2d\x\include\cocos\extensions;$(ProjectDir)..\..\lib\cocos2d\x\include\cocos\editor-support;$(ProjectDir)..\..\lib\cocos2d\x\include\bindings\manual;$(ProjectDir)..\..\lib\cocos2d\x\include\bindings\auto;$(ProjectDir)..\..\lib\cocos2d\x\include\external\spidermonkey\include\win32;$(ProjectDir)..\..\lib\cocos2d\x\include\external\chipmunk\include\chipmunk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;KIT_LOG_MESSAGES=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4267;4251;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>libcocos2dx-prebuilt.lib;opengl32.lib;ws2_32.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)$(ProjectName).exe</OutputFile>
+      <AdditionalLibraryDirectories>$(OutDir);$(ProjectDir)..\..\lib\cocos2d\x\lib\$(Configuration)-win32\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Command>echo Making EXE DEP-compatible...
+call "$(DevEnvDir)..\tools\vsvars32.bat"
+editbin.exe /NXCOMPAT:NO "$(TargetPath)"
+</Command>
+    </PostBuildEvent>
+    <PreLinkEvent>
+      <Command>echo Making output directory...
+if not exist "$(OutDir)" mkdir "$(OutDir)"
+echo Copying Win32 Libraries...
+xcopy /Y /Q "$(ProjectDir)..\..\lib\cocos2d\x\lib\$(Configuration)-win32\x86\*.dll" "$(OutDir)"
+echo Copying Art Resources...
+xcopy /Y /D "$(ProjectDir)..\..\project.json" $(OutDir)
+if not exist "$(OutDir)Assets" mkdir "$(OutDir)Assets"
+xcopy /Y /D /E "$(ProjectDir)..\..\Assets\*" "$(OutDir)Assets"
+echo Copying Script files...
+if not exist "$(OutDir)script" mkdir "$(OutDir)script"
+xcopy /Y /D /E "$(ProjectDir)..\..\lib\cocos2d\x\script\*" "$(OutDir)script"</Command>
+    </PreLinkEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\AppDelegate.cpp" />
+    <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\AppDelegate.h" />
+    <ClInclude Include="main.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="game.rc" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
