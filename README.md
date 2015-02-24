@@ -19,6 +19,7 @@ Prefer somebody explaining and showing it? Check out the [overview video](http:/
 Updates
 -------
 
+* Feb 24, 2015: Now has a separate cocos2d-x and cocos2d-js templates. Fixed a bug on Windows: "Unable to find MSBuild path." Still a few Windows-specific kinks to work out in the next version.
 * Feb 19, 2015: Fixed a bug in Xcode projects (reference to script folder).
 * Feb 7, 2015: Prebuilder updated for cocos2d-js 3.2 final / cocos2d-x 3.3.
 * Dec 28, 2014: Prebuilder updated for cocos2d-js 3.2 rc0 / cocos2d-x 3.3.
@@ -38,13 +39,14 @@ Or, on Windows leave off the `sudo`:
 
 	npm install rapidgame -g
 
-And, create a Unity game named "Zombie Matrix":
+And, create a cocos2d-x game named "Heck Yeah":
+
+	rapidgame create cocos2dx "Heck Yeah" org.myorg.heckyeah
+
+Or, a Unity game named "Zombie Matrix":
 
 	rapidgame create unity "Zombie Matrix" com.myompany.zombiematrix
 
-Or, a cocos2d-x / cocos2d-js game named "Heck Yeah":
-
-	rapidgame create cocos2d "Heck Yeah" org.myorg.heckyeah
 
 For usage instructions:
 

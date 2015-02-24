@@ -17,7 +17,9 @@ var http = require("http"),
 	packageJson = JSON.parse(fs.readFileSync(path.join(__dirname, "package.json"))),
 	cmdName = packageJson.name,
 	version = packageJson.version,
-	cocos2djsUrl = "http://cdn.cocos2d-x.org/cocos2d-js-v3.2.zip",
+	cocos2djsUrlMac = "http://cdn.cocos2d-x.org/cocos2d-js-v3.2.zip",
+	cocos2djsUrlWin = "http://cdn.cocos2d-x.org/cocos2d-js-v3.2.zip",
+	cocos2djsUrl = (process.platform === "darwin" ? cocos2djsUrlMac : cocos2djsUrlWin),
 	cocos2dDirGlob = "*ocos2d-js*",
 	category,
 	engines = [],
@@ -28,7 +30,7 @@ var http = require("http"),
 	copyCount = 0,
 	msBuildPath,
 	defaults = {
-		engine: "cocos2d",
+		engine: "cocos2dx",
 		template: "TwoScene",
 		package: "org.mycompany.mygame",
 		dest: process.cwd(),
@@ -55,7 +57,7 @@ var listDirectories = function() {
 // get engines and templates
 //
 engines = listDirectories(__dirname, "templates", "*");
-templates = listDirectories(__dirname, "templates", "cocos2d", "*");
+templates = listDirectories(__dirname, "templates", "cocos2dx", "*");
 
 //
 // Main run method.
@@ -82,7 +84,7 @@ var run = function(args) {
 
 	cmd
 		.command("prebuild [platform]")
-		.description("                            Prebuild Cocos2D X static libraries [platforms: " + platforms.join(", ") + "]")
+		.description("                            Prebuild cocos2d-x static libraries [platforms: " + platforms.join(", ") + "]")
 		.action(prebuild);
 	commands.push("prebuild");
 
@@ -165,7 +167,7 @@ var createProject = function(engine, name, package) {
 	
 	// Check engine and name
 	if (!cmd.engine || !name || !package) {
-		console.log("Engine, project name and package name are required, for example: " + cmdName + " cocos2d \"Heck Yeah\" com.mycompany.heckyeah");
+		console.log("Engine, project name and package name are required, for example: " + cmdName + " cocos2dx \"Heck Yeah\" com.mycompany.heckyeah");
 		usage();
 		return 1;
 	}
@@ -815,57 +817,77 @@ var getMSBuildPath = function(callback) {
 		root = '\\Software\\Microsoft\\MSBuild\\ToolsVersions',
 		regKey = new Winreg({key: root});
 	regKey.keys(function (err, items) {
-		var i, key;
+		var i, key, highest = 0, buildPath = '', count = 0;
 		if (err) {
 			console.log(err);
 			return;
 		}
+		
+		// find path to MSBuildToolsPath
 		for (i = 0; i < items.length; i += 1) {
+			// try to get the value of MSBuildToolsPath
 			key = path.basename(items[i].key);
-			if (parseFloat(key) >= 11.0) {
-				regKey = new Winreg({key: root + '\\' + key});
-				regKey.get("MSBuildToolsPath", function(err, item) {
-					if (err) {
-						console.log(err);
-						return;
-					}
+			regKey = new Winreg({key: root + '\\' + key});
+			regKey.get("MSBuildToolsPath", function(err, item) {
+				count += 1;
+				if (err) {
+					console.log(err);
+				} else if (typeof item === "object" && typeof item.value === "string" && item.value.length) {
 					if (cmd.verbose) {
-						console.log("MSBuildToolsPath: " + item.value);
+						console.log("Potential MSBuildToolsPath: " + item.value);
 					}
-					callback(item.value);
-				});
-				return;
-			}
+					if (parseFloat(key) > highest) {
+						buildPath = item.value;
+						highest = parseFloat(key);
+					}
+				}
+				if (count === items.length) {
+					if (buildPath.length) {
+						console.log("Final MSBuildToolsPath: " + buildPath);
+						callback(buildPath);
+					} else {
+						console.log("Unable to find MSBuild path");
+					}
+				}
+			});
 	  	}
-	  	console.log("Unable to find MSBuild path");
 	});
 };
 
 //
 // get the VCTargetsPath
+// (todo: mine this from the registry)
 //
 var getVCTargetsPath = function() {
 	var i,
-		base = "\\MSBuild\\Microsoft.Cpp\\v4.0\\V120\\",
-		//base = "\\MSBuild\\Microsoft.Cpp\\v4.0\\",
+		ret,
+		bases = [
+			"\\MSBuild\\Microsoft.Cpp\\v4.0\\V120\\",
+			"\\MSBuild\\Microsoft.Cpp\\v4.0\\V110\\",
+			"\\MSBuild\\Microsoft.Cpp\\v4.0\\"
+		],
 		names = [
-			"\\Program Files (x86)" + base,
-			"C:\\Program Files (x86)" + base,
-			"\\Program Files" + base,
-			"C:\\Program Files" + base
+			"\\Program Files (x86)",
+			"C:\\Program Files (x86)",
+			"\\Program Files",
+			"C:\\Program Files"
 		];
-	for (i = 0; i < names.length; i += 1) {
-		if (dirExists(names[i])) {
-			if (cmd.verbose) {
-				console.log("VCTargetsPath: " + names[i]);
+	for (j = 0; j < bases.length; j += 1) {
+		for (i = 0; i < names.length; i += 1) {
+			ret = names[i] + bases[j];
+			if (dirExists(ret)) {
+				if (cmd.verbose) {
+					console.log("VCTargetsPath: " + ret);
+				}
+				return ret;
 			}
-			return names[i];
 		}
 	}
 };
 
 //
 // get the vc bin dir
+// (todo: mine this from the registry)
 //
 var getVCBinDir = function() {
 	var i,
@@ -1178,7 +1200,7 @@ var usageExamples = function() {
 	console.log("  Examples:");
 	console.log("");
 	console.log("    $ " + cmdName + " create unity \"Zombie Matrix\" com.mycompany.zombiematrix");
-	console.log("    $ " + cmdName + " create cocos2d \"Heck Yeah\" com.mycompany.heckyeah");
+	console.log("    $ " + cmdName + " create cocos2dx \"Heck Yeah\" com.mycompany.heckyeah");
 	console.log("    $ " + cmdName + " prebuild");
 	console.log("");
 };

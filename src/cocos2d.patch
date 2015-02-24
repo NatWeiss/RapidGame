@@ -11,6 +11,26 @@ index 6ea045a..db0cf4b 100644
  LOCAL_SRC_FILES := auto/jsb_cocos2dx_auto.cpp \
                     auto/jsb_cocos2dx_builder_auto.cpp \
                     auto/jsb_cocos2dx_extension_auto.cpp \
+diff --git a/frameworks/js-bindings/cocos2d-x/cocos/2d/cocos2dx.props b/frameworks/js-bindings/cocos2d-x/cocos/2d/cocos2dx.props
+index a0a234e..afef5e9 100644
+--- a/frameworks/js-bindings/cocos2d-x/cocos/2d/cocos2dx.props
++++ b/frameworks/js-bindings/cocos2d-x/cocos/2d/cocos2dx.props
+@@ -7,7 +7,7 @@
+   </PropertyGroup>
+   <ItemDefinitionGroup>
+     <Link>
+-      <AdditionalDependencies>opengl32.lib;glew32.lib;libzlib.lib;libpng.lib;libjpeg.lib;libtiff.lib;libwebp.lib;libiconv.lib;glfw3.lib;freetype250.lib;winmm.lib;ws2_32.lib;libchipmunk.lib;libbox2d.lib;libSpine.lib;%(AdditionalDependencies)</AdditionalDependencies>
++      <AdditionalDependencies>opengl32.lib;glew32.lib;libzlib.lib;libpng.lib;libjpeg.lib;libtiff.lib;libwebp.lib;libiconv.lib;glfw3.lib;freetype250.lib;winmm.lib;ws2_32.lib;libchipmunk.lib;%(AdditionalDependencies)</AdditionalDependencies>
+       <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+     </Link>
+@@ -17,4 +17,4 @@
+     </ProjectReference>
+   </ItemDefinitionGroup>
+   <ItemGroup />
+-</Project>
+\ No newline at end of file
++</Project>
 diff --git a/frameworks/js-bindings/cocos2d-x/external/Box2D/Common/b2Draw.h b/frameworks/js-bindings/cocos2d-x/external/Box2D/Common/b2Draw.h
 index 20359c9..8c5f8ab 100755
 --- a/frameworks/js-bindings/cocos2d-x/external/Box2D/Common/b2Draw.h
