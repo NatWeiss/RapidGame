@@ -18,7 +18,10 @@ LOCAL_MODULE := cocos2djs_shared
 LOCAL_MODULE_FILENAME := libcocos2djs
 
 LOCAL_SRC_FILES := main.cpp \
-                   ../../AppDelegate.cpp
+                   ../../AppDelegate.cpp \
+                   ../../Game.cpp \
+                   ../../GameScene.cpp \
+                   ../../MenuScene.cpp
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../.. \
 				$(LOCAL_PATH)/../../../lib/cocos2d/x/include \

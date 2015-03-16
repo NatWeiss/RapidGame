@@ -39,13 +39,13 @@ Or, on Windows leave off the `sudo`:
 
 	npm install rapidgame -g
 
-And, create a cocos2d-x game named "Heck Yeah":
+And, create a cocos2d-x game named "HeckYeah":
 
-	rapidgame create cocos2dx "Heck Yeah" org.myorg.heckyeah
+	rapidgame create cocos2dx "HeckYeah" org.myorg.heckyeah
 
-Or, a Unity game named "Zombie Matrix":
+Or, a Unity game named "ZombieMatrix":
 
-	rapidgame create unity "Zombie Matrix" com.myompany.zombiematrix
+	rapidgame create unity "ZombieMatrix" com.myompany.zombiematrix
 
 
 For usage instructions:
@@ -77,7 +77,7 @@ The templates have:
 
 The project creator makes a copy of one of the templates, does a search and replace on the game title & package name, then installs any required modules. Viola. Your own rapidly-created game ready to go. Here's some example output from running the project creator:
 
-	$ rapidgamepro create Corona "Sword Ball" org.myorg.swordball
+	$ rapidgamepro create Corona "SwordBall" org.myorg.swordball
 	Rapidly creating a game
 	Engine: Corona
 	Template: TwoScene
@@ -178,17 +178,17 @@ Create Your Own Templates
 
 It's possible to create your own game templates. Here's the step-by-step instructions:
 
- 1. Create your game directory. If your game is called "Zombie Matrix", name the directory `Zombie Matrix`, including the space.
+ 1. Create your game directory. If your game is called "ZombieMatrix", name the directory `ZombieMatrix`.
  
- 2. Use the name of your game including any whitespace or punctation throughout your game project. RapidGame will automatically search and replace the title in most types of source and project files.
+ 2. Use the name of your game throughout your game project. RapidGame will automatically search and replace the title in most types of source and project files.
  
- 3. If you'd like a file or directory renamed, make sure it starts with your game's title. For example, if you have `Zombie Matrix.xcodeproj` it will get changed to `MyNewGame.xcodeproj`.
+ 3. If you'd like a file or directory renamed, make sure it starts with your game's title. For example, if you have `ZombieMatrix.xcodeproj` it will get changed to `MyNewGame.xcodeproj`.
  
  4. Whenever there's an instance of your package name, replace the beginning with `com.wizardfu.`, lowercase the title and remove any punctuation, so `com.mycompany.zombierevolution` becomes `com.wizardfu.zombierevolution`. This will get changed by the templating system when creating new game projects.
  
- 5. Copy your game template to the `templates/<engine>` directory of RapidGame. On Mac / Linux this is `/usr/local/lib/node_modules/rapidgame`. You can use the `npm prefix -g` command to determine where Node modules are installed on your system. If you're on Mac OS X, the template is for Unity and it's called "Zombie Matrix" then the final directory would be `/usr/local/lib/node_modules/rapidgame/templates/unity/Zombie Matrix/`.
+ 5. Copy your game template to the `templates/<engine>` directory of RapidGame. On Mac / Linux this is `/usr/local/lib/node_modules/rapidgame`. You can use the `npm prefix -g` command to determine where Node modules are installed on your system. If you're on Mac OS X, the template is for Unity and it's called "ZombieMatrix" then the final directory would be `/usr/local/lib/node_modules/rapidgame/templates/unity/ZombieMatrix/`.
 
- 6. Your template is now ready for testing. Try it out like this: `rapidgame create <engine> MyNewGame com.mycompany.mynewgame -t "Zombie Matrix" `.
+ 6. Your template is now ready for testing. Try it out like this: `rapidgame create <engine> MyNewGame com.mycompany.mynewgame -t "ZombieMatrix" `.
 
 
 Contributing

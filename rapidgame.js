@@ -1,7 +1,10 @@
 //
-//  Part of the [RapidGame](http://wizardfu.com/rapidgame) project.
+//  Part of the [RapidGame](https://github.com/natweiss/rapidgame) project.
 //  See the `LICENSE` file for the license governing this code.
-//  Developed by Nat Weiss.
+//  Developed by Nathanael Weiss.
+//
+//  To-do:
+//   - Fix Mac project name search and replace so names with spaces work.
 //
 
 var http = require("http"),
@@ -133,6 +136,7 @@ var init = function(directory) {
 	}
 
 	// Create lib symlink
+	// Windows: If you get Error: EPERM: operation not permitted: 'folder name\lib' it probably means you need to Run As Administrator
 	src = path.join(cmd.prefix, version);
 	dest = path.join(directory, "lib");
 	console.log("Symlinking" + (cmd.verbose ? ": " + dest + " -> " + src : " lib folder"));
@@ -219,7 +223,7 @@ var createProject = function(engine, name, package) {
 		regex: cmd.template,
 		replacement: name,
 		paths: [dest],
-		include: "*.js,*.plist,*.cpp,*.md,*.lua,*.html,*.json,*.xml,*.xib,*.pbxproj,*.xcscheme,*.xcworkspacedata,*.xccheckout,*.sh,*.cmd,*.py,*.rc,*.sln,*.txt,.classpath,.project,.cproject,makefile,manifest,*.vcxproj,*.user,*.filters",
+		include: "*.js,*.plist,*.cpp,*.md,*.lua,*.html,*.json,*.xml,*.xib,*.pbxproj,*.xcscheme,*.xcworkspacedata,*.xccheckout,*.sh,*.cmd,*.py,*.rc,*.sln,*.txt,.classpath,.project,.cproject,makefile,manifest,*.vcxproj,*.user,*.filters,.name",
 		recursive: true,
 		silent: !cmd.verbose
 	});
@@ -230,7 +234,7 @@ var createProject = function(engine, name, package) {
 		regex: packageSrc,
 		replacement: package,
 		paths: [dest],
-		include: "*.js,*.plist,*.xml,makefile,manifest,*.settings,*.lua,.project",
+		include: "*.js,*.plist,*.xml,makefile,manifest,*.settings,*.lua,.project,.identifier",
 		recursive: true,
 		silent: !cmd.verbose
 	});
@@ -805,6 +809,8 @@ var linkWin = function(config, callback) {
 	exec(command, options, function(err){
 		if (!err) {
 			callback();
+		} else {
+			console.log(err);
 		}
 	});
 };
@@ -825,38 +831,40 @@ var getMSBuildPath = function(callback) {
 		
 		// find path to MSBuildToolsPath
 		for (i = 0; i < items.length; i += 1) {
-			// try to get the value of MSBuildToolsPath
 			key = path.basename(items[i].key);
-			regKey = new Winreg({key: root + '\\' + key});
-			regKey.get("MSBuildToolsPath", function(err, item) {
-				count += 1;
-				if (err) {
-					console.log(err);
-				} else if (typeof item === "object" && typeof item.value === "string" && item.value.length) {
-					if (cmd.verbose) {
-						console.log("Potential MSBuildToolsPath: " + item.value);
+			regKey = new Winreg({key: root + '\\' + key});	
+			(function(key){
+				regKey.get("MSBuildToolsPath", function(err, item) {
+					count += 1;
+					if (err) {
+						console.log(err);
+					} else if (typeof item === "object" && typeof item.value === "string" && item.value.length) {
+						if (cmd.verbose) {
+							console.log("Potential MSBuildToolsPath: " + item.value);
+						}
+						console.log("Checking version = " + parseFloat(key) + " against highest " + highest);
+						if (parseFloat(key) > highest) {
+							buildPath = item.value;
+							highest = parseFloat(key);
+						}
 					}
-					if (parseFloat(key) > highest) {
-						buildPath = item.value;
-						highest = parseFloat(key);
+					if (count === items.length) {
+						if (buildPath.length) {
+							console.log("Final MSBuildToolsPath: " + buildPath);
+							callback(buildPath);
+						} else {
+							console.log("Unable to find MSBuild path");
+						}
 					}
-				}
-				if (count === items.length) {
-					if (buildPath.length) {
-						console.log("Final MSBuildToolsPath: " + buildPath);
-						callback(buildPath);
-					} else {
-						console.log("Unable to find MSBuild path");
-					}
-				}
-			});
-	  	}
+				});
+			})(key);
+		}
 	});
 };
 
 //
 // get the VCTargetsPath
-// (todo: mine this from the registry)
+// (todo: mine this from the registry \\Software\\Microsoft\\MSBuild\\ToolsVersions\\X\\VCTargetsPath)
 //
 var getVCTargetsPath = function() {
 	var i,
@@ -887,7 +895,11 @@ var getVCTargetsPath = function() {
 
 //
 // get the vc bin dir
-// (todo: mine this from the registry)
+// todo: mine this from the registry
+// mimic python's find_vcvarsall
+// http://stackoverflow.com/questions/6551724/how-do-i-point-easy-install-to-vcvarsall-bat
+// or:
+// http://cmake.3232098.n2.nabble.com/How-to-find-vcvarsall-bat-e-g-at-quot-C-Program-Files-x86-Microsoft-Visual-Studio-12-0-VC-quot-CMAKE-td7587359.html
 //
 var getVCBinDir = function() {
 	var i,
