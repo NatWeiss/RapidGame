@@ -16,12 +16,18 @@
       <Filter>win32</Filter>
     </ClCompile>
     <ClCompile Include="..\AppDelegate.cpp" />
+    <ClCompile Include="..\Game.cpp" />
+    <ClCompile Include="..\GameScene.cpp" />
+    <ClCompile Include="..\MenuScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
       <Filter>win32</Filter>
     </ClInclude>
     <ClInclude Include="..\AppDelegate.h" />
+    <ClInclude Include="..\Game.h" />
+    <ClInclude Include="..\GameScene.h" />
+    <ClInclude Include="..\MenuScene.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">

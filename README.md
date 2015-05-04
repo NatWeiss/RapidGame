@@ -19,6 +19,7 @@ Prefer somebody explaining and showing it? Check out the [overview video](http:/
 Updates
 -------
 
+* May 4, 2015: Upgraded to cocos2d-x 3.6 / cocos2d-js 3.6.
 * Mar 15, 2015: Fixed another bug related to MSBuild path on Windows (thanks, Adam Yocum). Fixed the cocos2d-x Android template.
 * Feb 24, 2015: Now has a separate cocos2d-x and cocos2d-js templates. Fixed a bug on Windows: "Unable to find MSBuild path." Still a few Windows-specific kinks to work out in the next version.
 * Feb 19, 2015: Fixed a bug in Xcode projects (reference to script folder).
@@ -52,6 +53,14 @@ Or, a Unity game named "ZombieMatrix":
 For usage instructions:
 
 	rapidgame --help
+
+
+Requirements
+------------
+
+Mac OS X: Xcode 5 or newer, [Git](http://git-scm.com/downloads) and [Node.js](http://nodejs.org/download/).
+Windows: **Visual Studio 2012 or newer**, [Git](http://git-scm.com/downloads) and [Node.js](http://nodejs.org/download/).
+Linux: Not yet supported. Are you a cocos2d-x Linux master with some experience with Javascript? Please help out! rapidgame.js almost supports Linux, just need to hook up the system calls to prebuild and archive the libraries.
 
 
 Eliminate Grunt Work

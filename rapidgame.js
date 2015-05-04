@@ -4,7 +4,10 @@
 //  Developed by Nathanael Weiss.
 //
 //  To-do:
+//   - Mention how to use a manual download of cocos2d-js.
 //   - Fix Mac project name search and replace so names with spaces work.
+//   - Fix Mac temp dir if changed to relative to project
+//   - Why did `sudo npm unlink rapidgame -g; sudo npm link .` fix "Error: Cannot find module 'path-extra'"?
 //
 
 var http = require("http"),
@@ -20,8 +23,8 @@ var http = require("http"),
 	packageJson = JSON.parse(fs.readFileSync(path.join(__dirname, "package.json"))),
 	cmdName = packageJson.name,
 	version = packageJson.version,
-	cocos2djsUrlMac = "http://cdn.cocos2d-x.org/cocos2d-js-v3.2.zip",
-	cocos2djsUrlWin = "http://cdn.cocos2d-x.org/cocos2d-js-v3.2.zip",
+	cocos2djsUrlMac = "http://cdn.cocos2d-x.org/cocos2d-js-v3.6.zip", // also, http://www.cocos2d-x.org/filedown/cocos2d-js-v3.6.zip
+	cocos2djsUrlWin = "http://cdn.cocos2d-x.org/cocos2d-js-v3.6.zip",
 	cocos2djsUrl = (process.platform === "darwin" ? cocos2djsUrlMac : cocos2djsUrlWin),
 	cocos2dDirGlob = "*ocos2d-js*",
 	category,
@@ -918,6 +921,7 @@ var getVCBinDir = function() {
 			return names[i];
 		}
 	}
+	return "";
 };
 
 //

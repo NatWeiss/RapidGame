@@ -1,16 +1,3 @@
-diff --git a/frameworks/js-bindings/bindings/Android.mk b/frameworks/js-bindings/bindings/Android.mk
-index 6ea045a..db0cf4b 100644
---- a/frameworks/js-bindings/bindings/Android.mk
-+++ b/frameworks/js-bindings/bindings/Android.mk
-@@ -6,6 +6,8 @@ LOCAL_MODULE := cocos_jsb_static
- 
- LOCAL_MODULE_FILENAME := libcocos2dxjsb
- 
-+LOCAL_ARM_MODE := arm
-+
- LOCAL_SRC_FILES := auto/jsb_cocos2dx_auto.cpp \
-                    auto/jsb_cocos2dx_builder_auto.cpp \
-                    auto/jsb_cocos2dx_extension_auto.cpp \
 diff --git a/frameworks/js-bindings/cocos2d-x/cocos/2d/cocos2dx.props b/frameworks/js-bindings/cocos2d-x/cocos/2d/cocos2dx.props
 index a0a234e..afef5e9 100644
 --- a/frameworks/js-bindings/cocos2d-x/cocos/2d/cocos2dx.props
@@ -31,63 +18,118 @@ index a0a234e..afef5e9 100644
 -</Project>
 \ No newline at end of file
 +</Project>
-diff --git a/frameworks/js-bindings/cocos2d-x/external/Box2D/Common/b2Draw.h b/frameworks/js-bindings/cocos2d-x/external/Box2D/Common/b2Draw.h
-index 20359c9..8c5f8ab 100755
---- a/frameworks/js-bindings/cocos2d-x/external/Box2D/Common/b2Draw.h
-+++ b/frameworks/js-bindings/cocos2d-x/external/Box2D/Common/b2Draw.h
-@@ -25,7 +25,7 @@
- struct b2Color
+diff --git a/frameworks/js-bindings/cocos2d-x/cocos/renderer/CCGLProgramState.cpp b/frameworks/js-bindings/cocos2d-x/cocos/renderer/CCGLProgramState.cpp
+index 34b9414..d991af4 100644
+--- a/frameworks/js-bindings/cocos2d-x/cocos/renderer/CCGLProgramState.cpp
++++ b/frameworks/js-bindings/cocos2d-x/cocos/renderer/CCGLProgramState.cpp
+@@ -51,6 +51,7 @@ UniformValue::UniformValue()
+ : _uniform(nullptr)
+ , _glprogram(nullptr)
+ , _useCallback(false)
++, _arrayCount(0)
  {
- 	b2Color() {}
--	b2Color(float32 r, float32 g, float32 b) : r(r), g(g), b(b) {}
-+	b2Color(float32 r_, float32 g_, float32 b_) : r(r_), g(g_), b(b_) {}
- 	void Set(float32 ri, float32 gi, float32 bi) { r = ri; g = gi; b = bi; }
- 	float32 r, g, b;
- };
-diff --git a/frameworks/js-bindings/cocos2d-x/external/Box2D/Common/b2Math.h b/frameworks/js-bindings/cocos2d-x/external/Box2D/Common/b2Math.h
-index 755c519..0986c9f 100755
---- a/frameworks/js-bindings/cocos2d-x/external/Box2D/Common/b2Math.h
-+++ b/frameworks/js-bindings/cocos2d-x/external/Box2D/Common/b2Math.h
-@@ -56,7 +56,7 @@ struct b2Vec2
- 	b2Vec2() {}
+ }
  
- 	/// Construct using coordinates.
--	b2Vec2(float32 x, float32 y) : x(x), y(y) {}
-+	b2Vec2(float32 x_, float32 y_) : x(x_), y(y_) {}
+@@ -58,6 +59,7 @@ UniformValue::UniformValue(Uniform *uniform, GLProgram* glprogram)
+ : _uniform(uniform)
+ , _glprogram(glprogram)
+ , _useCallback(false)
++, _arrayCount(0)
+ {
+ }
  
- 	/// Set this vector to all zeros.
- 	void SetZero() { x = 0.0f; y = 0.0f; }
-@@ -147,7 +147,7 @@ struct b2Vec3
- 	b2Vec3() {}
+@@ -90,7 +92,10 @@ void UniformValue::apply()
+                 break;
  
- 	/// Construct using coordinates.
--	b2Vec3(float32 x, float32 y, float32 z) : x(x), y(y), z(z) {}
-+	b2Vec3(float32 x_, float32 y_, float32 z_) : x(x_), y(y_), z(z_) {}
+             case GL_FLOAT:
+-                _glprogram->setUniformLocationWith1f(_uniform->location, _value.floatValue);
++                if (_arrayCount > 0)
++                    _glprogram->setUniformLocationWith1fv(_uniform->location, _value.floatArray, _arrayCount);
++                else
++                    _glprogram->setUniformLocationWith1f(_uniform->location, _value.floatValue);
+                 break;
  
- 	/// Set this vector to all zeros.
- 	void SetZero() { x = 0.0f; y = 0.0f; z = 0.0f; }
-diff --git a/frameworks/js-bindings/cocos2d-x/external/Box2D/Dynamics/b2World.cpp b/frameworks/js-bindings/cocos2d-x/external/Box2D/Dynamics/b2World.cpp
-index a3a6a1e..4840e43 100755
---- a/frameworks/js-bindings/cocos2d-x/external/Box2D/Dynamics/b2World.cpp
-+++ b/frameworks/js-bindings/cocos2d-x/external/Box2D/Dynamics/b2World.cpp
-@@ -1145,6 +1145,11 @@ void b2World::DrawDebugData()
- 	{
- 		for (b2Body* b = m_bodyList; b; b = b->GetNext())
- 		{
-+			bool hasContacts = false;
-+			for (b2ContactEdge* edge = b->GetContactList(); edge; edge = edge->next)
-+				if (edge->contact->IsEnabled() && edge->contact->IsTouching())
-+					{hasContacts = true; break;}
+             case GL_FLOAT_VEC2:
+@@ -138,6 +143,14 @@ void UniformValue::setFloat(float value)
+     _useCallback = false;
+ }
+ 
++void UniformValue::setFloatArray(float* array, int count)
++{
++    CCASSERT (_uniform->type == GL_FLOAT, "");
++    _value.floatArray = array;
++    _arrayCount = count;
++    _useCallback = false;
++}
 +
- 			const b2Transform& xf = b->GetTransform();
- 			for (b2Fixture* f = b->GetFixtureList(); f; f = f->GetNext())
- 			{
-@@ -1154,7 +1159,7 @@ void b2World::DrawDebugData()
- 				}
- 				else if (b->GetType() == b2_staticBody)
- 				{
--					DrawShape(f, xf, b2Color(0.5f, 0.9f, 0.5f));
-+					DrawShape(f, xf, hasContacts ? b2Color(0.9f, 0.1f, 0.1f) : b2Color(0.5f, 0.9f, 0.5f));
- 				}
- 				else if (b->GetType() == b2_kinematicBody)
- 				{
+ void UniformValue::setTexture(GLuint textureId, GLuint textureUnit)
+ {
+     //CCASSERT(_uniform->type == GL_SAMPLER_2D, "Wrong type. expecting GL_SAMPLER_2D");
+@@ -503,6 +516,24 @@ void GLProgramState::setUniformFloat(GLint uniformLocation, float value)
+         CCLOG("cocos2d: warning: Uniform at location not found: %i", uniformLocation);
+ }
+ 
++void GLProgramState::setUniformFloatArray(const std::string &uniformName, float* array, int count)
++{
++    auto v = getUniformValue(uniformName);
++    if (v)
++        v->setFloatArray(array, count);
++    else
++        CCLOG("cocos2d: warning: Uniform not found: %s", uniformName.c_str());
++}
++
++void GLProgramState::setUniformFloatArray(GLint uniformLocation, float* array, int count)
++{
++    auto v = getUniformValue(uniformLocation);
++    if (v)
++        v->setFloatArray(array, count);
++    else
++        CCLOG("cocos2d: warning: Uniform at location not found: %i", uniformLocation);
++}
++
+ void GLProgramState::setUniformInt(const std::string &uniformName, int value)
+ {
+     auto v = getUniformValue(uniformName);
+diff --git a/frameworks/js-bindings/cocos2d-x/cocos/renderer/CCGLProgramState.h b/frameworks/js-bindings/cocos2d-x/cocos/renderer/CCGLProgramState.h
+index 42b0a32..94898ad 100644
+--- a/frameworks/js-bindings/cocos2d-x/cocos/renderer/CCGLProgramState.h
++++ b/frameworks/js-bindings/cocos2d-x/cocos/renderer/CCGLProgramState.h
+@@ -76,6 +76,7 @@ public:
+      @param value Value to be sent, support float, int, Vec2/3/4, Mat4.
+      */
+     void setFloat(float value);
++    void setFloatArray(float* array, int count);
+     void setInt(int value);
+     void setVec2(const Vec2& value);
+     void setVec3(const Vec3& value);
+@@ -107,12 +108,14 @@ protected:
+     GLProgram* _glprogram;
+     /**Whether or not callback is used.*/
+     bool _useCallback;
++    int _arrayCount;
+     /**
+      @name Uniform Value Uniform
+      @{
+      */
+     union U{
+         float floatValue;
++        float* floatArray;
+         int intValue;
+         float v2Value[2];
+         float v3Value[3];
+@@ -266,6 +269,7 @@ public:
+      */
+     void setUniformInt(const std::string &uniformName, int value);
+     void setUniformFloat(const std::string &uniformName, float value);
++    void setUniformFloatArray(const std::string &uniformName, float* array, int count);
+     void setUniformVec2(const std::string &uniformName, const Vec2& value);
+     void setUniformVec3(const std::string &uniformName, const Vec3& value);
+     void setUniformVec4(const std::string &uniformName, const Vec4& value);
+@@ -280,6 +284,7 @@ public:
+      */
+     void setUniformInt(GLint uniformLocation, int value);
+     void setUniformFloat(GLint uniformLocation, float value);
++    void setUniformFloatArray(GLint uniformLocation, float* array, int count);
+     void setUniformVec2(GLint uniformLocation, const Vec2& value);
+     void setUniformVec3(GLint uniformLocation, const Vec3& value);
+     void setUniformVec4(GLint uniformLocation, const Vec4& value);
