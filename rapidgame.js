@@ -778,14 +778,15 @@ var startBuild = function(platform, callback, settings) {
 var linkWin = function(config, callback) {
 	var i, src,
 		jsbindings = path.join(cmd.prefix, "src", "cocos2d-js", "frameworks", "js-bindings"),
+		runtimeDir = path.join(cmd.prefix, "src", "cocos2d-js", "templates", "js-template-runtime", "runtime", "win32"),
 		libDirs = [
-			path.join(jsbindings, "cocos2d-x", "build", config + ".win32"),
-			path.join(jsbindings, "cocos2d-x", "cocos", "2d", config + ".win32"),
-			path.join(jsbindings, "bindings", "proj.win32", config + ".win32"),
-			path.join(jsbindings, "cocos2d-x", "cocos", "editor-support", "spine", "proj.win32", config + ".win32"),
-			path.join(jsbindings, "cocos2d-x", "external", "Box2D", "proj.win32", config + ".win32"),
-			path.join(jsbindings, "external", "spidermonkey", "prebuilt", "win32"),
-			path.join(jsbindings, "cocos2d-x", "external", "websockets", "prebuilt", "win32")
+			//path.join(jsbindings, "cocos2d-x", "build", config + ".win32"),
+			path.join(jsbindings, "cocos2d-x", "cocos", "2d", config + ".win32"), // libcocos2d.dll, glew32.dll, libcurl.dll, etc.
+			path.join(jsbindings, "bindings", "proj.win32", config + ".win32"), // libjsbindings.lib, sqlite3.dll, etc.
+			path.join(jsbindings, "cocos2d-x", "cocos", "editor-support", "spine", "proj.win32", config + ".win32"), // libSpine.lib
+			path.join(jsbindings, "cocos2d-x", "external", "Box2D", "proj.win32", config + ".win32"), // libbox2d.lib
+			path.join(jsbindings, "external", "spidermonkey", "prebuilt", "win32"), // mosjs-33.dll / .lib
+			path.join(jsbindings, "cocos2d-x", "external", "websockets", "prebuilt", "win32") // websockets.dll / .lib
 		],
 		options = {
 			cwd: cmd.prefix,
@@ -800,13 +801,13 @@ var linkWin = function(config, callback) {
 			'"/OUT:' + path.join(dest, "libcocos2dx-prebuilt.lib") + '"';
 
 	// copy dlls and finish creating command
+	copyGlobbed(runtimeDir, dest, "*.dll"); // first these because we want to overwrite libcocos2d.dll
 	wrench.mkdirSyncRecursive(dest);
 	for (i = 0; i < libDirs.length; i += 1) {
 		copyGlobbed(libDirs[i], dest, "*.dll");
 		//copyGlobbed(libDirs[i], dest, "*.pdb");
 		command += " " + path.join(libDirs[i], "*.lib");
 	}
-	copyGlobbed(path.join(cmd.prefix, "src", "cocos2d-js", "templates", "js-template-runtime", "runtime", "win32"), dest, "*.dll");
 
 	// execute
 	exec(command, options, function(err){
