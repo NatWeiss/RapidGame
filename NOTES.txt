@@ -1,0 +1,12 @@
+- README note: Path to rapidgame for Windows
+- README note: "rapidgame create" must be run in admin console for Windows (to create symlink)
+- README note: Android SDK must be downloaded for the target platform and for the minimal supported platform (currently API 10 and 18)
+- README note: Windows users must install cygwin
+- Windows project still does not compile (2 unresolved externals)
+- Does make when building the TwoScene example work in cygwin?
+
+How to build library for Debug-Android (armeabi) on Windows atm:
+- (cygwin) go to rapidgame/src/proj.android, run make
+- Comment out code for ndk-build
+- Switch to Git Bash
+- Run make again
