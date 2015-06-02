@@ -47,7 +47,7 @@ CC_ROOT=$(cd ../cocos2d-js/frameworks/js-bindings && pwd)
 SRC_ROOT=$(cd .. && pwd)
 UNAME=$(uname -s)
 if [ "${UNAME:0:6}" == "CYGWIN" ]; then
-	NDK_MODULE_PATH="${CC_ROOT}/cocos2d-x;${CC_ROOT}/cocos2d-x/external;${CC_ROOT}/cocos2d-x/cocos;${CC_ROOT};${SRC_ROOT}"
+	NDK_MODULE_PATH="${CC_ROOT}/cocos2d-x:${CC_ROOT}/cocos2d-x/external:${CC_ROOT}/cocos2d-x/cocos:${CC_ROOT}:${SRC_ROOT}"
 else
 	NDK_MODULE_PATH="${CC_ROOT}/cocos2d-x:${CC_ROOT}/cocos2d-x/external:${CC_ROOT}/cocos2d-x/cocos:${CC_ROOT}:${SRC_ROOT}"
 fi
