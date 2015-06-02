@@ -10,3 +10,8 @@ How to build library for Debug-Android (armeabi) on Windows atm:
 - Comment out code for ndk-build
 - Switch to Git Bash
 - Run make again
+
+- Running ant when building Android TwoScenes created some folders under rapidgame/0.9.7/cocos2d/x/java/cocos2d-x - look into?
+- Was latest supposed to be an alias/symlink for the most recent version (is it that way on Mac? (go check))
+- Does running the regular make in cygwin when building Android TwoScenes work instead of needing modified makefile?
+- There's gotta be more to remember and try out
