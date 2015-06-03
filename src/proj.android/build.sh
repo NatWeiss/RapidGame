@@ -63,14 +63,9 @@ fi
 echo "NDK_TOOLCHAIN_VERSION=${NDK_TOOLCHAIN_VERSION}"
 
 # Get which ar
-if [ "${UNAME:0:6}" == "CYGWIN" ]; then
-	# Sam: As of right now, I have it that you must apparently be running a 64-bit system if on Windows
-	# To Sam: why doesn't ndk-which work in cygwin?
-	ar="${NDK_ROOT}/toolchains/arm-linux-androideabi-4.8/prebuilt/windows-x86_64/bin/arm-linux-androideabi-ar"
-	ar=$(echo $ar | sed 's/\\/\//g')
-else
-	ar=$(${NDK_ROOT}/ndk-which ar)
-fi
+# Sam: Tested on Mac as well and it works fine, appending NDK_ROOT to the beginning caused the problem on cygwin
+ar=$(ndk-which ar)
+
 if [ ! -f "$ar" ]; then
 	echo "Missing the 'ar' NDK build tool. Please install the Android NDK and toolchains."
 	exit 1
@@ -78,12 +73,8 @@ fi
 echo "AR=${ar}"
 
 # Get which strip
-if [ "${UNAME:0:6}" == "CYGWIN" ]; then
-	strip="${NDK_ROOT}/toolchains/arm-linux-androideabi-4.8/prebuilt/windows-x86_64/bin/arm-linux-androideabi-strip"
-	strip=$(echo $strip | sed 's/\\/\//g')
-else
-	strip=$(${NDK_ROOT}/ndk-which strip)
-fi
+strip=$(ndk-which strip)
+
 if [ ! -f "$strip" ]; then
 	echo "Missing the 'strip' NDK build tool. Please install the Android NDK and toolchains."
 	exit 1
@@ -113,7 +104,7 @@ else
 fi
 src=$(cd ${src}; pwd)
 if [ "${UNAME:0:6}" == "CYGWIN" ]; then
-	# Sam: Modify the path so that it replaces /cygwin/c (11 characters) with C: on Windows
+	# Sam: Modify the path so that it replaces /cygdrive/c (11 characters) with C: on Windows
 	# Sam: cygwin must be installed using the default option of making it avaiable for all users (root directory)
 	temp=$src
 	src="C:"
@@ -125,6 +116,7 @@ if [ "${UNAME:0:6}" == "CYGWIN" ]; then
 	# Sam: When rapidgame creates its directories, latest is created as a folder itself and not a symlink on Windows
 	# Sam: This must be updated for every version of rapidgame to continue to work, unless you get latest to be a symlink like on Mac
 	# To Sam: symlinks are possible on Windows and it should be that way (rapidgame init . is working for example...)
+	# To Nat: Yes symlinks do work, but the code that creates latest did not work. I want to look into that and see what can be changed.
 	dest=../../0.9.7/cocos2d/x/lib/${config}-Android/${arch}
 else
 	dest=../../latest/cocos2d/x/lib/${config}-Android/${arch}
