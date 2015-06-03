@@ -117,8 +117,7 @@ echo "SRC=${src}"
 # To Sam: symlinks are possible on Windows and it should be that way (rapidgame init . is working for example...)
 # To Nat: Yes, and I encountered the same problem when not running in root. I checked the symlink code in rapidgame.js and
 #         it seems you catch the permissions error exception without doing anything. It is okay to just have this line by itself
-#         now, but the first time someone creates a cocos2dx project, they MUST run that command in cygwin with admin privileges,
-#         so that latest is created as a symlink.
+#         now, but the first time someone creates a cocos2dx project, they MUST run with admin privileges, so that latest is created as a symlink.
 dest=../../latest/cocos2d/x/lib/${config}-Android/${arch}
 
 mkdir -p ${dest}
