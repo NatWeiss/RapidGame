@@ -1,9 +1,13 @@
 Notes for Windows by Sam
 ------------------------
-build.sh = rapidgame/src/proj.android/build.sh
+Don't forget:
+
+- Update CHANGELOG.txt
 
 Add to README:
 
+- Android is now fully capable on Windows!
+- There is no longer any 64-bit requirement for Windows
 - The very first "rapidgame create cocos2dx ..." command MUST be run in an admin cygwin console on Windows to create latest as a symlink
 	-> If this is not done, latest will be created as a regular folder, and the library files will be stored in "latst" instead of the intended folder
 - (Both Mac and Win) Android SDK's APIs must be downloaded for the target platform and for the minimum supported platform
@@ -13,6 +17,8 @@ Add to README:
 Technical details:
 
 - The reason I believe cygwin must be installed in the root directory is that build.sh replaces "/cygwin/c" with "C:" for the src and dest paths
+	-> If cygwin isn't installed for all users (root), then cygwin's path to C: may change, but that may not be the case.
+	-> This could be resolved if someone wants to install cygwin for their user only and tests if the Android libraries are still able to be built
 - The Windows TwoScene template project still does not compile
 
 Future fixes:

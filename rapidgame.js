@@ -758,6 +758,12 @@ var startBuild = function(platform, callback, settings) {
 			arch,
 			config
 		];
+
+		if (process.platform === "win32")
+		{
+			command = "make";
+			args = cmd.minimal ? ["minimal"] : [];
+		}
 	} else if (platform === "Windows") {
 		dir = cmd.prefix;
 		command = settings[1];
