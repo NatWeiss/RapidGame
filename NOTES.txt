@@ -11,10 +11,13 @@ Add to README:
 - Android is now fully functional on Windows! (from prebuilding libraries to building .apk's, all using the standard commands)
 - I highly recommend adding the "rapidgame must be run in an admin console if on Windows" bit to the "Build a Game in Under 30 Seconds" section
 	-> Something like:
-		=> And, create a cocos2d-x game named "HeckYeah": (run this in an administrative console on Windows)
+		=> And, create a cocos2d-x game named "HeckYeah":
 		=> rapidgame create cocos2dx "HeckYeah" org.myorg.heckyeah
+		=> Make sure to run Command Prompt or Cygwin as administrator when doing this on Windows!
+	-> This is especially important the first time, as that is when latest is created
+		=> If running as root on Windows the first time, latest will be created as a symlink as intended, otherwise it will be a regular folder
 	-> You don't need to run "npm install rapidgame -g" in a root console on Windows, so this line should be changed to leave off the bit at the end:
-		=> "Or, on Windows leave off the `sudo` --and use an administrative console--:"
+		=> "Or, on Windows leave off the `sudo` --and use an administrative console--"
 - There is no longer any 64-bit requirement for Windows (remove the 64-bit part for Cygwin under Windows Notes)
 - When building an Android project with "make", the command must be run in a cygwin console if on Windows
 	-> You must manually set a couple environment variables first in ~/.bash_profile
@@ -24,8 +27,6 @@ Add to README:
 		=> type "ANDROID_SDK_ROOT=C:/path/to/sdk" (forward slashes are a must, the line does not contain quotes itself)
 		=> next line type "NDK_ROOT=C:/path/to/ndk" (forward slashes are a must, the line does not contain quotes itself)
 		=> save, exit editor, restart cygwin, good to go for all future projects
-- The very first "rapidgame create cocos2dx ..." or "rapidgame prebuild" command MUST be run in an admin console (cygwin shell as well if using latter command)
-	-> I highly recommend adding the Windows admin console note under the "Create a Game in Under 30 Seconds" section (despite the note under Windows Notes)
 - (Both Mac and Win) Android SDK's APIs must be downloaded for the target platform and for the minimum supported platform
 	-> TwoScene's current default target is API 18, and the minimum is API 10
 	-> This can be done by going to Android Studio -> Configure -> SDK Manager -> [Select and install appropriate packages]
@@ -35,7 +36,7 @@ Technical details:
 - rapidgame/src/proj.android/makefile was modified in order to run the Android library build commands in startBuild() in rapidgame.js (Windows only)
 	-> prebuildAndroid() was modified as well so that only one build is pushed (for both standard build and minimal build) if on Windows
 	-> This is because startBuild() runs "make" or "make minimal" in rapidgame/src/proj.android instead of running build.sh each time for each target
-- Removed "cocos_protobuf-lite_static" from build.sh at bottom, as it no longer is used doing the build process
+- Removed "cocos_protobuf-lite_static" from build.sh at the bottom from the list of directories, as it is no longer used doing the build process
 - build.sh no longer hardcodes paths for ar, strip, and dest for any platform
 - Changed every call of util.print() to console.log() in rapidgame.js to eliminate annoying messages for verbose output
 
