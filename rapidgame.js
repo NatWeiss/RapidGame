@@ -645,9 +645,19 @@ var prebuildAndroid = function(config, arch, callback) {
 
 	// create builds array
 	builds = [];
-	for (i = 0; i < configs.length; i += 1) {
-		for (j = 0; j < archs.length; j += 1) {
-			builds.push([configs[i], archs[j]]);
+	if (process.platform === "win32")
+	{
+		if (cmd.minimal)
+			builds.push([["Debug"], ["armeabi"]]);
+		else
+			builds.push([]);
+	}
+	else
+	{
+		for (i = 0; i < configs.length; i += 1) {
+			for (j = 0; j < archs.length; j += 1) {
+				builds.push([configs[i], archs[j]]);
+			}
 		}
 	}
 	nextBuild("Android", callback);

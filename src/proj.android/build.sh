@@ -133,7 +133,7 @@ echo "DEST=${dest}"
 lib="libcocos2dx-prebuilt.a"
 rm -f ${dest}/${lib}
 for dir in cocos_localstorage_static cocosdenshion_static cocos2dxandroid_static cocos_network_static cocostudio_static \
-	audioengine_static cocos3d_static cocos_protobuf-lite_static spine_static box2d_static cocos_extension_static cocos_ui_static \
+	audioengine_static cocos3d_static spine_static box2d_static cocos_extension_static cocos_ui_static \
 	cocos2dx_internal_static cocos_jsb_static cocosbuilder_static
 do
 	${ar} rs ${dest}/${lib} $(find ${src}/${dir} -name *.o)
