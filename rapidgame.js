@@ -592,7 +592,23 @@ var runPrebuild = function(platform, config, arch, callback) {
 			});
 		}
 	} else if (process.platform === "win32") {
-		prebuildWin(config, arch, callback);
+		if (platform === "android") {
+			prebuildAndroid(config, arch, function(){
+				callback();
+			});
+		}
+		else if (platform === "windows") {
+			prebuildWin(config, arch, function(){
+				callback();
+			});
+		}
+		else {
+			prebuildWin(config, arch, function(){
+				prebuildAndroid(config, arch, function(){
+					callback();
+				});
+			});
+		}
 	} else {
 		console.log("No prebuild command written for " + process.platform + " yet");
 	}
