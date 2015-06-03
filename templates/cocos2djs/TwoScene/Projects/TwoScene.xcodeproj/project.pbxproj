@@ -31,6 +31,7 @@
 		412F337D192C3712007F51FD /* Assets in Resources */ = {isa = PBXBuildFile; fileRef = 412F337C192C3712007F51FD /* Assets */; };
 		412F337E192C3712007F51FD /* Assets in Resources */ = {isa = PBXBuildFile; fileRef = 412F337C192C3712007F51FD /* Assets */; };
 		413369C11940554300258BC8 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 413369C01940554300258BC8 /* Security.framework */; };
+		414A7F041B1EA8FC00B56B55 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 414A7F031B1EA8FC00B56B55 /* Security.framework */; };
 		4152B89018949C3F00BEF730 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4152B88318949C3F00BEF730 /* AppController.mm */; };
 		4152B89918949C3F00BEF730 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4152B88C18949C3F00BEF730 /* main.m */; };
 		4152B89A18949C3F00BEF730 /* RootViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4152B88F18949C3F00BEF730 /* RootViewController.mm */; };
@@ -354,6 +355,7 @@
 		412F337C192C3712007F51FD /* Assets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Assets; path = ../Assets; sourceTree = "<group>"; };
 		412F3380192C37F4007F51FD /* index.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = index.html; path = html/index.html; sourceTree = "<group>"; };
 		413369C01940554300258BC8 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
+		414A7F031B1EA8FC00B56B55 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		4152B88218949C3F00BEF730 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
 		4152B88318949C3F00BEF730 /* AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppController.mm; sourceTree = "<group>"; };
 		4152B88B18949C3F00BEF730 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -410,6 +412,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				414A7F041B1EA8FC00B56B55 /* Security.framework in Frameworks */,
 				419E8ECB18A9F75900232A34 /* AVFoundation.framework in Frameworks */,
 				419E8EBB18A9F67C00232A34 /* OpenAL.framework in Frameworks */,
 				419E8EBA18A9F60900232A34 /* AudioToolbox.framework in Frameworks */,
@@ -1292,6 +1295,7 @@
 		4152B64E1894756E00BEF730 /* frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				414A7F031B1EA8FC00B56B55 /* Security.framework */,
 				41EA56151A4FEB7300D8764B /* GameController.framework */,
 				413369C01940554300258BC8 /* Security.framework */,
 				419E8EA018A9C68100232A34 /* libcurl.dylib */,
@@ -1609,7 +1613,7 @@
 		A92276FE1517C097001B78AA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -1621,7 +1625,6 @@
 				GCC_OPTIMIZATION_LEVEL = 1;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
 					"COCOS2D_DEBUG=0",
 					USE_FILE32API,
 					COCOS2D_JAVASCRIPT,
@@ -1629,7 +1632,6 @@
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				HEADER_SEARCH_PATHS = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
@@ -1651,7 +1653,7 @@
 		A92276FF1517C097001B78AA /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -1669,7 +1671,6 @@
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				HEADER_SEARCH_PATHS = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				OTHER_LDFLAGS = (

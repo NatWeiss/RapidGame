@@ -46,10 +46,7 @@ fi
 CC_ROOT=$(cd ../cocos2d-js/frameworks/js-bindings && pwd)
 SRC_ROOT=$(cd .. && pwd)
 UNAME=$(uname -s)
-
-# Sam: cygwin wants colon separators just like everyone else
 NDK_MODULE_PATH="${CC_ROOT}/cocos2d-x:${CC_ROOT}/cocos2d-x/external:${CC_ROOT}/cocos2d-x/cocos:${CC_ROOT}:${SRC_ROOT}"
-
 echo "CC_ROOT=${CC_ROOT}"
 echo "NDK_MODULE_PATH=${NDK_MODULE_PATH}"
 
@@ -66,13 +63,14 @@ fi
 echo "NDK_TOOLCHAIN_VERSION=${NDK_TOOLCHAIN_VERSION}"
 
 # Get which ar
-# Sam: As of right now, I have it that you must apparently be running a 64-bit system if on Windows
 if [ "${UNAME:0:6}" == "CYGWIN" ]; then
+	# Sam: As of right now, I have it that you must apparently be running a 64-bit system if on Windows
+	# To Sam: why doesn't ndk-which work in cygwin?
 	ar="${NDK_ROOT}/toolchains/arm-linux-androideabi-4.8/prebuilt/windows-x86_64/bin/arm-linux-androideabi-ar"
+	ar=$(echo $ar | sed 's/\\/\//g')
 else
 	ar=$(${NDK_ROOT}/ndk-which ar)
 fi
-
 if [ ! -f "$ar" ]; then
 	echo "Missing the 'ar' NDK build tool. Please install the Android NDK and toolchains."
 	exit 1
@@ -82,10 +80,10 @@ echo "AR=${ar}"
 # Get which strip
 if [ "${UNAME:0:6}" == "CYGWIN" ]; then
 	strip="${NDK_ROOT}/toolchains/arm-linux-androideabi-4.8/prebuilt/windows-x86_64/bin/arm-linux-androideabi-strip"
+	strip=$(echo $strip | sed 's/\\/\//g')
 else
 	strip=$(${NDK_ROOT}/ndk-which strip)
 fi
-
 if [ ! -f "$strip" ]; then
 	echo "Missing the 'strip' NDK build tool. Please install the Android NDK and toolchains."
 	exit 1
@@ -114,47 +112,34 @@ else
 	src="obj/local/${arch}/objs"
 fi
 src=$(cd ${src}; pwd)
-
-# Sam: Modify the path so that it replaces /cygwin/c (11 characters) with C: on Windows
-# Sam: cygwin must be installed using the default option of making it avaiable for all users (root directory)
 if [ "${UNAME:0:6}" == "CYGWIN" ]; then
+	# Sam: Modify the path so that it replaces /cygwin/c (11 characters) with C: on Windows
+	# Sam: cygwin must be installed using the default option of making it avaiable for all users (root directory)
 	temp=$src
 	src="C:"
 	src=$src${temp:11:4200}
 fi
-
 echo "SRC=${src}"
 
-# Sam: When rapidgame creates its directories, latest is created as a folder itself and not a symlink on Windows
-# Sam: This must be updated for every version of rapidgame to continue to work, unless you get latest to be a symlink like on Mac
 if [ "${UNAME:0:6}" == "CYGWIN" ]; then
+	# Sam: When rapidgame creates its directories, latest is created as a folder itself and not a symlink on Windows
+	# Sam: This must be updated for every version of rapidgame to continue to work, unless you get latest to be a symlink like on Mac
+	# To Sam: symlinks are possible on Windows and it should be that way (rapidgame init . is working for example...)
 	dest=../../0.9.7/cocos2d/x/lib/${config}-Android/${arch}
 else
 	dest=../../latest/cocos2d/x/lib/${config}-Android/${arch}
 fi
-
 mkdir -p ${dest}
 dest=$(cd ${dest}; pwd)
-
 if [ "${UNAME:0:6}" == "CYGWIN" ]; then
 	temp=$dest
 	dest="C:"
 	dest=$dest${temp:11:4200}
 fi
-
 echo "DEST=${dest}"
 
 lib="libcocos2dx-prebuilt.a"
 rm -f ${dest}/${lib}
-
-# Sam: Replace the backslashes in ar's and strip's paths with forward slashes if on Windows
-if [ "${UNAME:0:6}" == "CYGWIN" ]; then
-	ar=$(echo $ar | sed 's/\\/\//g')
-	strip=$(echo $strip | sed 's/\\/\//g')
-	echo "AR=${ar}"
-	echo "STRIP=${strip}"
-fi
-
 for dir in cocos_localstorage_static cocosdenshion_static cocos2dxandroid_static cocos_network_static cocostudio_static \
 	audioengine_static cocos3d_static cocos_protobuf-lite_static spine_static box2d_static cocos_extension_static cocos_ui_static \
 	cocos2dx_internal_static cocos_jsb_static cocosbuilder_static
@@ -162,3 +147,4 @@ do
 	${ar} rs ${dest}/${lib} $(find ${src}/${dir} -name *.o)
 	${strip} -x ${dest}/${lib}
 done
+

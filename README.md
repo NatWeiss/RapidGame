@@ -19,6 +19,7 @@ Prefer somebody explaining and showing it? Check out the [overview video](http:/
 Updates
 -------
 
+* June 2, 2015: Can now prebuild Android on Windows thanks to [Samuel Ørsnæs](https://github.com/samoersnaes).
 * May 4, 2015: Upgraded to cocos2d-x 3.6 / cocos2d-js 3.6.
 * Mar 15, 2015: Fixed another bug related to MSBuild path on Windows (thanks, Adam Yocum). Fixed the cocos2d-x Android template.
 * Feb 24, 2015: Now has a separate cocos2d-x and cocos2d-js templates. Fixed a bug on Windows: "Unable to find MSBuild path." Still a few Windows-specific kinks to work out in the next version.
@@ -37,7 +38,7 @@ There's no need to clone this repo, just install RapidGame:
 
 	sudo npm install rapidgame -g
 
-Or, on Windows leave off the `sudo`:
+Or, on Windows leave off the `sudo` and use an administrative console:
 
 	npm install rapidgame -g
 
@@ -158,6 +159,17 @@ The cocos2dx library prebuilder currently works on the following development pla
 * Windows
 
 Linux support is planned.
+
+
+Windows Notes
+-------------
+
+1. The `rapidgame` command must be run in an admin console.
+2. To compile Android successfully (on Windows), `rapidgame prebuild` must be run via [Cygwin 64-bit](https://www.cygwin.com) and Cygwin must be installed in the root directory `C:\cygwin64`. The "Devel" category of packages should be downloaded in addition to the defaults when running setup.
+3. Note that RapidGame is installed at `\Users\[USERNAME]\AppData\Roaming\npm\node_modules\rapidgame`.
+
+Thanks to [Samuel Ørsnæs](https://github.com/samoersnaes) for getting the Android build working in Windows!
+
 
 
 Custom cocos2d-x/js Projects

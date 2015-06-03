@@ -4,16 +4,23 @@
 
 #pragma once
 
+#include <string>
+#include <sstream>
+#include <deque>
+#include <memory>
+#include <vector>
+#include <map>
+#include <list>
+#include <stdlib.h>
+#include <math.h>
+#include <iomanip>
+using namespace std;
+
 #include "cocos2d.h"
 #include "SimpleAudioEngine.h"
 #include "chipmunk.h"
 
-using namespace cocos2d;
-using namespace CocosDenshion;
-using cocos2d::Rect;
-using namespace std;
-
-class AppDelegate : private Application
+class AppDelegate : private cocos2d::Application
 {
 	public:
 		AppDelegate();

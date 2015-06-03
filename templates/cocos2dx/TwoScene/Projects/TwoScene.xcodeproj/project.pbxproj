@@ -35,6 +35,7 @@
 		412F337D192C3712007F51FD /* Assets in Resources */ = {isa = PBXBuildFile; fileRef = 412F337C192C3712007F51FD /* Assets */; };
 		412F337E192C3712007F51FD /* Assets in Resources */ = {isa = PBXBuildFile; fileRef = 412F337C192C3712007F51FD /* Assets */; };
 		413369C11940554300258BC8 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 413369C01940554300258BC8 /* Security.framework */; };
+		414A7EF81B1EA35900B56B55 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 414A7EF71B1EA35900B56B55 /* Security.framework */; };
 		4152B89018949C3F00BEF730 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4152B88318949C3F00BEF730 /* AppController.mm */; };
 		4152B89918949C3F00BEF730 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4152B88C18949C3F00BEF730 /* main.m */; };
 		4152B89A18949C3F00BEF730 /* RootViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4152B88F18949C3F00BEF730 /* RootViewController.mm */; };
@@ -63,9 +64,8 @@
 		41F1A4B41894BB33006E818E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922754D1517C094001B78AA /* Foundation.framework */; };
 		41F1A4B51894BB33006E818E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922754F1517C094001B78AA /* CoreGraphics.framework */; };
 		41F1A4BC1894BB33006E818E /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41F1A3E01894BA38006E818E /* Default-568h@2x.png */; };
-		41F1A4E51894BBE3006E818E /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 41F1A4DA1894BBE3006E818E /* AppController.mm */; };
 		41F1A4E81894BBE3006E818E /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 41F1A4E01894BBE3006E818E /* Icon.icns */; };
-		41F1A4EA1894BBE3006E818E /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 41F1A4E21894BBE3006E818E /* main.mm */; };
+		41F1A4EA1894BBE3006E818E /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 41F1A4E21894BBE3006E818E /* main.cpp */; };
 		41F1A5071894BF71006E818E /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41F1A5061894BF71006E818E /* AppKit.framework */; };
 		41F1A5091894BF7E006E818E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41F1A5081894BF7E006E818E /* Cocoa.framework */; };
 		41F1A50B1894BF8A006E818E /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41F1A50A1894BF8A006E818E /* CoreFoundation.framework */; };
@@ -111,6 +111,7 @@
 		412F3379192C36E1007F51FD /* project.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = project.json; path = ../project.json; sourceTree = "<group>"; };
 		412F337C192C3712007F51FD /* Assets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Assets; path = ../Assets; sourceTree = "<group>"; };
 		413369C01940554300258BC8 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
+		414A7EF71B1EA35900B56B55 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		4152B88218949C3F00BEF730 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
 		4152B88318949C3F00BEF730 /* AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppController.mm; sourceTree = "<group>"; };
 		4152B88B18949C3F00BEF730 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -134,11 +135,9 @@
 		41EA56151A4FEB7300D8764B /* GameController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameController.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.1.sdk/System/Library/Frameworks/GameController.framework; sourceTree = DEVELOPER_DIR; };
 		41F1A3E01894BA38006E818E /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		41F1A4D61894BB33006E818E /* TwoScene.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TwoScene.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		41F1A4D91894BBE3006E818E /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppController.h; path = mac/AppController.h; sourceTree = "<group>"; };
-		41F1A4DA1894BBE3006E818E /* AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppController.mm; path = mac/AppController.mm; sourceTree = "<group>"; };
 		41F1A4E01894BBE3006E818E /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = Icon.icns; path = mac/Icon.icns; sourceTree = "<group>"; };
 		41F1A4E11894BBE3006E818E /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = mac/Info.plist; sourceTree = "<group>"; };
-		41F1A4E21894BBE3006E818E /* main.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = main.mm; path = mac/main.mm; sourceTree = "<group>"; };
+		41F1A4E21894BBE3006E818E /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = mac/main.cpp; sourceTree = "<group>"; };
 		41F1A4EC1894BCAE006E818E /* Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Prefix.pch; path = mac/Prefix.pch; sourceTree = "<group>"; };
 		41F1A5061894BF71006E818E /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		41F1A5081894BF7E006E818E /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
@@ -164,6 +163,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				414A7EF81B1EA35900B56B55 /* Security.framework in Frameworks */,
 				419E8ECB18A9F75900232A34 /* AVFoundation.framework in Frameworks */,
 				419E8EBB18A9F67C00232A34 /* OpenAL.framework in Frameworks */,
 				419E8EBA18A9F60900232A34 /* AudioToolbox.framework in Frameworks */,
@@ -232,6 +232,7 @@
 		4152B64E1894756E00BEF730 /* frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				414A7EF71B1EA35900B56B55 /* Security.framework */,
 				41EA56151A4FEB7300D8764B /* GameController.framework */,
 				413369C01940554300258BC8 /* Security.framework */,
 				419E8EA018A9C68100232A34 /* libcurl.dylib */,
@@ -300,11 +301,9 @@
 		41F1A4D81894BBA8006E818E /* mac */ = {
 			isa = PBXGroup;
 			children = (
-				41F1A4D91894BBE3006E818E /* AppController.h */,
-				41F1A4DA1894BBE3006E818E /* AppController.mm */,
 				41F1A4E01894BBE3006E818E /* Icon.icns */,
 				41F1A4E11894BBE3006E818E /* Info.plist */,
-				41F1A4E21894BBE3006E818E /* main.mm */,
+				41F1A4E21894BBE3006E818E /* main.cpp */,
 				41F1A4EC1894BCAE006E818E /* Prefix.pch */,
 			);
 			name = mac;
@@ -473,8 +472,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				41F1A4EA1894BBE3006E818E /* main.mm in Sources */,
-				41F1A4E51894BBE3006E818E /* AppController.mm in Sources */,
+				41F1A4EA1894BBE3006E818E /* main.cpp in Sources */,
 				4120A3C01A9B26A900692297 /* MenuScene.cpp in Sources */,
 				4120A3C41A9B2A1500692297 /* Game.cpp in Sources */,
 				4120A3BE1A9B26A900692297 /* GameScene.cpp in Sources */,

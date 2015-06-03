@@ -6,7 +6,7 @@
 
 #include "AppDelegate.h"
 
-class MenuScene : public Scene
+class MenuScene : public cocos2d::Scene
 {
 	public:
 		virtual void onEnter();

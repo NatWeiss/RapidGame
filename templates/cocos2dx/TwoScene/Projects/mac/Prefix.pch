@@ -1,4 +1,14 @@
 
-#ifdef __OBJC__
-	#import <Foundation/Foundation.h>
+#ifdef __cplusplus
+	#include "cocos2d.h"
+	#include <string>
+	#include <sstream>
+	#include <deque>
+	#include <memory>
+	#include <vector>
+	#include <map>
+	#include <list>
+	#include <stdlib.h>
+	#include <math.h>
+	#include <iomanip>
 #endif

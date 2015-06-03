@@ -14,7 +14,7 @@ const int gravity = -2500;
 const int labelPadding = 60;
 const int wallThickness = 40;
 int GameScene::score = 0;
-Label* GameScene::scoreLabel = nullptr;
+cocos2d::Label* GameScene::scoreLabel = nullptr;
 
 GameScene::GameScene()
 {
@@ -31,7 +31,7 @@ GameScene::~GameScene()
 void GameScene::onEnter()
 {
 	Scene::onEnter();
-	auto& winSize = Director::getInstance()->getWinSize();
+	auto& winSize = cocos2d::Director::getInstance()->getWinSize();
 	auto& contentRect = Game::getContentRect();
 	string fontName = "DolceVita.ttf";
 	int x1 = contentRect.origin.x + wallThickness;
@@ -40,41 +40,41 @@ void GameScene::onEnter()
 	int y2 = y1 + contentRect.size.height - wallThickness * 2;
 
 	// Music
-	SimpleAudioEngine::getInstance()->playBackgroundMusic("Song.mp3", true);
+	CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("Song.mp3", true);
 
 	// Stretched big background
-	auto bg2 = LayerColor::create(Color4B(208, 204, 202, 255));
+	auto bg2 = cocos2d::LayerColor::create(cocos2d::Color4B(208, 204, 202, 255));
 	bg2->setScale(2);
 	this->addChild(bg2, -1);
 
 	// Actual background
-	auto bg = LayerColor::create(Color4B(218, 214, 212, 255), contentRect.size.width, contentRect.size.height);
+	auto bg = cocos2d::LayerColor::create(cocos2d::Color4B(218, 214, 212, 255), contentRect.size.width, contentRect.size.height);
 	bg->setPosition(contentRect.origin);
 	this->addChild(bg, 0);
 
 	// Labels
 	stringstream ss;
 	ss << "Score: " << score;
-	scoreLabel = Label::createWithTTF(ss.str().c_str(), fontName, 45);
-	scoreLabel->setAnchorPoint(Vec2(0, 1));
+	scoreLabel = cocos2d::Label::createWithTTF(ss.str().c_str(), fontName, 45);
+	scoreLabel->setAnchorPoint(cocos2d::Vec2(0, 1));
 	scoreLabel->setPosition(x1 + labelPadding, y2 - labelPadding);
-	scoreLabel->setColor(Color3B(128, 128, 128));
+	scoreLabel->setColor(cocos2d::Color3B(128, 128, 128));
 	this->addChild(scoreLabel, 1);
 
-	auto sceneLabel = Label::createWithTTF("Game Scene", fontName, 200);
-	sceneLabel->setColor(Color3B(128, 128, 128));
+	auto sceneLabel = cocos2d::Label::createWithTTF("Game Scene", fontName, 200);
+	sceneLabel->setColor(cocos2d::Color3B(128, 128, 128));
 	sceneLabel->setPosition(Game::centralize(0, 228));
 	this->addChild(sceneLabel, 1);
-	sceneLabel->runAction(Sequence::create(
-		FadeOut::create(5),
-		RemoveSelf::create(),
+	sceneLabel->runAction(cocos2d::Sequence::create(
+		cocos2d::FadeOut::create(5),
+		cocos2d::RemoveSelf::create(),
 		nullptr
 	));
 
 	// Touch listners
-	auto dispatcher = Director::getInstance()->getEventDispatcher();
-	auto listener = EventListenerTouchAllAtOnce::create();
-	listener->onTouchesBegan = [this] (const vector<Touch*>& touches, Event* event) {this->touchHandler("began", touches, event);};
+	auto dispatcher = cocos2d::Director::getInstance()->getEventDispatcher();
+	auto listener = cocos2d::EventListenerTouchAllAtOnce::create();
+	listener->onTouchesBegan = [this] (const vector<cocos2d::Touch*>& touches, cocos2d::Event* event) {this->touchHandler("began", touches, event);};
 	dispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 
 	// Start physics
@@ -88,8 +88,8 @@ void GameScene::onEnter()
 	createPhysicsBox(x2, contentRect.origin.y, x2 + wallThickness, y2 + wallThickness, 0.9, 0, collisionTypeWall); // right
 
 	// Ball
-	ball = Sprite::create("Ball.png");
-	createPhysicsSprite(ball, Vec2(winSize.width * 0.5f, winSize.height * 0.5f), 1.0f, 0.0f, collisionTypeBall);
+	ball = cocos2d::Sprite::create("Ball.png");
+	createPhysicsSprite(ball, cocos2d::Vec2(winSize.width * 0.5f, winSize.height * 0.5f), 1.0f, 0.0f, collisionTypeBall);
 	this->addChild(ball, 1);
 
 	// Collision handler
@@ -149,7 +149,7 @@ void GameScene::createPhysicsBox(int x1, int y1, int x2, int y2, float elasticit
 	}
 }
 
-void GameScene::createPhysicsSprite(Sprite* sprite, Vec2 pos, float elasticity, float friction, int collisionType)
+void GameScene::createPhysicsSprite(cocos2d::Sprite* sprite, cocos2d::Vec2 pos, float elasticity, float friction, int collisionType)
 {
 	auto& size = sprite->getContentSize();
 	float w = size.width * 0.5f;
@@ -179,15 +179,15 @@ void GameScene::onCollision(cpArbiter* arb, cpSpace* space, void* data)
 	stringstream ss;
 	ss << "Score: " << score;
 	scoreLabel->setString(ss.str());
-	SimpleAudioEngine::getInstance()->playEffect("Wall.mp3");
+	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("Wall.mp3");
 }
 
-void GameScene::touchHandler(const string& type, const vector<Touch*>& touches, Event* event)
+void GameScene::touchHandler(const string& type, const vector<cocos2d::Touch*>& touches, cocos2d::Event* event)
 {
 	if (type == "began")
 	{
-		auto& winSize = Director::getInstance()->getWinSize();
-		SimpleAudioEngine::getInstance()->playEffect("Intro.mp3");
+		auto& winSize = cocos2d::Director::getInstance()->getWinSize();
+		CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("Intro.mp3");
 		static_cast<cpBody*>(ball->getUserData())->v = cpv(
 			touches[0]->getLocation().x < winSize.width * 0.5f ? -ballSpeed : ballSpeed,
 			ballSpeed

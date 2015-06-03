@@ -13,33 +13,33 @@ AppDelegate::AppDelegate()
 
 AppDelegate::~AppDelegate()
 {
-	ScriptEngineManager::destroyInstance();
+	cocos2d::ScriptEngineManager::destroyInstance();
 }
 
 void AppDelegate::initGLContextAttrs()
 {
     GLContextAttrs glContextAttrs = {8, 8, 8, 8, 24, 8};
-    GLView::setGLContextAttrs(glContextAttrs);
+    cocos2d::GLView::setGLContextAttrs(glContextAttrs);
 }
 
 bool AppDelegate::applicationDidFinishLaunching()
 {
-	auto director = Director::getInstance();
-	auto fileUtils = FileUtils::getInstance();
+	auto director = cocos2d::Director::getInstance();
+	auto fileUtils = cocos2d::FileUtils::getInstance();
 	auto& winSize = director->getWinSize();
 
 	// load project.json
 	auto json = fileUtils->getStringFromFile("project.json");
 	rapidjson::Document doc;
 	doc.Parse<0>(json.c_str());
-	Size designRes(2048, 1536);
+	cocos2d::Size designRes(2048, 1536);
 	if (doc["designWidth"].IsInt())
 		designRes.width = doc["designWidth"].GetInt();
 	if (doc["designHeight"].IsInt())
 		designRes.height = doc["designHeight"].GetInt();
 
 	// set content rect
-	Rect contentRect(0, 0, designRes.width, designRes.height);
+	cocos2d::Rect contentRect(0, 0, designRes.width, designRes.height);
 	if (winSize.width > winSize.height)
 	{
 		designRes.width = (designRes.height / winSize.height) * winSize.width;
@@ -76,16 +76,16 @@ bool AppDelegate::applicationDidFinishLaunching()
 
 void AppDelegate::applicationDidEnterBackground()
 {
-	Director::getInstance()->stopAnimation();
-	SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
-	SimpleAudioEngine::getInstance()->pauseAllEffects();
+	cocos2d::Director::getInstance()->stopAnimation();
+	CocosDenshion::SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
+	CocosDenshion::SimpleAudioEngine::getInstance()->pauseAllEffects();
 }
 
 void AppDelegate::applicationWillEnterForeground()
 {
-	Director::getInstance()->startAnimation();
-	SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
-	SimpleAudioEngine::getInstance()->resumeAllEffects();
+	cocos2d::Director::getInstance()->startAnimation();
+	CocosDenshion::SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
+	CocosDenshion::SimpleAudioEngine::getInstance()->resumeAllEffects();
 }
 
 

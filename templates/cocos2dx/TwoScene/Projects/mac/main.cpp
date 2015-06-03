@@ -8,9 +8,6 @@
 //
 
 #include "AppDelegate.h"
-#include "cocos2d.h"
-
-using namespace cocos2d;
 
 int main(int argc, char *argv[])
 {
@@ -22,7 +19,8 @@ int main(int argc, char *argv[])
 	#endif
 
 	// create the gl view
-	auto name = [[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleName"] UTF8String];
+	//auto name = [[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleName"] UTF8String];
+	string name = "MyApp";
 	if (fullscreen)
 		view = GLViewImpl::createWithFullScreen(name);
 	else
