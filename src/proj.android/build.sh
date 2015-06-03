@@ -105,22 +105,22 @@ fi
 src=$(cd ${src}; pwd)
 if [ "${UNAME:0:6}" == "CYGWIN" ]; then
 	# Sam: Modify the path so that it replaces /cygdrive/c (11 characters) with C: on Windows
-	# Sam: cygwin must be installed using the default option of making it avaiable for all users (root directory)
+	# Sam: cygwin must be installed in the root directory (recommended option in cygwin's setup)
 	temp=$src
 	src="C:"
 	src=$src${temp:11:4200}
 fi
 echo "SRC=${src}"
 
-if [ "${UNAME:0:6}" == "CYGWIN" ]; then
-	# Sam: When rapidgame creates its directories, latest is created as a folder itself and not a symlink on Windows
-	# Sam: This must be updated for every version of rapidgame to continue to work, unless you get latest to be a symlink like on Mac
-	# To Sam: symlinks are possible on Windows and it should be that way (rapidgame init . is working for example...)
-	# To Nat: Yes symlinks do work, but the code that creates latest did not work. I want to look into that and see what can be changed.
-	dest=../../0.9.7/cocos2d/x/lib/${config}-Android/${arch}
-else
-	dest=../../latest/cocos2d/x/lib/${config}-Android/${arch}
-fi
+# Sam: When rapidgame creates its directories, latest is created as a folder itself and not a symlink on Windows
+# Sam: This must be updated for every version of rapidgame to continue to work, unless you get latest to be a symlink like on Mac
+# To Sam: symlinks are possible on Windows and it should be that way (rapidgame init . is working for example...)
+# To Nat: Yes, and I encountered the same problem when not running in root. I checked the symlink code in rapidgame.js and
+#         it seems you catch the permissions error exception without doing anything. It is okay to just have this line by itself
+#         now, but the first time someone creates a cocos2dx project, they MUST run that command in cygwin with admin privileges,
+#         so that latest is created as a symlink.
+dest=../../latest/cocos2d/x/lib/${config}-Android/${arch}
+
 mkdir -p ${dest}
 dest=$(cd ${dest}; pwd)
 if [ "${UNAME:0:6}" == "CYGWIN" ]; then
