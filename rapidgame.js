@@ -4,10 +4,17 @@
 //  Developed by Nathanael Weiss.
 //
 //  To-do:
-//   - Mention how to use a manual download of cocos2d-js.
-//   - Fix Mac project name search and replace so names with spaces work.
-//   - Fix Mac temp dir if changed to relative to project
+//   - Mention how to use a manual download of cocos2d-js in readme.
+//   - Fix Mac project name search and replace so names with spaces work. (It used to...)
 //   - Why did `sudo npm unlink rapidgame -g; sudo npm link .` fix "Error: Cannot find module 'path-extra'"?
+//   - Mac prebuild fails if the user has changed Xcode's temporary build directory to "relative to project". Here's some details:
+//       export TARGET_TEMP_DIR=/Users/user/Library/Developer/RapidGame/src/proj.ios_mac/build/cocos2dx-prebuilt.build/Debug/Mac.build
+//       export TEMP_DIR=/Users/user/Library/Developer/RapidGame/src/proj.ios_mac/build/cocos2dx-prebuilt.build/Debug/Mac.build
+//       export TEMP_FILES_DIR=/Users/user/Library/Developer/RapidGame/src/proj.ios_mac/build/cocos2dx-prebuilt.build/Debug/Mac.build
+//       export TEMP_FILE_DIR=/Users/user/Library/Developer/RapidGame/src/proj.ios_mac/build/cocos2dx-prebuilt.build/Debug/Mac.build
+//       /bin/sh -c /Users/user/Library/Developer/RapidGame/src/proj.ios_mac/build/cocos2dx-prebuilt.build/Debug/Mac.build/Script-419E8E9E18A9BB3400232A34.sh
+//   	outputDir=/Users/user/Library/Developer/RapidGame/src/proj.ios_mac/../../latest/cocos2d/x/lib/Debug-Mac/macosx
+//   	error: libtool: can't open file: /Users/user/Library/Developer/RapidGame/src/proj.ios_mac/build/Debug/*.a (No such file or directory)
 //
 
 var http = require("http"),
@@ -77,7 +84,7 @@ var run = function(args) {
 		.option("-t, --template <name>", "template (" + templates.join(", ") + ") [" + defaults.template + "]", defaults.template)
 		.option("-p, --prefix <name>", "library directory [" + defaults.prefix + "]", defaults.prefix)
 		.option("-f, --folder <path>", "output folder [" + defaults.dest + "]", defaults.dest)
-		.option("-o, --orientation <orientation>", "orientation (" + orientations.join(", ") + ") [" + defaults.orientation + "]", defaults.orientation)
+		//.option("-o, --orientation <orientation>", "orientation (" + orientations.join(", ") + ") [" + defaults.orientation + "]", defaults.orientation)
 		.option("--nostrip", "do not strip the prebuilt libraries", false)
 		.option("--minimal", "prebuild only debug libraries and use minimal architectures", false)
 		.option("-v, --verbose", "be verbose", false);
@@ -174,7 +181,7 @@ var createProject = function(engine, name, package) {
 	
 	// Check engine and name
 	if (!cmd.engine || !name || !package) {
-		console.log("Engine, project name and package name are required, for example: " + cmdName + " cocos2dx \"Heck Yeah\" com.mycompany.heckyeah");
+		console.log("Engine, project name and package name are required, for example: " + cmdName + " cocos2dx \"HeckYeah\" com.mycompany.heckyeah");
 		usage();
 		return 1;
 	}
@@ -645,15 +652,13 @@ var prebuildAndroid = function(config, arch, callback) {
 
 	// create builds array
 	builds = [];
-	if (process.platform === "win32")
-	{
-		if (cmd.minimal)
+	if (process.platform === "win32") {
+		if (cmd.minimal) {
 			builds.push([["Debug"], ["armeabi"]]);
-		else
+		} else {
 			builds.push([]);
-	}
-	else
-	{
+		}
+	} else {
 		for (i = 0; i < configs.length; i += 1) {
 			for (j = 0; j < archs.length; j += 1) {
 				builds.push([configs[i], archs[j]]);
@@ -769,8 +774,7 @@ var startBuild = function(platform, callback, settings) {
 			config
 		];
 
-		if (process.platform === "win32")
-		{
+		if (process.platform === "win32") {
 			command = "make";
 			args = cmd.minimal ? ["minimal"] : [];
 		}
@@ -1248,8 +1252,7 @@ var usage = function() {
 var usageExamples = function() {
 	console.log("  Examples:");
 	console.log("");
-	console.log("    $ " + cmdName + " create unity \"Zombie Matrix\" com.mycompany.zombiematrix");
-	console.log("    $ " + cmdName + " create cocos2dx \"Heck Yeah\" com.mycompany.heckyeah");
+	console.log("    $ " + cmdName + " create cocos2dx \"HeckYeah\" com.mycompany.heckyeah");
 	console.log("    $ " + cmdName + " prebuild");
 	console.log("");
 };

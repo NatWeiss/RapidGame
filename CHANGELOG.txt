@@ -1,3 +1,14 @@
+Version 0.9.9 - June 4, 2015
+
+	Prebuilding Android on Windows is more rocksolid due to using ndk-which thanks to Samuel Ørsnæs.
+	Windows projects compile and run successfully also thanks to Samuel Ørsnæs.
+	Fixed cocos2dx Mac project.
+	Added makefile for building documentation.
+
+Version 0.9.8 - June 2, 2015
+
+	Can now prebuild Android on Windows thanks to Samuel Ørsnæs.
+
 Version 0.9.7 - May 7, 2015
 
 	Fixed a bug related to copying DLLs in the right order on Windows.

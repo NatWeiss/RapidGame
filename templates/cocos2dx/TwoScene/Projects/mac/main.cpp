@@ -12,21 +12,20 @@
 int main(int argc, char *argv[])
 {
 	AppDelegate app;
-	GLView* view = nullptr;
+	cocos2d::GLView* view = nullptr;
 	bool fullscreen = true;
 	#ifndef NDEBUG
 		fullscreen = false;
 	#endif
 
 	// create the gl view
-	//auto name = [[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleName"] UTF8String];
-	string name = "MyApp";
+	string name = "TwoScene";
 	if (fullscreen)
-		view = GLViewImpl::createWithFullScreen(name);
+		view = cocos2d::GLViewImpl::createWithFullScreen(name);
 	else
-		view = GLViewImpl::createWithRect(name, cocos2d::Rect(0, 0, 960, 641));
-	Director::getInstance()->setOpenGLView(view);
+		view = cocos2d::GLViewImpl::createWithRect(name, cocos2d::Rect(0, 0, 960, 640));
+	cocos2d::Director::getInstance()->setOpenGLView(view);
 	
 	// run the app
-	return Application::getInstance()->run();
+	return cocos2d::Application::getInstance()->run();
 }

@@ -21,7 +21,7 @@ Updates
 
 * June 2, 2015: Can now prebuild Android on Windows thanks to [Samuel Ørsnæs](https://github.com/samoersnaes).
 * May 4, 2015: Upgraded to cocos2d-x 3.6 / cocos2d-js 3.6.
-* Mar 15, 2015: Fixed another bug related to MSBuild path on Windows (thanks, Adam Yocum). Fixed the cocos2d-x Android template.
+* Mar 15, 2015: Fixed another bug related to MSBuild path on Windows (thanks, [Adam Yocum](https://github.com/adamyocum)). Fixed the cocos2d-x Android template.
 * Feb 24, 2015: Now has a separate cocos2d-x and cocos2d-js templates. Fixed a bug on Windows: "Unable to find MSBuild path." Still a few Windows-specific kinks to work out in the next version.
 * Feb 19, 2015: Fixed a bug in Xcode projects (reference to script folder).
 * Feb 7, 2015: Prebuilder updated for cocos2d-js 3.2 final / cocos2d-x 3.3.
@@ -38,11 +38,11 @@ There's no need to clone this repo, just install RapidGame:
 
 	sudo npm install rapidgame -g
 
-Or, on Windows leave off the `sudo` and use an administrative console:
+Or, on Windows leave off the `sudo`:
 
 	npm install rapidgame -g
 
-And, create a cocos2d-x game named "HeckYeah":
+And, create a cocos2d-x game named "HeckYeah". Make sure to run Command Prompt or Cygwin as administrator when doing this on Windows!
 
 	rapidgame create cocos2dx "HeckYeah" org.myorg.heckyeah
 
@@ -161,11 +161,28 @@ The cocos2dx library prebuilder currently works on the following development pla
 Linux support is planned.
 
 
+Android Notes
+-------------
+
+The following environment variables must be present in order to prebuild Android libraries. Consider adding these to your login profile. For example, on Mac add these lines to the bottom of your `~/.profile`:
+
+	export ANDROID_SDK_ROOT=~/path/to/android/sdk
+	export NDK_ROOT=~/path/to/android/ndk/
+
+Or, on Windows add these to the bottom of your [Cygwin](https://www.cygwin.com) `~/.bash_profile` (note that the forward slashes are correct):
+
+	ANDROID_SDK_ROOT=C:/path/to/android/sdk
+	NDK_ROOT=C:/path/to/android/ndk
+
+Android SDK APIs must be downloaded for the target platform and the minimum supported platform. The template project's target is currently API 18 and minimum is API 10. This can be done by going to Android Studio -> Configure -> SDK Manager -> [Select and install appropriate packages].
+
+
+
 Windows Notes
 -------------
 
-1. The `rapidgame` command must be run in an admin console.
-2. To compile Android successfully (on Windows), `rapidgame prebuild` must be run via [Cygwin 64-bit](https://www.cygwin.com) and Cygwin must be installed in the root directory `C:\cygwin64`. The "Devel" category of packages should be downloaded in addition to the defaults when running setup.
+1. The `rapidgame` command must be run in an admin console. This allows symlinks to be properly created, otherwise what should be symlinks will become regular folders and the prebuild command will fail.
+2. To compile Android successfully (on Windows), `rapidgame prebuild` must be run via [Cygwin](https://www.cygwin.com) and Cygwin must be installed in the root directory `C:\cygwin`. The "Devel" category of packages should be downloaded in addition to the defaults when running setup.
 3. Note that RapidGame is installed at `\Users\[USERNAME]\AppData\Roaming\npm\node_modules\rapidgame`.
 
 Thanks to [Samuel Ørsnæs](https://github.com/samoersnaes) for getting the Android build working in Windows!

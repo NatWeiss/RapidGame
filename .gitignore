@@ -1,3 +1,12 @@
 .DS_Store
 xcuserdata
 project.xcworkspace
+/src/downloaded.txt
+/src/cocos2d-js
+/node_modules
+/.id
+/build.log
+/0.*
+/1.*
+/latest
+/templates/*/*/lib

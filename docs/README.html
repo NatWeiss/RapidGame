@@ -10,8 +10,8 @@
 <body>
   <div class="container">
     <div class="page">
-		<h2 class="title">Wizard Fu's RapidGame &amp; RapidGamePro</h2>
-		<h2 class="contact"><a href='mailto&#58;n%61%74&#64;wi%7Aardf&#37;&#55;5&#46;c%6F&#109;'>n&#97;&#116;&#64;&#119;&#105;za&#114;df&#117;&#46;com</a></h2>
+		<h2 class="title">RapidGame</h2>
+		<h2 class="contact"></h2>
       <div class="header">
         
           <h1>README.md</h1>
@@ -53,7 +53,7 @@
         <ul>
 <li>June 2, 2015: Can now prebuild Android on Windows thanks to <a href="https://github.com/samoersnaes">Samuel Ørsnæs</a>.</li>
 <li>May 4, 2015: Upgraded to cocos2d-x 3.6 / cocos2d-js 3.6.</li>
-<li>Mar 15, 2015: Fixed another bug related to MSBuild path on Windows (thanks, Adam Yocum). Fixed the cocos2d-x Android template.</li>
+<li>Mar 15, 2015: Fixed another bug related to MSBuild path on Windows (thanks, <a href="https://github.com/adamyocum">Adam Yocum</a>). Fixed the cocos2d-x Android template.</li>
 <li>Feb 24, 2015: Now has a separate cocos2d-x and cocos2d-js templates. Fixed a bug on Windows: “Unable to find MSBuild path.” Still a few Windows-specific kinks to work out in the next version.</li>
 <li>Feb 19, 2015: Fixed a bug in Xcode projects (reference to script folder).</li>
 <li>Feb 7, 2015: Prebuilder updated for cocos2d-js 3.2 final / cocos2d-x 3.3.</li>
@@ -73,14 +73,14 @@
         
       
         
-        <p>Or, on Windows leave off the <code>sudo</code> and use an administrative console:</p>
+        <p>Or, on Windows leave off the <code>sudo</code>:</p>
 
         
           <div class='highlight'><pre><span class="hljs-built_in">npm</span> install rapidgame -g</pre></div>
         
       
         
-        <p>And, create a cocos2d-x game named “HeckYeah”:</p>
+        <p>And, create a cocos2d-x game named “HeckYeah”. Make sure to run Command Prompt or Cygwin as administrator when doing this on Windows!</p>
 
         
           <div class='highlight'><pre>rapidgame create cocos2dx <span class="hljs-string">"HeckYeah"</span> org.myorg.heckyeah</pre></div>
@@ -136,7 +136,7 @@ Linux: Not yet supported. Are you a cocos2d-x Linux master with some experience 
 <p>The project creator makes a copy of one of the templates, does a search and replace on the game title &amp; package name, then installs any required modules. Viola. Your own rapidly-created game ready to go. Here’s some example output from running the project creator:</p>
 
         
-          <div class='highlight'><pre>$ rapidgamepro create Corona <span class="hljs-string">"SwordBall"</span> org.myorg.swordball
+          <div class='highlight'><pre>$ rapidgame create Corona <span class="hljs-string">"SwordBall"</span> org.myorg.swordball
 Rapidly creating a game
 <span class="hljs-attribute">Engine</span>: Corona
 <span class="hljs-attribute">Template</span>: TwoScene
@@ -215,14 +215,36 @@ Server/ - The server which provides an API <span class="hljs-keyword">and</span>
 <li>Windows</li>
 </ul>
 <p>Linux support is planned.</p>
+<h2 id="android-notes">Android Notes</h2>
+
+        
+      
+        
+        <p>The following environment variables must be present in order to prebuild Android libraries. Consider adding these to your login profile. For example, on Mac add these lines to the bottom of your <code>~/.profile</code>:</p>
+
+        
+          <div class='highlight'><pre><span class="hljs-reserved">export</span> ANDROID_SDK_ROOT=~/path/to/android/sdk
+<span class="hljs-reserved">export</span> NDK_ROOT=~<span class="hljs-regexp">/path/to/android/ndk/</span></pre></div>
+        
+      
+        
+        <p>Or, on Windows add these to the bottom of your <a href="https://www.cygwin.com">Cygwin</a> <code>~/.bash_profile</code> (note that the forward slashes are correct):</p>
+
+        
+          <div class='highlight'><pre>ANDROID_SDK_ROOT=<span class="hljs-attribute">C</span>:/path/to/android/sdk
+NDK_ROOT=<span class="hljs-attribute">C</span>:/path/to/android/ndk</pre></div>
+        
+      
+        
+        <p>Android SDK APIs must be downloaded for the target platform and the minimum supported platform. The template project’s target is currently API 18 and minimum is API 10. This can be done by going to Android Studio -&gt; Configure -&gt; SDK Manager -&gt; [Select and install appropriate packages].</p>
 <h2 id="windows-notes">Windows Notes</h2>
 
         
       
         
         <ol>
-<li>The <code>rapidgame</code> command must be run in an admin console.</li>
-<li>To compile Android successfully (on Windows), <code>rapidgame prebuild</code> must be run via <a href="https://www.cygwin.com">Cygwin 64-bit</a> and Cygwin must be installed in the root directory <code>C:\cygwin64</code>. The “Devel” category of packages should be downloaded in addition to the defaults when running setup.</li>
+<li>The <code>rapidgame</code> command must be run in an admin console. This allows symlinks to be properly created, otherwise what should be symlinks will become regular folders and the prebuild command will fail.</li>
+<li>To compile Android successfully (on Windows), <code>rapidgame prebuild</code> must be run via <a href="https://www.cygwin.com">Cygwin</a> and Cygwin must be installed in the root directory <code>C:\cygwin</code>. The “Devel” category of packages should be downloaded in addition to the defaults when running setup.</li>
 <li>Note that RapidGame is installed at <code>\Users\[USERNAME]\AppData\Roaming\npm\node_modules\rapidgame</code>.</li>
 </ol>
 <p>Thanks to <a href="https://github.com/samoersnaes">Samuel Ørsnæs</a> for getting the Android build working in Windows!</p>
@@ -306,6 +328,13 @@ Server/ - The server which provides an API <span class="hljs-keyword">and</span>
               
                 
                 <li>
+                  <a class="source" href="README.html">
+                    README.md
+                  </a>
+                </li>
+              
+                
+                <li>
                   <a class="source" href="GameScene.html">
                     GameScene.js
                   </a>
@@ -329,13 +358,6 @@ Server/ - The server which provides an API <span class="hljs-keyword">and</span>
                 <li>
                   <a class="source" href="Server.html">
                     Server.js
-                  </a>
-                </li>
-              
-                
-                <li>
-                  <a class="source" href="README.html">
-                    README.md
                   </a>
                 </li>
               
