@@ -149,10 +149,16 @@ xcopy /Y /D /E "$(ProjectDir)..\..\lib\cocos2d\x\script\*" "$(OutDir)script"</Co
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\AppDelegate.cpp" />
+    <ClCompile Include="..\Game.cpp" />
+    <ClCompile Include="..\GameScene.cpp" />
+    <ClCompile Include="..\MenuScene.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\AppDelegate.h" />
+    <ClInclude Include="..\Game.h" />
+    <ClInclude Include="..\GameScene.h" />
+    <ClInclude Include="..\MenuScene.h" />
     <ClInclude Include="main.h" />
   </ItemGroup>
   <ItemGroup>

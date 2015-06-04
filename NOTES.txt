@@ -2,9 +2,8 @@ Notes for Windows by Sam
 ------------------------
 Don't forget:
 
-- You'll want to make this a new release (0.9.9 or even 1.0) after merging
 - Update CHANGELOG.txt
-- The Windows template project still does not compile and should be fixed at some point
+- It would be really cool if you made the new release version 1.0, because everything works!
 
 Add to README:
 
@@ -33,13 +32,10 @@ Add to README:
 
 Technical details:
 
+- Windows template project compiles (not the template itself but one made from "rapidgame create")
 - rapidgame/src/proj.android/makefile was modified in order to run the Android library build commands in startBuild() in rapidgame.js (Windows only)
 	-> prebuildAndroid() was modified as well so that only one build is pushed (for both standard build and minimal build) if on Windows
 	-> This is because startBuild() runs "make" or "make minimal" in rapidgame/src/proj.android instead of running build.sh each time for each target
 - Removed "cocos_protobuf-lite_static" from build.sh at the bottom from the list of directories, as it is no longer used doing the build process
 - build.sh no longer hardcodes paths for ar, strip, and dest for any platform
 - Changed every call of util.print() to console.log() in rapidgame.js to eliminate annoying messages for verbose output
-
-Future fixes:
-
-- I may try to get the Windows project compiling at some point, but I'm satisfied with rapidgame's functionality for right now
