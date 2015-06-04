@@ -88,7 +88,7 @@ The templates have:
 
 The project creator makes a copy of one of the templates, does a search and replace on the game title & package name, then installs any required modules. Viola. Your own rapidly-created game ready to go. Here's some example output from running the project creator:
 
-	$ rapidgamepro create Corona "SwordBall" org.myorg.swordball
+	$ rapidgame create Corona "SwordBall" org.myorg.swordball
 	Rapidly creating a game
 	Engine: Corona
 	Template: TwoScene
