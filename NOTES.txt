@@ -1,42 +1,42 @@
 Notes for Windows by Sam
 ------------------------
-build.sh = rapidgame/src/proj.android/build.sh
-
 Don't forget:
 
-- You will have to update the hardcoded paths for ar and strip in build.sh as newer NDK versions come out
-	-> Go into cygwin and type "ndk-which ar" and "ndk-which strip" to find which paths to use
-- Until rapidgame/latest is created as a symlink for Windows, the newest version number must be replaced in dest's path in build.sh
+- Update CHANGELOG.txt
+- It would be really cool if you made the new release version 1.0, because everything works!
+- Issues 6, 7, and 8 can be closed. Not sure about issue 4.
 
 Add to README:
 
-- rapidgame is installed at C:\Users\[USERNAME]\AppData\Roaming\npm\node_modules\rapidgame on Windows
-- "rapidgame create" must be run in an admin console if on Windows (to create the lib symlink)
-	-> If someone runs create in a regular console, run "rapidgame init [PROJECT_DIR]" in a root console and everything will be fine
+- Android is now fully functional on Windows! (from prebuilding libraries to building .apk's, all using the standard commands)
+- I highly recommend adding the "rapidgame must be run in an admin console if on Windows" bit to the "Build a Game in Under 30 Seconds" section
+	-> Something like:
+		=> And, create a cocos2d-x game named "HeckYeah":
+		=> rapidgame create cocos2dx "HeckYeah" org.myorg.heckyeah
+		=> Make sure to run Command Prompt or Cygwin as administrator when doing this on Windows!
+	-> This is especially important the first time, as that is when latest is created
+		=> If running as root on Windows the first time, latest will be created as a symlink as intended, otherwise it will be a regular folder
+	-> You don't need to run "npm install rapidgame -g" in a root console on Windows, so this line should be changed to leave off the bit at the end:
+		=> "Or, on Windows leave off the `sudo` --and use an administrative console--"
+- There is no longer any 64-bit requirement for Windows (remove the 64-bit part for Cygwin under Windows Notes)
+- When building an Android project with "make", the command must be run in a cygwin console if on Windows
+	-> You must manually set a couple environment variables first in ~/.bash_profile
+		=> cd ~
+		=> [text editor: e.g. nano] .bash_profile
+		=> go to bottom of file
+		=> type "ANDROID_SDK_ROOT=C:/path/to/sdk" (forward slashes are a must, the line does not contain quotes itself)
+		=> next line type "NDK_ROOT=C:/path/to/ndk" (forward slashes are a must, the line does not contain quotes itself)
+		=> save, exit editor, restart cygwin, good to go for all future projects
 - (Both Mac and Win) Android SDK's APIs must be downloaded for the target platform and for the minimum supported platform
 	-> TwoScene's current default target is API 18, and the minimum is API 10
 	-> This can be done by going to Android Studio -> Configure -> SDK Manager -> [Select and install appropriate packages]
-- If using Windows, then it must be a 64-bit machine at the moment (possibly easy fix in the future, see below)
-- If using Windows, you must download and install cygwin (64-bit)
-	-> It is very likely that cygwin must be installed in the root directory (C:\cygwin64), which is the recommended option (see below)
-	-> The "Devel" category of packages should probably be downloaded in addition to the defaults when running setup
-- Credit :D
 
 Technical details:
 
-- The reason 64-bit Windows is required is because the ar and strip paths are hardcoded to look in that directory in build.sh
-	-> There might be an external variable that contains info about what version that OS is
-	-> Maybe lines 71 and 84 can be rewritten with this variable to very easily fix the issue
-	-> The problem is Android NDK only installs the prebuilt applications in toolchains for your host OS
-		=> e.g. [NDK_ROOT]/toolchains/arm-linux-androideabi-4.8/prebuilt only contains windows-x86_64 for me
-- The reason I believe cygwin must be installed in the root directory is that build.sh replaces "/cygwin/c" with "C:" for the src and dest paths
-- I haven't double-checked yet but IIRC rapidgame/latest is supposed to be a symlink to the lastest version. This is not the case for Windows.
-	-> Windows creates a normal folder called latest, which means dest must be hardcoded to the most recent version path in build.sh
-	-> See "Don't forget"
-- The Windows TwoScene template project still does not compile
-
-Future fixes:
-
-- Running make for the TwoScene template for Android does not work on Windows currently, but the project can easily be built and installed
-	-> I will try to find a reasonable solution for this ASAP
-- Find the external/environment variable that allows ar and strip to be found on 32-bit Windows?
+- Windows template project compiles (not the template itself but one made from "rapidgame create")
+- rapidgame/src/proj.android/makefile was modified in order to run the Android library build commands in startBuild() in rapidgame.js (Windows only)
+	-> prebuildAndroid() was modified as well so that only one build is pushed (for both standard build and minimal build) if on Windows
+	-> This is because startBuild() runs "make" or "make minimal" in rapidgame/src/proj.android instead of running build.sh each time for each target
+- Removed "cocos_protobuf-lite_static" from build.sh at the bottom from the list of directories, as it is no longer used doing the build process
+- build.sh no longer hardcodes paths for ar, strip, and dest for any platform
+- Changed every call of util.print() to console.log() in rapidgame.js to eliminate annoying messages for verbose output
