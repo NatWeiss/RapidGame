@@ -4,6 +4,7 @@ Don't forget:
 
 - Update CHANGELOG.txt
 - It would be really cool if you made the new release version 1.0, because everything works!
+- Issues 6, 7, and 8 can be closed. Not sure about issue 4.
 
 Add to README:
 
