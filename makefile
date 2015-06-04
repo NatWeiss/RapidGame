@@ -1,3 +1,7 @@
+clean:
+	cd src/proj.android; make clean
+	rm -rf ~/Library/Developer/Xcode/DerivedData/cocos2dx-prebuilt*
+
 doc:
 	cp README.md README.litcoffee
 	rm -rf docs
