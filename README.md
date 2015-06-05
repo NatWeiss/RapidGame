@@ -50,7 +50,6 @@ Or, a Unity game named "ZombieMatrix":
 
 	rapidgame create unity "ZombieMatrix" com.mycompany.zombiematrix
 
-
 For usage instructions:
 
 	rapidgame --help
@@ -60,7 +59,9 @@ Requirements
 ------------
 
 Mac OS X: Xcode 5 or newer, [Git](http://git-scm.com/downloads) and [Node.js](http://nodejs.org/download/).
+
 Windows: **Visual Studio 2012 or newer**, [Git](http://git-scm.com/downloads), [Node.js](http://nodejs.org/download/), and [Cygwin](https://www.cygwin.com) if you want Android capabilities for cocos2d-x. Refer to the Android Notes and Windows Notes below.
+
 Linux: Not yet supported. Are you a cocos2d-x Linux master with some experience with Javascript? Please help out! rapidgame.js almost supports Linux, just need to hook up the system calls to prebuild and archive the libraries.
 
 
