@@ -42,13 +42,13 @@ Or, on Windows leave off the `sudo`:
 
 	npm install rapidgame -g
 
-And, create a cocos2d-x game named "HeckYeah". Make sure to run Command Prompt or Cygwin as administrator when doing this on Windows!
+And, create a cocos2d-x game named "HeckYeah". Make sure to run this command in Cygwin as administrator if you're using Windows:
 
 	rapidgame create cocos2dx "HeckYeah" org.myorg.heckyeah
 
 Or, a Unity game named "ZombieMatrix":
 
-	rapidgame create unity "ZombieMatrix" com.myompany.zombiematrix
+	rapidgame create unity "ZombieMatrix" com.mycompany.zombiematrix
 
 
 For usage instructions:
@@ -60,7 +60,7 @@ Requirements
 ------------
 
 Mac OS X: Xcode 5 or newer, [Git](http://git-scm.com/downloads) and [Node.js](http://nodejs.org/download/).
-Windows: **Visual Studio 2012 or newer**, [Git](http://git-scm.com/downloads) and [Node.js](http://nodejs.org/download/).
+Windows: **Visual Studio 2012 or newer**, [Git](http://git-scm.com/downloads), [Node.js](http://nodejs.org/download/), and [Cygwin](https://www.cygwin.com) if you want Android capabilities for cocos2d-x. Refer to the Android Notes and Windows Notes below.
 Linux: Not yet supported. Are you a cocos2d-x Linux master with some experience with Javascript? Please help out! rapidgame.js almost supports Linux, just need to hook up the system calls to prebuild and archive the libraries.
 
 
@@ -145,7 +145,7 @@ The command to prebuild cocos2d-x static libraries used by cocos2d-js on native 
 
 	rapidgame prebuild
 
-When the command is finished, you'll have a directory (`~/Library/Developer/RapidGame` on Macs) with include files, java files, make files, Javascript bindings and library files for iOS, Mac and Android in Debug and Release mode for all available architectures.
+When the command is finished, you'll have a directory (`~/Library/Developer/RapidGame` on Mac and `C:\Users\[USERNAME]\AppData\Roaming\npm\node_modules\rapidgame` on Windows) with include files, java files, make files, Javascript bindings and library files for iOS, Mac and Android in Debug and Release mode for all available architectures.
 
 
 Development Platforms
@@ -166,27 +166,25 @@ Android Notes
 
 The following environment variables must be present in order to prebuild Android libraries. Consider adding these to your login profile. For example, on Mac add these lines to the bottom of your `~/.profile`:
 
-	export ANDROID_SDK_ROOT=~/path/to/android/sdk
-	export NDK_ROOT=~/path/to/android/ndk/
+	export ANDROID_SDK_ROOT=/path/to/android/sdk
+	export NDK_ROOT=/path/to/android/ndk/
 
 Or, on Windows add these to the bottom of your [Cygwin](https://www.cygwin.com) `~/.bash_profile` (note that the forward slashes are correct):
 
 	ANDROID_SDK_ROOT=C:/path/to/android/sdk
 	NDK_ROOT=C:/path/to/android/ndk
 
-Android SDK APIs must be downloaded for the target platform and the minimum supported platform. The template project's target is currently API 18 and minimum is API 10. This can be done by going to Android Studio -> Configure -> SDK Manager -> [Select and install appropriate packages].
-
+The Android SDK APIs must be downloaded for the target platform and the minimum supported platform. The template project's target is currently API 18 and the minimum is API 10. You download the APIs by going to Android Studio -> Configure -> SDK Manager -> [Select and install appropriate packages].
 
 
 Windows Notes
 -------------
 
-1. The `rapidgame` command must be run in an admin console. This allows symlinks to be properly created, otherwise what should be symlinks will become regular folders and the prebuild command will fail.
-2. To compile Android successfully (on Windows), `rapidgame prebuild` must be run via [Cygwin](https://www.cygwin.com) and Cygwin must be installed in the root directory `C:\cygwin`. The "Devel" category of packages should be downloaded in addition to the defaults when running setup.
-3. Note that RapidGame is installed at `\Users\[USERNAME]\AppData\Roaming\npm\node_modules\rapidgame`.
+1. The `rapidgame` command must be run in an admin console. This allows symlinks to be properly created, otherwise what should be symlinks will become regular folders and the command will fail.
+2. To compile Android successfully (on Windows), `rapidgame prebuild` must be run via [Cygwin](https://www.cygwin.com) and Cygwin must be installed in the root directory `C:\cygwin` or `C:\cygwin64` and be made available for all users. This is the recommended option when you run the setup. When choosing which packages to install, click the circle icon to the right of "Devel" until the label on the right says "Install" in order to add these packages to the download list.
+3. Windows cannot build the cocos2d-x libraries for iOS and Mac. If you want to use RapidGame to develop for these platforms, you must use a Mac.
 
 Thanks to [Samuel Ørsnæs](https://github.com/samoersnaes) for getting the Android build working in Windows!
-
 
 
 Custom cocos2d-x/js Projects

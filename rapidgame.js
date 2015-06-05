@@ -654,9 +654,9 @@ var prebuildAndroid = function(config, arch, callback) {
 	builds = [];
 	if (process.platform === "win32") {
 		if (cmd.minimal) {
-			builds.push([["Debug"], ["armeabi"]]);
+			builds.push(["minimal (Debug armeabi)"]);
 		} else {
-			builds.push([]);
+			builds.push(["libraries for all platforms"]);
 		}
 	} else {
 		for (i = 0; i < configs.length; i += 1) {
@@ -1125,7 +1125,7 @@ var downloadUrl = function(url, dest, cb) {
 			if (!done) {
 				cur += chunk.length;
 				done = (cur >= total);
-				util.print("Downloading " + url + " "
+				console.log("Downloading " + url + " "
 					+ (100.0 * cur / total).toFixed(2) + "%..."
 					+ (done ? "\n" : "\r"));
 			}
@@ -1322,13 +1322,13 @@ var spawn = function(command, args, options, callback) {
 		// watch its output
 		child.stdout.on("data", function(chunk) {
 			if (cmd.verbose) {
-				util.print(chunk.toString());
+				console.log(chunk.toString());
 			}
 			logBuild(chunk.toString());
 		});
 		child.stderr.on("data", function(chunk) {
 			if (cmd.verbose) {
-				util.print(chunk.toString());
+				console.log(chunk.toString());
 			}
 			logBuild(chunk.toString());
 		});
