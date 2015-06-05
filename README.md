@@ -22,7 +22,7 @@ Updates
 * June 2, 2015: Can now prebuild Android on Windows thanks to [Samuel Ørsnæs](https://github.com/samoersnaes).
 * May 4, 2015: Upgraded to cocos2d-x 3.6 / cocos2d-js 3.6.
 * Mar 15, 2015: Fixed another bug related to MSBuild path on Windows (thanks, [Adam Yocum](https://github.com/adamyocum)). Fixed the cocos2d-x Android template.
-* Feb 24, 2015: Now has a separate cocos2d-x and cocos2d-js templates. Fixed a bug on Windows: "Unable to find MSBuild path." Still a few Windows-specific kinks to work out in the next version.
+* Feb 24, 2015: Now has separate cocos2d-x and cocos2d-js templates. Fixed a bug on Windows: "Unable to find MSBuild path." Still a few Windows-specific kinks to work out in the next version.
 * Feb 19, 2015: Fixed a bug in Xcode projects (reference to script folder).
 * Feb 7, 2015: Prebuilder updated for cocos2d-js 3.2 final / cocos2d-x 3.3.
 * Dec 28, 2014: Prebuilder updated for cocos2d-js 3.2 rc0 / cocos2d-x 3.3.
@@ -60,7 +60,7 @@ Requirements
 
 Mac OS X: Xcode 5 or newer, [Git](http://git-scm.com/downloads) and [Node.js](http://nodejs.org/download/).
 
-Windows: **Visual Studio 2012 or newer**, [Git](http://git-scm.com/downloads), [Node.js](http://nodejs.org/download/), and [Cygwin](https://www.cygwin.com) if you want Android capabilities for cocos2d-x. Refer to the Android Notes and Windows Notes below.
+Windows: **Visual Studio 2012 or newer** (get it for free [here](https://www.visualstudio.com/en-us/products/free-developer-offers-vs.aspx)), [Git](http://git-scm.com/downloads), [Node.js](http://nodejs.org/download/). You will also need [Cygwin](https://www.cygwin.com) if you want to make Android games. Refer to the Android Notes and Windows Notes below.
 
 Linux: Not yet supported. Are you a cocos2d-x Linux master with some experience with Javascript? Please help out! rapidgame.js almost supports Linux, just need to hook up the system calls to prebuild and archive the libraries.
 
@@ -113,7 +113,7 @@ What's the difference between a RapidGame project and a "normal" cocos2d-x proje
 
 A project created by RapidGame uses exactly the same underlying API as cocos2d-x / cocos2d-js. One can still get the running scene, for example, like this `cc.director.getRunningScene()` (Javascript) or this `cocos2d::Director::getInstance()->getRunningScene()` (C++).
 
-RapidGame extends upon the cocos2d-js API with the [Game](Game.html) object. This object provides methods which are commonly used in game development, but were missing from cocos2d-js at the time of writing. `Game.rand(5)`, for example, returns a random integer between 0 and 5.
+RapidGame extends upon the cocos2d-js API with the [Game](docs/Game.html) object. This object provides methods which are commonly used in game development, but were missing from cocos2d-js at the time of writing. `Game.rand(5)`, for example, returns a random integer between 0 and 5.
 
 While the underlying API stays the same, the file / folder structure of a project created by RapidGame is different than that of a "normal" cocos2d-js project. A normal project is created with the `cocos` command:
 
@@ -121,18 +121,18 @@ While the underlying API stays the same, the file / folder structure of a projec
 
 This results in a project folder approximately 500 MB which contains all the files necessary to build cocos2d-x from scratch. Subfolders include:
 
-	frameworks/ - All cocos2d-html5 and cocos2d-x source files, as well as project files for the game
+	frameworks/ - All cocos2d-js and cocos2d-x source files, as well as project files for the game
 	res/ - Game assets
 	runtime/ - An executable which can run the iOS Simulator from the commandline
 	src/ - The Javascript files
 	tools/ - Miscellaneous tools
 
-By contrast, a RapidGame project is only 2 MB (because it symlinks to cocos2d-html5 and the prebuilt cocos2d-x libraries) and has a more organized folder structure:
+By contrast, a RapidGame project is only 2 MB (because it symlinks to cocos2d-js and the prebuilt cocos2d-x libraries) and has a more organized folder structure:
 
 	Assets/ - The game assets and Javascript files
-	lib/ - A symlink to the prebuilt cocos2d-x libraries and cocos2d-html5
+	lib/ - A symlink to the prebuilt cocos2d-x libraries and cocos2d-js
 	Projects/ - The project files for the game
-	Server/ - The server which provides an API and serves files for the HTML5 version of the game
+	Server/ - The server which provides an API and serves files for the HTML5 version of the game (only for cocos2d-js projects)
 
 Inside the project files there are other differences. Take the Xcode project as an example. The normal cocos2d-js project is setup to build all of cocos2d-x, depends on several sub-projects (Targets > Build Phases > Target Dependencies) and references several **User Header Search Paths** (example: `$(SRCROOT)/../../js-bindings/cocos2d-x`) within the `frameworks` folder.
 
