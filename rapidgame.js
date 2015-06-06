@@ -170,7 +170,7 @@ var createProject = function(engine, name, package) {
 		files,
 		isCocos2d = false,
 		packageSrc = "com.wizardfu." + cmd.template.toLowerCase();
-	cmd.engine = engine.toString().toLowerCase();
+		cmd.engine = engine.toString().toLowerCase();
 	
 	category = "createProject";
 	
@@ -653,10 +653,12 @@ var prebuildAndroid = function(config, arch, callback) {
 	// create builds array
 	builds = [];
 	if (process.platform === "win32") {
+		// TODO: Do all Android projects compile on Mac?
 		if (cmd.minimal) {
 			builds.push(["minimal (Debug armeabi)"]);
 		} else {
-			builds.push(["libraries for all platforms"]);
+			// builds.push(["libraries for all platforms"]);
+			builds.push(["Debug/Release armeabi"]);
 		}
 	} else {
 		for (i = 0; i < configs.length; i += 1) {

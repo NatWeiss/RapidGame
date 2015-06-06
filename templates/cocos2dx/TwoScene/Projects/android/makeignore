@@ -1,17 +1,21 @@
-# Add the source files you want to ignore to this file.
-# When you make your project, only C/C++ (.c, .cpp, .cc, .cxx)
+# Add the source files you want to ignore to this file. When
+# you make your project, only C/C++ (.c, .cpp, .cc, .cxx)
 # files will be considered source files, and they must all
-# be stored in `Projects`.
+# be stored in `Projects`. Other files such as .m and .mm
+# files will be automatically ignored. When you build your
+# .apk again using make, the files you have changed since your
+# previous build will automatically be updated for the build
+# list. Your source filenames may not contain any spaces.
 #
 # Enter your files in the following format:
 # (feel free to add newlines as you wish)
 #
-# Test.cpp
-# File with spaces.cpp
+# Outdated_class.cpp
+# no_spaces_allowed.cpp
 #
-# Another category.c
+# some_c_file.c
 #
-# Old-project-file.cpp
+# Old_file_dont_delete.cpp
 
 
 
