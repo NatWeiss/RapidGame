@@ -5,13 +5,16 @@ all:
 	@echo "ANDROID_SDK_ROOT=${ANDROID_SDK_ROOT}"
 	@echo "PLUGIN_DIR=${PLUGIN_DIR}"
 	@if [ ! -d ${ANDROID_SDK_ROOT} ]; then echo "WARNING: The ANDROID_SDK_ROOT environment variable does not point to a directory. See the Readme.txt and set ANDROID_SDK_ROOT in your .profile."; exit; fi
+	./build_files.py
 	export CONFIG="debug" && ./build_native.py
 	find . -name .DS_Store -delete
 	ant -Dsdk.dir=${ANDROID_SDK_ROOT} -Dplugin.dir=${PLUGIN_DIR} debug
 release:
+	./build_files.py
 	export CONFIG="release" && ./build_native.py
 	ant -Dsdk.dir=${ANDROID_SDK_ROOT} -Dplugin.dir=${PLUGIN_DIR} debug
 distribution:
+	./build_files.py
 	export CONFIG="release" && ./build_native.py
 	ant -Dsdk.dir=${ANDROID_SDK_ROOT} -Dplugin.dir=${PLUGIN_DIR} release
 	zipalign -f 4 bin/`cat .name`-release-unsigned.apk bin/`cat .name`-release-aligned.apk

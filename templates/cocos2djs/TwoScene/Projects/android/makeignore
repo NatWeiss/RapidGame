@@ -1,0 +1,17 @@
+# Add the source files you want to ignore to this file.
+# When you make your project, only C/C++ (.c, .cpp, .cc, .cxx)
+# files will be considered source files, and they must all
+# be stored in `Projects`.
+#
+# Enter your files in the following format:
+# (feel free to add newlines as you wish)
+#
+# Test.cpp
+# File with spaces.cpp
+#
+# Another category.c
+#
+# Old-project-file.cpp
+
+
+

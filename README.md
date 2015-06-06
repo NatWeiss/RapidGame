@@ -172,8 +172,8 @@ The following environment variables must be present in order to prebuild Android
 
 Or, on Windows add these to the bottom of your [Cygwin](https://www.cygwin.com) `~/.bash_profile` (note that the forward slashes are correct):
 
-	ANDROID_SDK_ROOT=C:/path/to/android/sdk
-	NDK_ROOT=C:/path/to/android/ndk
+	export ANDROID_SDK_ROOT=C:/path/to/android/sdk
+	export NDK_ROOT=C:/path/to/android/ndk
 
 The Android SDK APIs must be downloaded for the target platform and the minimum supported platform. The template project's target is currently API 18 and the minimum is API 10. You download the APIs by going to Android Studio -> Configure -> SDK Manager -> [Select and install appropriate packages].
 
