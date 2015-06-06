@@ -54,7 +54,7 @@
 <li>June 2, 2015: Can now prebuild Android on Windows thanks to <a href="https://github.com/samoersnaes">Samuel Ørsnæs</a>.</li>
 <li>May 4, 2015: Upgraded to cocos2d-x 3.6 / cocos2d-js 3.6.</li>
 <li>Mar 15, 2015: Fixed another bug related to MSBuild path on Windows (thanks, <a href="https://github.com/adamyocum">Adam Yocum</a>). Fixed the cocos2d-x Android template.</li>
-<li>Feb 24, 2015: Now has a separate cocos2d-x and cocos2d-js templates. Fixed a bug on Windows: “Unable to find MSBuild path.” Still a few Windows-specific kinks to work out in the next version.</li>
+<li>Feb 24, 2015: Now has separate cocos2d-x and cocos2d-js templates. Fixed a bug on Windows: “Unable to find MSBuild path.” Still a few Windows-specific kinks to work out in the next version.</li>
 <li>Feb 19, 2015: Fixed a bug in Xcode projects (reference to script folder).</li>
 <li>Feb 7, 2015: Prebuilder updated for cocos2d-js 3.2 final / cocos2d-x 3.3.</li>
 <li>Dec 28, 2014: Prebuilder updated for cocos2d-js 3.2 rc0 / cocos2d-x 3.3.</li>
@@ -107,7 +107,7 @@
       
         
         <p>Mac OS X: Xcode 5 or newer, <a href="http://git-scm.com/downloads">Git</a> and <a href="http://nodejs.org/download/">Node.js</a>.</p>
-<p>Windows: <strong>Visual Studio 2012 or newer</strong>, <a href="http://git-scm.com/downloads">Git</a>, <a href="http://nodejs.org/download/">Node.js</a>, and <a href="https://www.cygwin.com">Cygwin</a> if you want Android capabilities for cocos2d-x. Refer to the Android Notes and Windows Notes below.</p>
+<p>Windows: <strong>Visual Studio 2012 or newer</strong> (get it for free <a href="https://www.visualstudio.com/en-us/products/free-developer-offers-vs.aspx">here</a>), <a href="http://git-scm.com/downloads">Git</a>, and <a href="http://nodejs.org/download/">Node.js</a>. You will also need <a href="https://www.cygwin.com">Cygwin</a> if you want to make Android games. Refer to the Android Notes and Windows Notes below.</p>
 <p>Linux: Not yet supported. Are you a cocos2d-x Linux master with some experience with Javascript? Please help out! rapidgame.js almost supports Linux, just need to hook up the system calls to prebuild and archive the libraries.</p>
 <h2 id="eliminate-grunt-work">Eliminate Grunt Work</h2>
 
@@ -170,7 +170,7 @@ Done
         <p>This results in a project folder approximately 500 MB which contains all the files necessary to build cocos2d-x from scratch. Subfolders include:</p>
 
         
-          <div class='highlight'><pre>frameworks/ - All cocos2d-html5 <span class="hljs-keyword">and</span> cocos2d-x source files, as well as project files <span class="hljs-keyword">for</span> the game
+          <div class='highlight'><pre>frameworks/ - All cocos2d-js <span class="hljs-keyword">and</span> cocos2d-x source files, as well as project files <span class="hljs-keyword">for</span> the game
 res/ - Game assets
 runtime/ - An executable which can run the iOS Simulator from the commandline
 src/ - The Javascript files
@@ -178,13 +178,13 @@ tools/ - Miscellaneous tools</pre></div>
         
       
         
-        <p>By contrast, a RapidGame project is only 2 MB (because it symlinks to cocos2d-html5 and the prebuilt cocos2d-x libraries) and has a more organized folder structure:</p>
+        <p>By contrast, a RapidGame project is only 2 MB (because it symlinks to cocos2d-js and the prebuilt cocos2d-x libraries) and has a more organized folder structure:</p>
 
         
           <div class='highlight'><pre>Assets/ - The game assets <span class="hljs-keyword">and</span> Javascript files
-lib/ - A symlink to the prebuilt cocos2d-x libraries <span class="hljs-keyword">and</span> cocos2d-html5
+lib/ - A symlink to the prebuilt cocos2d-x libraries <span class="hljs-keyword">and</span> cocos2d-js
 Projects/ - The project files <span class="hljs-keyword">for</span> the game
-Server/ - The server which provides an API <span class="hljs-keyword">and</span> serves files <span class="hljs-keyword">for</span> the HTML5 version <span class="hljs-keyword">of</span> the game</pre></div>
+Server/ - The server which provides an API <span class="hljs-keyword">and</span> serves files <span class="hljs-keyword">for</span> the HTML5 version <span class="hljs-keyword">of</span> the game (only for cocos2d-js projects)</pre></div>
         
       
         

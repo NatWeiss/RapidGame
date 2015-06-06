@@ -60,7 +60,7 @@ Requirements
 
 Mac OS X: Xcode 5 or newer, [Git](http://git-scm.com/downloads) and [Node.js](http://nodejs.org/download/).
 
-Windows: **Visual Studio 2012 or newer** (get it for free [here](https://www.visualstudio.com/en-us/products/free-developer-offers-vs.aspx)), [Git](http://git-scm.com/downloads), [Node.js](http://nodejs.org/download/). You will also need [Cygwin](https://www.cygwin.com) if you want to make Android games. Refer to the Android Notes and Windows Notes below.
+Windows: **Visual Studio 2012 or newer** (get it for free [here](https://www.visualstudio.com/en-us/products/free-developer-offers-vs.aspx)), [Git](http://git-scm.com/downloads), and [Node.js](http://nodejs.org/download/). You will also need [Cygwin](https://www.cygwin.com) if you want to make Android games. Refer to the Android Notes and Windows Notes below.
 
 Linux: Not yet supported. Are you a cocos2d-x Linux master with some experience with Javascript? Please help out! rapidgame.js almost supports Linux, just need to hook up the system calls to prebuild and archive the libraries.
 
