@@ -1,0 +1,45 @@
+#!/usr/bin/php
+<?php
+
+$start = $argv[1];
+$end = $argv[2];
+$file = $argv[3];
+$includeNewlines = ($argv[4] == "--newlines");
+$text = file_get_contents($file);
+
+if (strlen($start) <= 0 || strlen($end) <= 0 || strlen($text) <= 0)
+{
+	echo("Usage: delete-between 'some starting string' 'some ending string' file [--newlines]\nExample: delete-between start end ./my-text-file.txt --newlines\n");
+	exit(1);
+}
+echo("Deleting between '$start' and '$end' in $file\n");
+if ($includeNewlines)
+{
+	$start .= "\n";
+	$end .= "\n";
+}
+
+$count = 0;
+do
+{
+	$startPos = strpos($text, $start);
+	if ($startPos === false)
+		break;
+
+	$endPos = strpos($text, $end, $startPos);
+	if ($endPos === false)
+		break;
+
+	if ($endPos < $startPos)
+		break;
+
+	$text = substr($text, 0, $startPos) .
+		substr($text, $endPos + strlen($end));
+
+	$count++;
+} while(true);
+
+echo(($count == 0 ? "WARNING: " : "") . "Replaced $count occurences.\n");
+file_put_contents($file, $text);
+
+?>
