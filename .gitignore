@@ -4,6 +4,7 @@ project.xcworkspace
 TODO.txt
 /src/downloaded.txt
 /src/cocos2d-js
+/src/docco
 /node_modules
 /.id
 /build.log
