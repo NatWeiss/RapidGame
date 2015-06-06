@@ -16,33 +16,22 @@ distribution:
 	ant -Dsdk.dir=${ANDROID_SDK_ROOT} -Dplugin.dir=${PLUGIN_DIR} release
 	zipalign -f 4 bin/`cat .name`-release-unsigned.apk bin/`cat .name`-release-aligned.apk
 start-emulator:
-	android avd
+	#emulator -avd [device_name]
 run-emulator:
-	adb -e install bin/`cat .name`-debug.apk
-	adb -e logcat -s
-	adb -e logcat -v raw
+	#adb -e install -r bin/`cat .name`-debug.apk
+	#adb -e logcat -v brief `cat .identifier`:D *:F
 run:
-	#adb -d uninstall `cat .identifier`
 	adb -d install -r bin/`cat .name`-debug.apk
-	#adb -d logcat -s
-	echo
-	adb -d logcat -v raw *:d
+	adb -d logcat -v brief `cat .identifier`:D *:F
 run-release:
-	#adb -d uninstall `cat .identifier`
-	adb -d install bin/`cat .name`-debug.apk
-	#adb -d logcat -s
-	adb -d logcat -v raw *:d
+	adb -d install -r bin/`cat .name`-debug.apk
+	adb -d logcat -v brief `cat .identifier`:D *:F
 run-distribution:
-	#adb -d uninstall `cat .identifier`
-	adb -d install bin/`cat .name`-release-aligned.apk
-	#adb -d logcat -s
-	adb -d logcat -v raw *:d
+	adb -d install -r bin/`cat .name`-release-aligned.apk
+	adb -d logcat -v brief `cat .identifier`:D *:F
 clean:
 	rm -rf obj
 	rm -rf bin
 	rm -rf gen
 	rm -rf assets
-	rm -rf libs/armeabi
-	rm -rf libs/armeabi-v7a
-	rm -rf libs/x86
-	rm -rf libs/mips
+	rm -rf libs
