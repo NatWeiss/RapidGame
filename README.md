@@ -25,15 +25,15 @@ Although RapidGame can prebuild the libraries for all possible platforms, you sh
 
 |          | Win32 | Android | Android-x86 | HTML5 |
 | -------- | :---: | :-----: | :---------: | :---: |
-| coco2d-x | ![](https://img.shields.io/badge/build-passing-brightgreen.svg) | ![](https://img.shields.io/badge/build-passing-brightgreen.svg) | ![](https://img.shields.io/badge/build-failing-red.svg) | ![](https://img.shields.io/badge/build-skipped-yellowgreen.svg) |
-| coco2d-js | ![](https://img.shields.io/badge/build-failing-red.svg) | ![](https://img.shields.io/badge/build-failing-red.svg) | ![](https://img.shields.io/badge/build-failing-red.svg) | ![](https://img.shields.io/badge/build-passing-brightgreen.svg) |
+| cocos2d-x | ![](https://img.shields.io/badge/build-passing-brightgreen.svg) | ![](https://img.shields.io/badge/build-passing-brightgreen.svg) | ![](https://img.shields.io/badge/build-failing-red.svg) | ![](https://img.shields.io/badge/build-skipped-yellowgreen.svg) |
+| cocos2d-js | ![](https://img.shields.io/badge/build-failing-red.svg) | ![](https://img.shields.io/badge/build-failing-red.svg) | ![](https://img.shields.io/badge/build-failing-red.svg) | ![](https://img.shields.io/badge/build-passing-brightgreen.svg) |
 
 ### Mac
 
 |          | Mac | iOS | Android | Android-x86 | HTML5 |
 | -------- | :-: | :-: | :-----: | :---------: | :---: |
-| coco2d-x | ![](https://img.shields.io/badge/build-passing-brightgreen.svg) | ![](https://img.shields.io/badge/build-passing-brightgreen.svg) | ![](https://img.shields.io/badge/build-passing-brightgreen.svg) | ![](https://img.shields.io/badge/build-unknown-lightgrey.svg) | ![](https://img.shields.io/badge/build-skipped-yellowgreen.svg) |
-| coco2d-js | ![](https://img.shields.io/badge/build-unknown-lightgrey.svg) | ![](https://img.shields.io/badge/build-unknown-lightgrey.svg) | ![](https://img.shields.io/badge/build-unknown-lightgrey.svg) | ![](https://img.shields.io/badge/build-unknown-lightgrey.svg) | ![](https://img.shields.io/badge/build-passing-brightgreen.svg) |
+| cocos2d-x | ![](https://img.shields.io/badge/build-passing-brightgreen.svg) | ![](https://img.shields.io/badge/build-passing-brightgreen.svg) | ![](https://img.shields.io/badge/build-passing-brightgreen.svg) | ![](https://img.shields.io/badge/build-unknown-lightgrey.svg) | ![](https://img.shields.io/badge/build-skipped-yellowgreen.svg) |
+| cocos2d-js | ![](https://img.shields.io/badge/build-unknown-lightgrey.svg) | ![](https://img.shields.io/badge/build-unknown-lightgrey.svg) | ![](https://img.shields.io/badge/build-unknown-lightgrey.svg) | ![](https://img.shields.io/badge/build-unknown-lightgrey.svg) | ![](https://img.shields.io/badge/build-passing-brightgreen.svg) |
 
 
 Updates
