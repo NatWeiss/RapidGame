@@ -175,7 +175,7 @@ Or, on Windows add these to the bottom of your [Cygwin](https://www.cygwin.com) 
 	export ANDROID_SDK_ROOT=C:/path/to/android/sdk
 	export NDK_ROOT=C:/path/to/android/ndk
 
-The Android SDK APIs must be downloaded for the target platform and the minimum supported platform. The template project's target is currently API 18 and the minimum is API 10. You download the APIs by going to Android Studio -> Configure -> SDK Manager -> [Select and install appropriate packages].
+The Android SDK APIs must be downloaded for the target platform, that is to say the Android OS version you're targeting, such as 4.3.1 (API 18). This happens to be the default target version for all new Android sub-projects as well. In addition, you must download API 10 for the cocos2d-x libraries. You can download the APIs by going to Android Studio -> Configure -> SDK Manager -> [Select and install appropriate packages]. Or, if Android Studio opens directly to the IDE for you: Tools -> Android -> SDK Manager -> [Select and install appropriate packages].
 
 
 Windows Notes

@@ -653,12 +653,11 @@ var prebuildAndroid = function(config, arch, callback) {
 	// create builds array
 	builds = [];
 	if (process.platform === "win32") {
-		// TODO: Do all Android projects compile on Mac?
+		// TODO: Does x86 project compile on Mac?
 		if (cmd.minimal) {
 			builds.push(["minimal (Debug armeabi)"]);
 		} else {
-			// builds.push(["libraries for all platforms"]);
-			builds.push(["Debug/Release armeabi"]);
+			builds.push(["libraries for armeabi/armeabi-v7a"]);
 		}
 	} else {
 		for (i = 0; i < configs.length; i += 1) {
