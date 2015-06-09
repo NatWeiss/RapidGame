@@ -16,6 +16,26 @@ RapidGame is a commandline tool for Mac and Windows (Linux support is planned) w
 Prefer somebody explaining and showing it? Check out the [overview video](http://youtu.be/SOJs2DwIxOU).
 
 
+Build Status ![](https://img.shields.io/badge/version-0.9.9-blue.svg)
+------------
+
+Although RapidGame can prebuild the libraries for all possible platforms, you should refer to these tables to see whether you can successfully build a project for the platform you're targeting:
+
+### Windows
+
+|          | Win32 | Android | Android-x86 | HTML5 |
+| -------- | :---: | :-----: | :---------: | :---: |
+| coco2d-x | ![](https://img.shields.io/badge/build-passing-brightgreen.svg) | ![](https://img.shields.io/badge/build-passing-brightgreen.svg) | ![](https://img.shields.io/badge/build-failing-red.svg) | ![](https://img.shields.io/badge/build-skipped-yellowgreen.svg) |
+| coco2d-js | ![](https://img.shields.io/badge/build-failing-red.svg) | ![](https://img.shields.io/badge/build-failing-red.svg) | ![](https://img.shields.io/badge/build-failing-red.svg) | ![](https://img.shields.io/badge/build-passing-brightgreen.svg) |
+
+### Mac
+
+|          | Mac | iOS | Android | Android-x86 | HTML5 |
+| -------- | :-: | :-: | :-----: | :---------: | :---: |
+| coco2d-x | ![](https://img.shields.io/badge/build-passing-brightgreen.svg) | ![](https://img.shields.io/badge/build-passing-brightgreen.svg) | ![](https://img.shields.io/badge/build-passing-brightgreen.svg) | ![](https://img.shields.io/badge/build-unknown-lightgrey.svg) | ![](https://img.shields.io/badge/build-skipped-yellowgreen.svg) |
+| coco2d-js | ![](https://img.shields.io/badge/build-unknown-lightgrey.svg) | ![](https://img.shields.io/badge/build-unknown-lightgrey.svg) | ![](https://img.shields.io/badge/build-unknown-lightgrey.svg) | ![](https://img.shields.io/badge/build-unknown-lightgrey.svg) | ![](https://img.shields.io/badge/build-passing-brightgreen.svg) |
+
+
 Updates
 -------
 

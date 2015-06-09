@@ -39,7 +39,9 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../.. \
 				$(LOCAL_PATH)/../../../lib/cocos2d/x/include/bindings/cocosbuilder \
 				$(LOCAL_PATH)/../../../lib/cocos2d/x/include/cocos/platform/android \
 				$(LOCAL_PATH)/../../../lib/cocos2d/x/include/plugin/protocols/platform/android \
-				$(LOCAL_PATH)/../../../lib/cocos2d/x/include/external/spidermonkey/include/android
+				$(LOCAL_PATH)/../../../lib/cocos2d/x/include/external/spidermonkey/include/android \
+				$(LOCAL_PATH)/../../../lib/cocos2d/x/include/plugin/jsbindings/auto \
+				$(LOCAL_PATH)/../../../lib/cocos2d/x/include/plugin/jsbindings/manual
 
 LOCAL_WHOLE_STATIC_LIBRARIES := libcocos2dx-prebuilt
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_png_static cocos_jpeg_static cocos_tiff_static cocos_webp_static \
