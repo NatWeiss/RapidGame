@@ -9,17 +9,19 @@
 
 RapidGame is a commandline tool for Mac and Windows (Linux support is planned) which:
 
-1. Prebuilds cocos2d-x / cocos2d-js libraries for Mac, iOS, Android and Windows for multiple architectures and configurations, virtually eliminating the need to ever rebuild cocos2d-x or the Javascript bindings.
+1. Prebuilds cocos2d-x libraries and cocos2d-js bindings for Mac, iOS, Android and Windows for multiple architectures and configurations, virtually eliminating the need to ever rebuild cocos2d-x or the Javascript bindings.
 
 2. A game project templating system for creating cross-platform games for a variety of game engines, including cocos2d-x, cocos2d-js, Unity, Corona and Appcelerator Titanium. The default game template creates a simple Breakout clone with a menu and game scene.
 
 Prefer somebody explaining and showing it? Check out the [overview video](http://youtu.be/SOJs2DwIxOU).
 
 
+<!--
+
 Build Status ![](https://img.shields.io/badge/version-0.9.9-blue.svg)
 ------------
 
-Although RapidGame can prebuild the libraries for all possible platforms, you should refer to these tables to see whether you can successfully build a project for the platform you're targeting:
+Refer here to get an overview of what platforms you can and cannot build for based on the most recent release of RapidGame. As certain platforms (e.g. iOS and Android) can have devices with different CPU architectures on them, if there is a problem building for a particular architecture, it will be included as a separate table entry from the other architectures of that platform.
 
 ### Windows
 
@@ -34,6 +36,8 @@ Although RapidGame can prebuild the libraries for all possible platforms, you sh
 | -------- | :-: | :-: | :-----: | :---------: | :---: |
 | cocos2d-x | ![](https://img.shields.io/badge/build-passing-brightgreen.svg) | ![](https://img.shields.io/badge/build-passing-brightgreen.svg) | ![](https://img.shields.io/badge/build-passing-brightgreen.svg) | ![](https://img.shields.io/badge/build-unknown-lightgrey.svg) | ![](https://img.shields.io/badge/build-skipped-yellowgreen.svg) |
 | cocos2d-js | ![](https://img.shields.io/badge/build-unknown-lightgrey.svg) | ![](https://img.shields.io/badge/build-unknown-lightgrey.svg) | ![](https://img.shields.io/badge/build-unknown-lightgrey.svg) | ![](https://img.shields.io/badge/build-unknown-lightgrey.svg) | ![](https://img.shields.io/badge/build-passing-brightgreen.svg) |
+
+-->
 
 
 Updates
@@ -78,9 +82,9 @@ For usage instructions:
 Requirements
 ------------
 
-Mac OS X: Xcode 5 or newer, [Git](http://git-scm.com/downloads) and [Node.js](http://nodejs.org/download/).
+Mac OS X: Xcode 5 or newer, [Git](http://git-scm.com/downloads) and [Node.js](http://nodejs.org/download/). If you want to make Android games as well, refer to the [Android Notes](#android-notes) below for additional download requirements.
 
-Windows: **Visual Studio 2012 or newer** (get it for free [here](https://www.visualstudio.com/en-us/products/free-developer-offers-vs.aspx)), [Git](http://git-scm.com/downloads), and [Node.js](http://nodejs.org/download/). You will also need [Cygwin](https://www.cygwin.com) if you want to make Android games. Refer to the Android Notes and Windows Notes below.
+Windows: **Visual Studio 2012 or newer** (get it for free [here](https://www.visualstudio.com/en-us/products/free-developer-offers-vs.aspx)), [Git](http://git-scm.com/downloads), and [Node.js](http://nodejs.org/download/). You will also need [Cygwin](https://www.cygwin.com) if you want to make Android games. Refer to the [Android Notes](#android-notes) and [Windows Notes](#windows-notes) below.
 
 Linux: Not yet supported. Are you a cocos2d-x Linux master with some experience with Javascript? Please help out! rapidgame.js almost supports Linux, just need to hook up the system calls to prebuild and archive the libraries.
 
@@ -152,7 +156,7 @@ By contrast, a RapidGame project is only 2 MB (because it symlinks to cocos2d-js
 	Assets/ - The game assets and Javascript files
 	lib/ - A symlink to the prebuilt cocos2d-x libraries and cocos2d-js
 	Projects/ - The project files for the game
-	Server/ - The server which provides an API and serves files for the HTML5 version of the game (only for cocos2d-js projects)
+	Server/ - The server which provides an API and serves files for the HTML5 version of the game (cocos2d-js only)
 
 Inside the project files there are other differences. Take the Xcode project as an example. The normal cocos2d-js project is setup to build all of cocos2d-x, depends on several sub-projects (Targets > Build Phases > Target Dependencies) and references several **User Header Search Paths** (example: `$(SRCROOT)/../../js-bindings/cocos2d-x`) within the `frameworks` folder.
 
@@ -166,7 +170,7 @@ The command to prebuild cocos2d-x static libraries used by cocos2d-js on native 
 
 	rapidgame prebuild
 
-When the command is finished, you'll have a directory (`~/Library/Developer/RapidGame` on Mac and `C:\Users\[USERNAME]\AppData\Roaming\npm\node_modules\rapidgame` on Windows) with include files, java files, make files, Javascript bindings and library files for iOS, Mac and Android in Debug and Release mode for all available architectures.
+When the command is finished, you'll have a directory (`~/Library/Developer/RapidGame` on Mac and `C:\Users\[USERNAME]\AppData\Roaming\npm\node_modules\rapidgame` on Windows) with include files, java files, make files, Javascript bindings and library files for iOS, Mac, Android and Windows (varies depending on host OS) in Debug and Release mode for all available architectures.
 
 
 Development Platforms
@@ -174,7 +178,7 @@ Development Platforms
 
 RapidGame can be used on any platform that is capable of running Node.js.
 
-The cocos2dx library prebuilder currently works on the following development platforms:
+The cocos2d-x library prebuilder currently works on the following development platforms:
 
 * Mac
 * Windows
@@ -185,17 +189,7 @@ Linux support is planned.
 Android Notes
 -------------
 
-The following environment variables must be present in order to prebuild Android libraries. Consider adding these to your login profile. For example, on Mac add these lines to the bottom of your `~/.profile`:
-
-	export ANDROID_SDK_ROOT=/path/to/android/sdk
-	export NDK_ROOT=/path/to/android/ndk/
-
-Or, on Windows add these to the bottom of your [Cygwin](https://www.cygwin.com) `~/.bash_profile` (note that the forward slashes are correct):
-
-	export ANDROID_SDK_ROOT=C:/path/to/android/sdk
-	export NDK_ROOT=C:/path/to/android/ndk
-
-The Android SDK APIs must be downloaded for the target platform, that is to say the Android OS version you're targeting, such as 4.3.1 (API 18). This happens to be the default target version for all new Android sub-projects as well. In addition, you must download API 10 for the cocos2d-x libraries. You can download the APIs by going to Android Studio -> Configure -> SDK Manager -> [Select and install appropriate packages]. Or, if Android Studio opens directly to the IDE for you: Tools -> Android -> SDK Manager -> [Select and install appropriate packages].
+A detailed guide has been written specifically for how to build Android projects using RapidGame. You can read it [here](https://cdn.rawgit.com/NatWeiss/RapidGame/master/templates/cocos2dx/TwoScene/Projects/android/README.html), or alternatively find it in your cocos2d-x/js project as `[APPNAME]/Projects/android/README.html`.
 
 
 Windows Notes
@@ -203,7 +197,7 @@ Windows Notes
 
 1. The `rapidgame` command must be run in an admin console. This allows symlinks to be properly created, otherwise what should be symlinks will become regular folders and the command will fail.
 2. To compile Android successfully (on Windows), `rapidgame prebuild` must be run via [Cygwin](https://www.cygwin.com) and Cygwin must be installed in the root directory `C:\cygwin` or `C:\cygwin64` and be made available for all users. This is the recommended option when you run the setup. When choosing which packages to install, click the circle icon to the right of "Devel" until the label on the right says "Install" in order to add these packages to the download list.
-3. Windows cannot build the cocos2d-x libraries for iOS and Mac. If you want to use RapidGame to develop for these platforms, you must use a Mac.
+3. Windows cannot build the cocos2d-x libraries or cocos2d-js bindings for iOS and Mac. If you want to use RapidGame to develop for these platforms, you must use a Mac.
 
 Thanks to [Samuel Ørsnæs](https://github.com/samoersnaes) for getting the Android build working in Windows!
 

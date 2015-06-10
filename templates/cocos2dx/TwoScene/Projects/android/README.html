@@ -1,44 +1,944 @@
 <!DOCTYPE html>
 <html>
-  <!--Markdown to HTML: http://dillinger.io, HTML formatter: http://www.freeformatter.com/html-formatter.html-->
+  <!--Markdown to HTML: http://dillinger.io-->
+  <!--CSS found at: https://github.com/jasonlong/architect-theme/stylesheets/stylesheet.css-->
   <head>
     <meta charset="utf-8">
     <title>Android README</title>
-    <style>code{color:#c7254e;background-color:#f9f2f4;border-radius:4px}code,kbd{padding:2px 4px}kbd{color:#fff;background-color:#333;border-radius:3px;box-shadow:inset 0 -1px 0 rgba(0,0,0,.25)}kbd kbd{padding:0;font-size:100%;box-shadow:none}pre{display:block;margin:0 0 10px;word-break:break-all;word-wrap:break-word;color:#333;background-color:#f5f5f5;border:1px solid #ccc;border-radius:4px}pre code{padding:0;font-size:inherit;color:inherit;white-space:pre-wrap;background-color:transparent;border-radius:0}.pre-scrollable{max-height:340px;overflow-y:scroll}fieldset{border:0;min-width:0}legend{display:block;width:100%;margin-bottom:20px;font-size:21px;line-height:inherit;color:#333;border-bottom:1px solid #e5e5e5}label{display:inline-block;max-width:100%;margin-bottom:5px;font-weight:700}input[type="radio"],input[type="checkbox"]{margin:1px 0 0;line-height:normal}input[type="file"]{display:block}input[type="range"]{display:block;width:100%}select[multiple],select[size]{height:auto}input[type="file"]:focus,input[type="radio"]:focus,input[type="checkbox"]:focus{outline:thin dotted;outline:5px auto -webkit-focus-ring-color;outline-offset:-2px}output{padding-top:7px}output,.form-control{display:block;font-size:14px;line-height:1.4285714;color:#555}.form-control{width:100%;height:34px;padding:6px 12px;background-color:#fff;background-image:none;border:1px solid #ccc;border-radius:4px;box-shadow:inset 0 1px 1px rgba(0,0,0,.075);-webkit-transition:border-color ease-in-out .15s,box-shadow ease-in-out .15s;transition:border-color ease-in-out .15s,box-shadow ease-in-out .15s}.form-control:focus{border-color:#66afe9;outline:0;box-shadow:inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6)}.form-control::-moz-placeholder{color:#777;opacity:1}.form-control:-ms-input-placeholder{color:#777}.form-control::-webkit-input-placeholder{color:#777}.form-control[disabled],.form-control[readonly],fieldset[disabled] .form-control{cursor:not-allowed;background-color:#eee;opacity:1}textarea.form-control{height:auto}input[type="date"],input[type="time"],input[type="datetime-local"],input[type="month"]{line-height:34px;line-height:1.4285714 \0}input[type="date"].input-sm,.form-horizontal .form-group-sm input[type="date"].form-control,.input-group-sm>input[type="date"].form-control,.input-group-sm>input[type="date"].input-group-addon,.input-group-sm>.input-group-btn>input[type="date"].btn,input[type="time"].input-sm,.form-horizontal .form-group-sm input[type="time"].form-control,.input-group-sm>input[type="time"].form-control,.input-group-sm>input[type="time"].input-group-addon,.input-group-sm>.input-group-btn>input[type="time"].btn,input[type="datetime-local"].input-sm,.form-horizontal .form-group-sm input[type="datetime-local"].form-control,.input-group-sm>input[type="datetime-local"].form-control,.input-group-sm>input[type="datetime-local"].input-group-addon,.input-group-sm>.input-group-btn>input[type="datetime-local"].btn,input[type="month"].input-sm,.form-horizontal .form-group-sm input[type="month"].form-control,.input-group-sm>input[type="month"].form-control,.input-group-sm>input[type="month"].input-group-addon,.input-group-sm>.input-group-btn>input[type="month"].btn{line-height:30px}input[type="date"].input-lg,.form-horizontal .form-group-lg input[type="date"].form-control,.input-group-lg>input[type="date"].form-control,.input-group-lg>input[type="date"].input-group-addon,.input-group-lg>.input-group-btn>input[type="date"].btn,input[type="time"].input-lg,.form-horizontal .form-group-lg input[type="time"].form-control,.input-group-lg>input[type="time"].form-control,.input-group-lg>input[type="time"].input-group-addon,.input-group-lg>.input-group-btn>input[type="time"].btn,input[type="datetime-local"].input-lg,.form-horizontal .form-group-lg input[type="datetime-local"].form-control,.input-group-lg>input[type="datetime-local"].form-control,.input-group-lg>input[type="datetime-local"].input-group-addon,.input-group-lg>.input-group-btn>input[type="datetime-local"].btn,input[type="month"].input-lg,.form-horizontal .form-group-lg input[type="month"].form-control,.input-group-lg>input[type="month"].form-control,.input-group-lg>input[type="month"].input-group-addon,.input-group-lg>.input-group-btn>input[type="month"].btn{line-height:46px}.form-group{margin-bottom:15px}.radio,.checkbox{position:relative;display:block;min-height:20px;margin-top:10px;margin-bottom:10px}.radio label,.checkbox label{padding-left:20px;margin-bottom:0;font-weight:400;cursor:pointer}.radio input[type="radio"],.radio-inline input[type="radio"],.checkbox input[type="checkbox"],.checkbox-inline input[type="checkbox"]{position:absolute;margin-left:-20px;margin-top:4px \9}.radio+.radio,.checkbox+.checkbox{margin-top:-5px}.radio-inline,.checkbox-inline{display:inline-block;padding-left:20px;margin-bottom:0;vertical-align:middle;font-weight:400;cursor:pointer}.radio-inline+.radio-inline,.checkbox-inline+.checkbox-inline{margin-top:0;margin-left:10px}input[type="radio"][disabled],input[type="radio"].disabled,fieldset[disabled] input[type="radio"],input[type="checkbox"][disabled],input[type="checkbox"].disabled,fieldset[disabled] input[type="checkbox"],.radio-inline.disabled,fieldset[disabled] .radio-inline,.checkbox-inline.disabled,fieldset[disabled] .checkbox-inline,.radio.disabled label,fieldset[disabled] .radio label,.checkbox.disabled label,fieldset[disabled] .checkbox label{cursor:not-allowed}.form-control-static{padding-top:7px;padding-bottom:7px;margin-bottom:0}.form-control-static.input-lg,.form-horizontal .form-group-lg .form-control-static.form-control,.input-group-lg>.form-control-static.form-control,.input-group-lg>.form-control-static.input-group-addon,.input-group-lg>.input-group-btn>.form-control-static.btn,.form-control-static.input-sm,.form-horizontal .form-group-sm .form-control-static.form-control,.input-group-sm>.form-control-static.form-control,.input-group-sm>.form-control-static.input-group-addon,.input-group-sm>.input-group-btn>.form-control-static.btn{padding-left:0;padding-right:0}.input-sm,.form-horizontal .form-group-sm .form-control,.input-group-sm>.form-control{height:30px;padding:5px 10px;font-size:12px;line-height:1.5;border-radius:3px}.input-group-sm>.input-group-addon{height:30px;line-height:1.5}.input-group-sm>.input-group-btn>.btn{height:30px;padding:5px 10px;font-size:12px;line-height:1.5;border-radius:3px}select.input-sm,.form-horizontal .form-group-sm select.form-control,.input-group-sm>select.form-control,.input-group-sm>select.input-group-addon,.input-group-sm>.input-group-btn>select.btn{height:30px;line-height:30px}textarea.input-sm,.form-horizontal .form-group-sm textarea.form-control,.input-group-sm>textarea.form-control,.input-group-sm>textarea.input-group-addon,.input-group-sm>.input-group-btn>textarea.btn,select[multiple].input-sm,.form-horizontal .form-group-sm select[multiple].form-control,.input-group-sm>select[multiple].form-control,.input-group-sm>select[multiple].input-group-addon,.input-group-sm>.input-group-btn>select[multiple].btn{height:auto}.input-lg,.form-horizontal .form-group-lg .form-control,.input-group-lg>.form-control{height:46px;padding:10px 16px;font-size:18px;line-height:1.33;border-radius:6px}.input-group-lg>.input-group-addon{height:46px;line-height:1.33}.input-group-lg>.input-group-btn>.btn{height:46px;padding:10px 16px;font-size:18px;line-height:1.33;border-radius:6px}select.input-lg,.form-horizontal .form-group-lg select.form-control,.input-group-lg>select.form-control,.input-group-lg>select.input-group-addon,.input-group-lg>.input-group-btn>select.btn{height:46px;line-height:46px}textarea.input-lg,.form-horizontal .form-group-lg textarea.form-control,.input-group-lg>textarea.form-control,.input-group-lg>textarea.input-group-addon,.input-group-lg>.input-group-btn>textarea.btn,select[multiple].input-lg,.form-horizontal .form-group-lg select[multiple].form-control,.input-group-lg>select[multiple].form-control,.input-group-lg>select[multiple].input-group-addon,.input-group-lg>.input-group-btn>select[multiple].btn{height:auto}.has-feedback{position:relative}.has-feedback .form-control{padding-right:42.5px}.form-control-feedback{position:absolute;top:25px;right:0;z-index:2;display:block;width:34px;height:34px;line-height:34px;text-align:center}.input-lg+.form-control-feedback,.input-lg+.form-horizontal .form-group-lg .form-control,.form-horizontal .form-group-lg .input-lg+.form-control,.input-lg+.input-group-lg>.form-control,.input-group-lg>.input-lg+.form-control,.input-lg+.input-group-lg>.input-group-addon,.input-group-lg>.input-lg+.input-group-addon,.input-lg+.input-group-lg>.input-group-btn>.btn,.input-group-lg>.input-group-btn>.input-lg+.btn{width:46px;height:46px;line-height:46px}.input-sm+.form-control-feedback,.input-sm+.form-horizontal .form-group-sm .form-control,.form-horizontal .form-group-sm .input-sm+.form-control,.input-sm+.input-group-sm>.form-control,.input-group-sm>.input-sm+.form-control,.input-sm+.input-group-sm>.input-group-addon,.input-group-sm>.input-sm+.input-group-addon,.input-sm+.input-group-sm>.input-group-btn>.btn,.input-group-sm>.input-group-btn>.input-sm+.btn{width:30px;height:30px;line-height:30px}.has-success .help-block,.has-success .control-label,.has-success .radio,.has-success .checkbox,.has-success .radio-inline,.has-success .checkbox-inline{color:#3c763d}.has-success .form-control{border-color:#3c763d;box-shadow:inset 0 1px 1px rgba(0,0,0,.075)}.has-success .form-control:focus{border-color:#2b542b;box-shadow:inset 0 1px 1px rgba(0,0,0,.075),0 0 6px #67b168}.has-success .input-group-addon{color:#3c763d;border-color:#3c763d;background-color:#dff0d8}.has-success .form-control-feedback{color:#3c763d}.has-warning .help-block,.has-warning .control-label,.has-warning .radio,.has-warning .checkbox,.has-warning .radio-inline,.has-warning .checkbox-inline{color:#8a6d3b}.has-warning .form-control{border-color:#8a6d3b;box-shadow:inset 0 1px 1px rgba(0,0,0,.075)}.has-warning .form-control:focus{border-color:#66502c;box-shadow:inset 0 1px 1px rgba(0,0,0,.075),0 0 6px #c09f6b}.has-warning .input-group-addon{color:#8a6d3b;border-color:#8a6d3b;background-color:#fcf8e3}.has-warning .form-control-feedback{color:#8a6d3b}.has-error .help-block,.has-error .control-label,.has-error .radio,.has-error .checkbox,.has-error .radio-inline,.has-error .checkbox-inline{color:#a94442}.has-error .form-control{border-color:#a94442;box-shadow:inset 0 1px 1px rgba(0,0,0,.075)}.has-error .form-control:focus{border-color:#843534;box-shadow:inset 0 1px 1px rgba(0,0,0,.075),0 0 6px #ce8483}.has-error .input-group-addon{color:#a94442;border-color:#a94442;background-color:#f2dede}.has-error .form-control-feedback{color:#a94442}.has-feedback label.sr-only~.form-control-feedback{top:0}.help-block{display:block;margin-top:5px;margin-bottom:10px;color:#737373}@media (min-width:768px){.form-inline .form-group{display:inline-block;margin-bottom:0;vertical-align:middle}.form-inline .form-control{display:inline-block;width:auto;vertical-align:middle}.form-inline .input-group{display:inline-table;vertical-align:middle}.form-inline .input-group .input-group-addon,.form-inline .input-group .input-group-btn,.form-inline .input-group .form-control{width:auto}.form-inline .input-group>.form-control{width:100%}.form-inline .control-label{margin-bottom:0;vertical-align:middle}.form-inline .radio,.form-inline .checkbox{display:inline-block;margin-top:0;margin-bottom:0;vertical-align:middle}.form-inline .radio label,.form-inline .checkbox label{padding-left:0}.form-inline .radio input[type="radio"],.form-inline .checkbox input[type="checkbox"]{position:relative;margin-left:0}.form-inline .has-feedback .form-control-feedback{top:0}}.form-horizontal .radio,.form-horizontal .checkbox,.form-horizontal .radio-inline,.form-horizontal .checkbox-inline{margin-top:0;margin-bottom:0;padding-top:7px}.form-horizontal .radio,.form-horizontal .checkbox{min-height:27px}.form-horizontal .form-group{margin-left:-15px;margin-right:-15px}.form-horizontal .form-group:before{content:" ";display:table}.form-horizontal .form-group:after{content:" ";display:table;clear:both}@media (min-width:768px){.form-horizontal .control-label{text-align:right;margin-bottom:0;padding-top:7px}}.form-horizontal .has-feedback .form-control-feedback{top:0;right:15px}@media (min-width:768px){.form-horizontal .form-group-lg .control-label{padding-top:14.3px}}@media (min-width:768px){.form-horizontal .form-group-sm .control-label{padding-top:6px}}.btn{display:inline-block;vertical-align:middle;cursor:pointer;background-image:none;border:1px solid transparent;white-space:nowrap;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.btn:focus,.btn:active:focus,.btn.active:focus{outline:thin dotted;outline:5px auto -webkit-focus-ring-color;outline-offset:-2px}.btn:hover,.btn:focus{color:#333;text-decoration:none}.btn:active,.btn.active{outline:0;background-image:none;box-shadow:inset 0 3px 5px rgba(0,0,0,.125)}.btn.disabled,.btn[disabled],fieldset[disabled] .btn{cursor:not-allowed;pointer-events:none;opacity:.65;filter:alpha(opacity=65);box-shadow:none}.btn-default{color:#333;background-color:#fff;border-color:#ccc}.btn-default:hover,.btn-default:focus,.btn-default:active,.btn-default.active,.open>.btn-default.dropdown-toggle{color:#333;background-color:#e6e6e6;border-color:#adadad}.btn-default:active,.btn-default.active,.open>.btn-default.dropdown-toggle{background-image:none}.btn-default.disabled,.btn-default.disabled:hover,.btn-default.disabled:focus,.btn-default.disabled:active,.btn-default.disabled.active,.btn-default[disabled],.btn-default[disabled]:hover,.btn-default[disabled]:focus,.btn-default[disabled]:active,.btn-default[disabled].active,fieldset[disabled] .btn-default,fieldset[disabled] .btn-default:hover,fieldset[disabled] .btn-default:focus,fieldset[disabled] .btn-default:active,fieldset[disabled] .btn-default.active{background-color:#fff;border-color:#ccc}.btn-default .badge{color:#fff;background-color:#333}.btn-primary{color:#fff;background-color:#428bca;border-color:#3580bd}.btn-primary:hover,.btn-primary:focus,.btn-primary:active,.btn-primary.active,.open>.btn-primary.dropdown-toggle{color:#fff;background-color:#3073a9;border-color:#28608e}.btn-primary:active,.btn-primary.active,.open>.btn-primary.dropdown-toggle{background-image:none}.btn-primary.disabled,.btn-primary.disabled:hover,.btn-primary.disabled:focus,.btn-primary.disabled:active,.btn-primary.disabled.active,.btn-primary[disabled],.btn-primary[disabled]:hover,.btn-primary[disabled]:focus,.btn-primary[disabled]:active,.btn-primary[disabled].active,fieldset[disabled] .btn-primary,fieldset[disabled] .btn-primary:hover,fieldset[disabled] .btn-primary:focus,fieldset[disabled] .btn-primary:active,fieldset[disabled] .btn-primary.active{background-color:#428bca;border-color:#3580bd}.btn-primary .badge{color:#428bca;background-color:#fff}.btn-success{color:#fff;background-color:#5cb85c;border-color:#4eae4c}.btn-success:hover,.btn-success:focus,.btn-success:active,.btn-success.active,.open>.btn-success.dropdown-toggle{color:#fff;background-color:#469d44;border-color:#3b8439}.btn-success:active,.btn-success.active,.open>.btn-success.dropdown-toggle{background-image:none}.btn-success.disabled,.btn-success.disabled:hover,.btn-success.disabled:focus,.btn-success.disabled:active,.btn-success.disabled.active,.btn-success[disabled],.btn-success[disabled]:hover,.btn-success[disabled]:focus,.btn-success[disabled]:active,.btn-success[disabled].active,fieldset[disabled] .btn-success,fieldset[disabled] .btn-success:hover,fieldset[disabled] .btn-success:focus,fieldset[disabled] .btn-success:active,fieldset[disabled] .btn-success.active{background-color:#5cb85c;border-color:#4eae4c}.btn-success .badge{color:#5cb85c;background-color:#fff}.btn-info{color:#fff;background-color:#5bc0de;border-color:#46bada}.btn-info:hover,.btn-info:focus,.btn-info:active,.btn-info.active,.open>.btn-info.dropdown-toggle{color:#fff;background-color:#31b2d5;border-color:#269cbc}.btn-info:active,.btn-info.active,.open>.btn-info.dropdown-toggle{background-image:none}.btn-info.disabled,.btn-info.disabled:hover,.btn-info.disabled:focus,.btn-info.disabled:active,.btn-info.disabled.active,.btn-info[disabled],.btn-info[disabled]:hover,.btn-info[disabled]:focus,.btn-info[disabled]:active,.btn-info[disabled].active,fieldset[disabled] .btn-info,fieldset[disabled] .btn-info:hover,fieldset[disabled] .btn-info:focus,fieldset[disabled] .btn-info:active,fieldset[disabled] .btn-info.active{background-color:#5bc0de;border-color:#46bada}.btn-info .badge{color:#5bc0de;background-color:#fff}.btn-warning{color:#fff;background-color:#f0ad4e;border-color:#eea236}.btn-warning:hover,.btn-warning:focus,.btn-warning:active,.btn-warning.active,.open>.btn-warning.dropdown-toggle{color:#fff;background-color:#ec971f;border-color:#d58112}.btn-warning:active,.btn-warning.active,.open>.btn-warning.dropdown-toggle{background-image:none}.btn-warning.disabled,.btn-warning.disabled:hover,.btn-warning.disabled:focus,.btn-warning.disabled:active,.btn-warning.disabled.active,.btn-warning[disabled],.btn-warning[disabled]:hover,.btn-warning[disabled]:focus,.btn-warning[disabled]:active,.btn-warning[disabled].active,fieldset[disabled] .btn-warning,fieldset[disabled] .btn-warning:hover,fieldset[disabled] .btn-warning:focus,fieldset[disabled] .btn-warning:active,fieldset[disabled] .btn-warning.active{background-color:#f0ad4e;border-color:#eea236}.btn-warning .badge{color:#f0ad4e;background-color:#fff}.btn-danger{color:#fff;background-color:#d9534f;border-color:#d43d3a}.btn-danger:hover,.btn-danger:focus,.btn-danger:active,.btn-danger.active,.open>.btn-danger.dropdown-toggle{color:#fff;background-color:#c92e2c;border-color:#ac2525}.btn-danger:active,.btn-danger.active,.open>.btn-danger.dropdown-toggle{background-image:none}.btn-danger.disabled,.btn-danger.disabled:hover,.btn-danger.disabled:focus,.btn-danger.disabled:active,.btn-danger.disabled.active,.btn-danger[disabled],.btn-danger[disabled]:hover,.btn-danger[disabled]:focus,.btn-danger[disabled]:active,.btn-danger[disabled].active,fieldset[disabled] .btn-danger,fieldset[disabled] .btn-danger:hover,fieldset[disabled] .btn-danger:focus,fieldset[disabled] .btn-danger:active,fieldset[disabled] .btn-danger.active{background-color:#d9534f;border-color:#d43d3a}.btn-danger .badge{color:#d9534f;background-color:#fff}.btn-link{color:#428bca;font-weight:400;cursor:pointer;border-radius:0}.btn-link,.btn-link:active,.btn-link[disabled],fieldset[disabled] .btn-link{background-color:transparent;box-shadow:none}.btn-link,.btn-link:hover,.btn-link:focus,.btn-link:active{border-color:transparent}.btn-link:hover,.btn-link:focus{color:#2a6596;text-decoration:underline;background-color:transparent}.btn-link[disabled]:hover,.btn-link[disabled]:focus,fieldset[disabled] .btn-link:hover,fieldset[disabled] .btn-link:focus{color:#777;text-decoration:none}.btn-lg{padding:10px 16px;font-size:18px;line-height:1.33;border-radius:6px}.btn-sm{padding:5px 10px}.btn-sm,.btn-xs{font-size:12px;line-height:1.5;border-radius:3px}.btn-xs{padding:1px 5px}.btn-block{display:block;width:100%}.btn-block+.btn-block{margin-top:5px}input[type="submit"].btn-block,input[type="reset"].btn-block,input[type="button"].btn-block{width:100%}.fade{opacity:0;-webkit-transition:opacity .15s linear;transition:opacity .15s linear}.fade.in{opacity:1}.collapse{display:none}.collapse.in{display:block}tr.collapse.in{display:table-row}tbody.collapse.in{display:table-row-group}.collapsing{position:relative;height:0;overflow:hidden;-webkit-transition:height .35s ease;transition:height .35s ease}.input-group{position:relative;display:table;border-collapse:separate}.input-group[class*="col-"]{float:none;padding-left:0;padding-right:0}.input-group .form-control{position:relative;z-index:2;float:left;width:100%;margin-bottom:0}.input-group-addon,.input-group-btn,.input-group .form-control{display:table-cell}.input-group-addon:not(:first-child):not(:last-child),.input-group-btn:not(:first-child):not(:last-child),.input-group .form-control:not(:first-child):not(:last-child){border-radius:0}.input-group-addon{white-space:nowrap}.input-group-addon,.input-group-btn{width:1%;vertical-align:middle}.input-group-addon{padding:6px 12px;font-size:14px;font-weight:400;line-height:1;color:#555;text-align:center;background-color:#eee;border:1px solid #ccc;border-radius:4px}.input-group-addon.input-sm,.form-horizontal .form-group-sm .input-group-addon.form-control,.input-group-sm>.input-group-addon.form-control,.input-group-sm>.input-group-addon,.input-group-sm>.input-group-btn>.input-group-addon.btn{padding:5px 10px;font-size:12px;border-radius:3px}.input-group-addon.input-lg,.form-horizontal .form-group-lg .input-group-addon.form-control,.input-group-lg>.input-group-addon.form-control,.input-group-lg>.input-group-addon,.input-group-lg>.input-group-btn>.input-group-addon.btn{padding:10px 16px;font-size:18px;border-radius:6px}.input-group-addon input[type="radio"],.input-group-addon input[type="checkbox"]{margin-top:0}.input-group .form-control:first-child,.input-group-addon:first-child,.input-group-btn:first-child>.btn,.input-group-btn:first-child>.btn-group>.btn,.input-group-btn:first-child>.dropdown-toggle,.input-group-btn:last-child>.btn:not(:last-child):not(.dropdown-toggle),.input-group-btn:last-child>.btn-group:not(:last-child)>.btn{border-bottom-right-radius:0;border-top-right-radius:0}.input-group-addon:first-child{border-right:0}.input-group .form-control:last-child,.input-group-addon:last-child,.input-group-btn:last-child>.btn,.input-group-btn:last-child>.btn-group>.btn,.input-group-btn:last-child>.dropdown-toggle,.input-group-btn:first-child>.btn:not(:first-child),.input-group-btn:first-child>.btn-group:not(:first-child)>.btn{border-bottom-left-radius:0;border-top-left-radius:0}.input-group-addon:last-child{border-left:0}.input-group-btn{font-size:0;white-space:nowrap}.input-group-btn,.input-group-btn>.btn{position:relative}.input-group-btn>.btn+.btn{margin-left:-1px}.input-group-btn>.btn:hover,.input-group-btn>.btn:focus,.input-group-btn>.btn:active{z-index:2}.input-group-btn:first-child>.btn,.input-group-btn:first-child>.btn-group{margin-right:-1px}.input-group-btn:last-child>.btn,.input-group-btn:last-child>.btn-group{margin-left:-1px}.pagination{display:inline-block;padding-left:0;margin:20px 0;border-radius:4px}.pagination>li{display:inline}.pagination>li>a,.pagination>li>span{position:relative;float:left;padding:6px 12px;line-height:1.4285714;text-decoration:none;color:#428bca;background-color:#fff;border:1px solid #ddd;margin-left:-1px}.pagination>li:first-child>a,.pagination>li:first-child>span{margin-left:0;border-bottom-left-radius:4px;border-top-left-radius:4px}.pagination>li:last-child>a,.pagination>li:last-child>span{border-bottom-right-radius:4px;border-top-right-radius:4px}.pagination>li>a:hover,.pagination>li>a:focus,.pagination>li>span:hover,.pagination>li>span:focus{color:#2a6596;background-color:#eee;border-color:#ddd}.pagination>.active>a,.pagination>.active>a:hover,.pagination>.active>a:focus,.pagination>.active>span,.pagination>.active>span:hover,.pagination>.active>span:focus{z-index:2;color:#fff;background-color:#428bca;border-color:#428bca;cursor:default}.pagination>.disabled>span,.pagination>.disabled>span:hover,.pagination>.disabled>span:focus,.pagination>.disabled>a,.pagination>.disabled>a:hover,.pagination>.disabled>a:focus{color:#777;background-color:#fff;border-color:#ddd;cursor:not-allowed}.pagination-lg>li>a,.pagination-lg>li>span{padding:10px 16px;font-size:18px}.pagination-lg>li:first-child>a,.pagination-lg>li:first-child>span{border-bottom-left-radius:6px;border-top-left-radius:6px}.pagination-lg>li:last-child>a,.pagination-lg>li:last-child>span{border-bottom-right-radius:6px;border-top-right-radius:6px}.pagination-sm>li>a,.pagination-sm>li>span{padding:5px 10px;font-size:12px}.pagination-sm>li:first-child>a,.pagination-sm>li:first-child>span{border-bottom-left-radius:3px;border-top-left-radius:3px}.pagination-sm>li:last-child>a,.pagination-sm>li:last-child>span{border-bottom-right-radius:3px;border-top-right-radius:3px}.close{float:right;font-size:21px;font-weight:700;line-height:1;color:#000;text-shadow:0 1px 0 #fff;opacity:.2;filter:alpha(opacity=20)}.close:hover,.close:focus{color:#000;text-decoration:none;cursor:pointer;opacity:.5;filter:alpha(opacity=50)}button.close{padding:0;cursor:pointer;background:0 0;border:0;-webkit-appearance:none}.modal-open,.modal{overflow:hidden}.modal{display:none;position:fixed;top:0;right:0;bottom:0;left:0;z-index:1050;-webkit-overflow-scrolling:touch;outline:0}.modal.fade .modal-dialog{-webkit-transform:translate3d(0,-25%,0);transform:translate3d(0,-25%,0);-webkit-transition:-webkit-transform .3s ease-out;transition:transform .3s ease-out}.modal.in .modal-dialog{-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0)}.modal-open .modal{overflow-x:hidden;overflow-y:auto}.modal-dialog{position:relative;width:auto;margin:10px}.modal-content{position:relative;background-color:#fff;border:1px solid #999;border:1px solid rgba(0,0,0,.2);border-radius:6px;box-shadow:0 3px 9px rgba(0,0,0,.5);background-clip:padding-box;outline:0}.modal-backdrop{position:fixed;top:0;right:0;bottom:0;left:0;z-index:1040;background-color:#000}.modal-backdrop.fade{opacity:0;filter:alpha(opacity=0)}.modal-backdrop.in{opacity:.5;filter:alpha(opacity=50)}.modal-header{padding:15px;border-bottom:1px solid #e5e5e5;min-height:16.4285714px}.modal-header .close{margin-top:-2px}.modal-title{margin:0;line-height:1.4285714}.modal-body{position:relative;padding:15px}.modal-footer{padding:15px;text-align:right;border-top:1px solid #e5e5e5}.modal-footer:before,.modal-footer:after{content:" ";display:table}.modal-footer:after{clear:both}.modal-footer .btn+.btn{margin-left:5px;margin-bottom:0}.modal-footer .btn-group .btn+.btn{margin-left:-1px}.modal-footer .btn-block+.btn-block{margin-left:0}.modal-scrollbar-measure{position:absolute;top:-9999px;width:50px;height:50px;overflow:scroll}@media (min-width:768px){.modal-dialog{width:600px;margin:30px auto}.modal-content{box-shadow:0 5px 15px rgba(0,0,0,.5)}.modal-sm{width:300px}}@media (min-width:992px){.modal-lg{width:900px}}.clearfix:before,.clearfix:after{content:" ";display:table}.clearfix:after{clear:both}.center-block{display:block;margin-left:auto;margin-right:auto}.pull-right{float:right!important}.pull-left{float:left!important}.hide{display:none!important}.show{display:block!important}.invisible{visibility:hidden}.text-hide{font:0/0 a;color:transparent;text-shadow:none;background-color:transparent;border:0}.hidden{display:none!important;visibility:hidden!important}.affix{position:fixed;-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0)}.hljs{display:block;overflow-x:auto;padding:.5em;background:#002b36;color:#839496;-webkit-text-size-adjust:none}.hljs-comment,.hljs-template_comment,.diff .hljs-header,.hljs-doctype,.hljs-pi,.lisp .hljs-string,.hljs-javadoc{color:#586e75}.hljs-keyword,.hljs-winutils,.method,.hljs-addition,.css .hljs-tag,.hljs-request,.hljs-status,.nginx .hljs-title{color:#859900}.hljs-number,.hljs-command,.hljs-string,.hljs-tag .hljs-value,.hljs-rules .hljs-value,.hljs-phpdoc,.hljs-dartdoc,.tex .hljs-formula,.hljs-regexp,.hljs-hexcolor,.hljs-link_url{color:#2aa198}.hljs-title,.hljs-localvars,.hljs-chunk,.hljs-decorator,.hljs-built_in,.hljs-identifier,.vhdl .hljs-literal,.hljs-id,.css .hljs-function{color:#268bd2}.hljs-attribute,.hljs-variable,.lisp .hljs-body,.smalltalk .hljs-number,.hljs-constant,.hljs-class .hljs-title,.hljs-parent,.hljs-type,.hljs-link_reference{color:#b58900}.hljs-preprocessor,.hljs-preprocessor .hljs-keyword,.hljs-pragma,.hljs-shebang,.hljs-symbol,.hljs-symbol .hljs-string,.diff .hljs-change,.hljs-special,.hljs-attr_selector,.hljs-subst,.hljs-cdata,.css .hljs-pseudo,.hljs-header{color:#cb4b16}.hljs-deletion,.hljs-important{color:#dc322f}.hljs-link_label{color:#6c71c4}.tex .hljs-formula{background:#073642}*,*:before,*:after{box-sizing:border-box}html{-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,summary{display:block}audio,canvas,progress,video{display:inline-block;vertical-align:baseline}audio:not([controls]){display:none;height:0}[hidden],template{display:none}a{background:0 0}a:active,a:hover{outline:0}abbr[title]{border-bottom:1px dotted}b,strong{font-weight:700}dfn{font-style:italic}h1{margin:.67em 0}mark{background:#ff0;color:#000}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sup{top:-.5em}sub{bottom:-.25em}images{border:0}svg:not(:root){overflow:hidden}figure{margin:1em 40px}hr{box-sizing:content-box;height:0}pre{overflow:auto}code,kbd{font-size:1em}code,kbd,pre,samp{font-family:monospace,monospace}samp{font-size:1em}button,input,optgroup,select,textarea{color:inherit;font:inherit;margin:0}button{overflow:visible}button,select{text-transform:none}button,html input[type="button"],input[type="reset"],input[type="submit"]{-webkit-appearance:button;cursor:pointer}button[disabled],html input[disabled]{cursor:default}button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}input{line-height:normal}input[type="checkbox"],input[type="radio"]{box-sizing:border-box;padding:0}input[type="number"]::-webkit-inner-spin-button,input[type="number"]::-webkit-outer-spin-button{height:auto}input[type="search"]{-webkit-appearance:textfield;box-sizing:content-box}input[type="search"]::-webkit-search-cancel-button,input[type="search"]::-webkit-search-decoration{-webkit-appearance:none}fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}legend{border:0;padding:0}textarea{overflow:auto}optgroup{font-weight:700}table{border-collapse:collapse;border-spacing:0}.debug{background-color:#ffc0cb!important}.ellipsis{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.ir{background-color:transparent;border:0;overflow:hidden}.ir::before{content:'';display:block;height:150%;width:0}html{font-size:.875em;background:#fafafa;color:#373D49;font-family:Georgia,Cambria,serif;height:100%}@media screen and (min-width:27.5em){html{font-size:.875em}}@media screen and (min-width:46.25em){html{font-size:.875em}}@media screen and (min-width:62.5em){html{font-size:.875em}}@media screen and (min-width:87.5em){html{font-size:.875em}}body{font-size:1rem;font-family:Georgia,Cambria,serif;font-weight:400;line-height:2rem;height:100%}@media screen and (min-width:27.5em){body{font-size:1rem}}@media screen and (min-width:46.25em){body{font-size:1rem}}@media screen and (min-width:62.5em){body{font-size:1rem}}@media screen and (min-width:87.5em){body{font-size:1rem}}ul,ol{margin-bottom:.83999rem;padding-top:.16001rem}@media screen and (min-width:27.5em){ul,ol{margin-bottom:.83999rem;padding-top:.16001rem}}@media screen and (min-width:46.25em){ul,ol{margin-bottom:.83999rem;padding-top:.16001rem}}@media screen and (min-width:62.5em){ul,ol{margin-bottom:.83999rem;padding-top:.16001rem}}@media screen and (min-width:87.5em){ul,ol{margin-bottom:.83999rem;padding-top:.16001rem}}li{-webkit-font-feature-settings:'kern' 1,'onum' 1,'liga' 1;-moz-font-feature-settings:'kern' 1,'onum' 1,'liga' 1;font-feature-settings:'kern' 1,'onum' 1,'liga' 1;margin-left:1rem}li>ul,li>ol{margin-bottom:0}p{margin-bottom:1.33999rem;padding-top:.66001rem;-webkit-font-feature-settings:'kern' 1,'onum' 1,'liga' 1;-moz-font-feature-settings:'kern' 1,'onum' 1,'liga' 1;font-feature-settings:'kern' 1,'onum' 1,'liga' 1;margin-top:0}@media screen and (min-width:27.5em){p{margin-bottom:1.33999rem;padding-top:.66001rem}}@media screen and (min-width:46.25em){p{margin-bottom:1.33999rem;padding-top:.66001rem}}@media screen and (min-width:62.5em){p{margin-bottom:1.33999rem;padding-top:.66001rem}}@media screen and (min-width:87.5em){p{margin-bottom:1.33999rem;padding-top:.66001rem}}pre{font-size:1rem;margin-bottom:1.33999rem;padding:.66001rem 9.5px 9.5px;line-height:2rem;background:-webkit-linear-gradient(top,#fff 0,#fff .75rem,#f5f7fa .75rem,#f5f7fa 2.75rem,#fff 2.75rem,#fff 4rem);background:linear-gradient(to bottom,#fff 0,#fff .75rem,#f5f7fa .75rem,#f5f7fa 2.75rem,#fff 2.75rem,#fff 4rem);background-size:100% 4rem;border-color:#D3DAEA}@media screen and (min-width:27.5em){pre{font-size:1rem;margin-bottom:1.33999rem;padding-top:.66001rem}}@media screen and (min-width:46.25em){pre{font-size:1rem;margin-bottom:1.33999rem;padding-top:.66001rem}}@media screen and (min-width:62.5em){pre{font-size:1rem;margin-bottom:1.33999rem;padding-top:.66001rem}}@media screen and (min-width:87.5em){pre{font-size:1rem;margin-bottom:1.33999rem;padding-top:.66001rem}}blockquote{margin:0}blockquote p{font-size:1rem;margin-bottom:.33999rem;font-style:italic;padding:.66001rem 1rem 1rem;border-left:3px solid #A0AABF}@media screen and (min-width:27.5em){blockquote p{font-size:1rem;margin-bottom:.33999rem;padding-top:.66001rem}}@media screen and (min-width:46.25em){blockquote p{font-size:1rem;margin-bottom:.33999rem;padding-top:.66001rem}}@media screen and (min-width:62.5em){blockquote p{font-size:1rem;margin-bottom:.33999rem;padding-top:.66001rem}}@media screen and (min-width:87.5em){blockquote p{font-size:1rem;margin-bottom:.33999rem;padding-top:.66001rem}}th,td{padding:12px}h1,h2,h3,h4,h5,h6{font-family:"Source Sans Pro","Helvetica Neue",Helvetica,Arial,sans-serif;-webkit-font-feature-settings:'dlig' 1,'liga' 1,'lnum' 1,'kern' 1;-moz-font-feature-settings:'dlig' 1,'liga' 1,'lnum' 1,'kern' 1;font-feature-settings:'dlig' 1,'liga' 1,'lnum' 1,'kern' 1;font-style:normal;font-weight:600;margin-top:0}h1{line-height:3rem;font-size:2.05714rem;margin-bottom:.21999rem;padding-top:.78001rem}@media screen and (min-width:27.5em){h1{font-size:2.05714rem;margin-bottom:.21999rem;padding-top:.78001rem}}@media screen and (min-width:46.25em){h1{font-size:2.05714rem;margin-bottom:.21999rem;padding-top:.78001rem}}@media screen and (min-width:62.5em){h1{font-size:2.05714rem;margin-bottom:.21999rem;padding-top:.78001rem}}@media screen and (min-width:87.5em){h1{font-size:2.05714rem;margin-bottom:.21999rem;padding-top:.78001rem}}h2{line-height:3rem;font-size:1.95312rem;margin-bottom:.18358rem;padding-top:.81642rem}@media screen and (min-width:27.5em){h2{font-size:1.95312rem;margin-bottom:.18358rem;padding-top:.81642rem}}@media screen and (min-width:46.25em){h2{font-size:1.95312rem;margin-bottom:.18358rem;padding-top:.81642rem}}@media screen and (min-width:62.5em){h2{font-size:1.95312rem;margin-bottom:.18358rem;padding-top:.81642rem}}@media screen and (min-width:87.5em){h2{font-size:1.95312rem;margin-bottom:.18358rem;padding-top:.81642rem}}h3{line-height:3rem;font-size:1.64571rem;margin-bottom:.07599rem;padding-top:.92401rem}@media screen and (min-width:27.5em){h3{font-size:1.64571rem;margin-bottom:.07599rem;padding-top:.92401rem}}@media screen and (min-width:46.25em){h3{font-size:1.64571rem;margin-bottom:.07599rem;padding-top:.92401rem}}@media screen and (min-width:62.5em){h3{font-size:1.64571rem;margin-bottom:.07599rem;padding-top:.92401rem}}@media screen and (min-width:87.5em){h3{font-size:1.64571rem;margin-bottom:.07599rem;padding-top:.92401rem}}h4{font-size:1.5625rem;margin-bottom:.54686rem;padding-top:.45314rem}@media screen and (min-width:27.5em){h4{font-size:1.5625rem;margin-bottom:.54686rem;padding-top:.45314rem}}@media screen and (min-width:46.25em){h4{font-size:1.5625rem;margin-bottom:.54686rem;padding-top:.45314rem}}@media screen and (min-width:62.5em){h4{font-size:1.5625rem;margin-bottom:.54686rem;padding-top:.45314rem}}@media screen and (min-width:87.5em){h4{font-size:1.5625rem;margin-bottom:.54686rem;padding-top:.45314rem}}h5{font-size:1.25rem;margin-bottom:-.56251rem;padding-top:.56251rem}@media screen and (min-width:27.5em){h5{font-size:1.25rem;margin-bottom:-.56251rem;padding-top:.56251rem}}@media screen and (min-width:46.25em){h5{font-size:1.25rem;margin-bottom:-.56251rem;padding-top:.56251rem}}@media screen and (min-width:62.5em){h5{font-size:1.25rem;margin-bottom:-.56251rem;padding-top:.56251rem}}@media screen and (min-width:87.5em){h5{font-size:1.25rem;margin-bottom:-.56251rem;padding-top:.56251rem}}h6{font-size:1rem;margin-bottom:-.65001rem;padding-top:.65001rem}@media screen and (min-width:27.5em){h6{font-size:1rem;margin-bottom:-.65001rem;padding-top:.65001rem}}@media screen and (min-width:46.25em){h6{font-size:1rem;margin-bottom:-.65001rem;padding-top:.65001rem}}@media screen and (min-width:62.5em){h6{font-size:1rem;margin-bottom:-.65001rem;padding-top:.65001rem}}@media screen and (min-width:87.5em){h6{font-size:1rem;margin-bottom:-.65001rem;padding-top:.65001rem}}a{cursor:pointer;color:#35D7BB;text-decoration:none}a:hover,a:focus{border-bottom-color:#35D7BB;color:#dff9f4}img{height:auto;max-width:100%}.g{display:block}.g:after{clear:both;content:'';display:table}.g-b{float:left;margin:0;width:100%}.g{margin-left:-16px;margin-right:-16px}.g-b{padding-left:16px;padding-right:16px}@media screen and (min-width:27.5em){.g{margin-left:-16px;margin-right:-16px}.g-b{padding-left:16px;padding-right:16px}}@media screen and (min-width:46.25em){.g{margin-left:-16px;margin-right:-16px}.g-b{padding-left:16px;padding-right:16px}}@media screen and (min-width:62.5em){.g{margin-left:-16px;margin-right:-16px}.g-b{padding-left:16px;padding-right:16px}}.g-b--center{display:block;float:none;margin:0 auto}.g-b--right{float:right}.g-b--1of1{width:100%}.g-b--1of2,.g-b--2of4,.g-b--3of6,.g-b--4of8,.g-b--5of10,.g-b--6of12{width:50%}.g-b--1of3,.g-b--2of6,.g-b--4of12{width:33.333%}.g-b--2of3,.g-b--4of6,.g-b--8of12{width:66.666%}.g-b--1of4,.g-b--2of8,.g-b--3of12{width:25%}.g-b--3of4,.g-b--6of8,.g-b--9of12{width:75%}.g-b--1of5,.g-b--2of10{width:20%}.g-b--2of5,.g-b--4of10{width:40%}.g-b--3of5,.g-b--6of10{width:60%}.g-b--4of5,.g-b--8of10{width:80%}.g-b--1of6,.g-b--2of12{width:16.666%}.g-b--5of6,.g-b--10of12{width:83.333%}.g-b--1of8{width:12.5%}.g-b--3of8{width:37.5%}.g-b--5of8{width:62.5%}.g-b--7of8{width:87.5%}.g-b--1of10{width:10%}.g-b--3of10{width:30%}.g-b--7of10{width:70%}.g-b--9of10{width:90%}.g-b--1of12{width:8.333%}.g-b--5of12{width:41.666%}.g-b--7of12{width:58.333%}.g-b--11of12{width:91.666%}.g-b--push--1of1{margin-left:100%}.g-b--push--1of2,.g-b--push--2of4,.g-b--push--3of6,.g-b--push--4of8,.g-b--push--5of10,.g-b--push--6of12{margin-left:50%}.g-b--push--1of3,.g-b--push--2of6,.g-b--push--4of12{margin-left:33.333%}.g-b--push--2of3,.g-b--push--4of6,.g-b--push--8of12{margin-left:66.666%}.g-b--push--1of4,.g-b--push--2of8,.g-b--push--3of12{margin-left:25%}.g-b--push--3of4,.g-b--push--6of8,.g-b--push--9of12{margin-left:75%}.g-b--push--1of5,.g-b--push--2of10{margin-left:20%}.g-b--push--2of5,.g-b--push--4of10{margin-left:40%}.g-b--push--3of5,.g-b--push--6of10{margin-left:60%}.g-b--push--4of5,.g-b--push--8of10{margin-left:80%}.g-b--push--1of6,.g-b--push--2of12{margin-left:16.666%}.g-b--push--5of6,.g-b--push--10of12{margin-left:83.333%}.g-b--push--1of8{margin-left:12.5%}.g-b--push--3of8{margin-left:37.5%}.g-b--push--5of8{margin-left:62.5%}.g-b--push--7of8{margin-left:87.5%}.g-b--push--1of10{margin-left:10%}.g-b--push--3of10{margin-left:30%}.g-b--push--7of10{margin-left:70%}.g-b--push--9of10{margin-left:90%}.g-b--push--1of12{margin-left:8.333%}.g-b--push--5of12{margin-left:41.666%}.g-b--push--7of12{margin-left:58.333%}.g-b--push--11of12{margin-left:91.666%}.g-b--pull--1of1{margin-right:100%}.g-b--pull--1of2,.g-b--pull--2of4,.g-b--pull--3of6,.g-b--pull--4of8,.g-b--pull--5of10,.g-b--pull--6of12{margin-right:50%}.g-b--pull--1of3,.g-b--pull--2of6,.g-b--pull--4of12{margin-right:33.333%}.g-b--pull--2of3,.g-b--pull--4of6,.g-b--pull--8of12{margin-right:66.666%}.g-b--pull--1of4,.g-b--pull--2of8,.g-b--pull--3of12{margin-right:25%}.g-b--pull--3of4,.g-b--pull--6of8,.g-b--pull--9of12{margin-right:75%}.g-b--pull--1of5,.g-b--pull--2of10{margin-right:20%}.g-b--pull--2of5,.g-b--pull--4of10{margin-right:40%}.g-b--pull--3of5,.g-b--pull--6of10{margin-right:60%}.g-b--pull--4of5,.g-b--pull--8of10{margin-right:80%}.g-b--pull--1of6,.g-b--pull--2of12{margin-right:16.666%}.g-b--pull--5of6,.g-b--pull--10of12{margin-right:83.333%}.g-b--pull--1of8{margin-right:12.5%}.g-b--pull--3of8{margin-right:37.5%}.g-b--pull--5of8{margin-right:62.5%}.g-b--pull--7of8{margin-right:87.5%}.g-b--pull--1of10{margin-right:10%}.g-b--pull--3of10{margin-right:30%}.g-b--pull--7of10{margin-right:70%}.g-b--pull--9of10{margin-right:90%}.g-b--pull--1of12{margin-right:8.333%}.g-b--pull--5of12{margin-right:41.666%}.g-b--pull--7of12{margin-right:58.333%}.g-b--pull--11of12{margin-right:91.666%}@media screen and (min-width:27.5em){.g-b--m1of1{width:100%}.g-b--m1of2,.g-b--m2of4,.g-b--m3of6,.g-b--m4of8,.g-b--m5of10,.g-b--m6of12{width:50%}.g-b--m1of3,.g-b--m2of6,.g-b--m4of12{width:33.333%}.g-b--m2of3,.g-b--m4of6,.g-b--m8of12{width:66.666%}.g-b--m1of4,.g-b--m2of8,.g-b--m3of12{width:25%}.g-b--m3of4,.g-b--m6of8,.g-b--m9of12{width:75%}.g-b--m1of5,.g-b--m2of10{width:20%}.g-b--m2of5,.g-b--m4of10{width:40%}.g-b--m3of5,.g-b--m6of10{width:60%}.g-b--m4of5,.g-b--m8of10{width:80%}.g-b--m1of6,.g-b--m2of12{width:16.666%}.g-b--m5of6,.g-b--m10of12{width:83.333%}.g-b--m1of8{width:12.5%}.g-b--m3of8{width:37.5%}.g-b--m5of8{width:62.5%}.g-b--m7of8{width:87.5%}.g-b--m1of10{width:10%}.g-b--m3of10{width:30%}.g-b--m7of10{width:70%}.g-b--m9of10{width:90%}.g-b--m1of12{width:8.333%}.g-b--m5of12{width:41.666%}.g-b--m7of12{width:58.333%}.g-b--m11of12{width:91.666%}.g-b--push--m1of1{margin-left:100%}.g-b--push--m1of2,.g-b--push--m2of4,.g-b--push--m3of6,.g-b--push--m4of8,.g-b--push--m5of10,.g-b--push--m6of12{margin-left:50%}.g-b--push--m1of3,.g-b--push--m2of6,.g-b--push--m4of12{margin-left:33.333%}.g-b--push--m2of3,.g-b--push--m4of6,.g-b--push--m8of12{margin-left:66.666%}.g-b--push--m1of4,.g-b--push--m2of8,.g-b--push--m3of12{margin-left:25%}.g-b--push--m3of4,.g-b--push--m6of8,.g-b--push--m9of12{margin-left:75%}.g-b--push--m1of5,.g-b--push--m2of10{margin-left:20%}.g-b--push--m2of5,.g-b--push--m4of10{margin-left:40%}.g-b--push--m3of5,.g-b--push--m6of10{margin-left:60%}.g-b--push--m4of5,.g-b--push--m8of10{margin-left:80%}.g-b--push--m1of6,.g-b--push--m2of12{margin-left:16.666%}.g-b--push--m5of6,.g-b--push--m10of12{margin-left:83.333%}.g-b--push--m1of8{margin-left:12.5%}.g-b--push--m3of8{margin-left:37.5%}.g-b--push--m5of8{margin-left:62.5%}.g-b--push--m7of8{margin-left:87.5%}.g-b--push--m1of10{margin-left:10%}.g-b--push--m3of10{margin-left:30%}.g-b--push--m7of10{margin-left:70%}.g-b--push--m9of10{margin-left:90%}.g-b--push--m1of12{margin-left:8.333%}.g-b--push--m5of12{margin-left:41.666%}.g-b--push--m7of12{margin-left:58.333%}.g-b--push--m11of12{margin-left:91.666%}.g-b--pull--m1of1{margin-right:100%}.g-b--pull--m1of2,.g-b--pull--m2of4,.g-b--pull--m3of6,.g-b--pull--m4of8,.g-b--pull--m5of10,.g-b--pull--m6of12{margin-right:50%}.g-b--pull--m1of3,.g-b--pull--m2of6,.g-b--pull--m4of12{margin-right:33.333%}.g-b--pull--m2of3,.g-b--pull--m4of6,.g-b--pull--m8of12{margin-right:66.666%}.g-b--pull--m1of4,.g-b--pull--m2of8,.g-b--pull--m3of12{margin-right:25%}.g-b--pull--m3of4,.g-b--pull--m6of8,.g-b--pull--m9of12{margin-right:75%}.g-b--pull--m1of5,.g-b--pull--m2of10{margin-right:20%}.g-b--pull--m2of5,.g-b--pull--m4of10{margin-right:40%}.g-b--pull--m3of5,.g-b--pull--m6of10{margin-right:60%}.g-b--pull--m4of5,.g-b--pull--m8of10{margin-right:80%}.g-b--pull--m1of6,.g-b--pull--m2of12{margin-right:16.666%}.g-b--pull--m5of6,.g-b--pull--m10of12{margin-right:83.333%}.g-b--pull--m1of8{margin-right:12.5%}.g-b--pull--m3of8{margin-right:37.5%}.g-b--pull--m5of8{margin-right:62.5%}.g-b--pull--m7of8{margin-right:87.5%}.g-b--pull--m1of10{margin-right:10%}.g-b--pull--m3of10{margin-right:30%}.g-b--pull--m7of10{margin-right:70%}.g-b--pull--m9of10{margin-right:90%}.g-b--pull--m1of12{margin-right:8.333%}.g-b--pull--m5of12{margin-right:41.666%}.g-b--pull--m7of12{margin-right:58.333%}.g-b--pull--m11of12{margin-right:91.666%}}@media screen and (min-width:46.25em){.g-b--t1of1{width:100%}.g-b--t1of2,.g-b--t2of4,.g-b--t3of6,.g-b--t4of8,.g-b--t5of10,.g-b--t6of12{width:50%}.g-b--t1of3,.g-b--t2of6,.g-b--t4of12{width:33.333%}.g-b--t2of3,.g-b--t4of6,.g-b--t8of12{width:66.666%}.g-b--t1of4,.g-b--t2of8,.g-b--t3of12{width:25%}.g-b--t3of4,.g-b--t6of8,.g-b--t9of12{width:75%}.g-b--t1of5,.g-b--t2of10{width:20%}.g-b--t2of5,.g-b--t4of10{width:40%}.g-b--t3of5,.g-b--t6of10{width:60%}.g-b--t4of5,.g-b--t8of10{width:80%}.g-b--t1of6,.g-b--t2of12{width:16.666%}.g-b--t5of6,.g-b--t10of12{width:83.333%}.g-b--t1of8{width:12.5%}.g-b--t3of8{width:37.5%}.g-b--t5of8{width:62.5%}.g-b--t7of8{width:87.5%}.g-b--t1of10{width:10%}.g-b--t3of10{width:30%}.g-b--t7of10{width:70%}.g-b--t9of10{width:90%}.g-b--t1of12{width:8.333%}.g-b--t5of12{width:41.666%}.g-b--t7of12{width:58.333%}.g-b--t11of12{width:91.666%}.g-b--push--t1of1{margin-left:100%}.g-b--push--t1of2,.g-b--push--t2of4,.g-b--push--t3of6,.g-b--push--t4of8,.g-b--push--t5of10,.g-b--push--t6of12{margin-left:50%}.g-b--push--t1of3,.g-b--push--t2of6,.g-b--push--t4of12{margin-left:33.333%}.g-b--push--t2of3,.g-b--push--t4of6,.g-b--push--t8of12{margin-left:66.666%}.g-b--push--t1of4,.g-b--push--t2of8,.g-b--push--t3of12{margin-left:25%}.g-b--push--t3of4,.g-b--push--t6of8,.g-b--push--t9of12{margin-left:75%}.g-b--push--t1of5,.g-b--push--t2of10{margin-left:20%}.g-b--push--t2of5,.g-b--push--t4of10{margin-left:40%}.g-b--push--t3of5,.g-b--push--t6of10{margin-left:60%}.g-b--push--t4of5,.g-b--push--t8of10{margin-left:80%}.g-b--push--t1of6,.g-b--push--t2of12{margin-left:16.666%}.g-b--push--t5of6,.g-b--push--t10of12{margin-left:83.333%}.g-b--push--t1of8{margin-left:12.5%}.g-b--push--t3of8{margin-left:37.5%}.g-b--push--t5of8{margin-left:62.5%}.g-b--push--t7of8{margin-left:87.5%}.g-b--push--t1of10{margin-left:10%}.g-b--push--t3of10{margin-left:30%}.g-b--push--t7of10{margin-left:70%}.g-b--push--t9of10{margin-left:90%}.g-b--push--t1of12{margin-left:8.333%}.g-b--push--t5of12{margin-left:41.666%}.g-b--push--t7of12{margin-left:58.333%}.g-b--push--t11of12{margin-left:91.666%}.g-b--pull--t1of1{margin-right:100%}.g-b--pull--t1of2,.g-b--pull--t2of4,.g-b--pull--t3of6,.g-b--pull--t4of8,.g-b--pull--t5of10,.g-b--pull--t6of12{margin-right:50%}.g-b--pull--t1of3,.g-b--pull--t2of6,.g-b--pull--t4of12{margin-right:33.333%}.g-b--pull--t2of3,.g-b--pull--t4of6,.g-b--pull--t8of12{margin-right:66.666%}.g-b--pull--t1of4,.g-b--pull--t2of8,.g-b--pull--t3of12{margin-right:25%}.g-b--pull--t3of4,.g-b--pull--t6of8,.g-b--pull--t9of12{margin-right:75%}.g-b--pull--t1of5,.g-b--pull--t2of10{margin-right:20%}.g-b--pull--t2of5,.g-b--pull--t4of10{margin-right:40%}.g-b--pull--t3of5,.g-b--pull--t6of10{margin-right:60%}.g-b--pull--t4of5,.g-b--pull--t8of10{margin-right:80%}.g-b--pull--t1of6,.g-b--pull--t2of12{margin-right:16.666%}.g-b--pull--t5of6,.g-b--pull--t10of12{margin-right:83.333%}.g-b--pull--t1of8{margin-right:12.5%}.g-b--pull--t3of8{margin-right:37.5%}.g-b--pull--t5of8{margin-right:62.5%}.g-b--pull--t7of8{margin-right:87.5%}.g-b--pull--t1of10{margin-right:10%}.g-b--pull--t3of10{margin-right:30%}.g-b--pull--t7of10{margin-right:70%}.g-b--pull--t9of10{margin-right:90%}.g-b--pull--t1of12{margin-right:8.333%}.g-b--pull--t5of12{margin-right:41.666%}.g-b--pull--t7of12{margin-right:58.333%}.g-b--pull--t11of12{margin-right:91.666%}}@media screen and (min-width:62.5em){.g-b--d1of1{width:100%}.g-b--d1of2,.g-b--d2of4,.g-b--d3of6,.g-b--d4of8,.g-b--d5of10,.g-b--d6of12{width:50%}.g-b--d1of3,.g-b--d2of6,.g-b--d4of12{width:33.333%}.g-b--d2of3,.g-b--d4of6,.g-b--d8of12{width:66.666%}.g-b--d1of4,.g-b--d2of8,.g-b--d3of12{width:25%}.g-b--d3of4,.g-b--d6of8,.g-b--d9of12{width:75%}.g-b--d1of5,.g-b--d2of10{width:20%}.g-b--d2of5,.g-b--d4of10{width:40%}.g-b--d3of5,.g-b--d6of10{width:60%}.g-b--d4of5,.g-b--d8of10{width:80%}.g-b--d1of6,.g-b--d2of12{width:16.666%}.g-b--d5of6,.g-b--d10of12{width:83.333%}.g-b--d1of8{width:12.5%}.g-b--d3of8{width:37.5%}.g-b--d5of8{width:62.5%}.g-b--d7of8{width:87.5%}.g-b--d1of10{width:10%}.g-b--d3of10{width:30%}.g-b--d7of10{width:70%}.g-b--d9of10{width:90%}.g-b--d1of12{width:8.333%}.g-b--d5of12{width:41.666%}.g-b--d7of12{width:58.333%}.g-b--d11of12{width:91.666%}.g-b--push--d1of1{margin-left:100%}.g-b--push--d1of2,.g-b--push--d2of4,.g-b--push--d3of6,.g-b--push--d4of8,.g-b--push--d5of10,.g-b--push--d6of12{margin-left:50%}.g-b--push--d1of3,.g-b--push--d2of6,.g-b--push--d4of12{margin-left:33.333%}.g-b--push--d2of3,.g-b--push--d4of6,.g-b--push--d8of12{margin-left:66.666%}.g-b--push--d1of4,.g-b--push--d2of8,.g-b--push--d3of12{margin-left:25%}.g-b--push--d3of4,.g-b--push--d6of8,.g-b--push--d9of12{margin-left:75%}.g-b--push--d1of5,.g-b--push--d2of10{margin-left:20%}.g-b--push--d2of5,.g-b--push--d4of10{margin-left:40%}.g-b--push--d3of5,.g-b--push--d6of10{margin-left:60%}.g-b--push--d4of5,.g-b--push--d8of10{margin-left:80%}.g-b--push--d1of6,.g-b--push--d2of12{margin-left:16.666%}.g-b--push--d5of6,.g-b--push--d10of12{margin-left:83.333%}.g-b--push--d1of8{margin-left:12.5%}.g-b--push--d3of8{margin-left:37.5%}.g-b--push--d5of8{margin-left:62.5%}.g-b--push--d7of8{margin-left:87.5%}.g-b--push--d1of10{margin-left:10%}.g-b--push--d3of10{margin-left:30%}.g-b--push--d7of10{margin-left:70%}.g-b--push--d9of10{margin-left:90%}.g-b--push--d1of12{margin-left:8.333%}.g-b--push--d5of12{margin-left:41.666%}.g-b--push--d7of12{margin-left:58.333%}.g-b--push--d11of12{margin-left:91.666%}.g-b--pull--d1of1{margin-right:100%}.g-b--pull--d1of2,.g-b--pull--d2of4,.g-b--pull--d3of6,.g-b--pull--d4of8,.g-b--pull--d5of10,.g-b--pull--d6of12{margin-right:50%}.g-b--pull--d1of3,.g-b--pull--d2of6,.g-b--pull--d4of12{margin-right:33.333%}.g-b--pull--d2of3,.g-b--pull--d4of6,.g-b--pull--d8of12{margin-right:66.666%}.g-b--pull--d1of4,.g-b--pull--d2of8,.g-b--pull--d3of12{margin-right:25%}.g-b--pull--d3of4,.g-b--pull--d6of8,.g-b--pull--d9of12{margin-right:75%}.g-b--pull--d1of5,.g-b--pull--d2of10{margin-right:20%}.g-b--pull--d2of5,.g-b--pull--d4of10{margin-right:40%}.g-b--pull--d3of5,.g-b--pull--d6of10{margin-right:60%}.g-b--pull--d4of5,.g-b--pull--d8of10{margin-right:80%}.g-b--pull--d1of6,.g-b--pull--d2of12{margin-right:16.666%}.g-b--pull--d5of6,.g-b--pull--d10of12{margin-right:83.333%}.g-b--pull--d1of8{margin-right:12.5%}.g-b--pull--d3of8{margin-right:37.5%}.g-b--pull--d5of8{margin-right:62.5%}.g-b--pull--d7of8{margin-right:87.5%}.g-b--pull--d1of10{margin-right:10%}.g-b--pull--d3of10{margin-right:30%}.g-b--pull--d7of10{margin-right:70%}.g-b--pull--d9of10{margin-right:90%}.g-b--pull--d1of12{margin-right:8.333%}.g-b--pull--d5of12{margin-right:41.666%}.g-b--pull--d7of12{margin-right:58.333%}.g-b--pull--d11of12{margin-right:91.666%}}.splashscreen{position:fixed;top:0;left:0;width:100%;height:100%;background-color:#373D49;z-index:22}.splashscreen-dillinger{width:260px;height:auto;display:block;margin:0 auto;padding-bottom:3rem}@media screen and (min-width:46.25em){.splashscreen-dillinger{width:500px}}@media screen and (min-width:62.5em){.splashscreen-dillinger{width:700px}}@media screen and (min-width:87.5em){.splashscreen-dillinger{width:800px}}.splashscreen p{font-size:1.25rem;padding-top:.56251rem;font-family:"Source Sans Pro","Helvetica Neue",Helvetica,Arial,sans-serif;font-weight:400;text-align:center;max-width:500px;margin:0 auto;color:#FFF}@media screen and (min-width:27.5em){.splashscreen p{font-size:1.25rem;margin-bottom:1.43749rem;padding-top:.56251rem}}@media screen and (min-width:46.25em){.splashscreen p{font-size:1.25rem;margin-bottom:1.43749rem;padding-top:.56251rem}}@media screen and (min-width:62.5em){.splashscreen p{font-size:1.25rem;margin-bottom:1.43749rem;padding-top:.56251rem}}@media screen and (min-width:87.5em){.splashscreen p{font-size:1.25rem;margin-bottom:1.43749rem;padding-top:.56251rem}}.sp-center{position:relative;-webkit-transform:translateY(-50%);-ms-transform:translateY(-50%);transform:translateY(-50%);top:50%}.open-menu>.wrapper{overflow-x:hidden}.page{margin:0 auto;position:relative;top:0;left:0;width:100%;height:100%;z-index:2;-webkit-transition:all .25s ease-in-out;transition:all .25s ease-in-out;background-color:#fff;padding-top:51px;will-change:left}.open-menu .page{left:270px}.title{line-height:1rem;font-size:.8rem;margin-bottom:.77999rem;padding-top:.22001rem;font-weight:500;color:#A0AABF;letter-spacing:1px;text-transform:uppercase;padding-left:16px;padding-right:16px;margin-top:1rem}@media screen and (min-width:27.5em){.title{font-size:.8rem;margin-bottom:.77999rem;padding-top:.22001rem}}@media screen and (min-width:46.25em){.title{font-size:.8rem;margin-bottom:.77999rem;padding-top:.22001rem}}@media screen and (min-width:62.5em){.title{font-size:.8rem;margin-bottom:.77999rem;padding-top:.22001rem}}@media screen and (min-width:87.5em){.title{font-size:.8rem;margin-bottom:.77999rem;padding-top:.22001rem}}.split-preview .title{padding-left:0}.title-document{line-height:1rem;font-size:1.25rem;margin-bottom:.89999rem;padding-top:.10001rem;font-weight:400;font-family:"Ubuntu Mono",Monaco;color:#373D49;padding-left:16px;padding-right:16px;width:80%;min-width:300px;outline:0;border:none}@media screen and (min-width:27.5em){.title-document{font-size:1.25rem;margin-bottom:.89999rem;padding-top:.10001rem}}@media screen and (min-width:46.25em){.title-document{font-size:1.25rem;margin-bottom:.89999rem;padding-top:.10001rem}}@media screen and (min-width:62.5em){.title-document{font-size:1.25rem;margin-bottom:.89999rem;padding-top:.10001rem}}@media screen and (min-width:87.5em){.title-document{font-size:1.25rem;margin-bottom:.89999rem;padding-top:.10001rem}}.icon{display:block;margin:0 auto;width:36px;height:36px;border-radius:3px;text-align:center}.icon svg{display:inline-block;margin-left:auto;margin-right:auto}.icon-preview{background-color:#373D49;line-height:40px}.icon-preview svg{width:19px;height:12px}.icon-settings{background-color:#373D49;line-height:44px}.icon-settings svg{width:18px;height:18px}.icon-link{width:16px;height:16px;line-height:1;margin-right:24px;text-align:right}.navbar{background-color:#373D49;height:51px;width:100%;position:fixed;top:0;left:0;z-index:6;-webkit-transition:all .25s ease-in-out;transition:all .25s ease-in-out;will-change:left}.navbar:after{content:"";display:table;clear:both}.open-menu .navbar{left:270px}.navbar-brand{float:left;margin:0 0 0 24px;padding:0;line-height:42px}.navbar-brand svg{width:85px;height:11px}.nav-left{float:left}.nav-right{float:right}.nav-sidebar{width:100%}.menu{list-style:none;margin:0;padding:0}.menu a{border:0;color:#A0AABF;font-family:"Source Sans Pro","Helvetica Neue",Helvetica,Arial,sans-serif;outline:none;text-transform:uppercase}.menu a:hover{color:#35D7BB}.menu .menu-item{border:0;display:none;float:left;margin:0;position:relative}.menu .menu-item>a{display:block;font-size:12px;height:51px;letter-spacing:1px;line-height:51px;padding:0 24px}.menu .menu-item--settings,.menu .menu-item--preview,.menu .menu-item--save-to.in-sidebar,.menu .menu-item--import-from.in-sidebar,.menu .menu-item--link-unlink.in-sidebar,.menu .menu-item--documents.in-sidebar{display:block}.menu .menu-item--documents{padding-bottom:1rem}@media screen and (min-width:46.25em){.menu .menu-item--save-to,.menu .menu-item--import-from{display:block}.menu .menu-item--preview,.menu .menu-item--save-to.in-sidebar,.menu .menu-item--import-from.in-sidebar{display:none}}@media screen and (min-width:62.5em){.menu .menu-item--export-as{display:block}.menu .menu-item--preview{display:none}}.menu .menu-item.open>a{background-color:#1D212A}.menu .menu-item-icon>a{height:auto;padding:0}.menu .menu-item-icon:hover>a{background-color:transparent}.menu .menu-link.open i{background-color:#1D212A}.menu .menu-link.open g{fill:#35D7BB}.menu .menu-link-preview,.menu .menu-link-settings{margin-top:8px;width:51px}.menu-sidebar{width:100%}.menu-sidebar .menu-item{float:none;margin-bottom:1px;width:100%}.menu-sidebar .menu-item.open>a{background-color:#373D49}.menu-sidebar .open .caret{-webkit-transform:rotate(180deg);-ms-transform:rotate(180deg);transform:rotate(180deg)}.menu-sidebar>.menu-item:hover .dropdown a,.menu-sidebar>.menu-item:hover .dropdown .settings{background-color:transparent}.menu-sidebar .menu-link{background-color:#373D49;font-weight:600}.menu-sidebar .menu-link:after{content:"";display:table;clear:both}.menu-sidebar .menu-link>span{float:left}.menu-sidebar .menu-link>.caret{float:right;text-align:right;top:22px}.menu-sidebar .dropdown,.menu-sidebar .settings{background-color:transparent;position:static;width:100%}.dropdown{position:absolute;right:0;top:51px;width:188px}.dropdown,.settings{display:none;background-color:#1D212A}.dropdown{padding:0}.dropdown,.settings,.sidebar-list{list-style:none;margin:0}.sidebar-list{padding:0}.dropdown li,.dropdown .settings,.sidebar-list li{line-height:1;margin:32px 0;padding:0 0 0 32px}.dropdown a,.dropdown .settings,.sidebar-list a{color:#D0D6E2;display:block;text-transform:none}.dropdown a:after,.dropdown .settings,.sidebar-list a:after{content:"";display:table;clear:both}.dropdown .icon,.dropdown .settings,.sidebar-list .icon{float:right}.open .dropdown,.open .settings,.open .sidebar-list{display:block}.open .dropdown.collapse,.open .collapse.settings,.open .sidebar-list.collapse{display:none}.open .dropdown.collapse.in,.open .collapse.in.settings,.open .sidebar-list.collapse.in{display:block}.dropdown .unlinked .icon,.dropdown .unlinked .settings,.sidebar-list .unlinked .icon{opacity:.3}.dropdown.documents li,.dropdown.documents .documents.settings,.sidebar-list.documents li{background-image:url('../img/icons/file.svg');background-position:240px center;background-repeat:no-repeat;background-size:14px 16px;padding:3px 32px}.dropdown.documents li.octocat,.dropdown.documents .documents.settings,.sidebar-list.documents li.octocat{background-image:url('../img/icons/octocat.svg');background-position:234px center;background-size:24px 24px}.dropdown.documents li:last-child,.dropdown.documents .documents.settings,.sidebar-list.documents li:last-child{margin-bottom:1rem}.dropdown.documents li.active a,.dropdown.documents li.active .documents.settings,.sidebar-list.documents li.active a{color:#35D7BB}.settings{position:fixed;top:67px;right:16px;border-radius:3px;width:288px;background-color:#373D49;padding:16px;z-index:7}.show-settings .settings{display:block}.settings .has-checkbox{float:left}.settings a{font-size:1.25rem;font-family:"Source Sans Pro","Helvetica Neue",Helvetica,Arial,sans-serif;font-weight:400;-webkit-font-smoothing:antialiased;line-height:28px;color:#D0D6E2}.settings a:after{content:"";display:table;clear:both}@media screen and (min-width:27.5em){.settings a{font-size:1.25rem}}@media screen and (min-width:46.25em){.settings a{font-size:1.25rem}}@media screen and (min-width:62.5em){.settings a{font-size:1.25rem}}@media screen and (min-width:87.5em){.settings a{font-size:1.25rem}}.settings a:hover{color:#35D7BB}.settings li{border-bottom:1px solid #4F535B;margin:0;padding:16px 0}.settings li:last-child{border-bottom:none}.brand{border:none;display:block}.brand:hover g{fill:#35D7BB}.toggle{display:block;float:left;height:16px;padding:25px 16px 26px;width:40px}.toggle span:after,.toggle span:before{content:'';left:0;position:absolute;top:-6px}.toggle span:after{top:6px}.toggle span{display:block;position:relative}.toggle span,.toggle span:after,.toggle span:before{-webkit-backface-visibility:hidden;backface-visibility:hidden;background-color:#D3DAEA;height:2px;-webkit-transition:all .3s;transition:all .3s;width:20px}.open-menu .toggle span{background-color:transparent}.open-menu .toggle span:before{-webkit-transform:rotate(45deg)translate(3px,3px);-ms-transform:rotate(45deg)translate(3px,3px);transform:rotate(45deg)translate(3px,3px)}.open-menu .toggle span:after{-webkit-transform:rotate(-45deg)translate(5px,-6px);-ms-transform:rotate(-45deg)translate(5px,-6px);transform:rotate(-45deg)translate(5px,-6px)}.caret{display:inline-block;width:0;height:0;margin-left:6px;vertical-align:middle;position:relative;top:-1px;border-top:4px solid;border-right:4px solid transparent;border-left:4px solid transparent}.sidebar{overflow:auto;height:100%;padding-right:15px;padding-bottom:15px;width:285px}.sidebar-wrapper{-webkit-overflow-scrolling:touch;background-color:#2B2F36;left:0;height:100%;overflow-y:hidden;position:fixed;top:0;width:285px;z-index:1}.sidebar-branding{width:160px;padding:0;margin:16px auto}.header{border-bottom:1px solid #E8E8E8;position:relative}.words{line-height:1rem;font-size:.8rem;margin-bottom:.77999rem;padding-top:.22001rem;font-weight:500;font-family:"Source Sans Pro","Helvetica Neue",Helvetica,Arial,sans-serif;color:#A0AABF;letter-spacing:1px;text-transform:uppercase;z-index:5;position:absolute;right:16px;top:0}@media screen and (min-width:27.5em){.words{font-size:.8rem;margin-bottom:.77999rem;padding-top:.22001rem}}@media screen and (min-width:46.25em){.words{font-size:.8rem;margin-bottom:.77999rem;padding-top:.22001rem}}@media screen and (min-width:62.5em){.words{font-size:.8rem;margin-bottom:.77999rem;padding-top:.22001rem}}@media screen and (min-width:87.5em){.words{font-size:.8rem;margin-bottom:.77999rem;padding-top:.22001rem}}.words span{color:#000}.btn{text-align:center;display:inline-block;width:100%;text-transform:uppercase;font-weight:600;font-family:"Source Sans Pro","Helvetica Neue",Helvetica,Arial,sans-serif;font-size:14px;text-shadow:0 1px 0 #1b8b76;padding:16px 24px;background-color:#35D7BB;border-radius:3px;margin:0 auto 16px;line-height:1;color:#fff;-webkit-transition:all .15s linear;transition:all .15s linear;-webkit-font-smoothing:antialiased}.btn--new,.btn--save{display:block;width:238px}.btn--new:hover,.btn--new:focus,.btn--save:hover,.btn--save:focus{color:#fff;border-bottom-color:transparent;box-shadow:0 1px 3px #24b59b;text-shadow:0 1px 0 #24b59b}.btn--save{background-color:#4A5261;text-shadow:0 1px 1px #1e2127}.btn--save:hover,.btn--save:focus{color:#fff;border-bottom-color:transparent;box-shadow:0 1px 5px #08090a;text-shadow:none}.btn--delete{display:block;width:238px;background-color:transparent;font-size:12px;text-shadow:none}.btn--delete:hover,.btn--delete:focus{color:#fff;border-bottom-color:transparent;text-shadow:0 1px 0 #08090a;opacity:.8}.btn--ok,.btn--close{border-top:0;background-color:#4A5261;text-shadow:0 1px 0 #08090a;margin:0}.btn--ok:hover,.btn--ok:focus,.btn--close:hover,.btn--close:focus{color:#fff;background-color:#292d36;text-shadow:none}.overlay{position:absolute;top:0;left:0;width:100%;height:100%;background-color:rgba(55,61,73,.8);-webkit-transition:all .25s ease-in-out;transition:all .25s ease-in-out;-webkit-transition-timing-function:ease-out;transition-timing-function:ease-out;will-change:left,opacity,visibility;z-index:5;opacity:0;visibility:hidden}.show-settings .overlay{visibility:visible;opacity:1}.switch{float:right;line-height:1}.switch input{display:none}.switch small{display:inline-block;cursor:pointer;padding:0 24px 0 0;-webkit-transition:all ease .2s;transition:all ease .2s;background-color:#2B2F36;border-color:#2B2F36}.switch small,.switch small:before{border-radius:30px;box-shadow:inset 0 0 2px 0 #14171F}.switch small:before{display:block;content:'';width:28px;height:28px;background:#fff}.switch.checked small{padding-right:0;padding-left:24px;background-color:#35D7BB;box-shadow:none}.modal--dillinger.about .modal-dialog{font-size:1.25rem;max-width:500px}@media screen and (min-width:27.5em){.modal--dillinger.about .modal-dialog{font-size:1.25rem}}@media screen and (min-width:46.25em){.modal--dillinger.about .modal-dialog{font-size:1.25rem}}@media screen and (min-width:62.5em){.modal--dillinger.about .modal-dialog{font-size:1.25rem}}@media screen and (min-width:87.5em){.modal--dillinger.about .modal-dialog{font-size:1.25rem}}.modal--dillinger .modal-dialog{max-width:600px;width:auto;margin:5rem auto}.modal--dillinger .modal-content{background:#373D49;border-radius:3px;box-shadow:0 2px 5px 0 #2C3B59;color:#fff;font-family:"Source Sans Pro","Helvetica Neue",Helvetica,Arial,sans-serif;font-weight:400;padding:2rem}.modal--dillinger ul{list-style-type:disc;margin:1rem 0;padding:0 0 0 1rem}.modal--dillinger li{padding:0;margin:0}.modal--dillinger .modal-header{border:0;padding:0}.modal--dillinger .modal-body{padding:0}.modal--dillinger .modal-footer{border:0;padding:0}.modal--dillinger .close{color:#fff;opacity:1}.modal-backdrop{background-color:#373D49}.pagination--dillinger{padding:0!important;margin:1.5rem 0!important;-webkit-box-pack:justify;-webkit-justify-content:space-between;-ms-flex-pack:justify;justify-content:space-between;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-webkit-flex-direction:row;-ms-flex-direction:row;flex-direction:row;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-align-content:stretch;-ms-flex-line-pack:stretch;align-content:stretch}.pagination--dillinger,.pagination--dillinger li{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex}.pagination--dillinger li{-webkit-box-flex:1;-webkit-flex-grow:1;-ms-flex-positive:1;flex-grow:1;text-align:center}.pagination--dillinger li:first-child>a,.pagination--dillinger li.disabled>a,.pagination--dillinger li.disabled>a:hover,.pagination--dillinger li.disabled>a:focus,.pagination--dillinger li>a{background-color:transparent;border-color:#4F535B;border-right-color:transparent}.pagination--dillinger li.active>a,.pagination--dillinger li.active>a:hover,.pagination--dillinger li.active>a:focus{border-color:#4A5261;background-color:#4A5261;color:#fff}.pagination--dillinger li>a{float:none;color:#fff;width:100%;display:block;text-align:center;margin:0;border-right-color:transparent;padding:6px}.pagination--dillinger li>a:hover,.pagination--dillinger li>a:focus{border-color:#35D7BB;background-color:#35D7BB;color:#fff}.pagination--dillinger li:last-child a{border-color:#4F535B}.pagination--dillinger li:first-child a{border-right-color:transparent}.diNotify{position:absolute;z-index:9999;left:0;right:0;top:0;margin:0 auto;max-width:400px;text-align:center;-webkit-transition:top .5s ease-in-out,opacity .5s ease-in-out;transition:top .5s ease-in-out,opacity .5s ease-in-out;visibility:hidden}.diNotify-body{-webkit-font-smoothing:antialiased;background-color:#35D7BB;background:#666E7F;border-radius:3px;color:#fff;font-family:"Source Sans Pro","Helvetica Neue",Helvetica,Arial,sans-serif;font-weight:400;overflow:hidden;padding:1rem 2rem .5rem;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-align:baseline;-webkit-align-items:baseline;-ms-flex-align:baseline;align-items:baseline;-webkit-box-pack:center;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center}.diNotify-icon{display:block;width:16px;height:16px;line-height:16px;position:relative;top:3px}.diNotify-message{padding-left:1rem}.zen-wrapper{position:fixed;top:0;left:0;right:0;bottom:0;width:100%;height:100%;z-index:10;background-color:#FFF;opacity:0;-webkit-transition:opacity .25s ease-in-out;transition:opacity .25s ease-in-out}.zen-wrapper.on{opacity:1}.enter-zen-mode{font:0/0 a;color:transparent;text-shadow:none;background-color:transparent;border:0;background-image:url('../img/icons/enter-zen.svg');background-repeat:no-repeat;width:32px;height:32px;display:block;position:absolute;right:.5rem;top:.5rem;display:none}@media screen and (min-width:46.25em){.enter-zen-mode{display:block}}.close-zen-mode{font:0/0 a;color:transparent;text-shadow:none;background-color:transparent;border:0;background-image:url('../img/icons/exit-zen.svg');background-repeat:no-repeat;width:32px;height:32px;display:block;position:absolute;right:1rem;top:1rem}@media screen and (min-width:46.25em){.close-zen-mode{right:3rem;top:3rem}}.zen-page{position:relative;top:0;bottom:0;z-index:11;height:100%;width:100%}#zen{font-size:1.25rem;width:300px;height:80%;margin:0 auto;position:relative;top:10%}@media screen and (min-width:27.5em){#zen{font-size:1.25rem}}@media screen and (min-width:46.25em){#zen{font-size:1.25rem}}@media screen and (min-width:62.5em){#zen{font-size:1.25rem}}@media screen and (min-width:87.5em){#zen{font-size:1.25rem}}@media screen and (min-width:27.5em){#zen{width:400px}}@media screen and (min-width:46.25em){#zen{width:500px}}@media screen and (min-width:62.5em){#zen{width:700px}}#zen:before,#zen:after{content:"";position:absolute;height:10%;width:100%;z-index:12;pointer-events:none}#zen:after{background-image:-webkit-linear-gradient(270deg,rgba(255,255,255,0)0%,#fff 100%);background-image:linear-gradient(-180deg,rgba(255,255,255,0)0%,#fff 100%);bottom:0}.split{overflow:scroll;padding:0!important}.split-editor{padding-left:0;padding-right:0;position:relative}.show-preview .split-editor{display:none}@media screen and (min-width:46.25em){.split-editor{border-right:1px solid #E8E8E8;float:left;height:calc(100vh - 130px);-webkit-overflow-scrolling:touch;padding-right:16px;width:50%}.show-preview .split-editor{display:block}}.split-preview{background-color:#fff;display:none;position:absolute;top:129px;z-index:4}.show-preview .split-preview{display:block}@media screen and (min-width:46.25em){.split-preview{display:block;float:right;height:calc(100vh - 130px);-webkit-overflow-scrolling:touch;position:static;top:0;width:50%}}#editor{font-size:1rem;font-family:"Ubuntu Mono",Monaco;font-weight:400;line-height:2rem;width:100%;height:100%}@media screen and (min-width:27.5em){#editor{font-size:1rem}}@media screen and (min-width:46.25em){#editor{font-size:1rem}}@media screen and (min-width:62.5em){#editor{font-size:1rem}}@media screen and (min-width:87.5em){#editor{font-size:1rem}}#editor .ace_gutter{-webkit-font-smoothing:antialiased}#preview a{color:#A0AABF;text-decoration:underline}.sr-only{visibility:hidden;text-overflow:110%;overflow:hidden;top:-100px;position:absolute}.mnone{margin:0!important}</style>
+    <style>
+    /*! normalize.css v3.0.2 | MIT License | git.io/normalize */
+
+	/**
+	 * 1. Set default font family to sans-serif.
+	 * 2. Prevent iOS text size adjust after orientation change, without disabling
+	 *    user zoom.
+	 */
+
+	html {
+	  font-family: sans-serif; /* 1 */
+	  -webkit-text-size-adjust: 100%; /* 2 */
+	  -ms-text-size-adjust: 100%; /* 2 */
+	}
+
+	/**
+	 * Remove default margin.
+	 */
+
+	body {
+	  margin-left: 20px;
+	  margin-right: 20px;
+	  margin-bottom: 50px;
+	}
+
+	/* HTML5 display definitions
+	   ========================================================================== */
+
+	/**
+	 * Correct `block` display not defined for any HTML5 element in IE 8/9.
+	 * Correct `block` display not defined for `details` or `summary` in IE 10/11
+	 * and Firefox.
+	 * Correct `block` display not defined for `main` in IE 11.
+	 */
+
+	article,
+	aside,
+	details,
+	figcaption,
+	figure,
+	footer,
+	header,
+	hgroup,
+	main,
+	menu,
+	nav,
+	section,
+	summary {
+	  display: block;
+	}
+
+	/**
+	 * 1. Correct `inline-block` display not defined in IE 8/9.
+	 * 2. Normalize vertical alignment of `progress` in Chrome, Firefox, and Opera.
+	 */
+
+	audio,
+	canvas,
+	progress,
+	video {
+	  display: inline-block; /* 1 */
+	  vertical-align: baseline; /* 2 */
+	}
+
+	/**
+	 * Prevent modern browsers from displaying `audio` without controls.
+	 * Remove excess height in iOS 5 devices.
+	 */
+
+	audio:not([controls]) {
+	  display: none;
+	  height: 0;
+	}
+
+	/**
+	 * Address `[hidden]` styling not present in IE 8/9/10.
+	 * Hide the `template` element in IE 8/9/11, Safari, and Firefox < 22.
+	 */
+
+	[hidden],
+	template {
+	  display: none;
+	}
+
+	/* Links
+	   ========================================================================== */
+
+	/**
+	 * Remove the gray background color from active links in IE 10.
+	 */
+
+	a {
+	  background-color: transparent;
+	}
+
+	/**
+	 * Improve readability when focused and also mouse hovered in all browsers.
+	 */
+
+	a:active,
+	a:hover {
+	  outline: 0;
+	}
+
+	/* Text-level semantics
+	   ========================================================================== */
+
+	/**
+	 * Address styling not present in IE 8/9/10/11, Safari, and Chrome.
+	 */
+
+	abbr[title] {
+	  border-bottom: 1px dotted;
+	}
+
+	/**
+	 * Address style set to `bolder` in Firefox 4+, Safari, and Chrome.
+	 */
+
+	b,
+	strong {
+	  font-weight: bold;
+	}
+
+	/**
+	 * Address styling not present in Safari and Chrome.
+	 */
+
+	dfn {
+	  font-style: italic;
+	}
+
+	/**
+	 * Address variable `h1` font-size and margin within `section` and `article`
+	 * contexts in Firefox 4+, Safari, and Chrome.
+	 */
+
+	h1 {
+	  margin: 0.67em 0;
+	  font-size: 2em;
+	}
+
+	/**
+	 * Address styling not present in IE 8/9.
+	 */
+
+	mark {
+	  color: #000;
+	  background: #ff0;
+	}
+
+	/**
+	 * Address inconsistent and variable font size in all browsers.
+	 */
+
+	small {
+	  font-size: 80%;
+	}
+
+	/**
+	 * Prevent `sub` and `sup` affecting `line-height` in all browsers.
+	 */
+
+	sub,
+	sup {
+	  position: relative;
+	  font-size: 75%;
+	  line-height: 0;
+	  vertical-align: baseline;
+	}
+
+	sup {
+	  top: -0.5em;
+	}
+
+	sub {
+	  bottom: -0.25em;
+	}
+
+	/* Embedded content
+	   ========================================================================== */
+
+	/**
+	 * Remove border when inside `a` element in IE 8/9/10.
+	 */
+
+	img {
+	  border: 0;
+	}
+
+	/**
+	 * Correct overflow not hidden in IE 9/10/11.
+	 */
+
+	svg:not(:root) {
+	  overflow: hidden;
+	}
+
+	/* Grouping content
+	   ========================================================================== */
+
+	/**
+	 * Address margin not present in IE 8/9 and Safari.
+	 */
+
+	figure {
+	  margin: 1em 40px;
+	}
+
+	/**
+	 * Address differences between Firefox and other browsers.
+	 */
+
+	hr {
+	  height: 0;
+	  -moz-box-sizing: content-box;
+	  box-sizing: content-box;
+	}
+
+	/**
+	 * Contain overflow in all browsers.
+	 */
+
+	pre {
+	  overflow: auto;
+	}
+
+	/**
+	 * Address odd `em`-unit font size rendering in all browsers.
+	 */
+
+	code,
+	kbd,
+	pre,
+	samp {
+	  font-family: monospace, monospace;
+	  font-size: 1em;
+	}
+
+	/* Forms
+	   ========================================================================== */
+
+	/**
+	 * Known limitation: by default, Chrome and Safari on OS X allow very limited
+	 * styling of `select`, unless a `border` property is set.
+	 */
+
+	/**
+	 * 1. Correct color not being inherited.
+	 *    Known issue: affects color of disabled elements.
+	 * 2. Correct font properties not being inherited.
+	 * 3. Address margins set differently in Firefox 4+, Safari, and Chrome.
+	 */
+
+	button,
+	input,
+	optgroup,
+	select,
+	textarea {
+	  margin: 0; /* 3 */
+	  font: inherit; /* 2 */
+	  color: inherit; /* 1 */
+	}
+
+	/**
+	 * Address `overflow` set to `hidden` in IE 8/9/10/11.
+	 */
+
+	button {
+	  overflow: visible;
+	}
+
+	/**
+	 * Address inconsistent `text-transform` inheritance for `button` and `select`.
+	 * All other form control elements do not inherit `text-transform` values.
+	 * Correct `button` style inheritance in Firefox, IE 8/9/10/11, and Opera.
+	 * Correct `select` style inheritance in Firefox.
+	 */
+
+	button,
+	select {
+	  text-transform: none;
+	}
+
+	/**
+	 * 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`
+	 *    and `video` controls.
+	 * 2. Correct inability to style clickable `input` types in iOS.
+	 * 3. Improve usability and consistency of cursor style between image-type
+	 *    `input` and others.
+	 */
+
+	button,
+	html input[type="button"], /* 1 */
+	input[type="reset"],
+	input[type="submit"] {
+	  -webkit-appearance: button; /* 2 */
+	  cursor: pointer; /* 3 */
+	}
+
+	/**
+	 * Re-set default cursor for disabled elements.
+	 */
+
+	button[disabled],
+	html input[disabled] {
+	  cursor: default;
+	}
+
+	/**
+	 * Remove inner padding and border in Firefox 4+.
+	 */
+
+	button::-moz-focus-inner,
+	input::-moz-focus-inner {
+	  padding: 0;
+	  border: 0;
+	}
+
+	/**
+	 * Address Firefox 4+ setting `line-height` on `input` using `!important` in
+	 * the UA stylesheet.
+	 */
+
+	input {
+	  line-height: normal;
+	}
+
+	/**
+	 * It's recommended that you don't attempt to style these elements.
+	 * Firefox's implementation doesn't respect box-sizing, padding, or width.
+	 *
+	 * 1. Address box sizing set to `content-box` in IE 8/9/10.
+	 * 2. Remove excess padding in IE 8/9/10.
+	 */
+
+	input[type="checkbox"],
+	input[type="radio"] {
+	  box-sizing: border-box; /* 1 */
+	  padding: 0; /* 2 */
+	}
+
+	/**
+	 * Fix the cursor style for Chrome's increment/decrement buttons. For certain
+	 * `font-size` values of the `input`, it causes the cursor style of the
+	 * decrement button to change from `default` to `text`.
+	 */
+
+	input[type="number"]::-webkit-inner-spin-button,
+	input[type="number"]::-webkit-outer-spin-button {
+	  height: auto;
+	}
+
+	/**
+	 * 1. Address `appearance` set to `searchfield` in Safari and Chrome.
+	 * 2. Address `box-sizing` set to `border-box` in Safari and Chrome
+	 *    (include `-moz` to future-proof).
+	 */
+
+	input[type="search"] {
+	  -webkit-box-sizing: content-box; /* 2 */
+	  -moz-box-sizing: content-box;
+	  box-sizing: content-box;
+	  -webkit-appearance: textfield; /* 1 */
+	}
+
+	/**
+	 * Remove inner padding and search cancel button in Safari and Chrome on OS X.
+	 * Safari (but not Chrome) clips the cancel button when the search input has
+	 * padding (and `textfield` appearance).
+	 */
+
+	input[type="search"]::-webkit-search-cancel-button,
+	input[type="search"]::-webkit-search-decoration {
+	  -webkit-appearance: none;
+	}
+
+	/**
+	 * Define consistent border, margin, and padding.
+	 */
+
+	fieldset {
+	  padding: 0.35em 0.625em 0.75em;
+	  margin: 0 2px;
+	  border: 1px solid #c0c0c0;
+	}
+
+	/**
+	 * 1. Correct `color` not being inherited in IE 8/9/10/11.
+	 * 2. Remove padding so people aren't caught out if they zero out fieldsets.
+	 */
+
+	legend {
+	  padding: 0; /* 2 */
+	  border: 0; /* 1 */
+	}
+
+	/**
+	 * Remove default vertical scrollbar in IE 8/9/10/11.
+	 */
+
+	textarea {
+	  overflow: auto;
+	}
+
+	/**
+	 * Don't inherit the `font-weight` (applied by a rule above).
+	 * NOTE: the default cannot safely be changed in Chrome and Safari on OS X.
+	 */
+
+	optgroup {
+	  font-weight: bold;
+	}
+
+	/* Tables
+	   ========================================================================== */
+
+	/**
+	 * Remove most spacing between table cells.
+	 */
+
+	table {
+	  border-spacing: 0;
+	  border-collapse: collapse;
+	}
+
+	td,
+	th {
+	  padding: 0;
+	}
+
+	/* LAYOUT STYLES */
+	body {
+	  font-family: 'Helvetica Neue', Helvetica, Arial, serif;
+	  font-size: 15px;
+	  font-weight: 400;
+	  line-height: 1.5;
+	  color: #666;
+	  background: #fafafa url(../images/body-bg.jpg) 0 0 repeat;
+	}
+
+	p {
+	  margin-top: 0;
+	}
+
+	a {
+	  color: #2879d0;
+	}
+	a:hover {
+	  color: #2268b2;
+	}
+
+	header {
+	  padding-top: 40px;
+	  padding-bottom: 40px;
+	  font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif;
+	  background: #2e7bcf url(../images/header-bg.jpg) 0 0 repeat-x;
+	  border-bottom: solid 1px #275da1;
+	}
+
+	header h1 {
+	  width: 540px;
+	  margin-top: 0;
+	  margin-bottom: 0.2em;
+	  font-size: 72px;
+	  font-weight: normal;
+	  line-height: 1;
+	  color: #fff;
+	  letter-spacing: -1px;
+	}
+
+	header h2 {
+	  width: 540px;
+	  margin-top: 0;
+	  margin-bottom: 0;
+	  font-size: 26px;
+	  font-weight: normal;
+	  line-height: 1.3;
+	  color: #9ddcff;
+	  letter-spacing: 0;
+	}
+
+	.inner {
+	  position: relative;
+	  width: 940px;
+	  margin: 0 auto;
+	}
+
+	#content-wrapper {
+	  padding-top: 30px;
+	  border-top: solid 1px #fff;
+	}
+
+	#main-content {
+	  float: left;
+	  width: 690px;
+	}
+
+	#main-content img {
+	  max-width: 100%;
+	}
+
+	aside#sidebar {
+	  float: right;
+	  width: 200px;
+	  min-height: 504px;
+	  padding-left: 20px;
+	  font-size: 12px;
+	  line-height: 1.3;
+	  background: transparent url(../images/sidebar-bg.jpg) 0 0 no-repeat;
+	}
+
+	aside#sidebar p.repo-owner,
+	aside#sidebar p.repo-owner a {
+	  font-weight: bold;
+	}
+
+	#downloads {
+	  margin-bottom: 40px;
+	}
+
+	a.button {
+	  width: 134px;
+	  height: 58px;
+	  padding-top: 22px;
+	  padding-left: 68px;
+	  font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif;
+	  font-size: 23px;
+	  line-height: 1.2;
+	  color: #fff;
+	}
+	a.button small {
+	  display: block;
+	  font-size: 11px;
+	}
+	header a.button {
+	  position: absolute;
+	  top: 0;
+	  right: 0;
+	  background: transparent url(../images/github-button.png) 0 0 no-repeat;
+	}
+	aside a.button {
+	  display: block;
+	  width: 138px;
+	  padding-left: 64px;
+	  margin-bottom: 20px;
+	  font-size: 21px;
+	  background: transparent url(../images/download-button.png) 0 0 no-repeat;
+	}
+
+	code, pre {
+	  margin-bottom: 30px;
+	  font-family: Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal, monospace;
+	  font-size: 13px;
+	  color: #222;
+	}
+
+	code {
+	  padding: 0 3px;
+	  background-color: #f2f8fc;
+	  border: solid 1px #dbe7f3;
+	}
+
+	pre {
+	  padding: 20px;
+	  overflow: auto;
+	  text-shadow: none;
+	  background: #fff;
+	  border: solid 1px #f2f2f2;
+	}
+	pre code {
+	  padding: 0;
+	  color: #db0000;
+	  background-color: #fff;
+	  border: none;
+	}
+
+	ul, ol, dl {
+	  margin-left: 15px;
+	  margin-bottom: 20px;
+	}
+
+
+	/* COMMON STYLES */
+
+	hr {
+	  height: 0;
+	  margin-top: 1em;
+	  margin-bottom: 1em;
+	  border: 0;
+	  border-top: solid 1px #ddd;
+	}
+
+	table {
+	  width: 100%;
+	  border: 1px solid #ebebeb;
+	}
+
+	th {
+	  font-weight: 500;
+	}
+
+	td {
+	  font-weight: 300;
+	  text-align: center;
+	  border: 1px solid #ebebeb;
+	}
+
+	form {
+	  padding: 20px;
+	  background: #f2f2f2;
+
+	}
+
+
+	/* GENERAL ELEMENT TYPE STYLES */
+
+	#main-content h1 {
+	  margin-top: 0;
+	  margin-bottom: 0;
+	  font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif;
+	  font-size: 2.8em;
+	  font-weight: normal;
+	  color: #474747;
+	  text-indent: 6px;
+	  letter-spacing: -1px;
+	}
+
+	#main-content h1:before {
+	  padding-right: 0.3em;
+	  margin-left: -0.9em;
+	  color: #9ddcff;
+	  content: "/";
+	}
+
+	#main-content h2 {
+	  margin-bottom: 8px;
+	  font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif;
+	  font-size: 22px;
+	  font-weight: bold;
+	  color: #474747;
+	  text-indent: 4px;
+	}
+	#main-content h2:before {
+	  padding-right: 0.3em;
+	  margin-left: -1.5em;
+	  content: "//";
+	  color: #9ddcff;
+	}
+
+	#main-content h3 {
+	  margin-top: 24px;
+	  margin-bottom: 8px;
+	  font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif;
+	  font-size: 18px;
+	  font-weight: bold;
+	  color: #474747;
+	  text-indent: 3px;
+	}
+
+	#main-content h3:before {
+	  padding-right: 0.3em;
+	  margin-left: -2em;
+	  content: "///";
+	  color: #9ddcff;
+	}
+
+	#main-content h4 {
+	  margin-bottom: 8px;
+	  font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif;
+	  font-size: 15px;
+	  font-weight: bold;
+	  color: #474747;
+	  text-indent: 3px;
+	}
+
+	h4:before {
+	  padding-right: 0.3em;
+	  margin-left: -2.8em;
+	  content: "////";
+	  color: #9ddcff;
+	}
+
+	#main-content h5 {
+	  margin-bottom: 8px;
+	  font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif;
+	  font-size: 14px;
+	  color: #474747;
+	  text-indent: 3px;
+	}
+	h5:before {
+	  padding-right: 0.3em;
+	  margin-left: -3.2em;
+	  content: "/////";
+	  color: #9ddcff;
+	}
+
+	#main-content h6 {
+	  margin-bottom: 8px;
+	  font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif;
+	  font-size: .8em;
+	  color: #474747;
+	  text-indent: 3px;
+	}
+	h6:before {
+	  padding-right: 0.3em;
+	  margin-left: -3.7em;
+	  content: "//////";
+	  color: #9ddcff;
+	}
+
+	p {
+	  margin-bottom: 20px;
+	}
+
+	a {
+	  text-decoration: none;
+	}
+
+	p a {
+	  font-weight: 400;
+	}
+
+	blockquote {
+	  padding: 0 0 0 30px;
+	  margin-bottom: 20px;
+	  font-size: 1.6em;
+	  border-left: 10px solid #e9e9e9;
+	}
+
+	ul {
+	  list-style-position: inside;
+	  list-style: disc;
+	  padding-left: 20px;
+	}
+
+	ol {
+	  list-style-position: inside;
+	  list-style: decimal;
+	  padding-left: 3px;
+	}
+
+	dl dd {
+	  font-style: italic;
+	  font-weight: 100;
+	}
+
+	/* MISC */
+	.clearfix:after {
+	  display: block;
+	  height: 0;
+	  clear: both;
+	  visibility: hidden;
+	  content: '.';
+	}
+
+	.clearfix {display: inline-block;}
+	* html .clearfix {height: 1%;}
+	.clearfix {display: block;}
+
+	/* #Media Queries
+	================================================== */
+
+	/* Smaller than standard 960 (devices and browsers) */
+	@media only screen and (max-width: 959px) { }
+
+	/* Tablet Portrait size to standard 960 (devices and browsers) */
+	@media only screen and (min-width: 768px) and (max-width: 959px) {
+	  .inner {
+	    width: 740px;
+	  }
+	  header h1, header h2 {
+	    width: 340px;
+	  }
+	  header h1 {
+	    font-size: 60px;
+	  }
+	  header h2 {
+	    font-size: 30px;
+	  }
+	  #main-content {
+	    width: 490px;
+	  }
+	  #main-content h1:before,
+	  #main-content h2:before,
+	  #main-content h3:before,
+	  #main-content h4:before,
+	  #main-content h5:before,
+	  #main-content h6:before {
+	    padding-right: 0;
+	    margin-left: 0;
+	    content: none;
+	  }
+	}
+
+	/* All Mobile Sizes (devices and browser) */
+	@media only screen and (max-width: 767px) {
+	  .inner {
+	    width: 93%;
+	  }
+	  header {
+	    padding: 20px 0;
+	  }
+	  header .inner {
+	    position: relative;
+	  }
+	  header h1, header h2 {
+	    width: 100%;
+	  }
+	  header h1 {
+	    font-size: 48px;
+	  }
+	  header h2 {
+	    font-size: 24px;
+	  }
+	  header a.button {
+	    position: relative;
+	    display: inline-block;
+	    width: auto;
+	    height: auto;
+	    padding: 5px 10px;
+	    margin-top: 15px;
+	    font-size: 13px;
+	    line-height: 1;
+	    color: #2879d0;
+	    text-align: center;
+	    background-color: #9ddcff;
+	    background-image: none;
+	    border-radius: 5px;
+	    -moz-border-radius: 5px;
+	    -webkit-border-radius: 5px;
+	  }
+	  header a.button small {
+	    display: inline;
+	    font-size: 13px;
+	  }
+	  #main-content,
+	  aside#sidebar {
+	    float: none;
+	    width: 100% ! important;
+	  }
+	  aside#sidebar {
+	    min-height: 0;
+	    padding: 20px 0;
+	    margin-top: 20px;
+	    background-image: none;
+	    border-top: solid 1px #ddd;
+	  }
+	  aside#sidebar a.button {
+	    display: none;
+	  }
+	  #main-content h1:before,
+	  #main-content h2:before,
+	  #main-content h3:before,
+	  #main-content h4:before,
+	  #main-content h5:before,
+	  #main-content h6:before {
+	    padding-right: 0;
+	    margin-left: 0;
+	    content: none;
+	  }
+	}
+
+	/* Mobile Landscape Size to Tablet Portrait (devices and browsers) */
+	@media only screen and (min-width: 480px) and (max-width: 767px) { }
+
+	/* Mobile Portrait Size to Mobile Landscape Size (devices and browsers) */
+	@media only screen and (max-width: 479px) { }
+	</style>
+
   </head>
-  <body style="margin-left:15px;margin-right:15px">
+  <body>
+
   	<h1 id="building-android">Building Android README</h1>
-  	<p>Note: Some of the information here is intended for those who are building their first Android game or are interested in adding Android to their list of platforms to publish on, so forgive the detailed exposition if you are already familiar with Android development.</p>
+
+  	<p>Author's Note: The following gives a detailed overview for everything needed in order to compile a RapidGame project for Android. As such, there will be redundant information for those who already have experience with Android development. If that is the case, it is still recommended that you read through the entire document, as there is important information specific to RapidGame that you should know about so that you can properly configure your project to fit your needs. - <a href="https://github.com/samoersnaes" target="_blank">Samuel Ørsnæs</a></p>
+
+
+
+
     <h2 id="prerequisite-downloads-">Prerequisite Downloads</h2>
+
     <ul>
       <li><a href="http://developer.android.com/sdk/index.html" target="_blank">Android Studio</a> (includes Android SDK and many other tools)</li>
-      <li><a href="https://developer.android.com/ndk/downloads/index.html" target="_blank">Android NDK</a> (C++ development for Android)</li>
+      <li><a href="https://developer.android.com/ndk/downloads/index.html" target="_blank">Android NDK</a> (C/C++ development for Android)</li>
       <li><a href="http://ant.apache.org/bindownload.cgi" target="_blank">Apache Ant</a></li>
-      <li><a href="https://www.python.org/downloads" target="_blank">Python</a> (either version is fine)</li>
-      <li><a href="https://www.cygwin.com/" target="_blank">Cygwin</a> (only if you&#39;re on Windows; download the &quot;Devel&quot; packages as well in setup)</li>
+      <li><a href="https://www.python.org/downloads" target="_blank">Python</a> (2.7.x preferred, although 3.4.x should be fine)</li>
+      <li><a href="https://www.cygwin.com/" target="_blank">Cygwin</a> (for Windows only; download the &quot;Devel&quot; packages as well in setup)</li>
     </ul>
-    <p>Note that the path you choose to install the NDK in must not contain any spaces. In addition, although certain commands can be run outside of Cygwin on Windows, it is recommended that you run them all in a Cygwin shell. You must additionally run the shell as administrator each time you want to create a new project with <code>rapidgame create</code> in order to properly create the <code>lib</code> symlink.</p>
+
+    <p>Note that the path you choose to install the NDK in must not contain any spaces.</p>
+    <p>After downloading Android Studio, you will need to download the APIs for the OS version that you want to target. You could for example set Android 4.3.1 (API 18) as your target OS. It turns out that the template project that comes with RapidGame targets API 18, while cocos2d-x itself targets API 10. This means that you must download these particular APIs before you can build the template project. In order to do so, you go to Android Studio -> Configure -> SDK Manager -> [Select and install appropriate packages]. If you had previously created a project in Android Studio, then launching Android Studio will open up directly to the IDE. To navigate to the SDK Manager from there, you go to Tools -> Android -> SDK Manager.</p>
+    <p>(Windows only) In addition, although certain commands can be run outside of Cygwin, it is recommended that you run all of the possible commands listed in this README in a Cygwin shell for ease of use. You must additionally run the shell as administrator each time you want to create a new project with <code>rapidgame create</code> in order to properly create the <code>lib</code> symlink. The first time you run <code>rapidgame create</code>, which will automatically prebuild the libraries for you as well, if you did not use an admin Cygwin shell, then the libraries will have been improperly placed and you will need to delete <code>rapidgame/[VERSION]</code> and <code>rapidgame/latest</code>, the latter of which will have been improperly created as a folder instead of a symlink. After that, delete the defective project that was created by <code>rapidgame create</code> and run the command again in a proper admin Cygwin shell, and the project and libraries will be properly created.</p>
+
+
+
+
     <h2 id="setup-environment-variables-">Setup Environment Variables</h2>
+
     <p>Before building your first project, you should make sure all the necessary environment variables are set. It is assumed you already know how to work with environment variables for your system, but if you need help, refer to the <a href="#environment-variables-intro">bottom of this README</a>.</p>
+
     <pre><code>ANDROID_SDK_ROOT = /path/to/sdk
 ANT_HOME = /path/to/ant
 ANT_ROOT = /path/to/ant/bin
 JAVA_HOME = /path/to/jdk
 NDK_ROOT = /path/to/ndk
-PATH = $PATH:$JAVA_HOME/bin:$NDK_ROOT:/path/to/python:$ANDROID_SDK_ROOT/build-tools/XX:$ANDROID_SDK_ROOT/platform-tools:$ANDROID_SDK_ROOT/tools
+PATH = $PATH,
+       /path/to/python,
+       $JAVA_HOME/bin,
+       $NDK_ROOT,
+       $ANDROID_SDK_ROOT/build-tools/[VERSION],
+       $ANDROID_SDK_ROOT/platform-tools,
+       $ANDROID_SDK_ROOT/tools
 </code></pre>
-	<p>If you are on Windows, in addition to setting the above environment variables for your host OS, you must also set ANDROID_SDK_ROOT and NDK_ROOT in Cygwin's <code>~/.bash_profile</code> as you would on Mac. Refer to <a href="https://cdn.rawgit.com/NatWeiss/RapidGame/master/docs/README.html#android-notes" target="_blank">here</a> to see how to format them.</p>
-    <p>You choose where you want to install Ant and the Android NDK. Because RapidGame downloads and builds cocos2d-x/js for you, there is no need to set any environment variables related to cocos.</p>
+	
+	<p>The above is a generic representation of the environment variables and not proper syntax. It is for ease of readability and up to you to translate the information for your system. You get to choose where you want to install Ant and the Android NDK. Because RapidGame downloads and configures cocos2d-x and cocos2d-js for you, there is no need to set any environment variables related to Cocos.</p>
+	<p>(Winows only) In addition to setting the above environment variables for your host OS, you must also set <code>ANDROID_SDK_ROOT</code> and <code>NDK_ROOT</code> in Cygwin's <code>~/.bash_profile</code> as you would on Mac. The formatting should be as follows: <code>export ANDROID_SDK_ROOT=C:/path/to/sdk</code>, and you follow that pattern for <code>NDK_ROOT</code> as well.</p>
     <p><strong>Windows defaults:</strong></p>
     <ul>
       <li>Android SDK is installed in <code>C:\Users\[USERNAME]\AppData\Local\Android\sdk</code></li>
       <li>JDK is installed in <code>C:\Program Files\Java\jdk1.X</code></li>
       <li>Python is installed in <code>C:\PythonXX</code></li>
     </ul>
+
+
+
+
     <h2 id="building-your-project">Building Your Project</h2>
+
     <p></p>
     <pre><code>MyGame = example root project directory</code></pre>
-    <p>It&#39;s assumed that the RapidGame libraries have been built for Android by this point and you&#39;ve created your project using <code>rapidgame create cocos2dx</code> or <code>rapidgame create cocos2djs</code>. You are able to edit your source files in whatever IDE/text editor you like, but you should save the files in <code>MyGame/Projects</code>. When you are ready to build your game, you will have several options. You will first open Terminal on Mac or a Cygwin shell on Windows and change the directory (<code>cd</code>) to <code>MyGame/Projects/android</code> for the game you want to build. The following is a list of commands you may want to execute after that step (refer to <code>MyGame/Projects/android/makefile</code> if you want to make any modifications):</p>
+    <p>Anytime you actually build an .apk file (any of the first 3 commands listed below), make will automatically search in <code>MyGame/Projects</code> for all your C and C++ source files (<code>.c</code>, <code>.cpp</code>, <code>.cc</code>, <code>.cxx</code>) and update the changes you've made (whether creating or deleting files) for the build list. As header files aren't source files, you don't need to worry about them. Other filetypes such as <code>.m</code> and <code>.mm</code> will be ignored for the Android build. You can edit <code>MyGame/Projects/android/makeignore</code> and add the C and C++ files you do not want included in the Android build, one file per line. After editing <code>makeignore</code> and running <code>make [target]</code>, your project will be built according to the file changes in <code>MyGame/Projects</code> and the changes in <code>makeignore</code>. Your C/C++ filenames may not contain any spaces in them.</p>
+    <p>It&#39;s assumed that the RapidGame libraries have been built for Android by this point and you&#39;ve created your project using <code>rapidgame create cocos2dx</code> or <code>rapidgame create cocos2djs</code>. You are able to edit your source files in whatever IDE/text editor you like, but you should save the files in <code>MyGame/Projects</code>. When you are ready to build your game, you will have several options. You will first open Terminal on Mac or a Cygwin shell on Windows and change the directory (<code>cd</code>) to <code>MyGame/Projects/android</code>. The following is a list of commands you may want to execute after that step (refer to <code>MyGame/Projects/android/makefile</code> if you want to make any modifications):</p>
+
     <ol>
       <li>
         <code>make</code>: Build the debug version of your game and sign the .apk with the debug key. If you have never signed a debug Android application before and are prompted to enter information pertaining to the debug key, here is the info you need:
@@ -50,40 +950,63 @@ Key password: android
 CN: CN=Android Debug,0=Android,C=US
 </code></pre>
       </li>
-      <li>
-      <code>make release</code>: Build the release version of your game but still create the .apk file with the debug key.
-      </li>
+
+      <li><code>make release</code>: Build the release version of your game but still create the .apk file with the debug key.</li>
+
       <li><code>make distribution</code>: Build the release version of your game and sign the .apk with the release key. For info on how to build a release key and sign your app, refer to <a href="http://developer.android.com/tools/publishing/app-signing.html" target="_blank">this page</a>. If you prefer to do everything on the command line, <a href="http://developer.android.com/tools/publishing/app-signing.html#signing-manually" target="_blank">take a look here</a>. The commands are OS-agnostic, so they are the same on Mac and Windows.</li>
-      <li><code>make run</code>: Install your game on your Android device and begin printing log output to the console. Note that you must have your device plugged in via USB before running this command. If you get a &quot;waiting for device&quot; message after running this command, press ^C to end the command&#39;s execution and run <code>adb devices</code> to check if your device has been recognized yet. As for the log output, the default settings are to print debug output from your app and only fatal errors from everywhere else. For more about how logging works, refer to <a href="http://developer.android.com/tools/debugging/debugging-log.html" target="_blank">this page</a> and feel free to modify the makefile to your needs. If you want all future projects to keep a particular setting, you can modify <code>rapidgame/templates/cocos2dx/TwoScene</code> (replace <code>cocos2dx</code> with <code>cocos2djs</code> if need-be) or <a href="https://cdn.rawgit.com/NatWeiss/RapidGame/master/docs/README.html#create-your-own-templates" target="_blank">create your own templates</a>.</li>
-      <li><code>make run-relase</code>: Functionally equivalent to <code>make run</code> by default, as it installs APPNAME-debug.apk on your device and logs output to the console, exactly as <code>make run</code> does. However, you can modify the makefile to adjust what kind of logs you would like to see when you execute <code>make run</code> versus when you execute <code>make run-release</code>.</li>
+
+      <li><code>make run</code>: Install your game on your Android device and begin printing log output to the console. Note that you must have your device plugged in via USB before running this command. In addition, <code>make run</code> does not launch your app. That must be done by you. If you get a &quot;waiting for device&quot; message after running this command, press <code>^C</code> to end the command&#39;s execution and run <code>adb devices</code> to check if your device has been recognized yet. As for the log output, the default settings in the makefile are to print debug output from your app and only fatal errors from everywhere else. For more about how logging works, refer to <a href="http://developer.android.com/tools/debugging/debugging-log.html" target="_blank">this page</a> and feel free to modify the makefile to your needs. If you want all future projects to keep a particular setting, you can modify <code>rapidgame/templates/cocos2dx/TwoScene</code> (replace <code>cocos2dx</code> with <code>cocos2djs</code> if need-be) or <a href="https://github.com/NatWeiss/RapidGame#create-your-own-templates" target="_blank">create your own templates</a>.</li>
+
+      <li><code>make run-relase</code>: Functionally equivalent to <code>make run</code> by default, as it installs APPNAME-debug.apk on your device and logs output to the console, exactly as <code>make run</code> does. However, you can modify the makefile to change what kind of logs you will see when you execute <code>make run</code> versus when you execute <code>make run-release</code>.</li>
+
       <li><code>make run-distribution</code>: Installs APPNAME-release-aligned.apk on your device and logs output to the console.</li>
+
       <li><code>make clean</code>: Remove all the files and folders that were created when you built your game.</li>
-      <li><code>make start-emulator</code>: You will first need to create an Android Virtual Device (AVD) using AVD Manager, which can be found at <code>$ANDROID_SDK_ROOT/AVD Manager</code>, or by opening Android Studio and navigating to the Android Tools. You will then need to uncomment <code>#emulator -avd [device_name]</code> in the makefile by removing the <code>#</code> and then replace <code>[device_name]</code> with the name of the AVD you want to use for testing. In addition, uncomment the lines under <code>run-emulator</code>. Be warned that the emulator can run quite slowly, so you should do your best to find real devices to test your game on through people you know.</li>
+
+      <li><code>make start-emulator</code>: You will first need to create an Android Virtual Device (AVD) using AVD Manager, which can be found at <code>$ANDROID_SDK_ROOT/AVD Manager</code>, or by opening Android Studio and navigating to the Android Tools and selecting it from there. You will then need to uncomment <code>#emulator -avd [device_name]</code> in the makefile by removing the <code>#</code> and then replace <code>[device_name]</code> with the name of the AVD you want to use for testing. In addition, uncomment the lines under <code>run-emulator</code>. Be warned that the emulator can run quite slowly, so you should do your best to find real devices to test your game on through people you know.</li>
+
       <li><code>make run-emulator</code>: Installs the app on your chosen AVD. You must have the emulator running, and you must execute this command in a new shell if you had run <code>make start-emulator</code>, as the latter command must continue running until you are finished.</li>
     </ol>
-    <p>Anytime you actually build an .apk file (any of the first 3 commands listed above), make will automatically search in <code>MyGame/Projects</code> for all your C and C++ source files (<code>.c</code>, <code>.cpp</code>, <code>.cc</code>, <code>.cxx</code>) and update the changes you've made (whether creating or deleting files) for the build list. As header files aren't source files, you don't need to worry about them. Other filetypes such as <code>.m</code> and <code>.mm</code> will be ignored for the Android build. You can edit <code>MyGame/Projects/android/makeignore</code> and add the C and C++ files you do not want included in the Android build, one file per line. After editing <code>makeignore</code> and running <code>make [target]</code>, your project will be built according to the file changes in <code>MyGame/Projects</code> and the changes in <code>makeignore</code>. Your C/C++ filenames may not contain any spaces in them.</p>
+
+
+
+
     <h1 id="building-for-different-architectures">Building for Different Architectures</h1>
-    <p>As your app is using native code (C++), your final .apk will contain code compiled for a specific architecture. If you were writing a pure Java app, that app would run on any device without compiling for each platform thanks to the JVM. By default, your Android game is set to build for the ARM (armeabi) architecture, which a huge majority of Android phones use (think equivalent to Intel's dominance in desktop computing). RapidGame has the ability to prebuild the Android cocos2d-x libraries for ARM, ARMv7, and x86, but unfortunately trying to build the sample project after setting the architecture to x86 will cause the build to fail. Even so, the x86 devices that have <code>libhoudini</code> on them are able to run ARM apps, albeit more slowly. In any case, the two currently supported architectures you can build for are ARM and ARMv7. ARMv7 is backwards compatitable with ARM, so you can just build your app for ARM and it will run on newer ARMv7 devices. The main advantage of ARMv7 is faster floating point operations, so you may find your game performs better on newer devices. For more specific info on the different architectures, <a href="https://chromium.googlesource.com/android_tools/+/master-backup/ndk/docs/CPU-ARCH-ABIS.html" target="_blank">refer here</a>. You can find out much more extensive documentation about the NDK in general by going to <code>NDK_ROOT/docs/Start_Here.html</code>.</p>
-    <p>In order to actually get your project to compile for both ARM and ARMv7, you can edit <code>APP_ABI</code> in <code>MyGame/Projects/android/Application.mk</code> to <code>APP_ABI := armeabi armeabi-v7a</code>. When you build your project the next time, the .apk will now contain the files for both ARM and ARMv7, and when it is installed on a device, the necessary files will be used depending on the processor. One thing that must be noted is that when you build for ARMv7, you will get a long list of warning messages, and these messages will continue scrolling on the screen for several minutes until finally your game finishes building. There is nothing that can be done to prevent these warning messages (if you discover a way, please let us know on <a href="https://github.com/NatWeiss/RapidGame/issues" target="_blank">RapidGame's issues page</a> (requires a Github account)), but they are harmless. Your game will still compile and run without issue. However, to speed up build time, you should only build for ARM while you are developing the game. If your .apk gets to be over 50MB and you are considering submitting multiple .apk's for your game, then there are <a href="http://developer.android.com/google/play/publishing/multiple-apks.html" target="_blank">certain rules</a> you must be aware of.</p>
+
+    <p>As your app is using native code (C++), your final .apk will contain code compiled for a specific architecture. If you were writing a pure Java app, that app would run on any device without needing to compile for each architecture thanks to the JVM. By default, your Android game is set to build for the ARM (armeabi) architecture, which a huge majority of Android phones use (think equivalent to Intel's dominance in desktop computing). RapidGame has the ability to prebuild the Android cocos2d-x libraries for ARM, ARMv7, and x86, but unfortunately trying to build the template project after setting the architecture to x86 will cause the build to fail, so the Android-x86 libraries are skipped over in <code>rapidgame prebuild</code> to save time. Even so, the x86 devices that have <code>libhoudini</code> on them are able to run ARM apps, albeit more slowly. In any case, the two currently supported architectures you can build for are ARM and ARMv7. ARMv7 is backwards compatitable with ARM, so you can just build your app for ARM and it will run on newer ARMv7 devices. The main advantage of ARMv7 is faster floating point operations, so you may find your game performs better on newer devices. For more specific info on the different architectures, <a href="https://chromium.googlesource.com/android_tools/+/master-backup/ndk/docs/CPU-ARCH-ABIS.html" target="_blank">refer here</a>. You can find out much more extensive documentation about the NDK in general by going to <code>NDK_ROOT/docs/Start_Here.html</code>.</p>
+
+    <p>In order to actually get your project to compile for both ARM and ARMv7, you can edit <code>APP_ABI</code> in <code>MyGame/Projects/android/Application.mk</code> to <code>APP_ABI := armeabi armeabi-v7a</code>. When you rebuild your project with <code>make</code>, the .apk will now contain the files for both ARM and ARMv7, and when it is installed on a device, the necessary files will be used depending on the processor. One thing that must be noted is that when you build for ARMv7, you will get a long list of warning messages, and these messages will continue scrolling on the screen for several minutes until finally your game finishes building. There is nothing that can be done to prevent these warning messages (if you discover a way, please let us know on <a href="https://github.com/NatWeiss/RapidGame/issues" target="_blank">RapidGame's issues page</a> (requires a Github account)), but they are harmless. Your game will still compile and run without issue. However, to speed up build time, you should only build for ARM as you build and test the core of your game. If your .apk gets to be over 50MB and you are considering submitting multiple .apk's for your game, then there are <a href="http://developer.android.com/google/play/publishing/multiple-apks.html" target="_blank">certain rules</a> you must be aware of.</p>
+
+
+
+
     <h1 id="useful-tools">Useful Resources and Tools</h1>
+
     <ul>
-    	<li><a href="http://wizardfu.com/book/cocos2d-x/" target="_blank">Cocos2d-x Book</a>: Learn cocos2d-x and more, free.</li>
-    	<li><a href="https://github.com/NatWeiss/EntityFu" target="_blank">EntityFu</a>: A C++ Entity Component System that integrates very well into your game.</li>
-    	<li><a href="http://developer.android.com/tools/debugging/debugging-tracing.html" target="_blank">Traceview</a>: Optimize your game and find leaks.</li>
-    	<li><a href="http://developer.android.com/tools/studio/index.html" target="_blank">Learn Android Studio</a>: Although you can write your code with any text editor or IDE you like, there are still some nice features you should take advantage of in Android Studio, such as the ability to record and save .mp4 videos of your screen.</li>
+    	<li><a href="http://wizardfu.com/book/cocos2d-x/" target="_blank">Cocos2d-x Book</a>: Learn cocos2d-x and game design from the creator of RapidGame for free.</li>
+    	<li><a href="https://github.com/NatWeiss/EntityFu" target="_blank">EntityFu</a>: A C++ Entity Component System, also written by Mr. Wizard himself. See the README for a guide on Entity Component Systems if you are unfamiliar with them.</li>
+    	<li><a href="http://developer.android.com/tools/debugging/debugging-tracing.html" target="_blank">Traceview</a>: Optimize your game's performance and speed and find memory leaks. Much like Apple's `Intruments`, which comes with Xcode.</li>
+    	<li><a href="http://developer.android.com/tools/studio/index.html" target="_blank">Learn Android Studio</a>: Although you can write your code with any text editor or IDE you like, there are still some nice features you should take advantage of in Android Studio, such as the ability to record and save .mp4 videos of your device.</li>
     </ul>
+
+
+
+
     <h1 id="environment-variables-intro">Environment Variables Intro</h1>
-    <p>If you&#39;re not familiar with environment variables (hereby referred to as &quot;envars&quot;), they are variables that are accessible by any program on your computer, which makes them very useful and important. The following will explain how to properly set envars for your particular OS.</p>
+
+    <p>If you&#39;re not familiar with environment variables, they are variables that are accessible by any program on your computer, which makes them very useful and important. The following will explain how to properly set environment variables for your particular OS.</p>
+
     <h3 id="mac">Mac</h3>
-    <p>Your envars can be set in a text file known as <code>~/.bash_profile</code>. The format is as follows:</p>
+    <p>Your environment variables can be set in <code>~/.bash_profile</code> (a plain text file). You will find other things written in the file already, which you should ignore. Go to the bottom of the file to add your own stuff. The format is as follows:</p>
     <pre><code>export var1=/path/to/var1
 export var2=/path/to/var2
 # We want to keep the original variable and add to it
 export PATH=$PATH:/path/to/something:/path/to/another/thing
 </code></pre>
     <p>When you are done editing the file, save and close it and then run <code>source ~/.bash_profile</code> and you&#39;re good to go.</p>
+
     <h3 id="windows">Windows</h3>
-    <p>For Windows, the easiest way to edit your envars is by pressing the Windows button, searching &quot;environment variables&quot;, and clicking on the link that comes up. You should see a window divided into user and system variables, and we are only interested in editing user variables. Be sure to check if the variable already exists before trying to create a new one. Each variable has a name and a value, so if we were setting ANDROID_SDK_ROOT, then that would be the name, and the value might be <code>C:\Users\John\AppData\Local\Android\sdk</code>. If you want to add to an already existing variable, then you add your path to the beginning of the value and then place a <code>;</code> between that and the rest of the value, like so: <code>C:\Python27;C:\cygwin64</code>.</p>
+    <p>For Windows, the easiest way to edit your environment variables is by pressing the Windows button, searching &quot;environment variables&quot;, and clicking on the link that comes up. A window should open that is divided into user and system variables, and we are only interested in editing user variables. Be sure to check if the variable already exists before trying to create a new one. Each variable has a name and a value, so if we were setting <code>ANDROID_SDK_ROOT</code>, then that would be the name, and the value might be <code>C:\Users\John\AppData\Local\Android\sdk</code>. If you want to add to an already existing variable, then you add the path to add to the beginning of the value and then place a <code>;</code> between that and the rest of the value, e.g. we want to add Python's path to some other paths, so the final result would look like: <code>C:\Python27;C:\cygwin64\bin;C:\other\things</code>.</p>
   </body>
 </html>
 

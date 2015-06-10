@@ -39,15 +39,16 @@
         
         <p>RapidGame is a commandline tool for Mac and Windows (Linux support is planned) which:</p>
 <ol>
-<li><p>Prebuilds cocos2d-x / cocos2d-js libraries for Mac, iOS, Android and Windows for multiple architectures and configurations, virtually eliminating the need to ever rebuild cocos2d-x or the Javascript bindings.</p>
+<li><p>Prebuilds cocos2d-x libraries and cocos2d-js bindings for Mac, iOS, Android and Windows for multiple architectures and configurations, virtually eliminating the need to ever rebuild cocos2d-x or the Javascript bindings.</p>
 </li>
 <li><p>A game project templating system for creating cross-platform games for a variety of game engines, including cocos2d-x, cocos2d-js, Unity, Corona and Appcelerator Titanium. The default game template creates a simple Breakout clone with a menu and game scene.</p>
 </li>
 </ol>
 <p>Prefer somebody explaining and showing it? Check out the <a href="http://youtu.be/SOJs2DwIxOU">overview video</a>.</p>
 
+<!--
 <h2 id="build-status-https-img-shields-io-badge-version-0-9-9-blue-svg-">Build Status <img src="https://img.shields.io/badge/version-0.9.9-blue.svg" alt=""></h2>
-<p>Although RapidGame can prebuild the libraries for all possible platforms, you should refer to these tables to see whether you can successfully build a project for the platform you&#39;re targeting:</p>
+<p>Refer here to get an overview of what platforms you can and cannot build for based on the most recent release of RapidGame. As certain platforms (e.g. iOS and Android) can have devices with different CPU architectures on them, if there is a problem building for a particular architecture, it will be included as a separate table entry from the other architectures of that platform.</p>
 <h3 id="windows">Windows</h3>
 <table>
 <thead>
@@ -107,6 +108,7 @@
 </tr>
 </tbody>
 </table>
+-->
 
 <h2 id="updates">Updates</h2>
 
@@ -169,8 +171,8 @@
         
       
         
-        <p>Mac OS X: Xcode 5 or newer, <a href="http://git-scm.com/downloads">Git</a> and <a href="http://nodejs.org/download/">Node.js</a>.</p>
-<p>Windows: <strong>Visual Studio 2012 or newer</strong> (get it for free <a href="https://www.visualstudio.com/en-us/products/free-developer-offers-vs.aspx">here</a>), <a href="http://git-scm.com/downloads">Git</a>, and <a href="http://nodejs.org/download/">Node.js</a>. You will also need <a href="https://www.cygwin.com">Cygwin</a> if you want to make Android games. Refer to the Android Notes and Windows Notes below.</p>
+        <p>Mac OS X: Xcode 5 or newer, <a href="http://git-scm.com/downloads">Git</a> and <a href="http://nodejs.org/download/">Node.js</a>. If you want to make Android games as well, refer to the <a href="#android-notes">Android Notes</a> below for additional download requirements.</p>
+<p>Windows: <strong>Visual Studio 2012 or newer</strong> (get it for free <a href="https://www.visualstudio.com/en-us/products/free-developer-offers-vs.aspx">here</a>), <a href="http://git-scm.com/downloads">Git</a>, and <a href="http://nodejs.org/download/">Node.js</a>. You will also need <a href="https://www.cygwin.com">Cygwin</a> if you want to make Android games. Refer to the <a href="#android-notes">Android Notes</a> and <a href="#windows-notes">Windows Notes</a> below.</p>
 <p>Linux: Not yet supported. Are you a cocos2d-x Linux master with some experience with Javascript? Please help out! rapidgame.js almost supports Linux, just need to hook up the system calls to prebuild and archive the libraries.</p>
 <h2 id="eliminate-grunt-work">Eliminate Grunt Work</h2>
 
@@ -247,7 +249,7 @@ tools/ - Miscellaneous tools</pre></div>
           <div class='highlight'><pre>Assets/ - The game assets <span class="hljs-keyword">and</span> Javascript files
 lib/ - A symlink to the prebuilt cocos2d-x libraries <span class="hljs-keyword">and</span> cocos2d-js
 Projects/ - The project files <span class="hljs-keyword">for</span> the game
-Server/ - The server which provides an API <span class="hljs-keyword">and</span> serves files <span class="hljs-keyword">for</span> the HTML5 version <span class="hljs-keyword">of</span> the game (only for cocos2d-js projects)</pre></div>
+Server/ - The server which provides an API <span class="hljs-keyword">and</span> serves files <span class="hljs-keyword">for</span> the HTML5 version <span class="hljs-keyword">of</span> the game (cocos2d-js only)</pre></div>
         
       
         
@@ -265,14 +267,14 @@ Server/ - The server which provides an API <span class="hljs-keyword">and</span>
         
       
         
-        <p>When the command is finished, you’ll have a directory (<code>~/Library/Developer/RapidGame</code> on Mac and <code>C:\Users\[USERNAME]\AppData\Roaming\npm\node_modules\rapidgame</code> on Windows) with include files, java files, make files, Javascript bindings and library files for iOS, Mac and Android in Debug and Release mode for all available architectures.</p>
+        <p>When the command is finished, you’ll have a directory (<code>~/Library/Developer/RapidGame</code> on Mac and <code>C:\Users\[USERNAME]\AppData\Roaming\npm\node_modules\rapidgame</code> on Windows) with include files, java files, make files, Javascript bindings and library files for iOS, Mac, Android and Windows (varies depending on host OS) in Debug and Release mode for all available architectures.</p>
 <h2 id="development-platforms">Development Platforms</h2>
 
         
       
         
         <p>RapidGame can be used on any platform that is capable of running Node.js.</p>
-<p>The cocos2dx library prebuilder currently works on the following development platforms:</p>
+<p>The cocos2d-x library prebuilder currently works on the following development platforms:</p>
 <ul>
 <li>Mac</li>
 <li>Windows</li>
@@ -283,23 +285,7 @@ Server/ - The server which provides an API <span class="hljs-keyword">and</span>
         
       
         
-        <p>The following environment variables must be present in order to prebuild Android libraries. Consider adding these to your login profile. For example, on Mac add these lines to the bottom of your <code>~/.profile</code>:</p>
-
-        
-          <div class='highlight'><pre><span class="hljs-reserved">export</span> ANDROID_SDK_ROOT=/path/to/android/sdk
-<span class="hljs-reserved">export</span> NDK_ROOT=<span class="hljs-regexp">/path/to/android/ndk/</span></pre></div>
-        
-      
-        
-        <p>Or, on Windows add these to the bottom of your <a href="https://www.cygwin.com">Cygwin</a> <code>~/.bash_profile</code> (note that the forward slashes are correct):</p>
-
-        
-          <div class='highlight'><pre><span class="hljs-reserved">export</span> ANDROID_SDK_ROOT=<span class="hljs-attribute">C</span>:/path/to/android/sdk
-<span class="hljs-reserved">export</span> NDK_ROOT=<span class="hljs-attribute">C</span>:/path/to/android/ndk</pre></div>
-        
-      
-        
-        <p>The Android SDK APIs must be downloaded for the target platform, that is to say the Android OS version you're targeting, such as 4.3.1 (API 18). This happens to be the default target version for all new Android sub-projects as well. In addition, you must download API 10 for the cocos2d-x libraries. You can download the APIs by going to Android Studio -&gt; Configure -&gt; SDK Manager -&gt; [Select and install appropriate packages]. Or, if Android Studio opens directly to the IDE for you: Tools -&gt; Android -&gt; SDK Manager -&gt; [Select and install appropriate packages].</p>
+        <p>A detailed guide has been written specifically for how to build Android projects using RapidGame. You can read it <a href="https://cdn.rawgit.com/NatWeiss/RapidGame/master/templates/cocos2dx/TwoScene/Projects/android/README.html">here</a>, or alternatively find it in your cocos2d-x/js project as <code>[APPNAME]/Projects/android/README.html</code>.</p>
 <h2 id="windows-notes">Windows Notes</h2>
 
         
@@ -308,7 +294,7 @@ Server/ - The server which provides an API <span class="hljs-keyword">and</span>
         <ol>
 <li>The <code>rapidgame</code> command must be run in an admin console. This allows symlinks to be properly created, otherwise what should be symlinks will become regular folders and the command will fail.</li>
 <li>To compile Android successfully (on Windows), <code>rapidgame prebuild</code> must be run via <a href="https://www.cygwin.com">Cygwin</a> and Cygwin must be installed in the root directory <code>C:\cygwin</code> or <code>C:\cygwin64</code> and be made available for all users. This is the recommended option when you run the setup. When choosing which packages to install, click the circle icon to the right of “Devel” until the label on the right says “Install” in order to add these packages to the download list.</li>
-<li>Windows cannot build the cocos2d-x libraries for iOS and Mac. If you want to use RapidGame to develop for these platforms, you must use a Mac.</li>
+<li>Windows cannot build the cocos2d-x libraries or cocos2d-js bindings for iOS and Mac. If you want to use RapidGame to develop for these platforms, you must use a Mac.</li>
 </ol>
 <p>Thanks to <a href="https://github.com/samoersnaes">Samuel Ørsnæs</a> for getting the Android build working in Windows!</p>
 <h2 id="custom-cocos2d-x-js-projects">Custom cocos2d-x/js Projects</h2>
