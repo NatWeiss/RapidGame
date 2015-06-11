@@ -136,6 +136,8 @@ for dir in cocos_localstorage_static cocosdenshion_static cocos2dxandroid_static
 	cocos2dx_internal_static cocos_jsb_static cocosbuilder_static
 do
 	${ar} rs ${dest}/${lib} $(find ${src}/${dir} -name *.o)
-	${strip} -x ${dest}/${lib}
+	if [ "$3" != "nostrip" ]; then
+		${strip} -x ${dest}/${lib}
+	fi
 done
 

@@ -562,8 +562,16 @@ var setupPrebuild = function(platform, callback) {
 
 	// symlink latest -> version
 	dest = path.join(cmd.prefix, "latest");
-	try {fs.unlinkSync(dest);} catch(e){}
-	try {fs.symlinkSync(version, dest/*, "dir"*/);} catch(e){}
+	try {
+		fs.unlinkSync(dest);
+	} catch(e) {
+		logErr("Error deleting symlink: " + e);
+	}
+	try {
+		fs.symlinkSync(version, dest/*, "dir"*/);
+	} catch(e) {
+		logErr("Error creating symlink: " + e);
+	}
 
 	callback();
 };
@@ -653,16 +661,27 @@ var prebuildAndroid = function(config, arch, callback) {
 	// create builds array
 	builds = [];
 	if (process.platform === "win32") {
-		// TODO: Does x86 project compile on Mac?
 		if (cmd.minimal) {
-			builds.push(["minimal (Debug armeabi)"]);
+			if (cmd.nostrip) {
+				builds.push(["non-stripped minimal (Debug armeabi)"]);
+			} else {
+				builds.push(["minimal (Debug armeabi)"]);
+			}
 		} else {
-			builds.push(["libraries for armeabi/armeabi-v7a"]);
+			if (cmd.nostrip) {
+				builds.push(["non-stripped libraries for all platforms"]);
+			} else {
+				builds.push(["libraries for all platforms"]);
+			}
 		}
 	} else {
 		for (i = 0; i < configs.length; i += 1) {
 			for (j = 0; j < archs.length; j += 1) {
-				builds.push([configs[i], archs[j]]);
+				if (cmd.nostrip) {
+					builds.push([configs[i], archs[j], "nostrip"]);
+				} else {
+					builds.push([configs[i], archs[j]]);
+				}
 			}
 		}
 	}
@@ -777,7 +796,11 @@ var startBuild = function(platform, callback, settings) {
 
 		if (process.platform === "win32") {
 			command = "make";
-			args = cmd.minimal ? ["minimal"] : [];
+			if (cmd.minimal) {
+				args = cmd.nostrip ? ["minimal-nostrip"] : ["minimal"];
+			} else {
+				args = cmd.nostrip ? ["nostrip"] : [];
+			}
 		}
 	} else if (platform === "Windows") {
 		dir = cmd.prefix;

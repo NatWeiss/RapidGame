@@ -82,11 +82,13 @@ For usage instructions:
 Requirements
 ------------
 
-Mac OS X: Xcode 5 or newer, [Git](http://git-scm.com/downloads) and [Node.js](http://nodejs.org/download/). If you want to make Android games as well, refer to the [Android Notes](#android-notes) below for additional download requirements.
+Mac OS X: Xcode 5 or newer, [Git](http://git-scm.com/downloads) and [Node.js](http://nodejs.org/download/).
 
-Windows: **Visual Studio 2012 or newer** (get it for free [here](https://www.visualstudio.com/en-us/products/free-developer-offers-vs.aspx)), [Git](http://git-scm.com/downloads), and [Node.js](http://nodejs.org/download/). You will also need [Cygwin](https://www.cygwin.com) if you want to make Android games. Refer to the [Android Notes](#android-notes) and [Windows Notes](#windows-notes) below.
+Windows: **Visual Studio 2012 or newer** (get it for free [here](https://www.visualstudio.com/en-us/products/free-developer-offers-vs.aspx)), [Git](http://git-scm.com/downloads), and [Node.js](http://nodejs.org/download/). Read the [Windows Notes](#windows-notes) for additional notes you should be aware of.
 
 Linux: Not yet supported. Are you a cocos2d-x Linux master with some experience with Javascript? Please help out! rapidgame.js almost supports Linux, just need to hook up the system calls to prebuild and archive the libraries.
+
+If you want to make Android games, read the [Android README](http://htmlpreview.github.io/?https://github.com/NatWeiss/RapidGame/blob/master/templates/cocos2dx/TwoScene/Projects/android/README.html) to find out what you'll need for Android development.
 
 
 Eliminate Grunt Work
@@ -196,7 +198,7 @@ Windows Notes
 -------------
 
 1. The `rapidgame` command must be run in an admin console. This allows symlinks to be properly created, otherwise what should be symlinks will become regular folders and the command will fail.
-2. To compile Android successfully (on Windows), `rapidgame prebuild` must be run via [Cygwin](https://www.cygwin.com) and Cygwin must be installed in the root directory `C:\cygwin` or `C:\cygwin64` and be made available for all users. This is the recommended option when you run the setup. When choosing which packages to install, click the circle icon to the right of "Devel" until the label on the right says "Install" in order to add these packages to the download list.
+2. To compile the Android libraries successfully, `rapidgame prebuild` must be run via [Cygwin](https://www.cygwin.com). Read about all the specific requirements in the [Android README](http://htmlpreview.github.io/?https://github.com/NatWeiss/RapidGame/blob/master/templates/cocos2dx/TwoScene/Projects/android/README.html).
 3. Windows cannot build the cocos2d-x libraries or cocos2d-js bindings for iOS and Mac. If you want to use RapidGame to develop for these platforms, you must use a Mac.
 
 Thanks to [Samuel Ørsnæs](https://github.com/samoersnaes) for getting the Android build working in Windows!
