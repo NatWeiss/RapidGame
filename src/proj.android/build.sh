@@ -52,12 +52,14 @@ echo "NDK_MODULE_PATH=${NDK_MODULE_PATH}"
 
 # Set NDK_TOOLCHAIN_VERSION
 # Sam: NDK Toolchain Version 4.9 is now out (NDK r10e)
-if [ -d "${NDK_ROOT}/toolchains/arm-linux-androideabi-4.8" ]; then
+if [ -d "${NDK_ROOT}/toolchains/arm-linux-androideabi-4.9" ]; then
+	export NDK_TOOLCHAIN_VERSION="4.9"
+elif [ -d "${NDK_ROOT}/toolchains/arm-linux-androideabi-4.8" ]; then
 	export NDK_TOOLCHAIN_VERSION="4.8"
 elif [ -d "${NDK_ROOT}/toolchains/arm-linux-androideabi-4.7" ]; then
 	export NDK_TOOLCHAIN_VERSION="4.7"
 else
-	echo "NDK toolchain version 4.8 or 4.7 is required."
+	echo "NDK toolchain version 4.9, 4.8 or 4.7 is required."
 	exit 1
 fi
 echo "NDK_TOOLCHAIN_VERSION=${NDK_TOOLCHAIN_VERSION}"
