@@ -885,19 +885,34 @@
 
 
 
+  	<h2 id="tl-dr">TL;DR</h2>
+
+  	<ul>
+  		<li>Make sure you have all the programs that are under `Prequisite Downloads`</li>
+  		<li>Check your environment variables against the list in `Setup Environment Variables`</li>
+  		<li><code>cd [APPNAME]/Projects/android &amp;&amp; make</code></li>
+  		<li>Plug in your Android device via USB</li>
+  		<li><code>make run</code></li>
+  		<li>Find and launch app</li>
+  	</ul>
+
+
+
+
     <h2 id="prerequisite-downloads-">Prerequisite Downloads</h2>
 
     <ul>
       <li><a href="http://developer.android.com/sdk/index.html" target="_blank">Android Studio</a> (includes Android SDK and many other tools)</li>
       <li><a href="https://developer.android.com/ndk/downloads/index.html" target="_blank">Android NDK</a> (C/C++ development for Android)</li>
-      <li><a href="http://ant.apache.org/bindownload.cgi" target="_blank">Apache Ant</a></li>
+      <li><a href="http://ant.apache.org/bindownload.cgi" target="_blank">Apache Ant</a> (needed to build .apk's)</li>
       <li><a href="https://www.python.org/downloads" target="_blank">Python</a> (2.7.x preferred, although 3.4.x should be fine)</li>
       <li><a href="https://www.cygwin.com/" target="_blank">Cygwin</a> (for Windows only; download the &quot;Devel&quot; packages as well in setup)</li>
     </ul>
 
-    <p>Note that the path you choose to install the NDK in must not contain any spaces.</p>
+    <p>As the Android NDK and Ant do not come with installers but are comressed folders, you choose yourself where you want to unpack the folder. According to the NDK, the path to it may not contain any spaces (e.g. <code>/path/to my/ndk</code> is not allowed).</p>
     <p>After downloading Android Studio, you will need to download the APIs for the OS version that you want to target. You could for example set Android 4.3.1 (API 18) as your target OS. It turns out that the template project that comes with RapidGame targets API 18, while cocos2d-x itself targets API 10. This means that you must download these particular APIs before you can build the template project. In order to do so, you go to Android Studio -> Configure -> SDK Manager -> [Select and install appropriate packages]. If you had previously created a project in Android Studio, then launching Android Studio will open up directly to the IDE. To navigate to the SDK Manager from there, you go to Tools -> Android -> SDK Manager.</p>
-    <p>(Windows only) In addition, although certain commands can be run outside of Cygwin, it is recommended that you run all of the possible commands listed in this README in a Cygwin shell for ease of use. You must additionally run the shell as administrator each time you want to create a new project with <code>rapidgame create</code> in order to properly create the <code>lib</code> symlink. The first time you run <code>rapidgame create</code>, which will automatically prebuild the libraries for you as well, if you did not use an admin Cygwin shell, then the libraries will have been improperly placed and you will need to delete <code>rapidgame/[VERSION]</code> and <code>rapidgame/latest</code>, the latter of which will have been improperly created as a folder instead of a symlink. After that, delete the defective project that was created by <code>rapidgame create</code> and run the command again in a proper admin Cygwin shell, and the project and libraries will be properly created.</p>
+    <p><strong>(Windows only)</strong> Cygwin must be installed for all users (the recommended option in Cygwin's setup), which installs Cygwin in your root directory (<code>C:\Cygwin</code> or <code>C:\Cygwin64</code>). You should of course install the 64-bit version if you have a 64-bit machine. After you download the setup program found on their front page, you should keep the file stored somewhere safe in order to update your installation and install more programs as you become comfortable with it. The setup program itself may seem a bit intimidating, so just as a quick guide, here's what you do: Launch setup -> Next -> Next (Install from Internet) -> Next (Install for all users) -> Choose a directory that you won't delete on a whim -> Next -> Next (Direct connection) -> Next (Any mirror works) -> "Devel" change from `Default` to `Install` -> Next (Option `Select required packages` should be checked) -> [Wait] -> Finish.</p>
+    <p><strong>(Windows only)</strong> In addition, although certain commands can be run outside of Cygwin, it is recommended that you run all of the possible commands listed in this README in a Cygwin shell for ease of use. You must additionally run the shell as administrator each time you want to create a new project with <code>rapidgame create</code> in order to properly create the <code>lib</code> symlink. The first time you run <code>rapidgame create</code>, which will automatically prebuild the libraries for you as well, if you did not use an admin Cygwin shell, then the libraries will have been improperly placed and you will need to delete <code>rapidgame/[VERSION]</code> and <code>rapidgame/latest</code>, the latter of which will have been improperly created as a folder instead of a symlink. After that, delete the defective project that was created by <code>rapidgame create</code> and run the command again in a proper admin Cygwin shell, and the project and libraries will be properly created.</p>
 
 
 
@@ -920,8 +935,8 @@ PATH = $PATH,
        $ANDROID_SDK_ROOT/tools
 </code></pre>
 	
-	<p>The above is a generic representation of the environment variables and not proper syntax. It is for ease of readability and up to you to translate the information for your system. You get to choose where you want to install Ant and the Android NDK. Because RapidGame downloads and configures cocos2d-x and cocos2d-js for you, there is no need to set any environment variables related to Cocos.</p>
-	<p>(Winows only) In addition to setting the above environment variables for your host OS, you must also set <code>ANDROID_SDK_ROOT</code> and <code>NDK_ROOT</code> in Cygwin's <code>~/.bash_profile</code> as you would on Mac. The formatting should be as follows: <code>export ANDROID_SDK_ROOT=C:/path/to/sdk</code>, and you follow that pattern for <code>NDK_ROOT</code> as well.</p>
+	<p>The above is a generic representation of the environment variables and not proper syntax. It is for ease of readability and up to you to translate the information for your system. Because RapidGame downloads and configures cocos2d-x and cocos2d-js for you, there is no need to set any environment variables related to Cocos.</p>
+	<p><strong>(Windows only)</strong> In addition to setting the above environment variables for your host OS, you must also set <code>ANDROID_SDK_ROOT</code> and <code>NDK_ROOT</code> in Cygwin's <code>~/.bash_profile</code> as you would on <a href="#mac">Mac</a>. The formatting should be as follows: <code>export ANDROID_SDK_ROOT=C:/path/to/sdk</code>, and you follow that pattern for <code>NDK_ROOT</code> as well. See the link to `Mac` if you are confused.</p>
     <p><strong>Windows defaults:</strong></p>
     <ul>
       <li>Android SDK is installed in <code>C:\Users\[USERNAME]\AppData\Local\Android\sdk</code></li>
@@ -1003,7 +1018,8 @@ export var2=/path/to/var2
 # We want to keep the original variable and add to it
 export PATH=$PATH:/path/to/something:/path/to/another/thing
 </code></pre>
-    <p>When you are done editing the file, save and close it and then run <code>source ~/.bash_profile</code> and you&#39;re good to go.</p>
+    <p>When you are done editing the file, save and close it and then run <code>source ~/.bash_profile</code> and you&#39;re good to go. If you want to double-check, you can type <code>echo $VAR</code>, which will print the value of <code>VAR</code> back to you.</p>
+    <p>As a brief additional explanation if you're unfamiliar with the command line, <code>~</code> is your home directory and can be used in your terminal to get you back home (<code>cd ~</code>). After changing to your home directory, you can type <code>pwd</code> to find out where "home" actually is. Another interesting point is dotfiles. These are files that start with a <code>.</code> and cannot be seen by typing <code>ls</code>. You can type <code>ls -a</code> to see all of the files in a directory, including dotfiles.</p>
 
     <h3 id="windows">Windows</h3>
     <p>For Windows, the easiest way to edit your environment variables is by pressing the Windows button, searching &quot;environment variables&quot;, and clicking on the link that comes up. A window should open that is divided into user and system variables, and we are only interested in editing user variables. Be sure to check if the variable already exists before trying to create a new one. Each variable has a name and a value, so if we were setting <code>ANDROID_SDK_ROOT</code>, then that would be the name, and the value might be <code>C:\Users\John\AppData\Local\Android\sdk</code>. If you want to add to an already existing variable, then you add the path to add to the beginning of the value and then place a <code>;</code> between that and the rest of the value, e.g. we want to add Python's path to some other paths, so the final result would look like: <code>C:\Python27;C:\cygwin64\bin;C:\other\things</code>.</p>

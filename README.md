@@ -137,7 +137,7 @@ What's the difference between a RapidGame project and a "normal" cocos2d-x proje
 
 A project created by RapidGame uses exactly the same underlying API as cocos2d-x / cocos2d-js. One can still get the running scene, for example, like this `cc.director.getRunningScene()` (Javascript) or this `cocos2d::Director::getInstance()->getRunningScene()` (C++).
 
-RapidGame extends upon the cocos2d-js API with the [Game](https://cdn.rawgit.com/NatWeiss/RapidGame/master/docs/Game.html) object. This object provides methods which are commonly used in game development, but were missing from cocos2d-js at the time of writing. `Game.rand(5)`, for example, returns a random integer between 0 and 5.
+RapidGame extends upon the cocos2d-js API with the [Game](http://htmlpreview.github.io/?https://github.com/NatWeiss/RapidGame/blob/master/docs/Game.html) object. This object provides methods which are commonly used in game development, but were missing from cocos2d-js at the time of writing. `Game.rand(5)`, for example, returns a random integer between 0 and 5.
 
 While the underlying API stays the same, the file / folder structure of a project created by RapidGame is different than that of a "normal" cocos2d-js project. A normal project is created with the `cocos` command:
 
@@ -189,7 +189,7 @@ Linux support is planned.
 Android Notes
 -------------
 
-A detailed guide has been written specifically for how to build Android projects using RapidGame. You can read it [here](https://cdn.rawgit.com/NatWeiss/RapidGame/master/templates/cocos2dx/TwoScene/Projects/android/README.html), or alternatively find it in your cocos2d-x/js project as `[APPNAME]/Projects/android/README.html`.
+A detailed guide has been written specifically for how to build Android projects using RapidGame. You can read it [here](http://htmlpreview.github.io/?https://github.com/NatWeiss/RapidGame/blob/master/templates/cocos2dx/TwoScene/Projects/android/README.html), or alternatively find it in your cocos2d-x/js project as `[APPNAME]/Projects/android/README.html`.
 
 
 Windows Notes
