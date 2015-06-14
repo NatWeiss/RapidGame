@@ -108,7 +108,7 @@ def add_to_makefile(filtered):
         line = android.readline()
 
     if not found:
-        print 'Could not find "LOCAL_SRC_FILES := main.c" in `/Projects/android/jni/Android.mk`.'
+        print 'Could not find "LOCAL_SRC_FILES := main.cpp" in `Projects/android/jni/Android.mk`.'
         exit(1)
 
     # In order to make the process safer, the data has been stored in `lines`,
