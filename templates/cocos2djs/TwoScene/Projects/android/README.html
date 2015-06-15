@@ -986,6 +986,24 @@ CN: CN=Android Debug,0=Android,C=US
 
 
 
+    <h1 id="modifying-for-your-needs">Modifying for Your Needs</h1>
+
+    <p>If you are new to Android development, you may have questions about all the files that are in <code>MyGame/Projects/android</code>. First off, these files do not need to be changed in any way in order to get the template project running. However, they are of course used in some way to specify the metadata of your game, such as what the target Android OS version is, or whether your game starts in portrait or landscape, or what kind of permissions you want access to and what kind of hardware features your game requires. The following is a summary of all the files you may want to modify for some reason or another in order to fit your needs, meaning not all of the files will be mentioned here. If you still want to modify a specific feature and don't know how to do it, this list is meant to help you with Googling your problem to find the answer. However, <a href="http://developer.android.com/guide/components/fundamentals.html" target="_blank">this page</a> is a good starting point.</p>
+
+    <ul>
+    	<li><code>.identifier</code>: The package identifier for your game.</li>
+    	<li><code>.name</code>: The name of your game.</li>
+    	<li><code>AndroidManifest.xml</code>: This is the main file you will need to muck around with if you want to change any metadata about your game. Refer to the page mentioned above to see what's contained in the file itself and how to modify it.</li>
+    	<li><code>ant.properties</code>: Add your keystore information to this file so that you are automatically prompted for the release key's password when you run <code>make distribution</code>. Refer to the info mentioned under <a href="#building-your-project">Building Your Project</a> if you don't know what a keystore is or how to make one.</li>
+    	<li><code>build_files.py</code>: Makes sure the list of source files is updated everytime you run <code>make</code>. Should not be changed unless you know what you're doing.</li>
+    	<li><code>build_native.py</code>: The script that actually compiles your files and puts them in a shared library before <code>ant</code> is used to pack it in an .apk. Should not be changed in any way.</li>
+    	<li><code>makefile</code>: Tells <code>make</code> what to do to build your project for each of the possible targets. You could for example change how verbose you want <code>logcat</code> to be when printing output to the console.</li>
+    	<li><code>makeignore</code>: The list of C/C++ source files under <code>MyGame/Projects</code> that you don't want included in the Android build of your game.</li>
+    </ul>
+
+
+
+
     <h1 id="building-for-different-architectures">Building for Different Architectures</h1>
 
     <p>As your app is using native code (C++), your final .apk will contain code compiled for a specific architecture. If you were writing a pure Java app, that app would run on any device without needing to compile for each architecture thanks to the JVM. By default, your Android game is set to build for the ARM (armeabi) architecture, which a huge majority of Android phones use (think equivalent to Intel's dominance in desktop computing). RapidGame has the ability to prebuild the Android cocos2d-x libraries for ARM, ARMv7, and x86, but unfortunately trying to build the template project after setting the architecture to x86 will cause the build to fail, so the Android-x86 libraries are skipped over in <code>rapidgame prebuild</code> to save time. Even so, the x86 devices that have <code>libhoudini</code> on them are able to run ARM apps, albeit more slowly. In any case, the two currently supported architectures you can build for are ARM and ARMv7. ARMv7 is backwards compatitable with ARM, so you can just build your app for ARM and it will run on newer ARMv7 devices. The main advantage of ARMv7 is faster floating point operations, so you may find your game performs better on newer devices. For more specific info on the different architectures, <a href="https://chromium.googlesource.com/android_tools/+/master-backup/ndk/docs/CPU-ARCH-ABIS.html" target="_blank">refer here</a>. You can find out much more extensive documentation about the NDK in general by going to <code>NDK_ROOT/docs/Start_Here.html</code>.</p>
