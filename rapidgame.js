@@ -608,9 +608,9 @@ var runPrebuild = function(platform, config, arch, callback) {
 		}
 	} else if (process.platform === "win32") {
 		if (platform === "android") {
-			// Sam: All Cygwin terminals add TERM to the environment variables.
+			// Sam: All Cygwin terminals add TERM to their environment variables.
 			// Even though the value might vary ('cygwin' or 'xterm'), we can
-			// reasonable assume that someone running RapidGame in a shell with
+			// reasonably assume that someone running RapidGame in a shell with
 			// TERM as an environment variable is using Cygwin. Windows does
 			// not using this variable, which is why this check is used. The
 			// same check is applied when prebuilding without any arguments
