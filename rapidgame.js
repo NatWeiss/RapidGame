@@ -440,7 +440,7 @@ var downloadCocos = function(callback) {
 			// (see comments at the end of this file for how to create the patch)
 			src = path.join(dir, "cocos2d.patch");
 			console.log("Applying patch file: " + src);
-			exec("git apply --whitespace=nowarn " + src, {cwd: dest, env: process.env}, function(err){
+			exec("git apply --whitespace=nowarn " + '"' + src + '"', {cwd: dest, env: process.env}, function(err){
 				// Delete patch
 				//if (!err) {
 				//	fs.unlinkSync(src);
