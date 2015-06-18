@@ -883,7 +883,7 @@ var linkWin = function(config, callback) {
 	for (i = 0; i < libDirs.length; i += 1) {
 		copyGlobbed(libDirs[i], dest, "*.dll");
 		//copyGlobbed(libDirs[i], dest, "*.pdb");
-		command += " " + path.join(libDirs[i], "*.lib");
+		command += ' "' + path.join(libDirs[i], "*.lib") + '"';
 	}
 
 	// execute
