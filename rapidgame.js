@@ -608,9 +608,20 @@ var runPrebuild = function(platform, config, arch, callback) {
 		}
 	} else if (process.platform === "win32") {
 		if (platform === "android") {
-			prebuildAndroid(config, arch, function(){
-				callback();
-			});
+			// Sam: All Cygwin terminals add TERM to the environment variables.
+			// Even though the value might vary ('cygwin' or 'xterm'), we can
+			// reasonable assume that someone running RapidGame in a shell with
+			// TERM as an environment variable is using Cygwin. Windows does
+			// not using this variable, which is why this check is used. The
+			// same check is applied when prebuilding without any arguments
+			// (see a few lines below).
+			if ("TERM" in process.env) {
+				prebuildAndroid(config, arch, function(){
+					callback();
+				});
+			} else {
+				console.log("Build cancelled. You must prebuild the Android libraries in a Cygwin shell.");
+			}
 		}
 		else if (platform === "windows") {
 			prebuildWin(config, arch, function(){
@@ -618,11 +629,17 @@ var runPrebuild = function(platform, config, arch, callback) {
 			});
 		}
 		else {
-			prebuildWin(config, arch, function(){
-				prebuildAndroid(config, arch, function(){
+			if ("TERM" in process.env) {
+				prebuildWin(config, arch, function(){
+					prebuildAndroid(config, arch, function(){
+						callback();
+					});
+				});
+			} else {
+				prebuildWin(config, arch, function(){
 					callback();
 				});
-			});
+			}
 		}
 	} else {
 		console.log("No prebuild command written for " + process.platform + " yet");

@@ -3,4 +3,3 @@
   Or, on Windows, by opening the `.sln` file in `Projects\windows`.
   Or, for Android, see the README in `Projects/android`
   Ready to code? Start with the `Projects/GameScene.cpp` file.
-  Do `rapidgame prebuild` to prepare cocos2d-x libraries.
