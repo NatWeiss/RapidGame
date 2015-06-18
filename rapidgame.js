@@ -15,6 +15,7 @@
 //       /bin/sh -c /Users/user/Library/Developer/RapidGame/src/proj.ios_mac/build/cocos2dx-prebuilt.build/Debug/Mac.build/Script-419E8E9E18A9BB3400232A34.sh
 //   	outputDir=/Users/user/Library/Developer/RapidGame/src/proj.ios_mac/../../latest/cocos2d/x/lib/Debug-Mac/macosx
 //   	error: libtool: can't open file: /Users/user/Library/Developer/RapidGame/src/proj.ios_mac/build/Debug/*.a (No such file or directory)
+//		It may be that we just need to set CONFIGURATION_BUILD_DIR, see: https://developer.apple.com/library/mac/documentation/DeveloperTools/Reference/XcodeBuildSettingRef/1-Build_Setting_Reference/build_setting_ref.html
 //
 
 var http = require("http"),
