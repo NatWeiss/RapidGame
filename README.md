@@ -56,7 +56,7 @@ Updates
 Create a Game in Under 30 Seconds
 ---------------------------------
 
-You'll first need [Node.js](http://nodejs.org/download/) and [Git](http://git-scm.com/downloads).
+You'll first need [Node.js](http://nodejs.org/download/) and [Git](http://git-scm.com/downloads). Add Git to your PATH as well.
 
 There's no need to clone this repo, just install RapidGame:
 
@@ -66,7 +66,7 @@ Or, on Windows leave off the `sudo`:
 
 	npm install rapidgame -g
 
-And, create a cocos2d-x game named "HeckYeah". Make sure to run this command in Cygwin as administrator if you're using Windows:
+And, create a cocos2d-x game named "HeckYeah". Make sure to run this command as administrator if you're using Windows:
 
 	rapidgame create cocos2dx "HeckYeah" org.myorg.heckyeah
 
