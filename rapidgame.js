@@ -876,7 +876,7 @@ var linkWin = function(config, callback) {
 			'/IGNORE:4006 ' +
 			//'/OPT:REF ' +
 			//'/OPT:ICF ' +
-			'"/OUT:' + path.join(dest, "libcocos2dx-prebuilt.lib") + '"';
+			'/OUT:"' + path.join(dest, "libcocos2dx-prebuilt.lib") + '"';
 
 	// copy dlls and finish creating command
 	copyGlobbed(runtimeDir, dest, "*.dll"); // first these because we want to overwrite libcocos2d.dll
