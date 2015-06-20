@@ -1318,6 +1318,8 @@ var exec = function(command, options, callback) {
 	if (cmd.verbose) {
 		console.log(command);
 		console.log("Current dir: " + options.cwd);
+	} else {
+		logBuild("\nExecuting:\n\t" + command + "\nCurrent dir:\n\t" + options.cwd + "\n");
 	}
 	try {
 		child_process.exec(command, options, function(err, stdout, stderr){
