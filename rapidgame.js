@@ -1319,7 +1319,7 @@ var exec = function(command, options, callback) {
 		console.log(command);
 		console.log("Current dir: " + options.cwd);
 	} else {
-		logBuild("\nExecuting:\n\t" + command + "\nCurrent dir:\n\t" + options.cwd + "\n");
+		logBuild("\nExecuting:\n\t" + command + "\n\nCurrent dir:\n\t" + options.cwd + "\n\n");
 	}
 	try {
 		child_process.exec(command, options, function(err, stdout, stderr){
@@ -1355,6 +1355,8 @@ var spawn = function(command, args, options, callback) {
 		console.log("Current dir: " + options.cwd);
 	}
 	try {
+		logBuild("\nSpawning:\n\t" + command + ' ' + args.join(' ') + "\n\nCurrent dir:\n\t" + options.cwd + "\n\n");
+
 		// spawn the process
 		var child, exitCode = 0;
 		if (args && args.length) {
