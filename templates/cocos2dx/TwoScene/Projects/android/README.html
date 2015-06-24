@@ -888,13 +888,15 @@
   	<h2 id="tl-dr">TL;DR</h2>
 
   	<ul>
-  		<li>Make sure you have all the programs that are under `Prequisite Downloads`</li>
-  		<li>Check your environment variables against the list in `Setup Environment Variables`</li>
+  		<li>Make sure you have all the programs that are under <a href="#prerequisite-downloads-">Prequisite Downloads</a></li>
+  		<li>Check your environment variables against the list in <a href="#setup-environment-variables-">Setup Environment Variables</a></li>
   		<li><code>cd [APPNAME]/Projects/android &amp;&amp; make</code></li>
   		<li>Plug in your Android device via USB</li>
   		<li><code>make run</code></li>
   		<li>Find and launch app</li>
   	</ul>
+
+  	<p>You can create, delete, and edit source files under <code>[APPNAME]/Projects</code> and assets under <code>[APPNAME]/Assets</code> as you wish. Changes in these folders will be included in the Android build automatically.</p>
 
 
 
@@ -952,7 +954,7 @@ PATH = $PATH,
     <p></p>
     <pre><code>MyGame = example root project directory</code></pre>
     <p>Anytime you actually build an .apk file (any of the first 3 commands listed below), make will automatically search in <code>MyGame/Projects</code> for all your C and C++ source files (<code>.c</code>, <code>.cpp</code>, <code>.cc</code>, <code>.cxx</code>) and update the changes you've made (whether creating or deleting files) for the build list. As header files aren't source files, you don't need to worry about them. Other filetypes such as <code>.m</code> and <code>.mm</code> will be ignored for the Android build. You can edit <code>MyGame/Projects/android/makeignore</code> and add the C and C++ files you do not want included in the Android build, one file per line. After editing <code>makeignore</code> and running <code>make [target]</code>, your project will be built according to the file changes in <code>MyGame/Projects</code> and the changes in <code>makeignore</code>. Your C/C++ filenames may not contain any spaces in them.</p>
-    <p>It&#39;s assumed that the RapidGame libraries have been built for Android by this point and you&#39;ve created your project using <code>rapidgame create cocos2dx</code> or <code>rapidgame create cocos2djs</code>. You are able to edit your source files in whatever IDE/text editor you like, but you should save the files in <code>MyGame/Projects</code>. When you are ready to build your game, you will have several options. You will first open Terminal on Mac or a Cygwin shell on Windows and change the directory (<code>cd</code>) to <code>MyGame/Projects/android</code>. The following is a list of commands you may want to execute after that step (refer to <code>MyGame/Projects/android/makefile</code> if you want to make any modifications):</p>
+    <p>It&#39;s assumed that the RapidGame libraries have been built for Android by this point and you&#39;ve created your project using <code>rapidgame create cocos2dx</code> or <code>rapidgame create cocos2djs</code>. You are able to edit your source files in whatever IDE/text editor you like, but you should save the files in <code>MyGame/Projects</code>. For assets, add them to <code>MyGame/Assets</code> and they will automatically be included in your Android game under <code>MyGame/Projects/android/assets/Assets</code> when you run <code>make</code>. The <code>assets</code> directory and its subdirectories are destroyed upon execution of <code>make clean</code>. When you are ready to build your game, you will have several options. You will first open Terminal on Mac or a Cygwin shell on Windows and change the directory (<code>cd</code>) to <code>MyGame/Projects/android</code>. The following is a list of commands you may want to execute after that step (refer to <code>MyGame/Projects/android/makefile</code> if you want to make any modifications):</p>
 
     <ol>
       <li>
@@ -1016,10 +1018,10 @@ CN: CN=Android Debug,0=Android,C=US
     <h1 id="useful-tools">Useful Resources and Tools</h1>
 
     <ul>
-    	<li><a href="http://wizardfu.com/book/cocos2d-x/" target="_blank">Cocos2d-x Book</a>: Learn cocos2d-x and game design from the creator of RapidGame for free.</li>
-    	<li><a href="https://github.com/NatWeiss/EntityFu" target="_blank">EntityFu</a>: A C++ Entity Component System, also written by Mr. Wizard himself. See the README for a guide on Entity Component Systems if you are unfamiliar with them.</li>
-    	<li><a href="http://developer.android.com/tools/debugging/debugging-tracing.html" target="_blank">Traceview</a>: Optimize your game's performance and speed and find memory leaks. Much like Apple's `Intruments`, which comes with Xcode.</li>
-    	<li><a href="http://developer.android.com/tools/studio/index.html" target="_blank">Learn Android Studio</a>: Although you can write your code with any text editor or IDE you like, there are still some nice features you should take advantage of in Android Studio, such as the ability to record and save .mp4 videos of your device.</li>
+    	<li><a href="http://wizardfu.com/book/cocos2d-x/" target="_blank">Cocos2d-x Book</a>: Free book for learning cocos2d-x and game design from the author of RapidGame.</li>
+    	<li><a href="https://github.com/NatWeiss/EntityFu" target="_blank">EntityFu</a>: A C++ Entity Component System, also written by Nathanael. See the project's README for a guide on component-based programming if you are unfamiliar with it.</li>
+    	<li><a href="https://game-development.zeef.com/david.arcila" target="_blank">Game Development Resources</a>: Tools, assets, and other info galore. Look here if you need a free tool to do something for your game.</li>
+    	<li><a href="http://developer.android.com/index.html" target="_blank">Android Developer</a>: You will need to muck about with some of the files under <code>MyGame/Projects/android</code> at some point before you release your game. You can find the answers to a lot of your Android-specific questions here, such as what you need to do before publishing.</li>
     </ul>
 
 
