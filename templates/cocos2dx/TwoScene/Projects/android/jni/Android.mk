@@ -14,8 +14,8 @@ include $(PREBUILT_STATIC_LIBRARY)
 
 
 include $(CLEAR_VARS)
-LOCAL_MODULE := cocos2dx-game-shared
-LOCAL_MODULE_FILENAME := cocos2dx-game-lib
+LOCAL_MODULE := cocos2dxgame_shared
+LOCAL_MODULE_FILENAME := libcocos2dxgame
 
 LOCAL_SRC_FILES := main.cpp \
                    ../../AppDelegate.cpp \

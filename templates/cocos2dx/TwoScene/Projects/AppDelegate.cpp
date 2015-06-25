@@ -5,7 +5,6 @@
 #include "AppDelegate.h"
 #include "MenuScene.h"
 #include "Game.h"
-#include "external/json/document.h"
 
 AppDelegate::AppDelegate()
 {
@@ -28,17 +27,8 @@ bool AppDelegate::applicationDidFinishLaunching()
 	auto fileUtils = cocos2d::FileUtils::getInstance();
 	auto& winSize = director->getWinSize();
 
-	// load project.json
-	auto json = fileUtils->getStringFromFile("project.json");
-	rapidjson::Document doc;
-	doc.Parse<0>(json.c_str());
-	cocos2d::Size designRes(2048, 1536);
-	if (doc["designWidth"].IsInt())
-		designRes.width = doc["designWidth"].GetInt();
-	if (doc["designHeight"].IsInt())
-		designRes.height = doc["designHeight"].GetInt();
-
 	// set content rect
+	cocos2d::Size designRes(2048, 1536);
 	cocos2d::Rect contentRect(0, 0, designRes.width, designRes.height);
 	if (winSize.width > winSize.height)
 	{
@@ -59,7 +49,6 @@ bool AppDelegate::applicationDidFinishLaunching()
 	// set search paths
 	const char* paths[] =
 	{
-		"script",
 		"Assets",
 	};
 	for(auto& path : paths)

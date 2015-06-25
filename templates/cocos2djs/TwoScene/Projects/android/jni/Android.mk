@@ -14,8 +14,8 @@ include $(PREBUILT_STATIC_LIBRARY)
 
 
 include $(CLEAR_VARS)
-LOCAL_MODULE := cocos2djs-game-shared
-LOCAL_MODULE_FILENAME := cocos2djs-game-lib
+LOCAL_MODULE := cocos2djsgame_shared
+LOCAL_MODULE_FILENAME := libcocos2djsgame
 
 LOCAL_SRC_FILES := main.cpp \
                    ../../AppDelegate.cpp
