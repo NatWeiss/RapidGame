@@ -5,6 +5,7 @@
   <head>
     <meta charset="utf-8">
     <title>Android README</title>
+
     <style>
     /*! normalize.css v3.0.2 | MIT License | git.io/normalize */
 
@@ -880,12 +881,29 @@
 
   	<h1 id="building-android">Building Android README</h1>
 
-  	<p>Author's Note: The following gives a detailed overview for everything needed in order to compile a RapidGame project for Android. As such, there will be redundant information for those who already have experience with Android development. If that is the case, it is still recommended that you read through the entire document, as there is important information specific to RapidGame that you should know about so that you can properly configure your project to fit your needs. - <a href="https://github.com/samoersnaes" target="_blank">Samuel Ørsnæs</a></p>
+  	<p><strong>Author&#39;s Note</strong>: The following gives a detailed overview for everything needed in order to build a RapidGame project for Android. Most of this README is about what is required for Android development in general. As such, there will be redundant information for those who are already familiar with the topic. If that is the case, it is still recommended that you still skim through this README. - <a href="https://github.com/samoersnaes" target="_blank">Samuel Ørsnæs</a></p>
 
 
 
 
-  	<h2 id="tl-dr">TL;DR</h2>
+  	<h1 id="index">Index</h1>
+
+  	<ol>
+  		<li><a href="#tl-dr">TL;DR</a></li>
+  		<li><a href="#prerequisite-downloads-">Prerequisite Downloads</a></li>
+  		<li><a href="#setup-environment-variables-">Setup Environment Variables</a></li>
+  		<li><a href="#building-your-project">Building Your Project</a></li>
+  		<li><a href="#modifying-for-your-needs">Modifying for Your Needs</a></li>
+  		<li><a href="#building-for-different-architectures">Building for Different Architectures</a></li>
+  		<li><a href="#useful-tools">Useful Resources and Tools</a></li>
+  		<li><a href="#environment-variables-intro">Environment Variables Intro</a></li>
+  		<li><a href="#help">Help!</a></li>
+  	</ol>
+
+
+
+
+  	<h1 id="tl-dr">TL;DR</h1>
 
   	<ul>
   		<li>Make sure you have all the programs that are under <a href="#prerequisite-downloads-">Prequisite Downloads</a></li>
@@ -893,7 +911,7 @@
   		<li><code>cd [APPNAME]/Projects/android &amp;&amp; make</code></li>
   		<li>Plug in your Android device via USB</li>
   		<li><code>make run</code></li>
-  		<li>Find and launch app</li>
+  		<li>Find the app on your device and launch it</li>
   	</ul>
 
   	<p>You can create, delete, and edit source files under <code>[APPNAME]/Projects</code> and assets under <code>[APPNAME]/Assets</code> as you wish. Changes in these folders will be included in the Android build automatically.</p>
@@ -901,27 +919,29 @@
 
 
 
-    <h2 id="prerequisite-downloads-">Prerequisite Downloads</h2>
+    <h1 id="prerequisite-downloads-">Prerequisite Downloads</h1>
 
     <ul>
-      <li><a href="http://developer.android.com/sdk/index.html" target="_blank">Android Studio</a> (includes Android SDK and many other tools)</li>
-      <li><a href="https://developer.android.com/ndk/downloads/index.html" target="_blank">Android NDK</a> (C/C++ development for Android)</li>
-      <li><a href="http://ant.apache.org/bindownload.cgi" target="_blank">Apache Ant</a> (needed to build .apk's)</li>
-      <li><a href="https://www.python.org/downloads" target="_blank">Python</a> (2.7.x preferred, although 3.4.x should be fine)</li>
-      <li><a href="https://www.cygwin.com/" target="_blank">Cygwin</a> (for Windows only; download the &quot;Devel&quot; packages as well in setup)</li>
+      <li><a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html" target="_blank">JDK</a> (Java Development Kit)</li>
+      <li><a href="http://developer.android.com/sdk/index.html" target="_blank">Android Studio</a> (includes the Android SDK and many other tools)</li>
+      <li><a href="https://developer.android.com/ndk/downloads/index.html" target="_blank">Android NDK</a> (native Android development: C and C++)</li>
+      <li><a href="http://ant.apache.org/bindownload.cgi" target="_blank">Apache Ant</a> (needed to build .apk&#39;s)</li>
+      <li><a href="https://www.python.org/downloads" target="_blank">Python</a> (<strong>2.7.x required</strong>)</li>
+      <li><a href="https://www.cygwin.com/" target="_blank">Cygwin</a> (<strong>only required for Windows users</strong>; download the `Devel` packages as well in setup)</li>
     </ul>
 
-    <p>As the Android NDK and Ant do not come with installers but are compressed folders, you choose yourself where you want to unpack the folder. According to the NDK, the path to it may not contain any spaces (e.g. <code>/path/to my/ndk</code> is not allowed).</p>
-    <p>After downloading Android Studio, you will need to download the APIs for the OS version that you want to target. You could for example set Android 4.3.1 (API 18) as your target OS. It turns out that the template project that comes with RapidGame targets API 18, while cocos2d-x itself targets API 10. This means that you must download these particular APIs before you can build the template project. In order to do so, you go to Android Studio -> Configure -> SDK Manager -> [Select and install appropriate packages]. If you had previously created a project in Android Studio, then launching Android Studio will open up directly to the IDE. To navigate to the SDK Manager from there, you go to Tools -> Android -> SDK Manager.</p>
-    <p><strong>(Windows only)</strong> Cygwin must be installed for all users (the recommended option in Cygwin's setup), which installs Cygwin in your root directory (<code>C:\Cygwin</code> or <code>C:\Cygwin64</code>). You should of course install the 64-bit version if you have a 64-bit machine. After you download the setup program found on their front page, you should keep the file stored somewhere safe in order to update your installation and install more programs as you become comfortable with it. The setup program itself may seem a bit intimidating, so just as a quick guide, here's what you do: Launch setup -> Next -> Next (Install from Internet) -> Next (Install for all users) -> Choose a directory that you won't delete on a whim -> Next -> Next (Direct connection) -> Next (Any mirror works) -> "Devel" change from `Default` to `Install` -> Next (Option `Select required packages` should be checked) -> [Wait] -> Finish.</p>
-    <p><strong>(Windows only)</strong> In addition, although certain commands can be run outside of Cygwin, it is recommended that you run all of the possible commands listed in this README in a Cygwin shell for ease of use. You must additionally run the shell as administrator each time you want to create a new project with <code>rapidgame create</code> in order to properly create the <code>lib</code> symlink. The first time you run <code>rapidgame create</code>, which will automatically prebuild the libraries for you as well, if you did not use an admin Cygwin shell, then the libraries will have been improperly placed and you will need to delete <code>rapidgame/[VERSION]</code> and <code>rapidgame/latest</code>, the latter of which will have been improperly created as a folder instead of a symlink. After that, delete the defective project that was created by <code>rapidgame create</code> and run the command again in a proper admin Cygwin shell, and the project and libraries will be properly created.</p>
+    <p>As the Android NDK and Ant are compressed folders (not something you install), you choose where you want to unpack them. According to the NDK, the path to it may not contain any spaces (e.g. <code>/path to my/ndk</code> is not allowed).</p>
+
+    <p>After downloading Android Studio, you will need to download the APIs for the OS version that you want to target. You could for example choose Android 4.3.1 (API 18) as your target OS. It turns out that the template project that comes with RapidGame targets API 18, while cocos2d-x/js itself targets API 10. This means that you must download these particular APIs before you can build the template project. In order to do so, you go to Android Studio > Configure > SDK Manager > [Select and install appropriate packages]. If you had previously created a project in Android Studio, then launching Android Studio will open up directly to the IDE. To navigate to the SDK Manager from there, you go to Tools > Android > SDK Manager.</p>
+
+    <p><strong>(Windows only)</strong> Cygwin must be installed for all users (this is the recommended option in Cygwin&#39;s setup), which installs Cygwin in your root directory (<code>C:\Cygwin</code> or <code>C:\Cygwin64</code>). You should of course install the 64-bit version if you have a 64-bit machine. After you download the setup program found on their front page, you should keep this file stored somewhere safe in case you want to add packages or update Cygwin later. It is recommended that you use a Cygwin shell anytime you need to interact with the command line for your project. When you create a cocos2d-x/js project with RapidGame (<code>rapidgame create</code>), you must run Cygwin as administrator (right-click on `Cygwin Terminal` > `Run as administrator`). This is to ensure that the <code>lib</code> symlink is properly created. If you find installing Cygwin to be a bit intimidating, check out the <a href="#help">Help!</a></p>
 
 
 
 
-    <h2 id="setup-environment-variables-">Setup Environment Variables</h2>
+    <h1 id="setup-environment-variables-">Setup Environment Variables</h1>
 
-    <p>Before building your first project, you should make sure all the necessary environment variables are set. It is assumed you already know how to work with environment variables for your system, but if you need help, refer to the <a href="#environment-variables-intro">bottom of this README</a>.</p>
+    <p>Before building your first project, you should make sure all the necessary environment variables are set. If you don&#39;t know what that means, refer to <a href="#environment-variables-intro">Environment Variables Intro</a>.</p>
 
     <pre><code>ANDROID_SDK_ROOT = /path/to/sdk
 ANT_HOME = /path/to/ant
@@ -930,37 +950,58 @@ JAVA_HOME = /path/to/jdk
 NDK_ROOT = /path/to/ndk
 PATH = $PATH,
        /path/to/python,
-       $JAVA_HOME/bin,
-       $NDK_ROOT,
-       $ANDROID_SDK_ROOT/build-tools/[VERSION],
-       $ANDROID_SDK_ROOT/platform-tools,
-       $ANDROID_SDK_ROOT/tools
+       /path/to/jdk/bin,
+       /path/to/ndk,
+       /path/to/sdk/build-tools/[VERSION],
+       /path/to/sdk/platform-tools,
+       /path/to/sdk/tools
 </code></pre>
 	
-	<p>The above is a generic representation of the environment variables and not proper syntax. It is for ease of readability and up to you to translate the information for your system. Because RapidGame downloads and configures cocos2d-x and cocos2d-js for you, there is no need to set any environment variables related to Cocos.</p>
-	<p><strong>(Windows only)</strong> In addition to setting the above environment variables for your host OS, you must also set <code>ANDROID_SDK_ROOT</code> and <code>NDK_ROOT</code> in Cygwin's <code>~/.bash_profile</code> as you would on <a href="#mac">Mac</a>. The formatting should be as follows: <code>export ANDROID_SDK_ROOT=C:/path/to/sdk</code>, and you follow that pattern for <code>NDK_ROOT</code> as well. See the link to `Mac` if you are confused.</p>
+	<p>The above is a generic representation of the environment variables and not proper syntax. It up to you to format the information for your system.</p>
+
+	<p><strong>(Windows only)</strong> In addition to setting the above environment variables for your host OS, you must also set <code>ANDROID_SDK_ROOT</code> and <code>NDK_ROOT</code> in Cygwin&#39;s <code>~/.bash_profile</code> as you would on <a href="#mac">Mac</a>. The formatting should be as follows:</p>
+
+	<pre><code>export ANDROID_SDK_ROOT=C:/path/to/sdk
+export NDK_ROOT=C:/path/to/ndk
+</code></pre>
+
     <p><strong>Windows defaults:</strong></p>
     <ul>
-      <li>Android SDK is installed in <code>C:\Users\[USERNAME]\AppData\Local\Android\sdk</code></li>
-      <li>JDK is installed in <code>C:\Program Files\Java\jdk1.X</code></li>
-      <li>Python is installed in <code>C:\PythonXX</code></li>
+      <li>Python <code>C:\PythonXX</code></li>
+      <li>JDK <code>C:\Program Files\Java\jdk1.X</code></li>
+      <li>Android SDK <code>C:\Users\[USERNAME]\AppData\Local\Android\sdk</code></li>
     </ul>
 
 
 
 
-    <h2 id="building-your-project">Building Your Project</h2>
+    <h1 id="building-your-project">Building Your Project</h1>
 
-    <p></p>
     <pre><code>MyGame = example root project directory</code></pre>
-    <p>Anytime you actually build an .apk file (any of the first 3 commands listed below), make will automatically search in <code>MyGame/Projects</code> for all your C and C++ source files (<code>.c</code>, <code>.cpp</code>, <code>.cc</code>, <code>.cxx</code>) and update the changes you've made (whether creating or deleting files) for the build list. As header files aren't source files, you don't need to worry about them. Other filetypes such as <code>.m</code> and <code>.mm</code> will be ignored for the Android build. You can edit <code>MyGame/Projects/android/makeignore</code> and add the C and C++ files you do not want included in the Android build, one file per line. After editing <code>makeignore</code> and running <code>make [target]</code>, your project will be built according to the file changes in <code>MyGame/Projects</code> and the changes in <code>makeignore</code>. Your C/C++ filenames may not contain any spaces in them.</p>
-    <p>It&#39;s assumed that the RapidGame libraries have been built for Android by this point and you&#39;ve created your project using <code>rapidgame create cocos2dx</code> or <code>rapidgame create cocos2djs</code>. You are able to edit your source files in whatever IDE/text editor you like, but you should save the files in <code>MyGame/Projects</code>. For assets, add them to <code>MyGame/Assets</code> and they will automatically be included in your Android game under <code>MyGame/Projects/android/assets/Assets</code> when you run <code>make</code>. The <code>assets</code> directory and its subdirectories are destroyed upon execution of <code>make clean</code>. When you are ready to build your game, you will have several options. You will first open Terminal on Mac or a Cygwin shell on Windows and change the directory (<code>cd</code>) to <code>MyGame/Projects/android</code>. The following is a list of commands you may want to execute after that step (refer to <code>MyGame/Projects/android/makefile</code> if you want to make any modifications):</p>
+    <ul>
+    	<li>You can edit your source files however you like, whether in an IDE or in a plain text editor.</li>
+    	<li>You must save your source files in <code>MyGame/Projects</code> and your assets in <code>MyGame/Assets</code>.</li>
+    	<li>To build your project, you must execute one of the commands listed below.</li>
+    	<li>Before you run these commands, make sure you change your working directory (<code>cd</code>) to <code>MyGame/Projects/android</code>.</li>
+    	<li>When you run <code>make</code>, your entire project will be built and packaged into an .apk file (the file that goes on your Android device).</li>
+    	<li><code>make</code> will intelligently keep track of new and deleted files, so you don&#39;t have to.</li>
+    	<li><code>make</code> will only keep track of the C and C++ (<code>.c</code>, <code>.cpp</code>, <code>.cc</code>, <code>.cxx</code>) source files in <code>MyGame/Projects</code>. This means if you have Objective-C (<code>.m</code>, <code>.mm</code>) files specific to iOS and Mac, <code>make</code> will ignore them when building your Android project.</li>
+    	<li>You can add C/C++ files that you want to exclude from the Android build, one file per line, in <code>MyGame/Projects/android/makeignore</code>.</li>
+    	<li>Your C/C++ filenames must not contain any spaces in them (e.g. <code>my cpp file.cpp</code> is not allowed).</li>
+    	<li>You can change the behavior of <code>make</code> (such as what sort of output is logged to the console) by editing <code>MyGame/Projects/android/makefile</code>. Be careful of your changes, as they could adversely affect the build process or prevent you from building your project.</li>
+    </ul>
+
+    <h3>Commands</h3>
 
     <ol>
       <li>
-        <code>make</code>: Build the debug version of your game and sign the .apk with the debug key. If you have never signed a debug Android application before and are prompted to enter information pertaining to the debug key, here is the info you need:
+        <code>make</code>: Builds the debug version of your game and signs the .apk with the debug key (produces <code>APPNAME-debug.apk</code>). If you have never signed an Android application before and are prompted to enter information pertaining to the debug key, here is the info you need:
         <p></p>
-        <pre><code>Keystore name: debug.keystore (absolute path: ~/.android/debug.keystore on Mac and C:/Users/[USERNAME]/.android/debug.keystore on Windows)
+        <pre><code>Absolute path:
+(Mac) /Users/[USERNAME]/.android/debug.keystore
+(Win) C:/Users/[USERNAME]/.android/debug.keystore
+
+Keystore name: debug.keystore
 Keystore password: android
 Key alias: androiddebugkey
 Key password: android
@@ -968,21 +1009,21 @@ CN: CN=Android Debug,0=Android,C=US
 </code></pre>
       </li>
 
-      <li><code>make release</code>: Build the release version of your game but still create the .apk file with the debug key.</li>
+      <li><code>make release</code>: Builds the release version of your game but creates the .apk file using the debug key (produces <code>APPNAME-debug.apk</code>).</li>
 
-      <li><code>make distribution</code>: Build the release version of your game and sign the .apk with the release key. For info on how to build a release key and sign your app, refer to <a href="http://developer.android.com/tools/publishing/app-signing.html" target="_blank">this page</a>. If you prefer to do everything on the command line, <a href="http://developer.android.com/tools/publishing/app-signing.html#signing-manually" target="_blank">take a look here</a>. The commands are OS-agnostic, so they are the same on Mac and Windows.</li>
+      <li><code>make distribution</code>: Builds the release version of your game and signs the .apk with the release key (produces <code>APPNAME-release-aligned.apk</code>). For info on how to create a release key and sign your app, refer to <a href="http://developer.android.com/tools/publishing/app-signing.html" target="_blank">this page</a>. If you prefer to do everything on the command line, <a href="http://developer.android.com/tools/publishing/app-signing.html#signing-manually" target="_blank">take a look here</a>. The commands are OS-agnostic, so they are the same on Mac and Windows.</li>
 
-      <li><code>make run</code>: Install your game on your Android device and begin printing log output to the console. Note that you must have your device plugged in via USB before running this command. In addition, <code>make run</code> does not launch your app. That must be done by you. If you get a &quot;waiting for device&quot; message after running this command, press <code>^C</code> to end the command&#39;s execution and run <code>adb devices</code> to check if your device has been recognized yet. As for the log output, the default settings in the makefile are to print debug output from your app and only fatal errors from everywhere else. For more about how logging works, refer to <a href="http://developer.android.com/tools/debugging/debugging-log.html" target="_blank">this page</a> and feel free to modify the makefile to your needs. If you want all future projects to keep a particular setting, you can modify <code>rapidgame/templates/cocos2dx/TwoScene</code> (replace <code>cocos2dx</code> with <code>cocos2djs</code> if need-be) or <a href="https://github.com/NatWeiss/RapidGame#create-your-own-templates" target="_blank">create your own templates</a>.</li>
+      <li><code>make run</code>: You need to have run one of the above commands first. Your Android device must also have <a href="http://www.kingoapp.com/root-tutorials/how-to-enable-usb-debugging-mode-on-android.htm" target="_blank">USB debugging enabled</a> and be plugged in via USB. Installs <code>APPNAME-debug.apk</code> on your Android device and begins printing log output to the console. <code>make run</code> does not launch your app after installing it. As for the log output, the default settings--specified in the <code>makefile</code>--print debug output from your app and fatal errors from everywhere else. For more about how logging works, refer to <a href="http://developer.android.com/tools/debugging/debugging-log.html" target="_blank">this page</a>. If you want all future projects to keep a particular setting, you can <a href="https://github.com/NatWeiss/RapidGame#create-your-own-templates" target="_blank">create your own RapidGame template</a>.</li>
 
-      <li><code>make run-relase</code>: Functionally equivalent to <code>make run</code> by default, as it installs APPNAME-debug.apk on your device and logs output to the console, exactly as <code>make run</code> does. However, you can modify the makefile to change what kind of logs you will see when you execute <code>make run</code> versus when you execute <code>make run-release</code>.</li>
+      <li><code>make run-relase</code>: Installs <code>APPNAME-debug.apk</code> on your device and logs output to the console, exactly as <code>make run</code> does. However, you can modify the makefile to change what kind of logs you will see when you execute one command versus the other.</li>
 
-      <li><code>make run-distribution</code>: Installs APPNAME-release-aligned.apk on your device and logs output to the console.</li>
+      <li><code>make run-distribution</code>: Installs <code>APPNAME-release-aligned.apk</code> on your device and logs output to the console. You need to have run <code>make distribution</code> first.</li>
 
-      <li><code>make clean</code>: Remove all the files and folders that were created when you built your game.</li>
+      <li><code>make clean</code>: Removes all the files and folders that are created when you build your game. Run this to clean up your Android project before you rebuild it.</li>
 
-      <li><code>make start-emulator</code>: You will first need to create an Android Virtual Device (AVD) using AVD Manager, which can be found at <code>$ANDROID_SDK_ROOT/AVD Manager</code>, or by opening Android Studio and navigating to the Android Tools and selecting it from there. The AVD you create should be set to use the ARM architecture, because 1) RapidGame Android projects can only build for ARM, and 2) x86 requires you to download and configure several things before you can emulate that architecture. You will then need to uncomment <code>#emulator -avd [device_name]</code> in the makefile by removing the <code>#</code> and then replace <code>[device_name]</code> with the name of the AVD you want to use for testing. In addition, uncomment the lines under <code>run-emulator</code>. Although the emulator is useful for testing your game in different environments, you should thoroughly test your game on at least a few actual Android devices before you release it.</li>
+      <li><code>make start-emulator</code>: You will first need to create an Android Virtual Device (AVD) using AVD Manager, which can be found at <code>$ANDROID_SDK_ROOT/AVD Manager</code>, or by opening Android Studio and navigating to Tools > Android > AVD Manager. The AVD you create should be set to use the ARM architecture, because 1) RapidGame Android projects can only build for ARM, and 2) an emulated x86 device requires you to download and configure several things before you can emulate that architecture. You will then need open the <code>makefile</code> and uncomment <code>#emulator -avd [device_name]</code> by removing the <code>#</code> and then replacing <code>[device_name]</code> with the name of the AVD you want to use for testing. In addition, uncomment the lines under <code>run-emulator</code>. Although the emulator is useful for testing your game in different environments, you should thoroughly test your game on at least a few physical Android devices before you release it.</li>
 
-      <li><code>make run-emulator</code>: Installs the app on your chosen AVD. You must have the emulator running, and you must execute this command in a new shell if you had run <code>make start-emulator</code>, as the latter command must continue running until you are finished.</li>
+      <li><code>make run-emulator</code>: Installs <code>APPNAME-debug.apk</code> on your chosen AVD. The selected AVD must already be running (<code>make start-emulator</code>).</li>
     </ol>
 
 
@@ -990,17 +1031,15 @@ CN: CN=Android Debug,0=Android,C=US
 
     <h1 id="modifying-for-your-needs">Modifying for Your Needs</h1>
 
-    <p>If you are new to Android development, you may have questions about all the files that are in <code>MyGame/Projects/android</code>. First off, these files do not need to be changed in any way in order to get the template project running. However, they are of course used in some way to specify the metadata of your game, such as what the target Android OS version is, or whether your game starts in portrait or landscape, or what kind of permissions you want access to and what kind of hardware features your game requires. The following is a summary of all the files you may want to modify for some reason or another in order to fit your needs, meaning not all of the files will be mentioned here. If you still want to modify a specific feature and don't know how to do it, this list is meant to help you with Googling your problem to find the answer. However, <a href="http://developer.android.com/guide/components/fundamentals.html" target="_blank">this page</a> is a good starting point.</p>
+    <p>If you are new to Android development, you may have questions about all the files that are in <code>MyGame/Projects/android</code>. First off, these files do not need to be changed in any way in order to get the template project running. However, they are needed in order to specify the metadata of your game, such as what the target Android OS version is, or whether your game starts in portrait or landscape, or what kind of permissions you want access to and what kind of hardware features your game requires. The following is a summary of the files you may want to modify for some reason or another in order to fit your needs. If you want a good starting point for better understanding of Android metadata files, <a href="http://developer.android.com/guide/components/fundamentals.html" target="_blank">this page</a> is a place to start.</p>
 
     <ul>
     	<li><code>.identifier</code>: The package identifier for your game.</li>
     	<li><code>.name</code>: The name of your game.</li>
-    	<li><code>AndroidManifest.xml</code>: This is the main file you will need to muck around with if you want to change any metadata about your game. Refer to the page mentioned above to see what's contained in the file itself and how to modify it.</li>
-    	<li><code>ant.properties</code>: Add your keystore information to this file so that you are automatically prompted for the release key's password when you run <code>make distribution</code>. Refer to the info mentioned under <a href="#building-your-project">Building Your Project</a> if you don't know what a keystore is or how to make one.</li>
-    	<li><code>build_files.py</code>: Makes sure the list of source files is updated everytime you run <code>make</code>. Should not be changed unless you know what you're doing.</li>
-    	<li><code>build_native.py</code>: The script that actually compiles your files and puts them in a shared library before <code>ant</code> is used to pack it in an .apk. Should not be changed in any way.</li>
-    	<li><code>makefile</code>: Tells <code>make</code> what to do to build your project for each of the possible targets. You could for example change how verbose you want <code>logcat</code> to be when printing output to the console.</li>
-    	<li><code>makeignore</code>: The list of C/C++ source files under <code>MyGame/Projects</code> that you don't want included in the Android build of your game.</li>
+    	<li><code>AndroidManifest.xml</code>: This is the main file you will need to muck around with if you want to change any metadata about your game. Refer to the page mentioned above to see what&#39;s contained in the file itself and how to modify it.</li>
+    	<li><code>ant.properties</code>: Add your keystore information to this file so that you are automatically prompted for the release key&#39;s password when you run <code>make distribution</code>. Refer <a href="http://developer.android.com/tools/publishing/app-signing.html" target="_blank">here</a> if you don&#39;t know what a keystore is or how to make one.</li>
+    	<li><code>makefile</code>: Tells <code>make</code> what to do to build your project for each of the possible targets. You could for example change how verbose you want <code>adb logcat</code> to be when printing output to the console.</li>
+    	<li><code>makeignore</code>: The list of C/C++ source files under <code>MyGame/Projects</code> that you don&#39;t want included in the Android build of your game.</li>
     </ul>
 
 
@@ -1008,9 +1047,9 @@ CN: CN=Android Debug,0=Android,C=US
 
     <h1 id="building-for-different-architectures">Building for Different Architectures</h1>
 
-    <p>As your app is using native code (C++), your final .apk will contain code compiled for a specific architecture. If you were writing a pure Java app, that app would run on any device without needing to compile for each architecture thanks to the JVM. By default, your Android game is set to build for the ARM (armeabi) architecture, which a huge majority of Android phones use (think equivalent to Intel's dominance in desktop computing). RapidGame has the ability to prebuild the Android cocos2d-x libraries for ARM, ARMv7, and x86, but unfortunately trying to build the template project after setting the architecture to x86 will cause the build to fail, so the Android-x86 libraries are skipped over in <code>rapidgame prebuild</code> to save time. Even so, the x86 devices that have <code>libhoudini</code> on them are able to run ARM apps, albeit more slowly. In any case, the two currently supported architectures you can build for are ARM and ARMv7. ARMv7 is backwards compatitable with ARM, so you can just build your app for ARM and it will run on newer ARMv7 devices. The main advantage of ARMv7 is faster floating point operations, so you may find your game performs better on newer devices. For more specific info on the different architectures, <a href="https://chromium.googlesource.com/android_tools/+/master-backup/ndk/docs/CPU-ARCH-ABIS.html" target="_blank">refer here</a>. You can find out much more extensive documentation about the NDK in general by going to <code>$NDK_ROOT/docs/Start_Here.html</code>.</p>
+    <p>As your app is built using what Android considers native code (C++), your final .apk will contain code compiled for a specific architecture. If you were writing a pure Java app, that app would run on any device without needing to compile for each architecture thanks to the JVM. By default, your Android game is set to build for the ARM (armeabi) architecture, which a huge majority of Android devices use (think the equivalent to Intel&#39;s dominance in desktop computing). However, there is another version of ARM known as ARMv7, which is an architecture that is backwards compatitable with ARM, so you can just build your app for ARM and it will run on newer ARMv7 devices just fine. The main advantage of ARMv7 is faster floating point operations, so you may find your game performs better on newer devices. For more specific info on the different architectures, <a href="https://chromium.googlesource.com/android_tools/+/master-backup/ndk/docs/CPU-ARCH-ABIS.html" target="_blank">refer here</a>. You can find out much more extensive documentation about the NDK in general by going to <code>$NDK_ROOT/docs/Start_Here.html</code>.</p>
 
-    <p>In order to actually get your project to compile for both ARM and ARMv7, you can edit <code>APP_ABI</code> in <code>MyGame/Projects/android/Application.mk</code> to <code>APP_ABI := armeabi armeabi-v7a</code>. When you rebuild your project with <code>make</code>, the .apk will now contain the files for both ARM and ARMv7, and when it is installed on a device, the necessary files will be used depending on the processor. One thing that must be noted is that when you build for ARMv7, you will get a long list of warning messages, and these messages will continue scrolling on the screen for several minutes until finally your game finishes building. There is nothing that can be done to prevent these warning messages (if you discover a way, please let us know on <a href="https://github.com/NatWeiss/RapidGame/issues" target="_blank">RapidGame's issues page</a> (requires a Github account)), but they are harmless. Your game will still compile and run without issue. However, to speed up build time, you should only build for ARM as you build and test the core of your game. If your .apk gets to be over 50MB and you are considering submitting multiple .apk's for your game, then there are <a href="http://developer.android.com/google/play/publishing/multiple-apks.html" target="_blank">certain rules</a> you must be aware of.</p>
+    <p>In order to actually get your project to compile for both ARM and ARMv7, you can edit <code>APP_ABI</code> in <code>MyGame/Projects/android/Application.mk</code> to read <code>APP_ABI := armeabi armeabi-v7a</code>. When you rebuild your project with <code>make</code>, the .apk will now contain the files for both ARM and ARMv7, and when the .apk is installed on a device, the necessary files will be used depending on the processor. One thing that must be noted is that when you build for ARMv7, you will get a long list of warning messages, and these messages will continue scrolling on the screen for several minutes until finally your game finishes building. There is nothing that can be done to prevent these warning messages (if you discover a way, please let us know on <a href="https://github.com/NatWeiss/RapidGame/issues" target="_blank">RapidGame&#39;s issues page</a> (requires a Github account)), but they are harmless. Your game will still compile and run without issue. However, to speed up build time, you should only build for ARM during the development stage of your game. If your .apk gets to be over 50MB and you are considering submitting multiple .apk&#39;s for your game, then there are <a href="http://developer.android.com/google/play/publishing/multiple-apks.html" target="_blank">certain rules</a> you must be aware of.</p>
 
 
 
@@ -1019,9 +1058,9 @@ CN: CN=Android Debug,0=Android,C=US
 
     <ul>
     	<li><a href="http://wizardfu.com/book/cocos2d-x/" target="_blank">Cocos2d-x Book</a>: Free book for learning cocos2d-x and game design from the author of RapidGame.</li>
-    	<li><a href="https://github.com/NatWeiss/EntityFu" target="_blank">EntityFu</a>: A C++ Entity Component System, also written by Nathanael. See the project's README for a guide on component-based programming if you are unfamiliar with it.</li>
+    	<li><a href="https://github.com/NatWeiss/EntityFu" target="_blank">EntityFu</a>: A C++ Entity Component System, also written by Nathanael. See the project&#39;s README for a guide on component-based programming if you are unfamiliar with it.</li>
     	<li><a href="https://game-development.zeef.com/david.arcila" target="_blank">Game Development Resources</a>: Tools, assets, and other info galore. Look here if you need a free tool to do something for your game.</li>
-    	<li><a href="http://developer.android.com/index.html" target="_blank">Android Developer</a>: You will need to muck about with some of the files under <code>MyGame/Projects/android</code> at some point before you release your game. You can find the answers to a lot of your Android-specific questions here, such as what you need to do before publishing.</li>
+    	<li><a href="http://ds.arm.com/ds-5-community-edition/" target="_blank">ARM DS-5 Community Edition</a>: As you are using the Android NDK and a language other than Java to build your app, the profiling and debugging tools that come with Android will not work for your game. However, ARM offers free tools that you can use to optimize performance, find memory leaks, and profile your app in different ways. This tool comes standard in <a href="http://www.cocos2d-x.org/download" target="_blank">Cocos Code IDE</a>.</p>
     </ul>
 
 
@@ -1029,20 +1068,54 @@ CN: CN=Android Debug,0=Android,C=US
 
     <h1 id="environment-variables-intro">Environment Variables Intro</h1>
 
-    <p>If you&#39;re not familiar with environment variables, they are variables that are accessible by any program on your computer, which makes them very useful and important. One example of this usefulness is that when you type a command like <code>python</code> in your console, your computer doesn't automatically know where to find it. However, all major OS's have a variable called <code>PATH</code>, that is a list of directories, which your computer searches in to find if there's something related to what you typed on the command line. So when you type <code>python</code> in your shell, the OS looks in all the directories and when it finds a program named <code>python</code>, it executes that program. The following will explain how to properly set environment variables for your particular OS.</p>
+    <p>If you&#39;re not familiar with environment variables, they are variables that are accessible by any program on your computer, which makes them very powerful and important. One example of this usefulness is that when you type a command like <code>python</code> in your console, your computer doesn&#39;t automatically know where to find it. However, all major operating systems have a variable called <code>PATH</code>, that is a list of directories, which your computer searches in to find if there&#39;s something related to what you typed on the command line. So when you type <code>python</code> in your shell, the OS looks in all the directories listed in <code>PATH</code> and when it finds an executable named <code>python</code>, it executes that program. The following will explain how to properly set environment variables for your particular OS.</p>
 
     <h3 id="mac">Mac</h3>
-    <p>Your environment variables can be set in <code>~/.bash_profile</code> (a plain text file). You will find other things written in the file already, which you should ignore. Go to the bottom of the file to add your own stuff. The format is as follows:</p>
+    <p>Environment variables can be set in a plain text file known as <code>~/.bash_profile</code> (<code>~</code> signifies your home directory, which is <code>/Users/[USERNAME]</code> on Mac). You can check that the file exists by running <code>cd ~ &amp;&amp; ls -a</code>. To open the file, use your preferred text editor, such as <code>nano .bash_profile</code>. You will find other code written in the file already, which you should ignore. Go to the bottom of the file to add your specific environment variables. The format is as follows:</p>
+
     <pre><code>export var1=/path/to/var1
 export var2=/path/to/var2
-# We want to keep the original variable and add to it
-export PATH=$PATH:/path/to/something:/path/to/another/thing
+# We want to keep the original variable and append new paths to it
+export PATH=$PATH:/path/to/something/else:/path/to/another/thing
 </code></pre>
-    <p>When you are done editing the file, save and close it and then run <code>source ~/.bash_profile</code> and you&#39;re good to go. If you want to double-check, you can type <code>echo $VAR</code>, which will print the value of <code>VAR</code> back to you.</p>
-    <p>As a brief additional explanation if you're unfamiliar with the command line, <code>~</code> is your home directory and can be used in your terminal to get you back home (<code>cd ~</code>). After changing to your home directory, you can type <code>pwd</code> to find out where "home" actually is. Another interesting point is dotfiles. These are files that start with a <code>.</code> and cannot be seen by typing <code>ls</code>. You can type <code>ls -a</code> to see all of the files in a directory, including dotfiles.</p>
+
+    <p>When you are done editing the file, save and close it and then run <code>cd ~ &amp;&amp; source .bash_profile</code> and you&#39;re good to go. If you want to double-check that the variable has the correct value, you can type <code>echo $VAR</code>, which will print the value of <code>VAR</code> back to you.</p>
 
     <h3 id="windows">Windows</h3>
-    <p>For Windows, the easiest way to edit your environment variables is by pressing the Windows button, searching &quot;environment variables&quot;, and clicking on the link that comes up. A window should open that is divided into user and system variables, and we are only interested in editing user variables. Be sure to check if the variable already exists before trying to create a new one. Each variable has a name and a value, so if we were setting <code>ANDROID_SDK_ROOT</code>, then that would be the name, and the value might be <code>C:\Users\John\AppData\Local\Android\sdk</code>. If you want to add to an already existing variable, then you add the path to add to the beginning of the value and then place a <code>;</code> between that and the rest of the value, e.g. we want to add Python's path to some other paths, so the final result would look like: <code>C:\Python27;C:\cygwin64\bin;C:\other\things</code>.</p>
+    <p>For Windows, the easiest way to edit your environment variables is by pressing the Windows button, searching &quot;environment variables&quot;, and clicking on the link that comes up. A window should open that is divided into user and system variables, and we are only interested in editing user variables. Be sure to check if the variable already exists before trying to create a new one. Each variable has a name and a value, so if we were setting <code>ANDROID_SDK_ROOT</code>, then that would be the name, and the value might be <code>C:\Users\John\AppData\Local\Android\sdk</code>. If you want to add to an already existing variable, then you add the path to add to the beginning of the value and then place a <code>;</code> between the path you added and the rest of the value, e.g. we want to add Python&#39;s path to some other paths, so the final result would look like: <code>C:\Python27;C:\Program Files\Directory Containing MyProgram;C:\other\things</code>.</p>
+
+
+
+
+    <h1 id="help">Help!</h1>
+    <pre><code>MyGame = example root project directory</code></pre>
+
+    <h3>Where do I save my code/assets?</h3>
+    <p>You save your source files in <code>MyGame/Projects</code> and your assets in <code>MyGame/Assets</code>. You can see what goes into the .apk by running <code>unzip -l MyGame/Projects/android/bin/[APKNAME]</code>.</p>
+
+    <h3>I&#39;m having trouble with the NDK!</h3>
+    <p>Move the NDK folder to a path without any spaces.</p>
+
+    <h3>How do I install Cygwin?</h3>
+    <ol>
+    	<li>Launch setup program</li>
+    	<li>(Welcome page) > Next</li>
+    	<li>Install from Internet > Next</li>
+    	<li>Install for `All Users` > Next</li>
+    	<li>Choose a safe directory > Next</li>
+    	<li>Direct connection > Next</li>
+    	<li>Choose a mirror (anyone but the first) > Next</li>
+    	<li>Click the icon to the right of `Devel` to change it from `Default` to `Install` > Next</li>
+    	<li>`Select required packages` should be checked > Next</li>
+    	<li>Wait... > Finish</li>
+    </ol>
+
+    <h3>I ran <code>make run</code> and all I get is `waiting for device`!</h3>
+    <p>Have you <a href="http://www.kingoapp.com/root-tutorials/how-to-enable-usb-debugging-mode-on-android.htm" target="_blank">enabled USB debugging for your device</a>? Is your device plugged in via USB? Type <code>adb devices</code> to see if your device has been recognized. If you don&#39;t see your device, close the shell you are using and open a new one. Type <code>adb devices</code> one more time and your device should appear. Now you can execute <code>make run</code>.</p>
+
+    <h3>Where do I ask a question/submit an issue?</h3>
+    <p><a href="https://github.com/NatWeiss/RapidGame/issues" target="_blank">Here.</a> You need a GitHub account first.</p>
+
   </body>
 </html>
 
