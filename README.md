@@ -88,7 +88,7 @@ Windows: **Visual Studio 2012 or newer** (get it for free [here](https://www.vis
 
 Linux: Not yet supported. Are you a cocos2d-x Linux master with some experience with Javascript? Please help out! rapidgame.js almost supports Linux, just need to hook up the system calls to prebuild and archive the libraries.
 
-If you want to make Android games, read the [Android README](http://htmlpreview.github.io/?https://github.com/NatWeiss/RapidGame/blob/master/templates/cocos2dx/TwoScene/Projects/android/README.html) or [watch the video](https://www.youtube.com/watch?v=lM7C7JSptGw) to find out what you'll need for Android development.
+If you want to make Android games, read the [Android README](http://htmlpreview.github.io/?https://github.com/NatWeiss/RapidGame/blob/master/templates/cocos2dx/TwoScene/Projects/android/README.html) or [watch the video](https://www.youtube.com/watch?v=5PWEtjvhX1k) to find out what you'll need for Android development.
 
 
 Eliminate Grunt Work
@@ -198,7 +198,7 @@ Windows Notes
 -------------
 
 1. The `rapidgame create` command must be run in an admin console. This allows symlinks to be properly created, otherwise what should be symlinks will become regular folders and the command will fail.
-2. To compile the Android libraries successfully, `rapidgame prebuild` must be run via [Cygwin](https://www.cygwin.com). Read about all the specific requirements in the [Android README](http://htmlpreview.github.io/?https://github.com/NatWeiss/RapidGame/blob/master/templates/cocos2dx/TwoScene/Projects/android/README.html), or [watch the video](https://www.youtube.com/watch?v=lM7C7JSptGw) instead.
+2. To compile the Android libraries successfully, `rapidgame prebuild` must be run via [Cygwin](https://www.cygwin.com). Read about all the specific requirements in the [Android README](http://htmlpreview.github.io/?https://github.com/NatWeiss/RapidGame/blob/master/templates/cocos2dx/TwoScene/Projects/android/README.html), or [watch the video](https://www.youtube.com/watch?v=5PWEtjvhX1k) instead.
 3. Windows cannot build the cocos2d-x libraries or cocos2d-js bindings for iOS and Mac. If you want to use RapidGame to develop for these platforms, you must use a Mac.
 
 Thanks to [Samuel Ørsnæs](https://github.com/samoersnaes) for getting the Android build working in Windows!
