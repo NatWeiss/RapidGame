@@ -10,7 +10,7 @@ from re import search
 
 
 """
-1. Get all the source files in `Projects` -- source_files()
+1. Get all the C/C++ source files in `Projects` -- source_files()
 2. Remove the files that are in makeignore -- filter_sources()
 3. Delete the old LOCAL_SRC_FILES in Android.mk and reassign it with the new list in -- add_to_makefile()
 """
@@ -18,6 +18,11 @@ from re import search
 
 # Should be `Projects/android`
 start_path = os.getcwd()
+
+
+def print_and_exit(text):
+    print text
+    exit(1)
 
 
 def source_files():
@@ -34,15 +39,17 @@ def source_files():
         files.append(f)
 
     if len(files) == 0:
-        print 'ERROR: No source files to process. Store your files in `Projects`.'
-        exit(1)
+        print_and_exit('ERROR: No C/C++ source files to process. Store your files in `Projects`.')
 
+    spaces = []
     for f in files:
         if search('\s', f):
-            print 'ERROR: Source file contains spaces: ' + f
-            exit(1)
+            spaces.append(f)
 
-    print 'source_files (files): ' + str(files)
+    if spaces:
+        print_and_exit('ERROR: C/C++ source filename(s) contain(s) spaces: ' + str(spaces))
+
+    print 'source_files: ' + str(files)
     return files
 
 
@@ -51,8 +58,7 @@ def filter_sources(sources):
     try:
         ignore = open('makeignore', 'r')
     except IOError:
-        print 'ERROR: Cannot find/open makeignore in `Projects/android`.'
-        exit(1)
+        print_and_exit('ERROR: Could not find/open makeignore in `Projects/android`.')
 
     for line in ignore:
         line = line.strip()
@@ -60,27 +66,27 @@ def filter_sources(sources):
             try:
                 sources.remove(line)
             except ValueError:
-                print 'ERROR: Invalid filename in makeignore: ' + line
-                exit(1)
+                print_and_exit('ERROR: Invalid filename in makeignore: ' + str(line))
 
     ignore.close()
-    print 'filter_sources (sources): ' + str(sources)
+    print 'filter_sources: ' + str(sources)
     return sources
 
 
 def add_to_makefile(filtered):
+    if not filtered:
+        print_and_exit('ERROR: No source files to process after applying makeignore filter.')
+
     lines = []
     try:
         os.chdir(os.path.join(start_path, 'jni'))
     except OSError:
-        print 'ERROR: Cannot find/open `Projects/android/jni`.'
-        exit(1)
+        print_and_exit('ERROR: Could not find/open `Projects/android/jni` directory.')
 
     try:
         android = open('Android.mk', 'r+')
     except IOError:
-        print 'ERROR: Cannot find/open Android.mk in `Projects/android/jni`.'
-        exit(1)
+        print_and_exit('ERROR: Could not find/open Android.mk in `Projects/android/jni`.')
 
     found = False
     line = android.readline()
@@ -99,7 +105,7 @@ def add_to_makefile(filtered):
             # index is used to access the previous file in the list in order to add a `\` at the end
             index = len(lines) - 1
             for f in filtered:
-                lines[index] += ' \\';
+                lines[index] += ' \\'
                 lines.append('                   ../../' + f)
                 index += 1
         else:
@@ -108,25 +114,29 @@ def add_to_makefile(filtered):
         line = android.readline()
 
     if not found:
-        print 'Could not find "LOCAL_SRC_FILES := main.cpp" in `Projects/android/jni/Android.mk`.'
-        exit(1)
+        print_and_exit('ERROR: Could not find "LOCAL_SRC_FILES := main.cpp" in `Projects/android/jni/Android.mk`.')
 
     # In order to make the process safer, the data has been stored in `lines`,
     # which is written to Android-new.mk before the file is renamed to Android.mk
-    copy = open('Android-new.mk', 'w')
-    copy.write('\n'.join(lines))
-    copy.close()
     android.close()
     try:
-        os.rename('Android-new.mk', 'Android.mk')
+        temp = open('Android-temp.mk', 'w')
+    except IOError:
+        print_and_exit('ERROR: Could not create temporary file in `Projects/android/jni` directory.')
+
+    temp.write('\n'.join(lines))
+    temp.close()
+
+    try:
+        os.rename('Android-temp.mk', 'Android.mk')
     except OSError:
-        print 'Could not write to `Projects/android/jni/Android.mk`.'
-        exit(1)
-    print 'add_to_makefile (write): ' + str(android)
+        print_and_exit('ERROR: Could not write to `Projects/android/jni/Android.mk`.')
+
+    print 'add_to_makefile: ' + str(android)
 
 
 if __name__=='__main__':
-    print 'entering build_files.py...'
+    print 'Entering build_files.py...'
     add_to_makefile(filter_sources(source_files()))
-    print 'exiting build_files.py...'
+    print 'Exiting build_files.py...'
 
