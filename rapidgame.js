@@ -595,15 +595,26 @@ var runPrebuild = function(platform, config, arch, callback) {
 				callback();
 			});
 		} else if (platform === "android") {
-			prebuildAndroid(config, arch, function(){
+			if ("NDK_ROOT" in process.env) {
+				prebuildAndroid(config, arch, function(){
+					callback();
+				});
+			} else {
+				console.log("Android build cancelled. You need to setup additional programs to develop for Android. See the Android README on RapidGame's Github page.");
 				callback();
-			});
+			}
 		} else {
 			prebuildMac("Mac", config, arch, function(){
 				prebuildMac("iOS", config, arch, function(){
-					prebuildAndroid(config, arch, function(){
+					// Sam: See comments below for why this check is here.
+					if ("NDK_ROOT" in process.env) {
+						prebuildAndroid(config, arch, function(){
+							callback();
+						});
+					} else {
+						console.log("Android build cancelled. You need to setup additional programs to develop for Android. See the Android README on RapidGame's Github page.");
 						callback();
-					});
+					}
 				});
 			});
 		}
@@ -617,11 +628,23 @@ var runPrebuild = function(platform, config, arch, callback) {
 			// same check is applied when prebuilding without any arguments
 			// (see a few lines below).
 			if ("TERM" in process.env) {
-				prebuildAndroid(config, arch, function(){
+				// Sam: We can assume that if the user has setup NDK_ROOT, they
+				// have also setup everything else needed to prebuild the Android
+				// libraries. If they happen to have NDK_ROOT set but not everything
+				// else, they will still get an error when trying to prebuild the
+				// Android libraries, but it won't be as helpful.
+				if ("NDK_ROOT" in process.env) {
+					prebuildAndroid(config, arch, function(){
+						callback();
+					});
+				} else {
+					console.log("Android build cancelled. You need to setup additional programs to develop for Android. See the Android README on RapidGame's Github page.");
 					callback();
-				});
+				}
 			} else {
+				// Sam: User reaches here only if they are on Windows and they specifically run `rapidgame prebuild android`
 				console.log("Build cancelled. You must prebuild the Android libraries in a Cygwin shell.");
+				callback();
 			}
 		}
 		else if (platform === "windows") {
