@@ -78,6 +78,8 @@ For usage instructions:
 
 	rapidgame --help
 
+Keep in mind if you are completely new to the cocos2d family that creating a cocos2d-x project (`rapidgame create cocos2dx`) means your project code will be in C++, while building a cocos2d-js project (`rapidgame create cocos2djs`) allows you to develop your game in Javascript as well as C++ if you wish.
+
 
 Requirements
 ------------
