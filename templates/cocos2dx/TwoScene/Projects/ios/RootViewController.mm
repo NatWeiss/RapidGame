@@ -16,16 +16,20 @@ using namespace cocos2d;
 		if (self != nil)
 		{
 			forcePortrait = NO;
+			orientPortrait = NO;
 			
 			// Determine orientation by reading designWidth and designHeight from project.json
 			NSString* path = [[NSBundle mainBundle] pathForResource:@"project" ofType:@"json"];
 			NSData* data = [NSData dataWithContentsOfFile:path];
-			NSError* err = nil;
-			NSArray* result = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&err];
-			int w = [[result valueForKey:@"designWidth"] intValue];
-			int h = [[result valueForKey:@"designHeight"] intValue];
-			orientPortrait = (h > w);
-			NSLog(@"%d x %d, orientation portrait: %@", w, h, orientPortrait ? @"YES" : @"NO");
+			if (data != nil)
+			{
+				NSError* err = nil;
+				NSArray* result = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&err];
+				int w = [[result valueForKey:@"designWidth"] intValue];
+				int h = [[result valueForKey:@"designHeight"] intValue];
+				orientPortrait = (h > w);
+				NSLog(@"%d x %d, orientation portrait: %@", w, h, orientPortrait ? @"YES" : @"NO");
+			}
 		}
 		return self;
 	}

@@ -6,26 +6,47 @@
 #include "MenuScene.h"
 #include "Game.h"
 
+using namespace cocos2d;
+using namespace CocosDenshion;
+
 AppDelegate::AppDelegate()
 {
 }
 
 AppDelegate::~AppDelegate()
 {
-	cocos2d::ScriptEngineManager::destroyInstance();
+	ScriptEngineManager::destroyInstance();
 }
 
 void AppDelegate::initGLContextAttrs()
 {
     GLContextAttrs glContextAttrs = {8, 8, 8, 8, 24, 8};
-    cocos2d::GLView::setGLContextAttrs(glContextAttrs);
+    GLView::setGLContextAttrs(glContextAttrs);
 }
 
 bool AppDelegate::applicationDidFinishLaunching()
 {
-	auto director = cocos2d::Director::getInstance();
-	auto fileUtils = cocos2d::FileUtils::getInstance();
+	auto director = Director::getInstance();
+	auto fileUtils = FileUtils::getInstance();
+	auto view = director->getOpenGLView();
 	auto& winSize = director->getWinSize();
+
+	// create opengl view
+	if (view == nullptr)
+	{
+		bool fullscreen = true;
+		#ifndef NDEBUG
+			fullscreen = false;
+		#endif
+
+		// create the gl view
+		string name = "TwoScene";
+		if (fullscreen)
+			view = GLViewImpl::createWithFullScreen(name);
+		else
+			view = GLViewImpl::createWithRect(name, cocos2d::Rect(0, 0, 960, 640));
+		Director::getInstance()->setOpenGLView(view);
+	}
 
 	// set content rect
 	cocos2d::Size designRes(2048, 1536);
@@ -43,15 +64,11 @@ bool AppDelegate::applicationDidFinishLaunching()
 	// initialize director
 	director->setDisplayStats(true);
 	director->setAnimationInterval(1.0 / 60);
-	director->getOpenGLView()->setDesignResolutionSize(designRes.width, designRes.height, ResolutionPolicy::SHOW_ALL);
+	view->setDesignResolutionSize(designRes.width, designRes.height, ResolutionPolicy::SHOW_ALL);
 	//log("Win size %.0f,%.0f, design res %.0f,%.0f, content rect %.0f,%.0f,%.0f,%.0f", winSize.width, winSize.height, designRes.width, designRes.height, contentRect.origin.x, contentRect.origin.y, contentRect.size.width, contentRect.size.height);
 
 	// set search paths
-	const char* paths[] =
-	{
-		"Assets",
-	};
-	for(auto& path : paths)
+	for(auto& path : {"Assets"})
 		fileUtils->addSearchPath(path);
 
 	// create initial scene
@@ -65,16 +82,16 @@ bool AppDelegate::applicationDidFinishLaunching()
 
 void AppDelegate::applicationDidEnterBackground()
 {
-	cocos2d::Director::getInstance()->stopAnimation();
-	CocosDenshion::SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
-	CocosDenshion::SimpleAudioEngine::getInstance()->pauseAllEffects();
+	Director::getInstance()->stopAnimation();
+	SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
+	SimpleAudioEngine::getInstance()->pauseAllEffects();
 }
 
 void AppDelegate::applicationWillEnterForeground()
 {
-	cocos2d::Director::getInstance()->startAnimation();
-	CocosDenshion::SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
-	CocosDenshion::SimpleAudioEngine::getInstance()->resumeAllEffects();
+	Director::getInstance()->startAnimation();
+	SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
+	SimpleAudioEngine::getInstance()->resumeAllEffects();
 }
 
 
