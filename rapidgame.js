@@ -4,7 +4,7 @@
 //  Developed by Nathanael Weiss.
 //
 //  To-do:
-//   - Mention how to use a manual download of cocos2d-js in readme.
+//   - Mention how to use a manual download of cocos2d-x in readme.
 //   - Fix Mac project name search and replace so names with spaces work. (It used to...)
 //   - Why did `sudo npm unlink rapidgame -g; sudo npm link .` fix "Error: Cannot find module 'path-extra'"?
 //   - Mac prebuild fails if the user has changed Xcode's temporary build directory to "relative to project". Here's some details:
@@ -31,8 +31,8 @@ var http = require("http"),
 	packageJson = JSON.parse(fs.readFileSync(path.join(__dirname, "package.json"))),
 	cmdName = packageJson.name,
 	version = packageJson.version,
-	cocos2djsUrlMac = "http://cdn.cocos2d-x.org/cocos2d-js-v3.6.zip", // also, http://www.cocos2d-x.org/filedown/cocos2d-js-v3.6.zip
-	cocos2djsUrlWin = "http://cdn.cocos2d-x.org/cocos2d-js-v3.6.zip",
+	cocos2djsUrlMac = "http://cdn.cocos2d-x.org/cocos2d-x-3.7.zip", // also, http://www.cocos2d-x.org/filedown/cocos2d-x-v3.7.zip
+	cocos2djsUrlWin = "http://cdn.cocos2d-x.org/cocos2d-x-3.7.zip",
 	cocos2djsUrl = (process.platform === "darwin" ? cocos2djsUrlMac : cocos2djsUrlWin),
 	cocos2dDirGlob = "*ocos2d-js*",
 	category,
@@ -368,12 +368,12 @@ var copySrcFiles = function(callback) {
 };
 
 //
-// download cocos2d js source
+// download cocos2d-x source
 //
 var downloadCocos = function(callback) {
 	var dir = path.join(cmd.prefix, "src"),
 		src,
-		dest = path.join(dir, "cocos2d-js"),
+		dest = path.join(dir, "cocos2d-x"),
 		downloaded = path.join(cmd.prefix, "src", "downloaded.txt"),
 		doDownload = !dirExists(dest),
 		ver;
@@ -385,8 +385,8 @@ var downloadCocos = function(callback) {
 	}
 	if (ver !== cocos2djsUrl) {
 		if (typeof ver !== "undefined") {
-			console.log("Current Cocos2D JS URL: " + cocos2djsUrl);
-			console.log("Downloaded Cocos2D JS URL: " + ver);
+			console.log("Current cocos2d-x URL: " + cocos2djsUrl);
+			console.log("Downloaded cocos2d-x URL: " + ver);
 			console.log("Re-downloading");
 		}
 		doDownload = true;
@@ -410,7 +410,7 @@ var downloadCocos = function(callback) {
 	// warn about git existing
 	src = path.join(cmd.prefix, ".git");
 	if (dirExists(src)) {
-		console.log("WARNING: Directory " + src + " may prevent cocos2d-js from being patched with git apply");
+		console.log("WARNING: Directory " + src + " may prevent cocos2d-x from being patched with git apply");
 	}
 	
 	// copy latest patch
@@ -460,7 +460,7 @@ var downloadCocos = function(callback) {
 //
 var setupPrebuild = function(platform, callback) {
 	var ver, dir, src, dest, i, files,
-		frameworks = path.join(cmd.prefix, "src", "cocos2d-js", "frameworks");
+		srcRoot = path.join(cmd.prefix, "src", "cocos2d-x");
 
 	if (platform && platform !== "headers") {
 		callback();
@@ -494,28 +494,27 @@ var setupPrebuild = function(platform, callback) {
 
 	// copy cocos2d-html5
 	dest = path.join(ver, "cocos2d", "html");
-	src = path.join(frameworks, "cocos2d-html5");
+	src = path.join(srcRoot, "web");
 	copyRecursive(src, dest, false, true);
 
 	// copy headers
 	dir = dest = path.join(ver, "cocos2d", "x", "include");
-	src = path.join(frameworks, "js-bindings", "cocos2d-x");
-	// # except if dir is cocos2d-x/plugin (or don't copy plugin/jsbindings and reference the one in include/plugin/jsbindings)
+	src = srcRoot;
 	copyGlobbed(src, dest, '*.h');
 	copyGlobbed(src, dest, '*.hpp');
 	copyGlobbed(src, dest, '*.msg');
 	copyGlobbed(src, dest, '*.inl');
-
+/*
 	dest = path.join(dir, "bindings");
-	src = path.join(frameworks, "js-bindings", "bindings");
+	src = path.join(srcRoot, "js-bindings", "bindings");
 	copyGlobbed(src, dest, '*.h');
 	copyGlobbed(src, dest, '*.hpp');
 
 	dest = path.join(dir, "external");
-	src = path.join(frameworks, "js-bindings", "external");
+	src = path.join(srcRoot, "js-bindings", "external");
 	copyGlobbed(src, dest, '*.h');
 	copyGlobbed(src, dest, '*.msg');
-
+*/
 
 	// remove unneeded
 	files = ["docs", "build", "tests", "samples", "templates", "tools",
@@ -526,25 +525,31 @@ var setupPrebuild = function(platform, callback) {
 
 	// jsb
 	dest = path.join(ver, "cocos2d", "x", "script");
-	src = path.join(frameworks, "js-bindings", "bindings", "script");
+	src = path.join(srcRoot, "cocos", "scripting", "js-bindings", "script");
 	copyGlobbed(src, dest, '*.js');
-	src = path.join(frameworks, "js-bindings", "bindings", "auto", "api");
+/*
+	src = path.join(srcRoot, "js-bindings", "bindings", "auto", "api");
 	copyGlobbed(src, dest, '*.js');
+*/
 
 	// java
 	dir = path.join(ver, "cocos2d", "x", "java");
 	dest = path.join(dir, "cocos2d-x");
-	src = path.join(frameworks, "js-bindings", "cocos2d-x", "cocos", "platform", "android", "java");
+	src = path.join(srcRoot, "cocos", "platform", "android", "java");
 	copyRecursive(src, dest);
 	// .mk and .a
 	dest = path.join(dir, "mk");
 	src = path.join(cmd.prefix, "src");
 	copyGlobbed(src, dest, "*.mk");
 	copyGlobbed(src, dest, "*.a", "android");
-	src = path.join(frameworks, "js-bindings");
+/*
+	src = path.join(srcRoot, "js-bindings");
 	copyGlobbed(src, dest, "*.mk");
 	copyGlobbed(src, dest, "*.a", "android");
+*/
+
 	// # bonus: call android/strip on mk/*.a
+
 	files = ["proj.android", "cocos2d-js"];
 	for (i = 0; i < files.length; i += 1) {
 		wrench.rmdirSyncRecursive(path.join(dest, files[i]), true);
@@ -557,7 +562,6 @@ var setupPrebuild = function(platform, callback) {
 	for (i = 0; i < files.length; i += 1) {
 		wrench.rmdirSyncRecursive(files[i], true);
 	}
-
 
 	// find ${dir} | xargs xattr -c >> ${logFile} 2>&1
 
@@ -734,7 +738,7 @@ var prebuildAndroid = function(config, arch, callback) {
 //
 var prebuildWin = function(config, arch, callback) {
 	var i, j, command, targets, args, projs,
-		jsbindings = path.join(cmd.prefix, "src", "cocos2d-js", "frameworks", "js-bindings"),
+		jsbindings = path.join(cmd.prefix, "src", "cocos2d-x", "cocos", "scripting", "js-bindings"),
 		configs = (config ? [config] : (cmd.minimal ? ["Debug"] : ["Debug", "Release"]));
 
 	// set VCTargetsPath
@@ -742,7 +746,7 @@ var prebuildWin = function(config, arch, callback) {
 	process.env["VCTargetsPath"] = getVCTargetsPath();
 
 	// get bindings projects
-	projs = glob.sync(path.join(jsbindings, "bindings", "proj.win32", "*.vcxproj")) || [];
+	projs = glob.sync(path.join(jsbindings, "proj.win32", "*.vcxproj")) || [];
 
 	getMSBuildPath(function(_msBuildPath) {
 		msBuildPath = _msBuildPath;
@@ -753,7 +757,7 @@ var prebuildWin = function(config, arch, callback) {
 			command = path.join(msBuildPath, "MSBuild.exe");
 			targets = ["libcocos2d", "libBox2D", "libSpine"];
 			args = [
-				path.join(jsbindings, "cocos2d-x", "build", "cocos2d-win32.vc2012.sln"),
+				path.join(cmd.prefix, "src", "cocos2d-x", "build", "cocos2d-js-win32.sln"),
 				"/nologo",
 				"/maxcpucount:4",
 				//"/t:" + targets.join(";"),
@@ -877,17 +881,28 @@ var startBuild = function(platform, callback, settings) {
 // link windows
 //
 var linkWin = function(config, callback) {
+
+
+/*
+	
+all these paths need to be adjusted and tested on windows...
+	
+*/
+
+
+
+
 	var i, src,
-		jsbindings = path.join(cmd.prefix, "src", "cocos2d-js", "frameworks", "js-bindings"),
+		srcRoot = path.join(cmd.prefix, "src", "cocos2d-x"),
 		runtimeDir = path.join(cmd.prefix, "src", "cocos2d-js", "templates", "js-template-runtime", "runtime", "win32"),
 		libDirs = [
-			//path.join(jsbindings, "cocos2d-x", "build", config + ".win32"),
-			path.join(jsbindings, "cocos2d-x", "cocos", "2d", config + ".win32"), // libcocos2d.dll, glew32.dll, libcurl.dll, etc.
-			path.join(jsbindings, "bindings", "proj.win32", config + ".win32"), // libjsbindings.lib, sqlite3.dll, etc.
-			path.join(jsbindings, "cocos2d-x", "cocos", "editor-support", "spine", "proj.win32", config + ".win32"), // libSpine.lib
-			path.join(jsbindings, "cocos2d-x", "external", "Box2D", "proj.win32", config + ".win32"), // libbox2d.lib
-			path.join(jsbindings, "external", "spidermonkey", "prebuilt", "win32"), // mosjs-33.dll / .lib
-			path.join(jsbindings, "cocos2d-x", "external", "websockets", "prebuilt", "win32") // websockets.dll / .lib
+			//path.join(srcRoot, "build", config + ".win32"),
+			path.join(srcRoot, "cocos2d-x", "cocos", "2d", config + ".win32"), // libcocos2d.dll, glew32.dll, libcurl.dll, etc.
+			path.join(srcRoot, "bindings", "proj.win32", config + ".win32"), // libjsbindings.lib, sqlite3.dll, etc.
+			path.join(srcRoot, "cocos2d-x", "cocos", "editor-support", "spine", "proj.win32", config + ".win32"), // libSpine.lib
+			path.join(srcRoot, "cocos2d-x", "external", "Box2D", "proj.win32", config + ".win32"), // libbox2d.lib
+			path.join(srcRoot, "external", "spidermonkey", "prebuilt", "win32"), // mosjs-33.dll / .lib
+			path.join(srcRoot, "cocos2d-x", "external", "websockets", "prebuilt", "win32") // websockets.dll / .lib
 		],
 		options = {
 			cwd: cmd.prefix,

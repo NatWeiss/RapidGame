@@ -30,8 +30,6 @@
 		4120A3C41A9B2A1500692297 /* Game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4120A3C11A9B2A1500692297 /* Game.cpp */; };
 		412F3377192C36D2007F51FD /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 412F3375192C36D2007F51FD /* AppDelegate.cpp */; };
 		412F3378192C36D2007F51FD /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 412F3375192C36D2007F51FD /* AppDelegate.cpp */; };
-		412F337A192C36E1007F51FD /* project.json in Resources */ = {isa = PBXBuildFile; fileRef = 412F3379192C36E1007F51FD /* project.json */; };
-		412F337B192C36E1007F51FD /* project.json in Resources */ = {isa = PBXBuildFile; fileRef = 412F3379192C36E1007F51FD /* project.json */; };
 		412F337D192C3712007F51FD /* Assets in Resources */ = {isa = PBXBuildFile; fileRef = 412F337C192C3712007F51FD /* Assets */; };
 		412F337E192C3712007F51FD /* Assets in Resources */ = {isa = PBXBuildFile; fileRef = 412F337C192C3712007F51FD /* Assets */; };
 		413369C11940554300258BC8 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 413369C01940554300258BC8 /* Security.framework */; };
@@ -108,7 +106,6 @@
 		4120A3C21A9B2A1500692297 /* Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Game.h; sourceTree = "<group>"; };
 		412F3375192C36D2007F51FD /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
 		412F3376192C36D2007F51FD /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		412F3379192C36E1007F51FD /* project.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = project.json; path = ../project.json; sourceTree = "<group>"; };
 		412F337C192C3712007F51FD /* Assets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Assets; path = ../Assets; sourceTree = "<group>"; };
 		413369C01940554300258BC8 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
 		414A7EF71B1EA35900B56B55 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -312,7 +309,6 @@
 		A92275321517C094001B78AA = {
 			isa = PBXGroup;
 			children = (
-				412F3379192C36E1007F51FD /* project.json */,
 				412F3376192C36D2007F51FD /* AppDelegate.h */,
 				412F3375192C36D2007F51FD /* AppDelegate.cpp */,
 				4120A3C21A9B2A1500692297 /* Game.h */,
@@ -407,7 +403,6 @@
 			files = (
 				41F1A4E81894BBE3006E818E /* Icon.icns in Resources */,
 				41F1A4BC1894BB33006E818E /* Default-568h@2x.png in Resources */,
-				412F337B192C36E1007F51FD /* project.json in Resources */,
 				412F337E192C3712007F51FD /* Assets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -425,7 +420,6 @@
 				4110F72118C7ED7F004E9231 /* Icon-57.png in Resources */,
 				4110F72018C7ED7F004E9231 /* Icon-50@2x.png in Resources */,
 				4110F72518C7ED7F004E9231 /* Icon-72.png in Resources */,
-				412F337A192C36E1007F51FD /* project.json in Resources */,
 				4110F71C18C7ED7F004E9231 /* Icon-29@2x.png in Resources */,
 				4110F71E18C7ED7F004E9231 /* Icon-40@2x.png in Resources */,
 				4110F72818C7ED7F004E9231 /* Icon-76@2x.png in Resources */,

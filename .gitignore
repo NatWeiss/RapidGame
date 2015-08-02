@@ -2,7 +2,7 @@
 xcuserdata
 project.xcworkspace
 /src/downloaded.txt
-/src/cocos2d-js
+/src/cocos2d-x
 /node_modules
 /.id
 /build.log

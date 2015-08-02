@@ -1,135 +1,35 @@
-diff --git a/frameworks/js-bindings/cocos2d-x/cocos/2d/cocos2dx.props b/frameworks/js-bindings/cocos2d-x/cocos/2d/cocos2dx.props
-index a0a234e..afef5e9 100644
---- a/frameworks/js-bindings/cocos2d-x/cocos/2d/cocos2dx.props
-+++ b/frameworks/js-bindings/cocos2d-x/cocos/2d/cocos2dx.props
+diff --git a/cocos/2d/cocos2dx.props b/cocos/2d/cocos2dx.props
+index f1a0af1..a7dd654 100644
+--- a/cocos/2d/cocos2dx.props
++++ b/cocos/2d/cocos2dx.props
 @@ -7,7 +7,7 @@
    </PropertyGroup>
    <ItemDefinitionGroup>
      <Link>
--      <AdditionalDependencies>opengl32.lib;glew32.lib;libzlib.lib;libpng.lib;libjpeg.lib;libtiff.lib;libwebp.lib;libiconv.lib;glfw3.lib;freetype250.lib;winmm.lib;ws2_32.lib;libchipmunk.lib;libbox2d.lib;libSpine.lib;%(AdditionalDependencies)</AdditionalDependencies>
-+      <AdditionalDependencies>opengl32.lib;glew32.lib;libzlib.lib;libpng.lib;libjpeg.lib;libtiff.lib;libwebp.lib;libiconv.lib;glfw3.lib;freetype250.lib;winmm.lib;ws2_32.lib;libchipmunk.lib;%(AdditionalDependencies)</AdditionalDependencies>
+-      <AdditionalDependencies>opengl32.lib;glew32.lib;libzlib.lib;libwebp.lib;libiconv.lib;freetype250.lib;winmm.lib;ws2_32.lib;libbox2d.lib;libSpine.lib;%(AdditionalDependencies)</AdditionalDependencies>
++      <AdditionalDependencies>opengl32.lib;glew32.lib;libzlib.lib;libwebp.lib;libiconv.lib;freetype250.lib;winmm.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
        <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
        <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
      </Link>
-@@ -17,4 +17,4 @@
-     </ProjectReference>
-   </ItemDefinitionGroup>
-   <ItemGroup />
--</Project>
-\ No newline at end of file
-+</Project>
-diff --git a/frameworks/js-bindings/cocos2d-x/cocos/renderer/CCGLProgramState.cpp b/frameworks/js-bindings/cocos2d-x/cocos/renderer/CCGLProgramState.cpp
-index 34b9414..d991af4 100644
---- a/frameworks/js-bindings/cocos2d-x/cocos/renderer/CCGLProgramState.cpp
-+++ b/frameworks/js-bindings/cocos2d-x/cocos/renderer/CCGLProgramState.cpp
-@@ -51,6 +51,7 @@ UniformValue::UniformValue()
- : _uniform(nullptr)
- , _glprogram(nullptr)
- , _useCallback(false)
-+, _arrayCount(0)
- {
- }
+diff --git a/cocos/base/ccConfig.h b/cocos/base/ccConfig.h
+index 0d32b51..d6cd15f 100644
+--- a/cocos/base/ccConfig.h
++++ b/cocos/base/ccConfig.h
+@@ -255,14 +255,14 @@ THE SOFTWARE.
+ /** Use 3d physics integration API. */
+ #ifndef CC_USE_3D_PHYSICS
+ #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+-#define CC_USE_3D_PHYSICS 1
+-#define CC_USE_3D_PHYSICS 1
++#define CC_USE_3D_PHYSICS 0
++#define CC_USE_3D_PHYSICS 0 
+ #endif
+ #endif
  
-@@ -58,6 +59,7 @@ UniformValue::UniformValue(Uniform *uniform, GLProgram* glprogram)
- : _uniform(uniform)
- , _glprogram(glprogram)
- , _useCallback(false)
-+, _arrayCount(0)
- {
- }
+ /** Use 3D navigation API */
+ #ifndef CC_USE_NAVMESH
+-#define CC_USE_NAVMESH 1
++#define CC_USE_NAVMESH 0
+ #endif
  
-@@ -90,7 +92,10 @@ void UniformValue::apply()
-                 break;
- 
-             case GL_FLOAT:
--                _glprogram->setUniformLocationWith1f(_uniform->location, _value.floatValue);
-+                if (_arrayCount > 0)
-+                    _glprogram->setUniformLocationWith1fv(_uniform->location, _value.floatArray, _arrayCount);
-+                else
-+                    _glprogram->setUniformLocationWith1f(_uniform->location, _value.floatValue);
-                 break;
- 
-             case GL_FLOAT_VEC2:
-@@ -138,6 +143,14 @@ void UniformValue::setFloat(float value)
-     _useCallback = false;
- }
- 
-+void UniformValue::setFloatArray(float* array, int count)
-+{
-+    CCASSERT (_uniform->type == GL_FLOAT, "");
-+    _value.floatArray = array;
-+    _arrayCount = count;
-+    _useCallback = false;
-+}
-+
- void UniformValue::setTexture(GLuint textureId, GLuint textureUnit)
- {
-     //CCASSERT(_uniform->type == GL_SAMPLER_2D, "Wrong type. expecting GL_SAMPLER_2D");
-@@ -503,6 +516,24 @@ void GLProgramState::setUniformFloat(GLint uniformLocation, float value)
-         CCLOG("cocos2d: warning: Uniform at location not found: %i", uniformLocation);
- }
- 
-+void GLProgramState::setUniformFloatArray(const std::string &uniformName, float* array, int count)
-+{
-+    auto v = getUniformValue(uniformName);
-+    if (v)
-+        v->setFloatArray(array, count);
-+    else
-+        CCLOG("cocos2d: warning: Uniform not found: %s", uniformName.c_str());
-+}
-+
-+void GLProgramState::setUniformFloatArray(GLint uniformLocation, float* array, int count)
-+{
-+    auto v = getUniformValue(uniformLocation);
-+    if (v)
-+        v->setFloatArray(array, count);
-+    else
-+        CCLOG("cocos2d: warning: Uniform at location not found: %i", uniformLocation);
-+}
-+
- void GLProgramState::setUniformInt(const std::string &uniformName, int value)
- {
-     auto v = getUniformValue(uniformName);
-diff --git a/frameworks/js-bindings/cocos2d-x/cocos/renderer/CCGLProgramState.h b/frameworks/js-bindings/cocos2d-x/cocos/renderer/CCGLProgramState.h
-index 42b0a32..94898ad 100644
---- a/frameworks/js-bindings/cocos2d-x/cocos/renderer/CCGLProgramState.h
-+++ b/frameworks/js-bindings/cocos2d-x/cocos/renderer/CCGLProgramState.h
-@@ -76,6 +76,7 @@ public:
-      @param value Value to be sent, support float, int, Vec2/3/4, Mat4.
-      */
-     void setFloat(float value);
-+    void setFloatArray(float* array, int count);
-     void setInt(int value);
-     void setVec2(const Vec2& value);
-     void setVec3(const Vec3& value);
-@@ -107,12 +108,14 @@ protected:
-     GLProgram* _glprogram;
-     /**Whether or not callback is used.*/
-     bool _useCallback;
-+    int _arrayCount;
-     /**
-      @name Uniform Value Uniform
-      @{
-      */
-     union U{
-         float floatValue;
-+        float* floatArray;
-         int intValue;
-         float v2Value[2];
-         float v3Value[3];
-@@ -266,6 +269,7 @@ public:
-      */
-     void setUniformInt(const std::string &uniformName, int value);
-     void setUniformFloat(const std::string &uniformName, float value);
-+    void setUniformFloatArray(const std::string &uniformName, float* array, int count);
-     void setUniformVec2(const std::string &uniformName, const Vec2& value);
-     void setUniformVec3(const std::string &uniformName, const Vec3& value);
-     void setUniformVec4(const std::string &uniformName, const Vec4& value);
-@@ -280,6 +284,7 @@ public:
-      */
-     void setUniformInt(GLint uniformLocation, int value);
-     void setUniformFloat(GLint uniformLocation, float value);
-+    void setUniformFloatArray(GLint uniformLocation, float* array, int count);
-     void setUniformVec2(GLint uniformLocation, const Vec2& value);
-     void setUniformVec3(GLint uniformLocation, const Vec3& value);
-     void setUniformVec4(GLint uniformLocation, const Vec4& value);
+ /** Use culling or not. */
