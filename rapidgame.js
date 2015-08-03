@@ -21,7 +21,6 @@
 var http = require("http"),
 	path = require("path-extra"),
 	fs = require("fs"),
-	util = require("util"),
 	cmd = require("commander"),
 	replace = require("replace"),
 	download = require("download"),
@@ -34,7 +33,7 @@ var http = require("http"),
 	cocos2djsUrlMac = "http://cdn.cocos2d-x.org/cocos2d-x-3.7.zip", // also, http://www.cocos2d-x.org/filedown/cocos2d-x-v3.7.zip
 	cocos2djsUrlWin = "http://cdn.cocos2d-x.org/cocos2d-x-3.7.zip",
 	cocos2djsUrl = (process.platform === "darwin" ? cocos2djsUrlMac : cocos2djsUrlWin),
-	cocos2dDirGlob = "*ocos2d-js*",
+	cocos2dDirGlob = "*ocos2d-x*",
 	category,
 	engines = [],
 	templates = [],
@@ -442,11 +441,6 @@ var downloadCocos = function(callback) {
 			src = path.join(dir, "cocos2d.patch");
 			console.log("Applying patch file: " + src);
 			exec("git apply --whitespace=nowarn " + '"' + src + '"', {cwd: dest, env: process.env}, function(err){
-				// Delete patch
-				//if (!err) {
-				//	fs.unlinkSync(src);
-				//}
-				
 				callback();
 			});
 		} catch(e) {
@@ -820,6 +814,11 @@ var startBuild = function(platform, callback, settings) {
 		}
 		if (cmd.minimal) {
 			archSettings = (sdk === "iphoneos" ? ["-arch", "armv7"] : ["-arch", "i386"]);
+		} else if (sdk === "iphonesimulator") {
+			// why doesn't this force the iphonesimulator builds to have both i386 and x86_64?
+			// is one of them being stripped away?
+			//archSettings = ["-arch", "x86_64", "-arch", "i386"]
+			archSettings = ["-arch", "x86_64"]
 		}
 		args = [
 			"-project", path.join(dir, proj + ".xcodeproj"),
@@ -1198,19 +1197,18 @@ var downloadUrl = function(url, dest, cb) {
 	});
 	
 	// Update percentage
-	if (process.platform == "win32") {
-		console.log("Downloading " + url + "...");
-	} else {
-		emitter.on("data", function(chunk) {
-			if (!done) {
-				cur += chunk.length;
-				done = (cur >= total);
-				console.log("Downloading " + url + " "
-					+ (100.0 * cur / total).toFixed(2) + "%..."
-					+ (done ? "\n" : "\r"));
-			}
-		});
-	}
+	console.log("Downloading " + url + "...");
+	emitter.on("data", function(chunk) {
+		if (!done) {
+			cur += chunk.length;
+			done = (cur >= total);
+			process.stdout.clearLine();  // clear current text
+			process.stdout.cursorTo(0);
+			process.stdout.write("Downloading " + url + " "
+				+ (100.0 * cur / total).toFixed(2) + "%..."
+				+ (done ? "\n" : "\r"));
+		}
+	});
 	
 	// Error
 	emitter.on("error", function(status) {
