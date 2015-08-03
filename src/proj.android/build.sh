@@ -43,10 +43,10 @@ fi
 #fi
 
 # Set module path
-CC_ROOT=$(cd ../cocos2d-js/frameworks/js-bindings && pwd)
+CC_ROOT=$(cd ../cocos2d-x && pwd)
 SRC_ROOT=$(cd .. && pwd)
 UNAME=$(uname -s)
-NDK_MODULE_PATH="${CC_ROOT}/cocos2d-x:${CC_ROOT}/cocos2d-x/external:${CC_ROOT}/cocos2d-x/cocos:${CC_ROOT}:${SRC_ROOT}"
+NDK_MODULE_PATH="${CC_ROOT}:${CC_ROOT}/external:${SRC_ROOT}"
 echo "CC_ROOT=${CC_ROOT}"
 echo "NDK_MODULE_PATH=${NDK_MODULE_PATH}"
 
@@ -133,9 +133,9 @@ echo "DEST=${dest}"
 
 lib="libcocos2dx-prebuilt.a"
 rm -f ${dest}/${lib}
-for dir in cocos_localstorage_static cocosdenshion_static cocos2dxandroid_static cocos_network_static cocostudio_static \
-	audioengine_static cocos3d_static spine_static box2d_static cocos_extension_static cocos_ui_static \
-	cocos2dx_internal_static cocos_jsb_static cocosbuilder_static
+for dir in audioengine_static  cocos2dx_internal_static  cocos_extension_static  cocos_ui_static  cocostudio_static  spine_static \
+	box2d_static  cocos2dxandroid_static  cocos_flatbuffers_static  cocosbuilder_static  bullet_static  cocos3d_static \
+	cocos_network_static  cocosdenshion_static  recast_static
 do
 	${ar} rs ${dest}/${lib} $(find ${src}/${dir} -name *.o)
 	if [ "$3" != "nostrip" ]; then

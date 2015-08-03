@@ -550,7 +550,7 @@ var setupPrebuild = function(platform, callback) {
 
 	// # bonus: call android/strip on mk/*.a
 
-	files = ["proj.android", "cocos2d-js"];
+	files = ["proj.android", "cocos2d-js", path.join("cocos2d-x", "tools"), path.join("cocos2d-x", "templates"), path.join("cocos2d-x", "tests")];
 	for (i = 0; i < files.length; i += 1) {
 		wrench.rmdirSyncRecursive(path.join(dest, files[i]), true);
 	}

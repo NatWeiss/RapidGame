@@ -13,6 +13,10 @@ LOCAL_SRC_FILES := ../../../lib/cocos2d/x/lib/$(CONFIG)-Android/$(TARGET_ARCH_AB
 include $(PREBUILT_STATIC_LIBRARY)
 
 
+# $(call import-add-path,$(LOCAL_PATH)/../../../lib/cocos2d/x/java/mk/cocos2d-x/)
+# $(call import-add-path,$(LOCAL_PATH)/../../cocos2d-x/external)
+# $(call import-add-path,$(LOCAL_PATH)/../../cocos2d-x/cocos)
+
 include $(CLEAR_VARS)
 LOCAL_MODULE := cocos2dxgame_shared
 LOCAL_MODULE_FILENAME := libcocos2dxgame
@@ -45,6 +49,11 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../.. \
 				$(LOCAL_PATH)/../../../lib/cocos2d/x/include/external/spidermonkey/include/android
 
 LOCAL_WHOLE_STATIC_LIBRARIES := libcocos2dx-prebuilt
+
+#
+# is it possible to pack these into libcocos2dx.a instead of copying them into cocos2d/x/java/mk/cocos2d-x/*/*.a ?
+# http://stackoverflow.com/questions/13637450/android-ndk-how-to-link-multiple-3rd-party-libraries
+#
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_png_static cocos_jpeg_static cocos_tiff_static cocos_webp_static \
 	cocos_curl_static cocos_freetype2_static spidermonkey_static websockets_static cocos_chipmunk_static \
 	cocos_zlib_static
@@ -71,4 +80,6 @@ include $(BUILD_SHARED_LIBRARY)
 
 
 $(call import-module,audio/android)
-$(call import-module,bindings)
+# $(call import-module,bindings)
+
+
