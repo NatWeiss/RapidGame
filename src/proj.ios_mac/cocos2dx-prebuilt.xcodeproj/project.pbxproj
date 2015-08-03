@@ -146,7 +146,7 @@
 		419E8DAC18A9724F00232A34 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0510;
+				LastUpgradeCheck = 0640;
 			};
 			buildConfigurationList = 419E8DAF18A9724F00232A34 /* Build configuration list for PBXProject "cocos2dx-prebuilt" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -332,6 +332,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
