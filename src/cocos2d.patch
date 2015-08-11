@@ -1,16 +1,3 @@
-diff --git a/cocos/2d/cocos2dx.props b/cocos/2d/cocos2dx.props
-index f1a0af1..a7dd654 100644
---- a/cocos/2d/cocos2dx.props
-+++ b/cocos/2d/cocos2dx.props
-@@ -7,7 +7,7 @@
-   </PropertyGroup>
-   <ItemDefinitionGroup>
-     <Link>
--      <AdditionalDependencies>opengl32.lib;glew32.lib;libzlib.lib;libwebp.lib;libiconv.lib;freetype250.lib;winmm.lib;ws2_32.lib;libbox2d.lib;libSpine.lib;%(AdditionalDependencies)</AdditionalDependencies>
-+      <AdditionalDependencies>opengl32.lib;glew32.lib;libzlib.lib;libwebp.lib;libiconv.lib;freetype250.lib;winmm.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-       <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
-     </Link>
 diff --git a/cocos/base/ccConfig.h b/cocos/base/ccConfig.h
 index 0d32b51..d6cd15f 100644
 --- a/cocos/base/ccConfig.h

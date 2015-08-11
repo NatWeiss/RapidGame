@@ -740,16 +740,16 @@ var prebuildAndroid = function(config, arch, callback) {
 // prebuild windows
 //
 var prebuildWin = function(config, arch, callback) {
-	var i, j, command, targets, args, projs,
-		jsbindings = path.join(cmd.prefix, "src", "cocos2d-x", "cocos", "scripting", "js-bindings"),
+	var i, j, command, targets, args, projs = [],
+		base = path.join(cmd.prefix, "src", "cocos2d-x"),
 		configs = (config ? [config] : (cmd.minimal ? ["Debug"] : ["Debug", "Release"]));
 
 	// set VCTargetsPath
 	// (overcome error MSB4019: The imported project "C:\Microsoft.Cpp.Default.props" was not found.)
 	process.env["VCTargetsPath"] = getVCTargetsPath();
 
-	// get bindings projects
-	projs = glob.sync(path.join(jsbindings, "proj.win32", "*.vcxproj")) || [];
+	// manually add bindings projects
+	//projs = glob.sync(path.join(base, "cocos", "scripting", "js-bindings", "proj.win32", "*.vcxproj")) || [];
 
 	getMSBuildPath(function(_msBuildPath) {
 		msBuildPath = _msBuildPath;
@@ -758,25 +758,26 @@ var prebuildWin = function(config, arch, callback) {
 		builds = [];
 		for (i = 0; i < configs.length; i += 1) {
 			command = path.join(msBuildPath, "MSBuild.exe");
-			targets = ["libcocos2d", "libBox2D", "libSpine"];
+			//targets = ["libcocos2d", "libjscocos2d", "libbox2d", "libbullet", "librecast", "libSpine"];
+			targets = ["libcocos2d", "libjscocos2d"];
 			args = [
-				path.join(cmd.prefix, "src", "cocos2d-x", "build", "cocos2d-js-win32.sln"),
+				path.join(base, "build", "cocos2d-js-win32.sln"),
 				"/nologo",
 				"/maxcpucount:4",
-				//"/t:" + targets.join(";"),
+				"/t:" + targets.join(";"),
 				//"/p:VisualStudioVersion=12.0",
 				//"/p:PlatformTarget=x86",
 				//"/verbosity:diag",
 				//"/clp:ErrorsOnly",
 				//"/p:nowarn=4005",
 				//'/p:WarningLevel=0',
-				"/p:configuration=" + configs[i]
+				"/p:configuration=" + configs[i] + ";platform=Win32"
 			];
 
 			// main solution
-			builds.push([configs[i], command, args]);
+			builds.push([configs[i], command, args, projs.length == 0 ? linkWin : false]);
 
-			// bindings
+			// additional projects
 			for (j = 0; j < projs.length; j+=1) {
 				args = [
 					projs[j],
@@ -889,28 +890,20 @@ var startBuild = function(platform, callback, settings) {
 // link windows
 //
 var linkWin = function(config, callback) {
-
-
-/*
-	
-all these paths need to be adjusted and tested on windows...
-	
-*/
-
-
-
-
 	var i, src,
 		srcRoot = path.join(cmd.prefix, "src", "cocos2d-x"),
-		runtimeDir = path.join(cmd.prefix, "src", "cocos2d-js", "templates", "js-template-runtime", "runtime", "win32"),
+		dllDirs = [
+			//path.join(srcRoot, "external", "lua", "luajit", "prebuilt", "win32"),
+			],
 		libDirs = [
-			//path.join(srcRoot, "build", config + ".win32"),
-			path.join(srcRoot, "cocos2d-x", "cocos", "2d", config + ".win32"), // libcocos2d.dll, glew32.dll, libcurl.dll, etc.
+			path.join(srcRoot, "build", config + ".win32")
+/*			path.join(srcRoot, "cocos2d-x", "cocos", "2d", config + ".win32"), // libcocos2d.dll, glew32.dll, libcurl.dll, etc.
 			path.join(srcRoot, "bindings", "proj.win32", config + ".win32"), // libjsbindings.lib, sqlite3.dll, etc.
 			path.join(srcRoot, "cocos2d-x", "cocos", "editor-support", "spine", "proj.win32", config + ".win32"), // libSpine.lib
 			path.join(srcRoot, "cocos2d-x", "external", "Box2D", "proj.win32", config + ".win32"), // libbox2d.lib
 			path.join(srcRoot, "external", "spidermonkey", "prebuilt", "win32"), // mosjs-33.dll / .lib
 			path.join(srcRoot, "cocos2d-x", "external", "websockets", "prebuilt", "win32") // websockets.dll / .lib
+*/
 		],
 		options = {
 			cwd: cmd.prefix,
@@ -925,12 +918,20 @@ all these paths need to be adjusted and tested on windows...
 			'/OUT:"' + path.join(dest, "libcocos2dx-prebuilt.lib") + '"';
 
 	// copy dlls and finish creating command
-	copyGlobbed(runtimeDir, dest, "*.dll"); // first these because we want to overwrite libcocos2d.dll
 	wrench.mkdirSyncRecursive(dest);
+	for (i = 0; i < dllDirs.length; i += 1) {
+		copyGlobbed(dllDirs[i], dest, "*.dll");
+	}
 	for (i = 0; i < libDirs.length; i += 1) {
 		copyGlobbed(libDirs[i], dest, "*.dll");
 		//copyGlobbed(libDirs[i], dest, "*.pdb");
 		command += ' "' + path.join(libDirs[i], "*.lib") + '"';
+	}
+
+	// move duplicate libs that break the linker
+	try {
+		fs.renameSync(path.join(libDirs[0], "libpng-2015.lib"), path.join(libDirs[0], "libpng-2015.duplicate-lib"));
+	} catch(e) {
 	}
 
 	// execute
@@ -1207,17 +1208,19 @@ var downloadUrl = function(url, dest, cb) {
 	
 	// Update percentage
 	console.log("Downloading " + url + "...");
-	emitter.on("data", function(chunk) {
-		if (!done) {
-			cur += chunk.length;
-			done = (cur >= total);
-			process.stdout.clearLine();  // clear current text
-			process.stdout.cursorTo(0);
-			process.stdout.write("Downloading " + url + " "
-				+ (100.0 * cur / total).toFixed(2) + "%..."
-				+ (done ? "\n" : "\r"));
-		}
-	});
+	if (process.platform !== "win32") {
+		emitter.on("data", function(chunk) {
+			if (!done) {
+				cur += chunk.length;
+				done = (cur >= total);
+				process.stdout.clearLine();  // clear current text
+				process.stdout.cursorTo(0);
+				process.stdout.write("Downloading " + url + " "
+					+ (100.0 * cur / total).toFixed(2) + "%..."
+					+ (done ? "\n" : "\r"));
+			}
+		});
+	}
 	
 	// Error
 	emitter.on("error", function(status) {
@@ -1360,12 +1363,14 @@ var logBuild = function(str) {
 // execute a command
 //
 var exec = function(command, options, callback) {
+	// logging
 	if (cmd.verbose) {
 		console.log(command);
 		console.log("Current dir: " + options.cwd);
-	} else {
-		logBuild("\nExecuting:\n\t" + command + "\n\nCurrent dir:\n\t" + options.cwd + "\n\n");
 	}
+	logBuild("\nExecuting:\n\t" + command + "\n\nCurrent dir:\n\t" + options.cwd + "\n\n");
+
+	// execute
 	try {
 		child_process.exec(command, options, function(err, stdout, stderr){
 			execCallback(err, stdout, stderr);
