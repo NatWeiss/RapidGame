@@ -13,10 +13,6 @@ LOCAL_SRC_FILES := ../../../lib/cocos2d/x/lib/$(CONFIG)-Android/$(TARGET_ARCH_AB
 include $(PREBUILT_STATIC_LIBRARY)
 
 
-# $(call import-add-path,$(LOCAL_PATH)/../../../lib/cocos2d/x/java/mk/cocos2d-x/)
-# $(call import-add-path,$(LOCAL_PATH)/../../cocos2d-x/external)
-# $(call import-add-path,$(LOCAL_PATH)/../../cocos2d-x/cocos)
-
 include $(CLEAR_VARS)
 LOCAL_MODULE := cocos2dxgame_shared
 LOCAL_MODULE_FILENAME := libcocos2dxgame
@@ -50,14 +46,6 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../.. \
 
 LOCAL_WHOLE_STATIC_LIBRARIES := libcocos2dx-prebuilt
 
-#
-# is it possible to pack these into libcocos2dx.a instead of copying them into cocos2d/x/java/mk/cocos2d-x/*/*.a ?
-# http://stackoverflow.com/questions/13637450/android-ndk-how-to-link-multiple-3rd-party-libraries
-#
-LOCAL_WHOLE_STATIC_LIBRARIES += cocos_png_static cocos_jpeg_static cocos_tiff_static cocos_webp_static \
-	cocos_curl_static cocos_freetype2_static spidermonkey_static websockets_static cocos_chipmunk_static \
-	cocos_zlib_static
-
 # cocos2d-x/cocos/2d/Android.mk
 LOCAL_CFLAGS   := -Wno-psabi -DUSE_FILE32API
 
@@ -72,14 +60,24 @@ LOCAL_LDLIBS := -lGLESv1_CM \
 	-lGLESv2 \
 	-lEGL \
 	-llog \
-	-lz \
 	-lOpenSLES \
 	-landroid
 
+# remaining external libraries
+LOCAL_LDLIBS += -L $(LOCAL_PATH)/../../../lib/cocos2d/x/java/mk/cocos2d-x/external/jpeg/prebuilt/android/$(APP_ABI) -ljpeg
+LOCAL_LDLIBS += -L $(LOCAL_PATH)/../../../lib/cocos2d/x/java/mk/cocos2d-x/external/tiff/prebuilt/android/$(APP_ABI) -ltiff
+LOCAL_LDLIBS += -L $(LOCAL_PATH)/../../../lib/cocos2d/x/java/mk/cocos2d-x/external/webp/prebuilt/android/$(APP_ABI) -lwebp
+LOCAL_LDLIBS += -L $(LOCAL_PATH)/../../../lib/cocos2d/x/java/mk/cocos2d-x/external/curl/prebuilt/android/$(APP_ABI) -lcurl -lssl -lcrypto
+LOCAL_LDLIBS += -L $(LOCAL_PATH)/../../../lib/cocos2d/x/java/mk/cocos2d-x/external/freetype2/prebuilt/android/$(APP_ABI) -lfreetype
+LOCAL_LDLIBS += -L $(LOCAL_PATH)/../../../lib/cocos2d/x/java/mk/cocos2d-x/external/spidermonkey/prebuilt/android/$(APP_ABI) -ljs_static
+LOCAL_LDLIBS += -L $(LOCAL_PATH)/../../../lib/cocos2d/x/java/mk/cocos2d-x/external/websockets/prebuilt/android/$(APP_ABI) -lwebsockets
+LOCAL_LDLIBS += -L $(LOCAL_PATH)/../../../lib/cocos2d/x/java/mk/cocos2d-x/external/chipmunk/prebuilt/android/$(APP_ABI) -lchipmunk
+LOCAL_LDLIBS += $(LOCAL_PATH)/../../../lib/cocos2d/x/java/mk/cocos2d-x/external/zlib/prebuilt/android/$(APP_ABI)/libz.a
+LOCAL_LDLIBS += -L $(LOCAL_PATH)/../../../lib/cocos2d/x/java/mk/cocos2d-x/external/png/prebuilt/android/$(APP_ABI) -lpng
+
 include $(BUILD_SHARED_LIBRARY)
 
-
 $(call import-module,audio/android)
+
+# $(call import-add-path,$(LOCAL_PATH)/../../../lib/cocos2d/x/java/mk/cocos2d-x/external)
 # $(call import-module,bindings)
-
-
