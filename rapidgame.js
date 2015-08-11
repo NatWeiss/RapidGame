@@ -422,7 +422,8 @@ var downloadCocos = function(callback) {
 		}
 
 		var globPath = path.join(dir, cocos2dDirGlob),
-			files = glob.sync(globPath);
+			files = glob.sync(globPath),
+			cmd;
 		if (!files || files.length !== 1) {
 			logErr("Couldn't glob " + globPath);
 			return;
@@ -440,7 +441,15 @@ var downloadCocos = function(callback) {
 			// (see comments at the end of this file for how to create the patch)
 			src = path.join(dir, "cocos2d.patch");
 			console.log("Applying patch file: " + src);
-			exec("git apply --whitespace=nowarn " + '"' + src + '"', {cwd: dest, env: process.env}, function(err){
+
+			// for some reason git apply sometimes does not work and produces no output...
+			// (use the patch command instead)
+			cmd = "patch -p1 < ";
+			if (process.platform === "win32") {
+				cmd = "git apply --whitespace=nowarn ";
+			}
+			cmd += '"' + src + '"';
+			exec(cmd, {cwd: dest, env: process.env}, function(err){
 				callback();
 			});
 		} catch(e) {
