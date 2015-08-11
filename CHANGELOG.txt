@@ -1,3 +1,7 @@
+Version 0.9.10 - August 11, 2015
+
+	Upgraded to cocos2d-x 3.7 (the cocos2d-x team has merged the cocos2d-js and cocos2d-x projects).
+
 Version 0.9.9 - June 4, 2015
 
 	Prebuilding Android on Windows is more rocksolid due to using ndk-which thanks to Samuel Ørsnæs.
