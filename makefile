@@ -1,5 +1,7 @@
 clean:
 	cd src/proj.android; make clean
+	cd templates/cocos2dx/TwoScene/Projects/android; make clean
+	cd templates/cocos2djs/TwoScene/Projects/android; make clean
 	rm -rf ~/Library/Developer/Xcode/DerivedData/cocos2dx-prebuilt*
 
 doc:
