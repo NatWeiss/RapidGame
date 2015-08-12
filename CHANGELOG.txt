@@ -1,3 +1,7 @@
+Version 0.9.11 - August 11, 2015
+
+	Fixed linking problem on Windows due to 3.7 upgrade.
+
 Version 0.9.10 - August 11, 2015
 
 	Upgraded to cocos2d-x 3.7 (the cocos2d-x team has merged the cocos2d-js and cocos2d-x projects).

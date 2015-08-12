@@ -41,7 +41,9 @@ var http = require("http"),
 	orientations = ["landscape", "portrait"],
 	platforms = ["headers", "ios", "mac", "android", "windows", "linux"],
 	copyCount = 0,
-	msBuildPath,
+	msBuildExePath,
+	libExePath,
+	vcTargetsPath,
 	defaults = {
 		engine: "cocos2dx",
 		template: "TwoScene",
@@ -328,21 +330,27 @@ var prebuild = function(platform, config, arch) {
 		return 1;
 	}
 
-	console.log("Happily prebuilding " + platform);
-	cmd.buildLog = path.join(cmd.prefix, "build.log");
-	try {
-		fs.writeFileSync(cmd.buildLog, "");
-		console.log("Writing build log to: " + cmd.buildLog);
-	} catch(e) {
-		cmd.buildLog = "";
-	}
+	getToolPaths(function(success) {
+		if (!success) {
+			return;
+		}
 
-	report("start");
-	copySrcFiles(function() {
-		downloadCocos(function() {
-			setupPrebuild(platform, function() {
-				runPrebuild(platform, config, arch, function() {
-					report("done");
+		console.log("Happily prebuilding " + platform);
+		cmd.buildLog = path.join(cmd.prefix, "build.log");
+		try {
+			fs.writeFileSync(cmd.buildLog, "");
+			console.log("Writing build log to: " + cmd.buildLog);
+		} catch(e) {
+			cmd.buildLog = "";
+		}
+
+		report("start");
+		copySrcFiles(function() {
+			downloadCocos(function() {
+				setupPrebuild(platform, function() {
+					runPrebuild(platform, config, arch, function() {
+						report("done");
+					});
 				});
 			});
 		});
@@ -746,52 +754,48 @@ var prebuildWin = function(config, arch, callback) {
 
 	// set VCTargetsPath
 	// (overcome error MSB4019: The imported project "C:\Microsoft.Cpp.Default.props" was not found.)
-	process.env["VCTargetsPath"] = getVCTargetsPath();
+	process.env["VCTargetsPath"] = vcTargetsPath;
 
 	// manually add bindings projects
 	//projs = glob.sync(path.join(base, "cocos", "scripting", "js-bindings", "proj.win32", "*.vcxproj")) || [];
 
-	getMSBuildPath(function(_msBuildPath) {
-		msBuildPath = _msBuildPath;
+	// create builds
+	builds = [];
+	for (i = 0; i < configs.length; i += 1) {
+		command = msBuildExePath;
+		//targets = ["libcocos2d", "libjscocos2d", "libbox2d", "libbullet", "librecast", "libSpine"];
+		targets = ["libcocos2d", "libjscocos2d"];
+		args = [
+			path.join(base, "build", "cocos2d-js-win32.sln"),
+			"/nologo",
+			"/maxcpucount:4",
+			"/t:" + targets.join(";"),
+			//"/p:VisualStudioVersion=12.0",
+			//"/p:PlatformTarget=x86",
+			//"/verbosity:diag",
+			//"/clp:ErrorsOnly",
+			//"/p:nowarn=4005",
+			//'/p:WarningLevel=0',
+			"/p:configuration=" + configs[i] + ";platform=Win32"
+		];
 
-		// create builds
-		builds = [];
-		for (i = 0; i < configs.length; i += 1) {
-			command = path.join(msBuildPath, "MSBuild.exe");
-			//targets = ["libcocos2d", "libjscocos2d", "libbox2d", "libbullet", "librecast", "libSpine"];
-			targets = ["libcocos2d", "libjscocos2d"];
+		// main solution
+		builds.push([configs[i], command, args, projs.length == 0 ? linkWin : false]);
+
+		// additional projects
+		for (j = 0; j < projs.length; j+=1) {
 			args = [
-				path.join(base, "build", "cocos2d-js-win32.sln"),
+				projs[j],
 				"/nologo",
-				"/maxcpucount:4",
-				"/t:" + targets.join(";"),
-				//"/p:VisualStudioVersion=12.0",
-				//"/p:PlatformTarget=x86",
-				//"/verbosity:diag",
-				//"/clp:ErrorsOnly",
-				//"/p:nowarn=4005",
-				//'/p:WarningLevel=0',
-				"/p:configuration=" + configs[i] + ";platform=Win32"
+	            "/maxcpucount:4",
+	        	"/p:configuration=" + configs[i]
 			];
-
-			// main solution
-			builds.push([configs[i], command, args, projs.length == 0 ? linkWin : false]);
-
-			// additional projects
-			for (j = 0; j < projs.length; j+=1) {
-				args = [
-					projs[j],
-					"/nologo",
-		            "/maxcpucount:4",
-		        	"/p:configuration=" + configs[i]
-				];
-				builds.push([configs[i], command, args, (j == projs.length - 1) ? linkWin : false]);
-			}
+			builds.push([configs[i], command, args, (j == projs.length - 1) ? linkWin : false]);
 		}
+	}
 
-		// start
-		nextBuild("Windows", callback);
-	});
+	// start
+	nextBuild("Windows", callback);
 };
 
 //
@@ -892,45 +896,37 @@ var startBuild = function(platform, callback, settings) {
 var linkWin = function(config, callback) {
 	var i, src,
 		srcRoot = path.join(cmd.prefix, "src", "cocos2d-x"),
-		dllDirs = [
-			//path.join(srcRoot, "external", "lua", "luajit", "prebuilt", "win32"),
-			],
-		libDirs = [
-			path.join(srcRoot, "build", config + ".win32")
-/*			path.join(srcRoot, "cocos2d-x", "cocos", "2d", config + ".win32"), // libcocos2d.dll, glew32.dll, libcurl.dll, etc.
-			path.join(srcRoot, "bindings", "proj.win32", config + ".win32"), // libjsbindings.lib, sqlite3.dll, etc.
-			path.join(srcRoot, "cocos2d-x", "cocos", "editor-support", "spine", "proj.win32", config + ".win32"), // libSpine.lib
-			path.join(srcRoot, "cocos2d-x", "external", "Box2D", "proj.win32", config + ".win32"), // libbox2d.lib
-			path.join(srcRoot, "external", "spidermonkey", "prebuilt", "win32"), // mosjs-33.dll / .lib
-			path.join(srcRoot, "cocos2d-x", "external", "websockets", "prebuilt", "win32") // websockets.dll / .lib
-*/
-		],
+		libDir = path.join(srcRoot, "build", config + ".win32"),
 		options = {
 			cwd: cmd.prefix,
 			env: process.env
 		},
 		dest = path.join(cmd.prefix, version, "cocos2d", "x", "lib", config + "-win32", "x86"),
-		command = '"' + getVCBinDir() + 'lib.exe" ' +
+		command = '"' + libExePath + '" ' +
 			'/NOLOGO ' +
 			'/IGNORE:4006 ' +
 			//'/OPT:REF ' +
 			//'/OPT:ICF ' +
 			'/OUT:"' + path.join(dest, "libcocos2dx-prebuilt.lib") + '"';
 
-	// copy dlls and finish creating command
+	// make output dir
 	wrench.mkdirSyncRecursive(dest);
-	for (i = 0; i < dllDirs.length; i += 1) {
-		copyGlobbed(dllDirs[i], dest, "*.dll");
-	}
-	for (i = 0; i < libDirs.length; i += 1) {
-		copyGlobbed(libDirs[i], dest, "*.dll");
-		//copyGlobbed(libDirs[i], dest, "*.pdb");
-		command += ' "' + path.join(libDirs[i], "*.lib") + '"';
-	}
 
-	// move duplicate libs that break the linker
+	// copy dlls and finish creating command
+	//copyGlobbed(path.join(srcRoot, "external", "lua", "luajit", "prebuilt", "win32"), dest, "*.dll");
+	copyGlobbed(libDir, dest, "*.dll");
+	copyGlobbed(libDir, dest, "glfw3.lib"); // possibly because of the new duplicate -2015.lib files, this is necessary...
+	copyGlobbed(libDir, dest, "libchipmunk.lib");
+	copyGlobbed(libDir, dest, "libjpeg.lib");
+	copyGlobbed(libDir, dest, "libpng.lib");
+	copyGlobbed(libDir, dest, "libtiff.lib");
+	command += ' "' + path.join(libDir, "*.lib") + '"';
+
+	// move unneeded file(s)
 	try {
-		fs.renameSync(path.join(libDirs[0], "libpng-2015.lib"), path.join(libDirs[0], "libpng-2015.duplicate-lib"));
+		// this must be done because both of these libpng.lib files contain pngwin.res and lib.exe errors with LNK1241
+		// (consider instead using /REMOVE option: https://msdn.microsoft.com/en-us/library/0xb6w1f8.aspx)
+		fs.renameSync(path.join(libDir, "libpng-2015.lib"), path.join(libDir, "libpng-2015.duplicate-lib"));
 	} catch(e) {
 	}
 
@@ -945,20 +941,62 @@ var linkWin = function(config, callback) {
 };
 
 //
+// Get paths to needed tools.
+//
+var getToolPaths = function(callback) {
+	if (process.platform === "win32") {
+		getMSBuildPath(function(success){
+			getLibExePath(function(success){
+				getVCTargetsPath(function(success){
+					callback(success);
+				});
+			});
+		});
+	} else {
+		callback(true);
+	}
+};
+
+//
 // get the ms build tools path
 //
-var getMSBuildPath = function(callback) {
+var getMSBuildPath = function(cb) {
 	var Winreg = require("winreg"),
 		root = '\\Software\\Microsoft\\MSBuild\\ToolsVersions',
-		regKey = new Winreg({key: root});
+		regKey,
+		savePath = path.join(cmd.prefix, "msbuildpath.txt"),
+		callback = function() {
+			if (fileExists(msBuildExePath)) {
+				try{
+					fs.writeFileSync(savePath, msBuildExePath).toString().trim();
+				} catch (e) {
+				}
+				console.log("MSBUILD: " + msBuildExePath);
+				cb(true);
+			} else {
+				console.log("Unable to locate MSBuild.exe. Please set the contents of the following file to the absolute path to MSBuild.exe:\n\n\t" + savePath + "\n\nExample: C:\\Path\\to\\MSBuild.exe");
+				cb();
+			}
+		};
+
+	// try to load saved path
+	try{
+		msBuildExePath = fs.readFileSync(savePath).toString().trim();
+		if (msBuildExePath.length > 0) {
+			callback();
+			return;
+		}
+	} catch(e) {
+	}
+
+	// find path to MSBuildToolsPath
+	regKey = new Winreg({key: root});
 	regKey.keys(function (err, items) {
 		var i, key, highest = 0, buildPath = '', count = 0;
 		if (err) {
 			console.log(err);
-			return;
+			callback();
 		}
-		
-		// find path to MSBuildToolsPath
 		for (i = 0; i < items.length; i += 1) {
 			key = path.basename(items[i].key);
 			regKey = new Winreg({key: root + '\\' + key});	
@@ -968,10 +1006,8 @@ var getMSBuildPath = function(callback) {
 					if (err) {
 						console.log(err);
 					} else if (typeof item === "object" && typeof item.value === "string" && item.value.length) {
-						if (cmd.verbose) {
-							console.log("Potential MSBuildToolsPath: " + item.value);
-						}
-						console.log("Checking version = " + parseFloat(key) + " against highest " + highest);
+						//console.log("Potential MSBuildToolsPath: " + item.value);
+						//console.log("Checking version = " + parseFloat(key) + " against highest " + highest);
 						if (parseFloat(key) > highest) {
 							buildPath = item.value;
 							highest = parseFloat(key);
@@ -979,11 +1015,10 @@ var getMSBuildPath = function(callback) {
 					}
 					if (count === items.length) {
 						if (buildPath.length) {
-							console.log("Final MSBuildToolsPath: " + buildPath);
-							callback(buildPath);
-						} else {
-							console.log("Unable to find MSBuild path");
+							//console.log("Final MSBuildToolsPath: " + buildPath);
+							msBuildExePath = path.join(buildPath, "MSBuild.exe");
 						}
+						callback();
 					}
 				});
 			})(key);
@@ -995,7 +1030,7 @@ var getMSBuildPath = function(callback) {
 // get the VCTargetsPath
 // (todo: mine this from the registry \\Software\\Microsoft\\MSBuild\\ToolsVersions\\X\\VCTargetsPath)
 //
-var getVCTargetsPath = function() {
+var getVCTargetsPath = function(cb) {
 	var i,
 		ret,
 		bases = [
@@ -1004,50 +1039,112 @@ var getVCTargetsPath = function() {
 			"\\MSBuild\\Microsoft.Cpp\\v4.0\\"
 		],
 		names = [
-			"\\Program Files (x86)",
 			"C:\\Program Files (x86)",
-			"\\Program Files",
-			"C:\\Program Files"
-		];
+			"\\Program Files (x86)",
+			"C:\\Program Files",
+			"\\Program Files"
+		],
+		savePath = path.join(cmd.prefix, "vctargetspath.txt"),
+		callback = function() {
+			if (dirExists(vcTargetsPath)) {
+				try{
+					fs.writeFileSync(savePath, vcTargetsPath).toString().trim();
+				} catch (e) {
+				}
+				console.log("VCTARGETS: " + vcTargetsPath);
+				cb(true);
+			} else {
+				console.log("Unable to locate VCTargetsPath. Please set the contents of the following file to the absolute path to VCTargets:\n\n\t" + savePath + "\n\nExample: " + names[0] + bases[0]);
+				cb();
+			}
+		};
+
+	// try to load saved path
+	try{
+		vcTargetsPath = fs.readFileSync(savePath).toString().trim();
+		if (vcTargetsPath.length > 0) {
+			callback();
+			return;
+		}
+	} catch(e) {
+	}
+
+	// determine path
 	for (j = 0; j < bases.length; j += 1) {
 		for (i = 0; i < names.length; i += 1) {
 			ret = names[i] + bases[j];
 			if (dirExists(ret)) {
 				if (cmd.verbose) {
-					console.log("VCTargetsPath: " + ret);
+					//console.log("VCTargetsPath: " + ret);
 				}
-				return ret;
+				vcTargetsPath = ret;
+				callback();
+				return;
 			}
 		}
 	}
+	callback();
 };
 
 //
-// get the vc bin dir
+// get the vc bin dir and append lib.exe
 // todo: mine this from the registry
-// mimic python's find_vcvarsall
+// or mimic python's find_vcvarsall
 // http://stackoverflow.com/questions/6551724/how-do-i-point-easy-install-to-vcvarsall-bat
 // or:
 // http://cmake.3232098.n2.nabble.com/How-to-find-vcvarsall-bat-e-g-at-quot-C-Program-Files-x86-Microsoft-Visual-Studio-12-0-VC-quot-CMAKE-td7587359.html
 //
-var getVCBinDir = function() {
-	var i,
-		base = "\\Microsoft Visual Studio 12.0\\VC\\bin\\",
+var getLibExePath = function(cb) {
+	var i, j, ret,
+		bases = [
+			"C:\\Program Files (x86)",
+			"\\Program Files (x86)",
+			"C:\\Program Files",
+			"\\Program Files"
+		],
 		names = [
-			"\\Program Files (x86)" + base,
-			"C:\\Program Files (x86)" + base,
-			"\\Program Files" + base,
-			"C:\\Program Files" + base
-		];
-	for (i = 0; i < names.length; i += 1) {
-		if (dirExists(names[i])) {
-			if (cmd.verbose) {
-				console.log("VCBinDir: " + names[i]);
+			"\\Microsoft Visual Studio 12.0\\VC\\bin\\"
+		],
+		savePath = path.join(cmd.prefix, "libexepath.txt"),
+		callback = function() {
+			if (fileExists(libExePath)) {
+				try{
+					fs.writeFileSync(savePath, libExePath).toString().trim();
+				} catch (e) {
+				}
+				console.log("LIB: " + libExePath);
+				cb(true);
+			} else {
+				console.log("Unable to locate lib.exe. Please set the contents of the following file to the absolute path to lib.exe:\n\n\t" + savePath + "\n\nExample: " + bases[0] + names[0]);
+				cb();
 			}
-			return names[i];
+		};
+
+	// try to load saved path
+	try{
+		libExePath = fs.readFileSync(savePath).toString().trim();
+		if (libExePath.length > 0) {
+			callback();
+			return;
+		}
+	} catch(e) {
+	}
+
+	// determine path
+	for (j = 0; j < bases.length; j += 1) {
+		for (i = 0; i < names.length; i += 1) {
+			ret = bases[j] + names[i];
+			if (dirExists(ret)) {
+				if (cmd.verbose) {
+					//console.log("Lib.exe: " + ret);
+				}
+				libExePath = path.join(ret, 'lib.exe');
+				callback();
+				return;
+			}
 		}
 	}
-	return "";
+	callback();
 };
 
 //
