@@ -6,6 +6,7 @@
 //  To-do:
 //   - Mention how to use a manual download of cocos2d-x in readme.
 //   - Fix Mac project name search and replace so names with spaces work. (It used to...)
+//   - Regarding the linux build: http://stackoverflow.com/questions/21168141/can-not-install-packages-using-node-package-manager-in-ubuntu
 //   - Why did `sudo npm unlink rapidgame -g; sudo npm link .` fix "Error: Cannot find module 'path-extra'"?
 //   - Mac prebuild fails if the user has changed Xcode's temporary build directory to "relative to project". Here's some details:
 //       export TARGET_TEMP_DIR=/Users/user/Library/Developer/RapidGame/src/proj.ios_mac/build/cocos2dx-prebuilt.build/Debug/Mac.build
@@ -330,21 +331,23 @@ var prebuild = function(platform, config, arch) {
 		return 1;
 	}
 
+	// initialize build log
+	cmd.buildLog = path.join(cmd.prefix, "build.log");
+	try {
+		fs.writeFileSync(cmd.buildLog, "");
+		console.log("Writing build log to: " + cmd.buildLog);
+	} catch(e) {
+		cmd.buildLog = "";
+	}
+
 	getToolPaths(function(success) {
 		if (!success) {
 			return;
 		}
 
-		console.log("Happily prebuilding " + platform);
-		cmd.buildLog = path.join(cmd.prefix, "build.log");
-		try {
-			fs.writeFileSync(cmd.buildLog, "");
-			console.log("Writing build log to: " + cmd.buildLog);
-		} catch(e) {
-			cmd.buildLog = "";
-		}
-
+		logBuild("Happily prebuilding " + platform, true);
 		report("start");
+		
 		copySrcFiles(function() {
 			downloadCocos(function() {
 				setupPrebuild(platform, function() {
@@ -367,7 +370,7 @@ var copySrcFiles = function(callback) {
 	src = path.join(__dirname, "src");
 	dest = path.join(cmd.prefix, "src");
 	if (src !== dest) {
-		console.log("Copying " + src + " to " + dest);
+		logBuild("Copying " + src + " to " + dest, true);
 		copyRecursive(src, dest, true);
 	}
 
@@ -392,17 +395,15 @@ var downloadCocos = function(callback) {
 	}
 	if (ver !== cocos2djsUrl) {
 		if (typeof ver !== "undefined") {
-			console.log("Current cocos2d-x URL: " + cocos2djsUrl);
-			console.log("Downloaded cocos2d-x URL: " + ver);
-			console.log("Re-downloading");
+			logBuild("Current cocos2d-x URL: " + cocos2djsUrl, true);
+			logBuild("Downloaded cocos2d-x URL: " + ver, true);
+			logBuild("Re-downloading", true);
 		}
 		doDownload = true;
 		try {
 			wrench.rmdirSyncRecursive(dest, true);
 		} catch(e) {
-			if (cmd.verbose) {
-				console.log(e);
-			}
+			logBuild(e, cmd.verbose);
 			// try again
 			try {wrench.rmdirSyncRecursive(dest, true);} catch(e) {}
 		}
@@ -417,7 +418,7 @@ var downloadCocos = function(callback) {
 	// warn about git existing
 	src = path.join(cmd.prefix, ".git");
 	if (dirExists(src)) {
-		console.log("WARNING: Directory " + src + " may prevent cocos2d-x from being patched with git apply");
+		logBuild("WARNING: Directory " + src + " may prevent cocos2d-x from being patched with git apply", true);
 	}
 	
 	// copy latest patch
@@ -439,7 +440,7 @@ var downloadCocos = function(callback) {
 
 		// Rename extract dir
 		try {
-			console.log("Moving " + files[0] + " to " + dest);
+			logBuild("Moving " + files[0] + " to " + dest, true);
 			fs.renameSync(files[0], dest);
 
 			// Save downloaded version
@@ -448,7 +449,7 @@ var downloadCocos = function(callback) {
 			// Apply latest patch
 			// (see comments at the end of this file for how to create the patch)
 			src = path.join(dir, "cocos2d.patch");
-			console.log("Applying patch file: " + src);
+			logBuild("Applying patch file: " + src, true);
 
 			// for some reason git apply sometimes does not work and produces no output...
 			// (use the patch command instead)
@@ -478,7 +479,7 @@ var setupPrebuild = function(platform, callback) {
 		return;
 	}
 
-	console.log("Copying header files...");
+	logBuild("Copying header files...", true);
 
 	// reset cocos2d dir
 	ver = path.join(cmd.prefix, version);
@@ -487,20 +488,15 @@ var setupPrebuild = function(platform, callback) {
 	try {
 		for (i = 0; i < files.length; i += 1) {
 			src = path.join(dest, files[i]);
-			if (cmd.verbose) {
-				console.log("rm -r " + src);
-			}
+			logBuild("rm -r " + src, cmd.verbose);
 			wrench.rmdirSyncRecursive(src, true);
-			if (cmd.verbose) {
-				console.log("mkdir " + src);
-			}
+			
+			logBuild("mkdir " + src, cmd.verbose);
 			wrench.mkdirSyncRecursive(src);
 		}
 	} catch(e) {
-		console.log("Error cleaning destination: " + dest);
-		if (cmd.verbose) {
-			console.log(e);
-		}
+		logBuild("Error cleaning destination: " + dest, cmd.verbose);
+		logBuild(e, cmd.verbose);
 	}
 
 	// copy cocos2d-html5
@@ -616,7 +612,7 @@ var runPrebuild = function(platform, config, arch, callback) {
 					callback();
 				});
 			} else {
-				console.log("Android build cancelled. You need to setup additional programs to develop for Android. See the Android README on RapidGame's Github page.");
+				logBuild("Android build cancelled. You need to setup additional programs to develop for Android. See the Android README on RapidGame's Github page.", true);
 				callback();
 			}
 		} else {
@@ -628,7 +624,7 @@ var runPrebuild = function(platform, config, arch, callback) {
 							callback();
 						});
 					} else {
-						console.log("Android build cancelled. You need to setup additional programs to develop for Android. See the Android README on RapidGame's Github page.");
+						logBuild("Android build cancelled. You need to setup additional programs to develop for Android. See the Android README on RapidGame's Github page.", true);
 						callback();
 					}
 				});
@@ -654,12 +650,12 @@ var runPrebuild = function(platform, config, arch, callback) {
 						callback();
 					});
 				} else {
-					console.log("Android build cancelled. You need to setup additional programs to develop for Android. See the Android README on RapidGame's Github page.");
+					logBuild("Android build cancelled. You need to setup additional programs to develop for Android. See the Android README on RapidGame's Github page.", true);
 					callback();
 				}
 			} else {
 				// Sam: User reaches here only if they are on Windows and they specifically run `rapidgame prebuild android`
-				console.log("Build cancelled. You must prebuild the Android libraries in a Cygwin shell.");
+				logBuild("Build cancelled. You must prebuild the Android libraries in a Cygwin shell.", true);
 				callback();
 			}
 		}
@@ -682,7 +678,7 @@ var runPrebuild = function(platform, config, arch, callback) {
 			}
 		}
 	} else {
-		console.log("No prebuild command written for " + process.platform + " yet");
+		logBuild("No prebuild command written for " + process.platform + " yet", true);
 	}
 };
 
@@ -869,12 +865,12 @@ var startBuild = function(platform, callback, settings) {
 		settings[2] = path.basename(args[0]);
 	}
 
-	console.log("Building " + platform + " " + settings[0] +
+	logBuild("Building " + platform + " " + settings[0] +
 		(settings[1] ? " " + settings[1] : "") +
-		(settings[2] ? " " + settings[2] : "") + "...");
+		(settings[2] ? " " + settings[2] : "") + "...", true);
 	spawn(command, args, {cwd: dir, env: process.env}, function(err){
 		var onFinished = function(){
-			console.log("Succeeded.");
+			logBuild("Succeeded.", true);
 			nextBuild(platform, callback);
 		};
 		if (!err){
@@ -936,7 +932,7 @@ var linkWin = function(config, callback) {
 		if (!err) {
 			callback();
 		} else {
-			console.log(err);
+			logBuild(err, true);
 		}
 	});
 };
@@ -980,7 +976,7 @@ var getMSBuildPath = function(cb) {
 					fs.writeFileSync(savePath, msBuildExePath).toString().trim();
 				} catch (e) {
 				}
-				console.log("MSBUILD: " + msBuildExePath);
+				logBuild("MSBUILD: " + msBuildExePath, true);
 				cb(true);
 			} else {
 				console.log("Unable to locate MSBuild.exe. Please set the contents of the following file to the absolute path to MSBuild.exe:\n\n\t" + savePath + "\n\nExample: C:\\Path\\to\\MSBuild.exe");
@@ -1003,7 +999,7 @@ var getMSBuildPath = function(cb) {
 	regKey.keys(function (err, items) {
 		var i, key, highest = 0, buildPath = '', count = 0;
 		if (err) {
-			console.log(err);
+			logBuild(err, true);
 			callback();
 		}
 		for (i = 0; i < items.length; i += 1) {
@@ -1013,10 +1009,10 @@ var getMSBuildPath = function(cb) {
 				regKey.get("MSBuildToolsPath", function(err, item) {
 					count += 1;
 					if (err) {
-						console.log(err);
+						logBuild(err, true);
 					} else if (typeof item === "object" && typeof item.value === "string" && item.value.length) {
-						//console.log("Potential MSBuildToolsPath: " + item.value);
-						//console.log("Checking version = " + parseFloat(key) + " against highest " + highest);
+						logBuild("Potential MSBuildToolsPath: " + item.value);
+						logBuild("Checking version = " + parseFloat(key) + " against highest " + highest);
 						if (parseFloat(key) > highest) {
 							buildPath = item.value;
 							highest = parseFloat(key);
@@ -1024,7 +1020,7 @@ var getMSBuildPath = function(cb) {
 					}
 					if (count === items.length) {
 						if (buildPath.length) {
-							//console.log("Final MSBuildToolsPath: " + buildPath);
+							logBuild("Final MSBuildToolsPath: " + buildPath);
 							msBuildExePath = path.join(buildPath, "MSBuild.exe");
 						}
 						callback();
@@ -1043,6 +1039,7 @@ var getVCTargetsPath = function(cb) {
 	var i,
 		ret,
 		bases = [
+			"\\MSBuild\\Microsoft.Cpp\\v4.0\\V140\\",
 			"\\MSBuild\\Microsoft.Cpp\\v4.0\\V120\\",
 			"\\MSBuild\\Microsoft.Cpp\\v4.0\\V110\\",
 			"\\MSBuild\\Microsoft.Cpp\\v4.0\\"
@@ -1060,7 +1057,7 @@ var getVCTargetsPath = function(cb) {
 					fs.writeFileSync(savePath, vcTargetsPath).toString().trim();
 				} catch (e) {
 				}
-				console.log("VCTARGETS: " + vcTargetsPath);
+				logBuild("VCTARGETS: " + vcTargetsPath, true);
 				cb(true);
 			} else {
 				console.log("Unable to locate VCTargetsPath directory. Please set the contents of the following file to the absolute path to VCTargets:\n\n\t" + savePath + "\n\nExample: " + names[0] + bases[0]);
@@ -1084,7 +1081,7 @@ var getVCTargetsPath = function(cb) {
 			ret = names[i] + bases[j];
 			if (dirExists(ret)) {
 				if (cmd.verbose) {
-					//console.log("VCTargetsPath: " + ret);
+					logBuild("VCTargetsPath: " + ret);
 				}
 				vcTargetsPath = ret;
 				callback();
@@ -1112,6 +1109,7 @@ var getLibExePath = function(cb) {
 			"\\Program Files"
 		],
 		names = [
+			"\\Microsoft Visual Studio 14.0\\VC\\bin\\",
 			"\\Microsoft Visual Studio 12.0\\VC\\bin\\"
 		],
 		savePath = path.join(cmd.prefix, "libexepath.txt"),
@@ -1121,7 +1119,7 @@ var getLibExePath = function(cb) {
 					fs.writeFileSync(savePath, libExePath).toString().trim();
 				} catch (e) {
 				}
-				console.log("LIB: " + libExePath);
+				logBuild("LIB: " + libExePath, true);
 				cb(true);
 			} else {
 				console.log("Unable to locate lib.exe. Please set the contents of the following file to the absolute path to lib.exe:\n\n\t" + savePath + "\n\nExample: " + bases[0] + names[0]);
@@ -1145,7 +1143,7 @@ var getLibExePath = function(cb) {
 			ret = bases[j] + names[i];
 			if (dirExists(ret)) {
 				if (cmd.verbose) {
-					//console.log("Lib.exe: " + ret);
+					logBuild("Lib.exe: " + ret);
 				}
 				libExePath = path.join(ret, 'lib.exe');
 				callback();
@@ -1186,10 +1184,7 @@ var checkPrefix = function() {
 // Copy files recursively with a special exclude filter.
 //
 var copyRecursive = function(src, dest, filter, overwrite) {
-	if (cmd.verbose) {
-		console.log("Recursively copying " + path.relative(cmd.prefix, src) +
-			" to " + path.relative(cmd.prefix, dest));
-	}
+	logBuild("Recursively copying " + path.relative(cmd.prefix, src) + " to " + path.relative(cmd.prefix, dest), cmd.verbose);
 	
 	// copy using wrench
 	overwrite = overwrite || false;
@@ -1214,10 +1209,7 @@ var copyRecursive = function(src, dest, filter, overwrite) {
 var copyGlobbed = function(src, dest, pattern, grep, depth) {
 	var i, j, file, files;
 	pattern = path.join("**", pattern);
-	if (cmd.verbose) {
-		console.log("Recursively copying " + path.relative(cmd.prefix, path.join(src, pattern)) +
-			" to " + path.relative(cmd.prefix, dest));
-	}
+	logBuild("Recursively copying " + path.relative(cmd.prefix, path.join(src, pattern)) + " to " + path.relative(cmd.prefix, dest), cmd.verbose);
 
 	files = glob.sync(path.join(src, pattern));
 	for (i = 0; i < files.length; i += 1) {
@@ -1225,18 +1217,18 @@ var copyGlobbed = function(src, dest, pattern, grep, depth) {
 			continue;
 		}
 		file = path.relative(src, files[i]);
-		//console.log(path.relative(cmd.prefix, files[i]) + " -> " + path.relative(cmd.prefix, path.join(dest, file)));
+		//logBuild(path.relative(cmd.prefix, files[i]) + " -> " + path.relative(cmd.prefix, path.join(dest, file)));
 		if (depth == 1) {
 			file = path.join(path.basename(path.dirname(file)), path.basename(file));
 		}
 		file = path.join(dest, file);
-		//console.log(path.relative(cmd.prefix, files[i]) + " -> " + path.relative(cmd.prefix, file));
+		logBuild(path.relative(cmd.prefix, files[i]) + " -> " + path.relative(cmd.prefix, file));
 
 		wrench.mkdirSyncRecursive(path.dirname(file));
 		try{
 			fs.writeFileSync(file, fs.readFileSync(files[i]));
 		} catch(e) {
-			console.log(e);
+			logBuild(e, true);
 		}
 	}
 	return files.length;
@@ -1267,7 +1259,7 @@ var excludeFilter = function(filename, dir){
 				doExclude = true;
 			}
 		} catch(e) {
-			console.log(e);
+			logBuild(e, true);
 		}
 	} else if (dir.indexOf(path.join("build", "build")) >= 0) {
 		doExclude = true;
@@ -1295,8 +1287,8 @@ var excludeFilter = function(filename, dir){
 	}
 
 	// Report and return
-	if (doExclude && cmd.verbose) {
-		console.log("Ignoring filename '" + filename + "' in " + dir);
+	if (doExclude) {
+		logBuild("Ignoring filename '" + filename + "' in " + dir, cmd.verbose);
 	}
 	if (!doExclude) {
 		copyCount += 1;
@@ -1319,7 +1311,7 @@ var downloadUrl = function(url, dest, cb) {
 	});
 	
 	// Update percentage
-	console.log("Downloading " + url + "...");
+	logBuild("Downloading " + url + "...", true);
 	if (process.platform !== "win32") {
 		emitter.on("data", function(chunk) {
 			if (!done) {
@@ -1342,7 +1334,7 @@ var downloadUrl = function(url, dest, cb) {
 	
 	// Done
 	emitter.on("close", function() {
-		console.log("Download + extract finished");
+		logBuild("Download + extract finished", true);
 		cb(true);
 	});
 };
@@ -1365,7 +1357,7 @@ var report = (function() {
 		} catch(e) {
 		}
 		if (uuid && uuid.indexOf("false") >= 0) {
-			console.log("Opted out of automatic bug reporting");
+			logBuild("Opted out of automatic bug reporting", true);
 			return null;
 		}
 	
@@ -1462,10 +1454,13 @@ var usageExamples = function() {
 //
 // append to the build log
 //
-var logBuild = function(str) {
+var logBuild = function(str, echo) {
+	if (echo) {
+		console.log(str);
+	}
 	if (cmd.buildLog) {
 		try {
-			fs.appendFileSync(cmd.buildLog, str);
+			fs.appendFileSync(cmd.buildLog, str + "\n");
 		} catch(e) {
 		}
 	}
@@ -1489,7 +1484,7 @@ var exec = function(command, options, callback) {
 			callback(err, stdout, stderr);
 		});
 	} catch(e) {
-		console.log(e);
+		logBuild(e, true);
 	}
 };
 
@@ -1500,12 +1495,8 @@ var execCallback = function(error, stdout, stderr) {
 	if (error !== null) {
 		logErr("exec error: " + error);
 	}
-	if (cmd.verbose || error) {
-		console.log(stdout);
-		console.log(stderr);
-	}
-	logBuild(stdout);
-	logBuild(stderr);
+	logBuild(stdout, cmd.verbose || error);
+	logBuild(stderr, cmd.verbose || error);
 };
 
 //
@@ -1516,9 +1507,9 @@ var spawn = function(command, args, options, callback) {
 		console.log(command + ' ' + args.join(' '));
 		console.log("Current dir: " + options.cwd);
 	}
-	try {
-		logBuild("\nSpawning:\n\t" + command + ' ' + args.join(' ') + "\n\nCurrent dir:\n\t" + options.cwd + "\n\n");
+	logBuild("\nSpawning:\n\t" + command + ' ' + args.join(' ') + "\n\nCurrent dir:\n\t" + options.cwd + "\n\n");
 
+	try {
 		// spawn the process
 		var child, exitCode = 0;
 		if (args && args.length) {
@@ -1529,16 +1520,10 @@ var spawn = function(command, args, options, callback) {
 
 		// watch its output
 		child.stdout.on("data", function(chunk) {
-			if (cmd.verbose) {
-				console.log(chunk.toString());
-			}
-			logBuild(chunk.toString());
+			logBuild(chunk.toString(), cmd.verbose);
 		});
 		child.stderr.on("data", function(chunk) {
-			if (cmd.verbose) {
-				console.log(chunk.toString());
-			}
-			logBuild(chunk.toString());
+			logBuild(chunk.toString(), cmd.verbose);
 		});
 		child.on("error", function(e) {
 			logErr("Spawn error " + e);
@@ -1570,9 +1555,7 @@ var spawn = function(command, args, options, callback) {
 // replace occurrences a string with another in a specific file
 //
 var sed = function(search, replace, dest) {
-	if (cmd.verbose) {
-		console.log("Replacing all '" + search + "' with '" + replace + "' in: " + dest);
-	}
+	logBuild("Replacing all '" + search + "' with '" + replace + "' in: " + dest, cmd.verbose);
 	try{
 		var text = fs.readFileSync(dest).toString(),
 			pos = 0;
@@ -1586,7 +1569,7 @@ var sed = function(search, replace, dest) {
 		} while(pos >= 0);
 		fs.writeFileSync(dest, text);
 	} catch(e) {
-		console.log(e);
+		logBuild(e, true);
 	}
 }
 
