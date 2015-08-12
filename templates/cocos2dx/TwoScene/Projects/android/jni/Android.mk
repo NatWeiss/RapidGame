@@ -64,16 +64,10 @@ LOCAL_LDLIBS := -lGLESv1_CM \
 	-landroid
 
 # remaining external libraries
-LOCAL_LDLIBS += -L $(LOCAL_PATH)/../../../lib/cocos2d/x/java/mk/cocos2d-x/external/jpeg/prebuilt/android/$(APP_ABI) -ljpeg
-LOCAL_LDLIBS += -L $(LOCAL_PATH)/../../../lib/cocos2d/x/java/mk/cocos2d-x/external/tiff/prebuilt/android/$(APP_ABI) -ltiff
-LOCAL_LDLIBS += -L $(LOCAL_PATH)/../../../lib/cocos2d/x/java/mk/cocos2d-x/external/webp/prebuilt/android/$(APP_ABI) -lwebp
-LOCAL_LDLIBS += -L $(LOCAL_PATH)/../../../lib/cocos2d/x/java/mk/cocos2d-x/external/curl/prebuilt/android/$(APP_ABI) -lcurl -lssl -lcrypto
-LOCAL_LDLIBS += -L $(LOCAL_PATH)/../../../lib/cocos2d/x/java/mk/cocos2d-x/external/freetype2/prebuilt/android/$(APP_ABI) -lfreetype
-LOCAL_LDLIBS += -L $(LOCAL_PATH)/../../../lib/cocos2d/x/java/mk/cocos2d-x/external/spidermonkey/prebuilt/android/$(APP_ABI) -ljs_static
-LOCAL_LDLIBS += -L $(LOCAL_PATH)/../../../lib/cocos2d/x/java/mk/cocos2d-x/external/websockets/prebuilt/android/$(APP_ABI) -lwebsockets
-LOCAL_LDLIBS += -L $(LOCAL_PATH)/../../../lib/cocos2d/x/java/mk/cocos2d-x/external/chipmunk/prebuilt/android/$(APP_ABI) -lchipmunk
-LOCAL_LDLIBS += $(LOCAL_PATH)/../../../lib/cocos2d/x/java/mk/cocos2d-x/external/zlib/prebuilt/android/$(APP_ABI)/libz.a
-LOCAL_LDLIBS += -L $(LOCAL_PATH)/../../../lib/cocos2d/x/java/mk/cocos2d-x/external/png/prebuilt/android/$(APP_ABI) -lpng
+# (use entire path for libz so that the system version is not used)
+LOCAL_LDLIBS += $(LOCAL_PATH)/../../../lib/cocos2d/x/lib/$(CONFIG)-Android/$(APP_ABI)/libz.a
+LOCAL_LDLIBS += -L $(LOCAL_PATH)/../../../lib/cocos2d/x/lib/$(CONFIG)-Android/$(APP_ABI)
+LOCAL_LDLIBS += -lpng -ljpeg -ltiff -lwebp -lcurl -lssl -lcrypto -lfreetype -ljs_static -lwebsockets -lchipmunk
 
 include $(BUILD_SHARED_LIBRARY)
 

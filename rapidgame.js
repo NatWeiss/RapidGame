@@ -552,7 +552,8 @@ var setupPrebuild = function(platform, callback) {
 	dest = path.join(dir, "mk");
 	src = path.join(cmd.prefix, "src");
 	copyGlobbed(src, dest, "*.mk");
-	copyGlobbed(src, dest, "*.a", "android");
+	copyGlobbed(src, path.join(ver, "cocos2d", "x", "lib", "Debug-Android"), "*.a", "android", 1);
+	copyGlobbed(src, path.join(ver, "cocos2d", "x", "lib", "Release-Android"), "*.a", "android", 1);
 /*
 	src = path.join(srcRoot, "js-bindings");
 	copyGlobbed(src, dest, "*.mk");
@@ -1210,8 +1211,8 @@ var copyRecursive = function(src, dest, filter, overwrite) {
 //
 // copy files using glob
 //
-var copyGlobbed = function(src, dest, pattern, grep) {
-	var i, file, files;
+var copyGlobbed = function(src, dest, pattern, grep, depth) {
+	var i, j, file, files;
 	pattern = path.join("**", pattern);
 	if (cmd.verbose) {
 		console.log("Recursively copying " + path.relative(cmd.prefix, path.join(src, pattern)) +
@@ -1223,8 +1224,14 @@ var copyGlobbed = function(src, dest, pattern, grep) {
 		if (grep && files[i].indexOf(grep) < 0) {
 			continue;
 		}
-		file = path.join(dest, path.relative(src, files[i]));
-		//console.log(/*path.relative(cmd.prefix, files[i]) + " -> " + */path.relative(cmd.prefix, file));
+		file = path.relative(src, files[i]);
+		//console.log(path.relative(cmd.prefix, files[i]) + " -> " + path.relative(cmd.prefix, path.join(dest, file)));
+		if (depth == 1) {
+			file = path.join(path.basename(path.dirname(file)), path.basename(file));
+		}
+		file = path.join(dest, file);
+		//console.log(path.relative(cmd.prefix, files[i]) + " -> " + path.relative(cmd.prefix, file));
+
 		wrench.mkdirSyncRecursive(path.dirname(file));
 		try{
 			fs.writeFileSync(file, fs.readFileSync(files[i]));

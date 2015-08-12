@@ -1,6 +1,6 @@
 {
   "name": "rapidgame",
-  "version": "0.9.10",
+  "version": "0.9.11",
   "description": "A commandline tool for Mac and Windows that prebuilds cocos2d-x libraries for Mac, iOS, Android and Windows for multiple architectures and configurations, virtually eliminating the need to ever rebuild cocos2d-x or its Javascript bindings.",
   "author": {
     "name": "Nathanael Weiss",

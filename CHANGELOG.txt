@@ -1,6 +1,7 @@
 Version 0.9.11 - August 11, 2015
 
 	On Windows, the path to MsBuild.exe, Lib.exe and VCTargetsPath can be set manually in case they cannot be automatically located.
+	Android libraries are now placed in the lib folder instead of the mk folder.
 	Fixed linking problem on Windows due to 3.7 upgrade.
 
 Version 0.9.10 - August 11, 2015
