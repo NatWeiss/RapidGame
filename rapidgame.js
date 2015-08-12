@@ -946,7 +946,15 @@ var linkWin = function(config, callback) {
 var getToolPaths = function(callback) {
 	if (process.platform === "win32") {
 		getMSBuildPath(function(success){
+			if (!success) {
+				callback(false);
+				return;
+			}
 			getLibExePath(function(success){
+				if (!success) {
+					callback(false);
+					return;
+				}
 				getVCTargetsPath(function(success){
 					callback(success);
 				});
@@ -1054,7 +1062,7 @@ var getVCTargetsPath = function(cb) {
 				console.log("VCTARGETS: " + vcTargetsPath);
 				cb(true);
 			} else {
-				console.log("Unable to locate VCTargetsPath. Please set the contents of the following file to the absolute path to VCTargets:\n\n\t" + savePath + "\n\nExample: " + names[0] + bases[0]);
+				console.log("Unable to locate VCTargetsPath directory. Please set the contents of the following file to the absolute path to VCTargets:\n\n\t" + savePath + "\n\nExample: " + names[0] + bases[0]);
 				cb();
 			}
 		};
