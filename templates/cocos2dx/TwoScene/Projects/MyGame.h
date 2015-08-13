@@ -5,7 +5,7 @@
 #pragma once
 #include "AppDelegate.h"
 
-namespace Game
+namespace MyGame
 {
 	/// Get / set the scale of one pixel.
 	float getPixelScale();

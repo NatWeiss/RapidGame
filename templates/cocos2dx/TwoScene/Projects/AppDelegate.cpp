@@ -4,7 +4,7 @@
 
 #include "AppDelegate.h"
 #include "MenuScene.h"
-#include "Game.h"
+#include "MyGame.h"
 
 using namespace cocos2d;
 using namespace CocosDenshion;
@@ -59,7 +59,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 		designRes.height = (designRes.width / winSize.width) * winSize.height;
 		contentRect.origin.y = (designRes.height - contentRect.size.height) * .5;
 	}
-	Game::setContentRect(contentRect);
+	MyGame::setContentRect(contentRect);
 
 	// initialize director
 	director->setDisplayStats(true);

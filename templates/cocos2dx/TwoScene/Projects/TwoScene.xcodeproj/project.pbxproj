@@ -25,8 +25,8 @@
 		4120A3BE1A9B26A900692297 /* GameScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4120A3B91A9B26A800692297 /* GameScene.cpp */; };
 		4120A3BF1A9B26A900692297 /* MenuScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4120A3BB1A9B26A800692297 /* MenuScene.cpp */; };
 		4120A3C01A9B26A900692297 /* MenuScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4120A3BB1A9B26A800692297 /* MenuScene.cpp */; };
-		4120A3C31A9B2A1500692297 /* Game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4120A3C11A9B2A1500692297 /* Game.cpp */; };
-		4120A3C41A9B2A1500692297 /* Game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4120A3C11A9B2A1500692297 /* Game.cpp */; };
+		4120A3C31A9B2A1500692297 /* MyGame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4120A3C11A9B2A1500692297 /* MyGame.cpp */; };
+		4120A3C41A9B2A1500692297 /* MyGame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4120A3C11A9B2A1500692297 /* MyGame.cpp */; };
 		412F3377192C36D2007F51FD /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 412F3375192C36D2007F51FD /* AppDelegate.cpp */; };
 		412F3378192C36D2007F51FD /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 412F3375192C36D2007F51FD /* AppDelegate.cpp */; };
 		412F337D192C3712007F51FD /* Assets in Resources */ = {isa = PBXBuildFile; fileRef = 412F337C192C3712007F51FD /* Assets */; };
@@ -82,8 +82,8 @@
 		4120A3BA1A9B26A800692297 /* GameScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameScene.h; sourceTree = "<group>"; };
 		4120A3BB1A9B26A800692297 /* MenuScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MenuScene.cpp; sourceTree = "<group>"; };
 		4120A3BC1A9B26A900692297 /* MenuScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuScene.h; sourceTree = "<group>"; };
-		4120A3C11A9B2A1500692297 /* Game.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Game.cpp; sourceTree = "<group>"; };
-		4120A3C21A9B2A1500692297 /* Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Game.h; sourceTree = "<group>"; };
+		4120A3C11A9B2A1500692297 /* MyGame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MyGame.cpp; sourceTree = "<group>"; };
+		4120A3C21A9B2A1500692297 /* MyGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyGame.h; sourceTree = "<group>"; };
 		412F3375192C36D2007F51FD /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
 		412F3376192C36D2007F51FD /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		412F337C192C3712007F51FD /* Assets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Assets; path = ../Assets; sourceTree = "<group>"; };
@@ -243,8 +243,8 @@
 			children = (
 				412F3376192C36D2007F51FD /* AppDelegate.h */,
 				412F3375192C36D2007F51FD /* AppDelegate.cpp */,
-				4120A3C21A9B2A1500692297 /* Game.h */,
-				4120A3C11A9B2A1500692297 /* Game.cpp */,
+				4120A3C21A9B2A1500692297 /* MyGame.h */,
+				4120A3C11A9B2A1500692297 /* MyGame.cpp */,
 				4120A3BA1A9B26A800692297 /* GameScene.h */,
 				4120A3B91A9B26A800692297 /* GameScene.cpp */,
 				4120A3BC1A9B26A900692297 /* MenuScene.h */,
@@ -400,7 +400,7 @@
 			files = (
 				41F1A4EA1894BBE3006E818E /* main.cpp in Sources */,
 				4120A3C01A9B26A900692297 /* MenuScene.cpp in Sources */,
-				4120A3C41A9B2A1500692297 /* Game.cpp in Sources */,
+				4120A3C41A9B2A1500692297 /* MyGame.cpp in Sources */,
 				4120A3BE1A9B26A900692297 /* GameScene.cpp in Sources */,
 				412F3378192C36D2007F51FD /* AppDelegate.cpp in Sources */,
 			);
@@ -416,7 +416,7 @@
 				4152B89018949C3F00BEF730 /* AppController.mm in Sources */,
 				4152B89A18949C3F00BEF730 /* RootViewController.mm in Sources */,
 				4152B89918949C3F00BEF730 /* main.m in Sources */,
-				4120A3C31A9B2A1500692297 /* Game.cpp in Sources */,
+				4120A3C31A9B2A1500692297 /* MyGame.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

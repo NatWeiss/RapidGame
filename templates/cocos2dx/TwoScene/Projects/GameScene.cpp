@@ -2,7 +2,7 @@
 /// > Created using [RapidGame](https://github.com/natweiss/rapidgame). See the `LICENSE` file for the license governing this code.
 ///
 
-#include "Game.h"
+#include "MyGame.h"
 #include "MenuScene.h"
 #include "GameScene.h"
 
@@ -32,7 +32,7 @@ void GameScene::onEnter()
 {
 	Scene::onEnter();
 	auto& winSize = cocos2d::Director::getInstance()->getWinSize();
-	auto& contentRect = Game::getContentRect();
+	auto& contentRect = MyGame::getContentRect();
 	string fontName = "DolceVita.ttf";
 	int x1 = contentRect.origin.x + wallThickness;
 	int x2 = x1 + contentRect.size.width - wallThickness * 2;
@@ -63,7 +63,7 @@ void GameScene::onEnter()
 
 	auto sceneLabel = cocos2d::Label::createWithTTF("Game Scene", fontName, 200);
 	sceneLabel->setColor(cocos2d::Color3B(128, 128, 128));
-	sceneLabel->setPosition(Game::centralize(0, 228));
+	sceneLabel->setPosition(MyGame::centralize(0, 228));
 	this->addChild(sceneLabel, 1);
 	sceneLabel->runAction(cocos2d::Sequence::create(
 		cocos2d::FadeOut::create(5),
@@ -133,7 +133,7 @@ void GameScene::onExit()
 void GameScene::createPhysicsBox(int x1, int y1, int x2, int y2, float elasticity, float friction, int collisionType)
 {
 	cpShape* shape = nullptr;
-	int start = shapes.size();
+	auto start = shapes.size();
 
 	// create box as four segments
 	shapes.push_back(cpSegmentShapeNew(space->staticBody, cpv(x1, y1), cpv(x1, y2), 0.0f));

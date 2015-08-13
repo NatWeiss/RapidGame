@@ -2,7 +2,7 @@
 /// > Created using [RapidGame](https://github.com/natweiss/rapidgame). See the `LICENSE` file for the license governing this code.
 ///
 
-#include "Game.h"
+#include "MyGame.h"
 #include "MenuScene.h"
 #include "GameScene.h"
 
@@ -21,7 +21,7 @@ void MenuScene::onEnter()
 	// Logo
 	float y = 24;
 	auto logo = cocos2d::Sprite::create("Logo.png");
-	logo->setPosition(Game::centralize(0, 228 - y * 0.5f));
+	logo->setPosition(MyGame::centralize(0, 228 - y * 0.5f));
 	this->addChild(logo, 1);
 	logo->runAction(cocos2d::RepeatForever::create(cocos2d::Sequence::create(
 		cocos2d::EaseInOut::create(cocos2d::MoveBy::create(2, cocos2d::Vec2(0, y)), 1.2),
@@ -32,7 +32,7 @@ void MenuScene::onEnter()
 	// Title
 	auto logoLabel = cocos2d::Label::createWithTTF(logoText.c_str(), font, 200);
 	logoLabel->setColor(cocos2d::Color3B(128, 128, 128));
-	logoLabel->setPosition(Game::centralize(0, 228));
+	logoLabel->setPosition(MyGame::centralize(0, 228));
 	this->addChild(logoLabel, 1);
 	
 	// Menu
@@ -50,7 +50,7 @@ void MenuScene::onEnter()
 		cocos2d::Director::getInstance()->replaceScene(scene);
 		scene->release();		
 	});
-	playButton->setPosition(Game::centralize(0, -400));
+	playButton->setPosition(MyGame::centralize(0, -400));
 	menu->addChild(playButton);
 }
 
