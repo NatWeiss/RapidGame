@@ -913,10 +913,15 @@ var linkWin = function(config, callback) {
 	//copyGlobbed(path.join(srcRoot, "external", "lua", "luajit", "prebuilt", "win32"), dest, "*.dll");
 	copyGlobbed(libDir, dest, "*.dll");
 	copyGlobbed(libDir, dest, "glfw3.lib"); // possibly because of the new duplicate -2015.lib files, this is necessary...
+	copyGlobbed(libDir, dest, "glfw3-2015.lib");
 	copyGlobbed(libDir, dest, "libchipmunk.lib");
+	copyGlobbed(libDir, dest, "libchipmunk-2015.lib");
 	copyGlobbed(libDir, dest, "libjpeg.lib");
+	copyGlobbed(libDir, dest, "libjpeg-2015.lib");
 	copyGlobbed(libDir, dest, "libpng.lib");
+	copyGlobbed(libDir, dest, "libpng-2015.lib");
 	copyGlobbed(libDir, dest, "libtiff.lib");
+	copyGlobbed(libDir, dest, "libtiff-2015.lib");
 	command += ' "' + path.join(libDir, "*.lib") + '"';
 
 	// move unneeded file(s)
