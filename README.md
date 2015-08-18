@@ -19,6 +19,7 @@ Prefer somebody explaining and showing it? Check out the [overview video](http:/
 Updates
 -------
 
+* August 17, 2015: Fixes for Visual Studio 2015.
 * August 11, 2015: On Windows, the path to MSBuild.exe, Lib.exe and VCTargetsPath can be set manually in case they cannot be automatically located.
 * August 2, 2015: Upgraded to cocos2d-x 3.7 (cocos2d-js and cocos2d-x have now been merged into just cocos2d-x).
 * June 2, 2015: Can now prebuild Android on Windows thanks to [Samuel Ørsnæs](https://github.com/samoersnaes).

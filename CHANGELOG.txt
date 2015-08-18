@@ -1,3 +1,7 @@
+Version 0.9.12 - August 17, 2015
+
+	Fixes for Visual Studio 2015.
+
 Version 0.9.11 - August 11, 2015
 
 	On Windows, the path to MsBuild.exe, Lib.exe and VCTargetsPath can be set manually in case they cannot be automatically located.
