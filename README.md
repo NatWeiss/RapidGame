@@ -72,6 +72,23 @@ Linux: support is planned.
 Android: please read the [Android README](http://htmlpreview.github.io/?https://github.com/NatWeiss/RapidGame/blob/master/templates/cocos2dx/TwoScene/Projects/android/README.html) or [watch the video](https://www.youtube.com/watch?v=5PWEtjvhX1k) to find out what you will need for Android development.
 
 
+Windows Notes
+-------------
+
+1. **The `rapidgame create` or `rapidgame prebuild` command must be run in an admin console.** This allows symlinks to be properly created, otherwise what should be symlinks will become regular folders and the command will fail.
+2. If you have freshly installed Visual Studio, then you will need to run it once in order for it to download the necessary build tools.
+3. To compile the Android libraries successfully, `rapidgame prebuild` must be run via [Cygwin](https://www.cygwin.com). Read about all the specific requirements in the [Android README](http://htmlpreview.github.io/?https://github.com/NatWeiss/RapidGame/blob/master/templates/cocos2dx/TwoScene/Projects/android/README.html), or [watch the video](https://www.youtube.com/watch?v=5PWEtjvhX1k) instead.
+4. Windows cannot build the cocos2d-x libraries or cocos2d-js bindings for iOS and Mac. If you want to use RapidGame to develop for these platforms, you must use a Mac.
+
+Thanks to [Samuel Ørsnæs](https://github.com/samoersnaes) for getting the Android build working in Windows!
+
+
+Android Notes
+-------------
+
+A detailed guide has been written specifically for how to build Android projects using RapidGame. You can read it [here](http://htmlpreview.github.io/?https://github.com/NatWeiss/RapidGame/blob/master/templates/cocos2dx/TwoScene/Projects/android/README.html), or alternatively find it in your cocos2d-x/js project as `[APPNAME]/Projects/android/README.html`.
+
+
 Eliminate Grunt Work
 --------------------
 
@@ -191,22 +208,6 @@ The cocos2d-x library prebuilder currently works on the following development pl
 * Windows
 
 Linux support is planned.
-
-
-Android Notes
--------------
-
-A detailed guide has been written specifically for how to build Android projects using RapidGame. You can read it [here](http://htmlpreview.github.io/?https://github.com/NatWeiss/RapidGame/blob/master/templates/cocos2dx/TwoScene/Projects/android/README.html), or alternatively find it in your cocos2d-x/js project as `[APPNAME]/Projects/android/README.html`.
-
-
-Windows Notes
--------------
-
-1. The `rapidgame create` command must be run in an admin console. This allows symlinks to be properly created, otherwise what should be symlinks will become regular folders and the command will fail.
-2. To compile the Android libraries successfully, `rapidgame prebuild` must be run via [Cygwin](https://www.cygwin.com). Read about all the specific requirements in the [Android README](http://htmlpreview.github.io/?https://github.com/NatWeiss/RapidGame/blob/master/templates/cocos2dx/TwoScene/Projects/android/README.html), or [watch the video](https://www.youtube.com/watch?v=5PWEtjvhX1k) instead.
-3. Windows cannot build the cocos2d-x libraries or cocos2d-js bindings for iOS and Mac. If you want to use RapidGame to develop for these platforms, you must use a Mac.
-
-Thanks to [Samuel Ørsnæs](https://github.com/samoersnaes) for getting the Android build working in Windows!
 
 
 Custom cocos2d-x/js Projects
