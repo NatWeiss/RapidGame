@@ -18,3 +18,19 @@ doc:
 	@src/docco/delete-between "<p>Created using" "this code.</p>" docs/GameScene.html
 	@src/docco/delete-between "<p>Created using" "this code.</p>" docs/MenuScene.html
 	@src/docco/delete-between "<p>Created using" "this code.</p>" docs/Server.html
+
+ver = cocos2d-x-3.7
+patch:
+	mkdir -p /tmp/ccx
+	cd /tmp/ccx
+	cp ~/Downloads/${ver}.zip /tmp/ccx
+	cd /tmp/ccx && unzip ${ver}.zip && mv ${ver} cocos2d-x && rm ${ver}.zip
+	find /tmp/ccx/cocos2d-x -name .gitignore -delete
+	git init /tmp/ccx/cocos2d-x
+	cd /tmp/ccx/cocos2d-x && git add * && git commit -a -m initial
+	rm -rf /tmp/ccx/cocos2d-x/plugin/plugins/facebook/proj.ios/FacebookSDK.framework
+	cp -afv src/cocos2d-x/* /tmp/ccx/cocos2d-x/
+	cd /tmp/ccx/cocos2d-x && git diff > patch # && git diff --staged --binary >> patch
+	mv /tmp/ccx/cocos2d-x/patch ./cocos2d.patch
+	rm -rf /tmp/ccx
+	ls cocos2d.patch
