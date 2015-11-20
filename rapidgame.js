@@ -1305,43 +1305,20 @@ var excludeFilter = function(filename, dir){
 // download and extract a url to the given destination
 //
 var downloadUrl = function(url, dest, cb) {
-	var done = false,
-		total = 1,
-		cur = 0,
-		emitter = download(url, dest, {extract: true});
+	
+	logBuild("Downloading " + url + " please wait...", true);
+	var dl = new download().get(url, dest, { extract: true})		
+	dl.run(function (err, files) {
+		if (err) {
+			logErr("Download error " + err);		
+			cb(false);
+		}else{
+			logBuild("Download + extract finished "+files, true);
+			cb(true);			
+		}
+		
+	});
 
-	// Get total length
-	emitter.on("response", function(response) {
-		total = parseInt(response.headers["content-length"], 10)
-	});
-	
-	// Update percentage
-	logBuild("Downloading " + url + "...", true);
-	if (process.platform !== "win32") {
-		emitter.on("data", function(chunk) {
-			if (!done) {
-				cur += chunk.length;
-				done = (cur >= total);
-				process.stdout.clearLine();  // clear current text
-				process.stdout.cursorTo(0);
-				process.stdout.write("Downloading " + url + " "
-					+ (100.0 * cur / total).toFixed(2) + "%..."
-					+ (done ? "\n" : "\r"));
-			}
-		});
-	}
-	
-	// Error
-	emitter.on("error", function(status) {
-		logErr("Download error " + status);
-		cb(false);
-	});
-	
-	// Done
-	emitter.on("close", function() {
-		logBuild("Download + extract finished", true);
-		cb(true);
-	});
 };
 
 //
