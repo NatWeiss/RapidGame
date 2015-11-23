@@ -32,7 +32,7 @@
   ],
   "dependencies": {
     "commander": "~2.2.0",
-    "download": "~0.1.16",
+    "download": "~4.4.3",
     "glob": "~3.2.9",
     "node-uuid": "^1.4.1",
     "path-extra": "~1.0.0",
