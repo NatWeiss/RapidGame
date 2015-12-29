@@ -90,6 +90,7 @@ var run = function(args) {
 		//.option("-o, --orientation <orientation>", "orientation (" + orientations.join(", ") + ") [" + defaults.orientation + "]", defaults.orientation)
 		.option("--nostrip", "do not strip the prebuilt libraries", false)
 		.option("--minimal", "prebuild only debug libraries and use minimal architectures", false)
+		//.option("--i386", "on iphonesimulator, build i386 instead of x86_64", false)
 		.option("-v, --verbose", "be verbose", false);
 
 	cmd
@@ -810,7 +811,7 @@ var nextBuild = function(platform, callback){
 // start a given build
 //
 var startBuild = function(platform, callback, settings) {
-	var dir, command, args, config, sdk, proj, arch, targets, archSettings = [], xcodeSettings = [];
+	var dir, command, args, config, sdk, proj, arch, targets, archSettings = [], platformSettings = [], xcodeSettings = [];
 	if (platform === "iOS" || platform === "Mac") {
 		config = settings[0];
 		sdk = settings[1];
@@ -823,13 +824,27 @@ var startBuild = function(platform, callback, settings) {
 			xcodeSettings.push("STRIP_INSTALLED_PRODUCT=YES");
 			xcodeSettings.push("STRIP_STYLE=non-global");
 		}
-		if (cmd.minimal) {
-			archSettings = (sdk === "iphoneos" ? ["-arch", "armv7"] : ["-arch", "i386"]);
+		if (sdk === "iphoneos") {
+			if (cmd.minimal) {
+				archSettings = ["-arch", "armv7"];
+			} /*else {
+				platformSettings = [
+					"-destination", "platform=iOS,name=iPhone 6s",
+					"-destination-timeout", "5"
+				];
+			}*/
 		} else if (sdk === "iphonesimulator") {
-			// why doesn't this force the iphonesimulator builds to have both i386 and x86_64?
-			// is one of them being stripped away?
-			//archSettings = ["-arch", "x86_64", "-arch", "i386"]
-			archSettings = ["-arch", "x86_64"]
+			platformSettings = [
+				"-destination", "platform=iphonesimulator,name=iPhone 6s",
+				"-destination-timeout", "5"
+			];
+			/*if (cmd.i386) {
+				archSettings = ["-arch", "i386"];
+			} else {
+				// why doesn't this make iphonesimulator libs have both i386 and x86_64? is one being stripped away?
+				//archSettings = ["-arch", "x86_64", "-arch", "i386"];
+				archSettings = ["-arch", "x86_64"];
+			}*/
 		}
 		args = [
 			"-project", path.join(dir, proj + ".xcodeproj"),
@@ -838,6 +853,7 @@ var startBuild = function(platform, callback, settings) {
 			"-sdk", sdk
 		];
 		args = args.concat(archSettings);
+		args = args.concat(platformSettings);
 		args = args.concat(xcodeSettings);
 	} else if (platform === "Android") {
 		dir = path.join(cmd.prefix, "src", "proj.android");

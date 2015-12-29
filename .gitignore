@@ -10,4 +10,5 @@ project.xcworkspace
 /1.*
 /latest
 /templates/*/*/lib
+/*.patch
 /publish.sh
