@@ -27,7 +27,7 @@ class AppDelegate : private cocos2d::Application
 		virtual ~AppDelegate();
 
 		void initGLContextAttrs() override;
-		virtual bool applicationDidFinishLaunching();
-		virtual void applicationDidEnterBackground();
-		virtual void applicationWillEnterForeground();
+		virtual bool applicationDidFinishLaunching() override;
+		virtual void applicationDidEnterBackground() override;
+		virtual void applicationWillEnterForeground() override;
 };

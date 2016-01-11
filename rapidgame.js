@@ -31,8 +31,8 @@ var http = require("http"),
 	packageJson = JSON.parse(fs.readFileSync(path.join(__dirname, "package.json"))),
 	cmdName = packageJson.name,
 	version = packageJson.version,
-	cocos2djsUrlMac = "http://cdn.cocos2d-x.org/cocos2d-x-3.7.zip", // also, http://www.cocos2d-x.org/filedown/cocos2d-x-v3.7.zip
-	cocos2djsUrlWin = "http://cdn.cocos2d-x.org/cocos2d-x-3.7.zip",
+	cocos2djsUrlMac = "http://cdn.cocos2d-x.org/cocos2d-x-3.9.zip",
+	cocos2djsUrlWin = "http://cdn.cocos2d-x.org/cocos2d-x-3.9.zip",
 	cocos2djsUrl = (process.platform === "darwin" ? cocos2djsUrlMac : cocos2djsUrlWin),
 	cocos2dDirGlob = "*ocos2d-x*",
 	category,
@@ -835,7 +835,7 @@ var startBuild = function(platform, callback, settings) {
 			}*/
 		} else if (sdk === "iphonesimulator") {
 			platformSettings = [
-				"-destination", "platform=iphonesimulator,name=iPhone 6s",
+				"-destination", "platform=iphonesimulator,name=iPhone 6s",  // add "generic/" somewhere? is that why it doesn't run correctly on 5s?
 				"-destination-timeout", "5"
 			];
 			/*if (cmd.i386) {
@@ -1321,20 +1321,23 @@ var excludeFilter = function(filename, dir){
 // download and extract a url to the given destination
 //
 var downloadUrl = function(url, dest, cb) {
+	// fix 3.9.zip's lack of cocos2d-x-3.9/ prefix
+	dest = path.join(dest, path.basename(url, '.zip'));
+	wrench.mkdirSyncRecursive(dest);
+	logBuild("Download destination: " + dest, true);
 	
+	// now download
 	logBuild("Downloading " + url + " please wait...", true);
-	var dl = new download().get(url, dest, { extract: true})		
+	var dl = new download({extract: true}).get(url, dest);
 	dl.run(function (err, files) {
 		if (err) {
-			logErr("Download error " + err);		
+			logErr("Download error " + err);
 			cb(false);
-		}else{
-			logBuild("Download + extract finished "+files, true);
-			cb(true);			
+		} else {
+			logBuild("Download + extract finished ", true);
+			cb(true);
 		}
-		
 	});
-
 };
 
 //

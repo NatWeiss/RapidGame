@@ -40,7 +40,7 @@ void __openURL(const char* urlCstr)
 
 		// use root view controller manage gl view
 		viewController = [[RootViewController alloc] initWithNibName:nil bundle:nil];
-		viewController.wantsFullScreenLayout = YES;
+		//viewController.wantsFullScreenLayout = YES;
 		viewController.view = eaglView;
 
 		// add root view controller to window

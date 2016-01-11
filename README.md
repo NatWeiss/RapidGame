@@ -19,10 +19,11 @@ Prefer somebody explaining and showing it? Check out the [overview video](http:/
 Updates
 -------
 
-* August 17, 2015: Fixes for Visual Studio 2015.
-* August 11, 2015: On Windows, the path to MSBuild.exe, Lib.exe and VCTargetsPath can be set manually in case they cannot be automatically located.
-* August 2, 2015: Upgraded to cocos2d-x 3.7 (cocos2d-js and cocos2d-x have now been merged into just cocos2d-x).
-* June 2, 2015: Can now prebuild Android on Windows thanks to [Samuel Ørsnæs](https://github.com/samoersnaes).
+* Jan 10, 2016: Updated to cocos2d-x 3.9.
+* Aug 17, 2015: Fixes for Visual Studio 2015.
+* Aug 11, 2015: On Windows, the path to MSBuild.exe, Lib.exe and VCTargetsPath can be set manually in case they cannot be automatically located.
+* Aug 2, 2015: Upgraded to cocos2d-x 3.7 (cocos2d-js and cocos2d-x have now been merged into just cocos2d-x).
+* Jun 2, 2015: Can now prebuild Android on Windows thanks to [Samuel Ørsnæs](https://github.com/samoersnaes).
 * May 4, 2015: Upgraded to cocos2d-x 3.6 / cocos2d-js 3.6.
 * Mar 15, 2015: Fixed another bug related to MSBuild path on Windows (thanks, [Adam Yocum](https://github.com/adamyocum)). Fixed the cocos2d-x Android template.
 * Feb 24, 2015: Now has separate cocos2d-x and cocos2d-js templates. Fixed a bug on Windows: "Unable to find MSBuild path."
@@ -130,30 +131,6 @@ The project creator makes a copy of one of the templates, does a search and repl
 The library prebuilder creates static libraries that virtually eliminate build times for the cocos2d-x engine. With hundreds of source files to be compiled, building cocos2d-x for just one platform can take at least five minutes. This can be a real time sink, especially when switching from the simulator to device triggers a rebuild.
 
 The prebuilder automatically downloads cocos2d-x, patches it to ensure that it can be built from the commandline, then prebuilds cocos2d-x for all possible platforms, configurations and architectures. It is then possible to compile and link native cocos2d-x games in seconds. Even better, the project creator will absolutely symlink to the location of the prebuilt libraries so your game projects stay lightweight and can be moved easily. A regular cocos2d-x game project directory can be half a gigabyte or more. A RapidGame project is around two megabytes.
-
-
-<!--
-
-Build Status ![](https://img.shields.io/badge/version-0.9.9-blue.svg)
-------------
-
-Refer here to get an overview of what platforms you can and cannot build for based on the most recent release of RapidGame. As certain platforms (e.g. iOS and Android) can have devices with different CPU architectures on them, if there is a problem building for a particular architecture, it will be included as a separate table entry from the other architectures of that platform.
-
-### Windows
-
-|          | Win32 | Android | Android-x86 | HTML5 |
-| -------- | :---: | :-----: | :---------: | :---: |
-| cocos2d-x | ![](https://img.shields.io/badge/build-passing-brightgreen.svg) | ![](https://img.shields.io/badge/build-passing-brightgreen.svg) | ![](https://img.shields.io/badge/build-failing-red.svg) | ![](https://img.shields.io/badge/build-skipped-yellowgreen.svg) |
-| cocos2d-js | ![](https://img.shields.io/badge/build-failing-red.svg) | ![](https://img.shields.io/badge/build-failing-red.svg) | ![](https://img.shields.io/badge/build-failing-red.svg) | ![](https://img.shields.io/badge/build-passing-brightgreen.svg) |
-
-### Mac
-
-|          | Mac | iOS | Android | Android-x86 | HTML5 |
-| -------- | :-: | :-: | :-----: | :---------: | :---: |
-| cocos2d-x | ![](https://img.shields.io/badge/build-passing-brightgreen.svg) | ![](https://img.shields.io/badge/build-passing-brightgreen.svg) | ![](https://img.shields.io/badge/build-passing-brightgreen.svg) | ![](https://img.shields.io/badge/build-unknown-lightgrey.svg) | ![](https://img.shields.io/badge/build-skipped-yellowgreen.svg) |
-| cocos2d-js | ![](https://img.shields.io/badge/build-unknown-lightgrey.svg) | ![](https://img.shields.io/badge/build-unknown-lightgrey.svg) | ![](https://img.shields.io/badge/build-unknown-lightgrey.svg) | ![](https://img.shields.io/badge/build-unknown-lightgrey.svg) | ![](https://img.shields.io/badge/build-passing-brightgreen.svg) |
-
--->
 
 
 What's the difference between a RapidGame project and a "normal" cocos2d-x project?

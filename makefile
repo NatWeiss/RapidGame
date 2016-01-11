@@ -19,7 +19,7 @@ doc:
 	@src/docco/delete-between "<p>Created using" "this code.</p>" docs/MenuScene.html
 	@src/docco/delete-between "<p>Created using" "this code.</p>" docs/Server.html
 
-ver = cocos2d-x-3.7
+ver = cocos2d-x-3.9
 patch:
 	mkdir -p /tmp/ccx
 	cd /tmp/ccx
