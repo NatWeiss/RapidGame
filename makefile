@@ -21,10 +21,9 @@ doc:
 
 ver = cocos2d-x-3.9
 patch:
-	mkdir -p /tmp/ccx
-	cd /tmp/ccx
-	cp ~/Downloads/${ver}.zip /tmp/ccx
-	cd /tmp/ccx && unzip ${ver}.zip && mv ${ver} cocos2d-x && rm ${ver}.zip
+	mkdir -p /tmp/ccx/cocos2d-x
+	cd /tmp/ccx/cocos2d-x && cp ~/Downloads/${ver}.zip . && unzip ${ver}.zip && rm ${ver}.zip
+	#cd /tmp/ccx && unzip ${ver}.zip && mv ${ver} cocos2d-x && rm ${ver}.zip
 	find /tmp/ccx/cocos2d-x -name .gitignore -delete
 	#find /tmp/ccx/cocos2d-x -type f -exec chmod 644 {} +
 	git init /tmp/ccx/cocos2d-x
