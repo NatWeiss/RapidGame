@@ -45,6 +45,7 @@ var http = require("http"),
 	msBuildExePath,
 	libExePath,
 	vcTargetsPath,
+	doJSB = false,
 	defaults = {
 		engine: "cocos2dx",
 		template: "TwoScene",
@@ -579,7 +580,7 @@ var setupPrebuild = function(platform, callback) {
 	try {
 		fs.unlinkSync(dest);
 	} catch(e) {
-		logErr("Error deleting symlink: " + e);
+		//logErr("Error deleting symlink: " + e);
 	}
 	try {
 		fs.symlinkSync(version, dest/*, "dir"*/);
@@ -596,6 +597,16 @@ var setupPrebuild = function(platform, callback) {
 var runPrebuild = function(platform, config, arch, callback) {
 	config = "";
 	arch = "";
+
+	// check whether to prebuild javascript bindings
+	try{
+		var configDest = path.join(cmd.prefix, version, "cocos2d", "x", "include", "cocos", "base", "ccConfig.h"),
+			ccConfig = fs.readFileSync(configDest).toString().trim();
+		doJSB = (ccConfig.indexOf("CC_ENABLE_SCRIPT_BINDING 1") >= 0);
+		console.log("Prebuild Javascript bindings: " + (doJSB ? "yes" : "no"));
+	} catch(e) {
+	}
+
 	if (platform === "headers") {
 		callback();
 	} else if (process.platform === "darwin") {
@@ -762,9 +773,9 @@ var prebuildWin = function(config, arch, callback) {
 	for (i = 0; i < configs.length; i += 1) {
 		command = msBuildExePath;
 		//targets = ["libcocos2d", "libjscocos2d", "libbox2d", "libbullet", "librecast", "libSpine"];
-		targets = ["libcocos2d", "libjscocos2d"];
+		targets = ["libcocos2d"];
 		args = [
-			path.join(base, "build", "cocos2d-js-win32.sln"),
+			path.join(base, "build", "cocos2d-win32.sln"),
 			"/nologo",
 			"/maxcpucount:4",
 			"/t:" + targets.join(";"),
@@ -776,6 +787,11 @@ var prebuildWin = function(config, arch, callback) {
 			//'/p:WarningLevel=0',
 			"/p:configuration=" + configs[i] + ";platform=Win32"
 		];
+
+		// do js build
+		if (doJSB) {
+			targets.push("libjscocos2d");
+		}
 
 		// main solution
 		builds.push([configs[i], command, args, projs.length == 0 ? linkWin : false]);
