@@ -15,6 +15,7 @@
 			);
 			dependencies = (
 				419AD8BC1B6DCDBE007D3F55 /* PBXTargetDependency */,
+				41803F961C45702C00907B6D /* PBXTargetDependency */,
 			);
 			name = iOS;
 			productName = "cocos2d-x-static-ios";
@@ -27,6 +28,7 @@
 			);
 			dependencies = (
 				419AD8B41B6DCD07007D3F55 /* PBXTargetDependency */,
+				41803F921C45702200907B6D /* PBXTargetDependency */,
 			);
 			name = Mac;
 			productName = "cocos2d-x-static-mac";
@@ -34,6 +36,20 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXContainerItemProxy section */
+		41803F911C45702200907B6D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 419AD8A81B6DCCB2007D3F55 /* cocos2d_js_bindings.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A03F31E81781479B006731B9;
+			remoteInfo = "libjscocos2d Mac";
+		};
+		41803F951C45702C00907B6D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 419AD8A81B6DCCB2007D3F55 /* cocos2d_js_bindings.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A07A4FB5178387750073F6A7;
+			remoteInfo = "libjscocos2d iOS";
+		};
 		419AD8A41B6DCC66007D3F55 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 419AD89F1B6DCC66007D3F55 /* cocos2d_libs.xcodeproj */;
@@ -221,6 +237,16 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		41803F921C45702200907B6D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libjscocos2d Mac";
+			targetProxy = 41803F911C45702200907B6D /* PBXContainerItemProxy */;
+		};
+		41803F961C45702C00907B6D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libjscocos2d iOS";
+			targetProxy = 41803F951C45702C00907B6D /* PBXContainerItemProxy */;
+		};
 		419AD8B41B6DCD07007D3F55 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "libcocos2d Mac";
