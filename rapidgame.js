@@ -923,17 +923,19 @@ var startBuild = function(platform, callback, settings) {
 		settings[1] = "";
 		settings[2] = path.basename(args[0]);
 	} else if (platform === "Linux") {
-		dir = path.join(cmd.prefix, "src", "cocos2d-x", "build", "linux");
+		dir = path.join(cmd.prefix, "src", "cocos2d-x", "build", settings[0] + "-linux");
 		wrench.mkdirSyncRecursive(dir);
 		command = settings[1];
 		args = settings[2];
 		settings[1] = "";
-		settings[2] = path.basename(args[0]);
+		settings[2] = "";
 	}
 
-	logBuild("Building " + platform + " " + settings[0] +
+	logBuild("Building " + platform +
+		(settings[0] ? " " + settings[0] : "") +
 		(settings[1] ? " " + settings[1] : "") +
-		(settings[2] ? " " + settings[2] : "") + "...", true);
+		(settings[2] ? " " + settings[2] : "") +
+		"...", true);
 	spawn(command, args, {cwd: dir, env: process.env}, function(err){
 		var onFinished = function(){
 			logBuild("Succeeded.", true);
@@ -1012,15 +1014,17 @@ var linkWin = function(config, callback) {
 // link linux
 //
 var linkLinux = function(config, callback) {
-	var srcRoot = path.join(cmd.prefix, "src", "cocos2d-x"),
-		libDir = path.join(srcRoot, "lib"),
-		dest = path.join(cmd.prefix, version, "cocos2d", "x", "lib", config + "-linux", "x86");
+	var libDir = path.join(cmd.prefix, "src", "cocos2d-x", "build", config + "-linux", "lib"),
+		dest = path.join(cmd.prefix, version, "cocos2d", "x", "lib", config + "-Linux", "x86");
 
 	// make output dir
 	wrench.mkdirSyncRecursive(dest);
 
 	// just copy static libraries
 	copyGlobbed(libDir, dest, "*.a");
+	
+	// remember to call callback when finished
+	callback();
 };
 
 //
