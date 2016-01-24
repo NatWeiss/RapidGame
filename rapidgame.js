@@ -151,14 +151,18 @@ var init = function(directory) {
 	}
 
 	// Create lib symlink
-	// Windows: If you get Error: EPERM: operation not permitted: 'folder name\lib' it probably means you need to Run As Administrator
+	// Windows "EPERM: operation not permitted" probably means user needs to Run As Administrator
+	// http://stackoverflow.com/questions/4051883/batch-script-how-to-check-for-admin-rights
 	src = path.join(cmd.prefix, version);
 	dest = path.join(directory, "lib");
 	console.log("Symlinking" + (cmd.verbose ? ": " + dest + " -> " + src : " lib folder"));
 	try {
 		fs.symlinkSync(src, dest);
 	} catch(e) {
-		logErr("Error creating symlink: " + e);
+		logErr("Error creating symlink");
+		if (process.platform === "win32") {
+			logErr("\nPlease 'Run As Administrator'.\n");
+		}
 	}
 };
 
@@ -423,7 +427,7 @@ var downloadCocos = function(callback) {
 		logBuild("WARNING: Directory " + src + " may prevent cocos2d-x from being patched with git apply", true);
 	}
 	
-	// copy latest patch
+	// copy patch
 	copyGlobbed(path.join(__dirname, "src"), dir, "*.patch");
 
 	// download
@@ -452,7 +456,7 @@ var downloadCocos = function(callback) {
 			src = path.join(dir, "cocos2d.patch");
 			patchSize = fs.statSync(src).size;
 			if (patchSize > 8) {
-				// Apply latest patch
+				// Apply patch
 				// (see comments at the end of this file for how to create the patch)
 				logBuild("Applying patch file: " + src, true);
 
@@ -486,6 +490,25 @@ var setupPrebuild = function(platform, callback) {
 	if (platform && platform !== "headers") {
 		callback();
 		return;
+	}
+
+	logBuild("Checking if symlinks can be created", true);
+
+	// symlink ./latest -> ./version
+	dest = path.join(cmd.prefix, "latest");
+	try {
+		fs.unlinkSync(dest);
+	} catch(e) {
+		//logErr("Error deleting symlink: " + e);
+	}
+	try {
+		fs.symlinkSync(version, dest);
+		logErr("Ok");
+	} catch(e) {
+		logErr("Error creating symlink " + dest + " => " + version);
+		if (process.platform === "win32") {
+			logErr("\nPlease 'Run As Administrator'. Proceeding with unpredictable results.\n");
+		}
 	}
 
 	logBuild("Copying header files...", true);
@@ -581,19 +604,6 @@ var setupPrebuild = function(platform, callback) {
 	}
 
 	// find ${dir} | xargs xattr -c >> ${logFile} 2>&1
-
-	// symlink latest -> version
-	dest = path.join(cmd.prefix, "latest");
-	try {
-		fs.unlinkSync(dest);
-	} catch(e) {
-		//logErr("Error deleting symlink: " + e);
-	}
-	try {
-		fs.symlinkSync(version, dest/*, "dir"*/);
-	} catch(e) {
-		logErr("Error creating symlink: " + e);
-	}
 
 	callback();
 };
