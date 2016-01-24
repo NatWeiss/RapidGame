@@ -15,9 +15,8 @@ var http = require("http"),
 	packageJson = JSON.parse(fs.readFileSync(path.join(__dirname, "package.json"))),
 	cmdName = packageJson.name,
 	version = packageJson.version,
-	cocos2djsUrlMac = "http://cdn.cocos2d-x.org/cocos2d-x-3.9.zip",
-	cocos2djsUrlWin = "http://cdn.cocos2d-x.org/cocos2d-x-3.9.zip",
-	cocos2djsUrl = (process.platform === "darwin" ? cocos2djsUrlMac : cocos2djsUrlWin),
+	cocos2dxUrl = "http://cdn.cocos2d-x.org/cocos2d-x-3.9.zip",
+	extractName = "cocos2d-x-3.9", // leave blank of cocos2d-x is properly zipped with a 'cocos2d-x/' directory prefix
 	cocos2dDirGlob = "*ocos2d-x*",
 	category,
 	engines = [],
@@ -422,12 +421,11 @@ var prebuild = function(platform, config, arch) {
 // copy src directory to prefix
 //
 var copySrcFiles = function(callback) {
-	var src, dest;
+	var src = path.join(__dirname, "src"),
+		dest = path.join(cmd.prefix, "src");
 
 	// Synchronously copy src directory to dest
-	src = path.join(__dirname, "src");
-	dest = path.join(cmd.prefix, "src");
-	if (src !== dest) {
+	if (src !== dest && !dirExists(dest)) {
 		logBuild("Copying " + src + " to " + dest, true);
 		copyRecursive(src, dest, true);
 	}
@@ -451,9 +449,9 @@ var downloadCocos = function(callback) {
 		ver = fs.readFileSync(downloaded).toString().trim();
 	} catch(e) {
 	}
-	if (ver !== cocos2djsUrl) {
+	if (ver !== cocos2dxUrl) {
 		if (typeof ver !== "undefined") {
-			logBuild("Current cocos2d-x URL: " + cocos2djsUrl, true);
+			logBuild("Current cocos2d-x URL: " + cocos2dxUrl, true);
 			logBuild("Downloaded cocos2d-x URL: " + ver, true);
 			logBuild("Re-downloading", true);
 		}
@@ -483,7 +481,7 @@ var downloadCocos = function(callback) {
 	copyGlobbed(path.join(__dirname, "src"), dir, "*.patch");
 
 	// download
-	downloadUrl(cocos2djsUrl, dir, function(success) {
+	downloadUrl(cocos2dxUrl, dir, function(success) {
 		if (!success) {
 			return;
 		}
@@ -503,7 +501,7 @@ var downloadCocos = function(callback) {
 			fs.renameSync(files[0], dest);
 
 			// Save downloaded version
-			fs.writeFileSync(downloaded, cocos2djsUrl);
+			fs.writeFileSync(downloaded, cocos2dxUrl);
 
 			src = path.join(dir, "ccx.patch");
 			patchSize = fs.statSync(src).size;
@@ -995,7 +993,7 @@ var startBuild = function(platform, callback, settings) {
 		wrench.mkdirSyncRecursive(dir);
 		command = settings[1];
 		args = settings[2];
-		settings[1] = "";
+		settings[1] = command;
 		settings[2] = "";
 	}
 
@@ -1349,7 +1347,7 @@ var checkPrefix = function() {
 // Copy files recursively with a special exclude filter.
 //
 var copyRecursive = function(src, dest, filter, overwrite) {
-	logBuild("Recursively copying " + path.relative(cmd.prefix, src) + " to " + path.relative(cmd.prefix, dest), cmd.verbose);
+	logBuild("cp -r " + path.relative(cmd.prefix, src) + " " + path.relative(cmd.prefix, dest), cmd.verbose);
 	
 	// copy using wrench
 	overwrite = overwrite || false;
@@ -1374,7 +1372,7 @@ var copyRecursive = function(src, dest, filter, overwrite) {
 var copyGlobbed = function(src, dest, pattern, grep, depth) {
 	var i, j, file, files;
 	pattern = path.join("**", pattern);
-	logBuild("Recursively copying " + path.relative(cmd.prefix, path.join(src, pattern)) + " to " + path.relative(cmd.prefix, dest), cmd.verbose);
+	logBuild("  " + path.relative(cmd.prefix, path.join(src, pattern)) + " => " + path.relative(cmd.prefix, dest), cmd.verbose);
 
 	files = glob.sync(path.join(src, pattern));
 	for (i = 0; i < files.length; i += 1) {
@@ -1465,9 +1463,11 @@ var excludeFilter = function(filename, dir){
 // download and extract a url to the given destination
 //
 var downloadUrl = function(url, dest, cb) {
-	// fix 3.9.zip's lack of cocos2d-x-3.9/ prefix
-	dest = path.join(dest, path.basename(url, '.zip'));
-	wrench.mkdirSyncRecursive(dest);
+	// prefix the extract destination
+	if (extractName.length) {
+		dest = path.join(dest, extractName);
+		wrench.mkdirSyncRecursive(dest);
+	}
 	logBuild("Download destination: " + dest, true);
 	
 	// now download
@@ -1543,10 +1543,10 @@ var logBuild = function(str, echo) {
 var exec = function(command, options, callback) {
 	// logging
 	if (cmd.verbose) {
-		console.log(command);
-		console.log("Current dir: " + options.cwd);
+		console.log("Current dir: " + options.cwd + "\n");
+		console.log(command + "\n");
 	}
-	logBuild("\nExecuting:\n\t" + command + "\n\nCurrent dir:\n\t" + options.cwd + "\n\n");
+	logBuild("\nCurrent dir:\n\t" + options.cwd + "\n\nExecuting:\n\t" + command + "\n\n");
 
 	// execute
 	try {
@@ -1575,10 +1575,10 @@ var execCallback = function(error, stdout, stderr) {
 //
 var spawn = function(command, args, options, callback) {
 	if (cmd.verbose) {
-		console.log(command + ' ' + args.join(' '));
-		console.log("Current dir: " + options.cwd);
+		console.log("Current dir: " + options.cwd + "\n");
+		console.log(command + ' ' + args.join(' ') + "\n");
 	}
-	logBuild("\nSpawning:\n\t" + command + ' ' + args.join(' ') + "\n\nCurrent dir:\n\t" + options.cwd + "\n\n");
+	logBuild("\nCurrent dir:\n\t" + options.cwd + "\n\nSpawning:\n\t" + command + ' ' + args.join(' ') + "\n\n");
 
 	try {
 		// spawn the process
