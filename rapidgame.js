@@ -3,22 +3,6 @@
 //  See the `LICENSE` file for the license governing this code.
 //  Developed by Nathanael Weiss.
 //
-//  To-do:
-//   - Mention how to use a manual download of cocos2d-x in readme.
-//   - Fix Mac project name search and replace so names with spaces work. (It used to...)
-//   - Regarding the linux build: http://stackoverflow.com/questions/21168141/can-not-install-packages-using-node-package-manager-in-ubuntu
-//   - Why did `sudo npm unlink rapidgame -g; sudo npm link .` fix "Error: Cannot find module 'path-extra'"?
-//   - Mac prebuild fails if the user has changed Xcode's temporary build directory to "relative to project". Here's some details:
-//       export TARGET_TEMP_DIR=/Users/user/Library/Developer/RapidGame/src/proj.ios_mac/build/cocos2dx-prebuilt.build/Debug/Mac.build
-//       export TEMP_DIR=/Users/user/Library/Developer/RapidGame/src/proj.ios_mac/build/cocos2dx-prebuilt.build/Debug/Mac.build
-//       export TEMP_FILES_DIR=/Users/user/Library/Developer/RapidGame/src/proj.ios_mac/build/cocos2dx-prebuilt.build/Debug/Mac.build
-//       export TEMP_FILE_DIR=/Users/user/Library/Developer/RapidGame/src/proj.ios_mac/build/cocos2dx-prebuilt.build/Debug/Mac.build
-//       /bin/sh -c /Users/user/Library/Developer/RapidGame/src/proj.ios_mac/build/cocos2dx-prebuilt.build/Debug/Mac.build/Script-419E8E9E18A9BB3400232A34.sh
-//   	outputDir=/Users/user/Library/Developer/RapidGame/src/proj.ios_mac/../../latest/cocos2d/x/lib/Debug-Mac/macosx
-//   	error: libtool: can't open file: /Users/user/Library/Developer/RapidGame/src/proj.ios_mac/build/Debug/*.a (No such file or directory)
-//		It may be that we just need to set CONFIGURATION_BUILD_DIR, see: https://developer.apple.com/library/mac/documentation/DeveloperTools/Reference/XcodeBuildSettingRef/1-Build_Setting_Reference/build_setting_ref.html
-//
-
 var http = require("http"),
 	path = require("path-extra"),
 	fs = require("fs"),
@@ -548,17 +532,6 @@ var setupPrebuild = function(platform, callback) {
 	copyGlobbed(src, dest, '*.hpp');
 	copyGlobbed(src, dest, '*.msg');
 	copyGlobbed(src, dest, '*.inl');
-/*
-	dest = path.join(dir, "bindings");
-	src = path.join(srcRoot, "js-bindings", "bindings");
-	copyGlobbed(src, dest, '*.h');
-	copyGlobbed(src, dest, '*.hpp');
-
-	dest = path.join(dir, "external");
-	src = path.join(srcRoot, "js-bindings", "external");
-	copyGlobbed(src, dest, '*.h');
-	copyGlobbed(src, dest, '*.msg');
-*/
 
 	// remove unneeded
 	files = ["docs", "build", "tests", "samples", "templates", "tools",
@@ -571,10 +544,6 @@ var setupPrebuild = function(platform, callback) {
 	dest = path.join(ver, "cocos2d", "x", "script");
 	src = path.join(srcRoot, "cocos", "scripting", "js-bindings", "script");
 	copyGlobbed(src, dest, '*.js');
-/*
-	src = path.join(srcRoot, "js-bindings", "bindings", "auto", "api");
-	copyGlobbed(src, dest, '*.js');
-*/
 
 	// java
 	dir = path.join(ver, "cocos2d", "x", "java");
@@ -587,11 +556,6 @@ var setupPrebuild = function(platform, callback) {
 	copyGlobbed(src, dest, "*.mk");
 	copyGlobbed(src, path.join(ver, "cocos2d", "x", "lib", "Debug-Android"), "*.a", "android", 1);
 	copyGlobbed(src, path.join(ver, "cocos2d", "x", "lib", "Release-Android"), "*.a", "android", 1);
-/*
-	src = path.join(srcRoot, "js-bindings");
-	copyGlobbed(src, dest, "*.mk");
-	copyGlobbed(src, dest, "*.a", "android");
-*/
 
 	// # bonus: call android/strip on mk/*.a
 
@@ -652,7 +616,7 @@ var runPrebuild = function(platform, config, arch, callback) {
 		} else {
 			prebuildMac("Mac", config, arch, function(){
 				prebuildMac("iOS", config, arch, function(){
-					// Sam: See comments below for why this check is here.
+					// See comments below for why this check is here.
 					if ("NDK_ROOT" in process.env) {
 						prebuildAndroid(config, arch, function(){
 							callback();
@@ -666,7 +630,7 @@ var runPrebuild = function(platform, config, arch, callback) {
 		}
 	} else if (process.platform === "win32") {
 		if (platform === "android") {
-			// Sam: All Cygwin terminals add TERM to their environment variables.
+			// All Cygwin terminals add TERM to their environment variables.
 			// Even though the value might vary ('cygwin' or 'xterm'), we can
 			// reasonably assume that someone running RapidGame in a shell with
 			// TERM as an environment variable is using Cygwin. Windows does
@@ -674,7 +638,7 @@ var runPrebuild = function(platform, config, arch, callback) {
 			// same check is applied when prebuilding without any arguments
 			// (see a few lines below).
 			if ("TERM" in process.env) {
-				// Sam: We can assume that if the user has setup NDK_ROOT, they
+				// We can assume that if the user has setup NDK_ROOT, they
 				// have also setup everything else needed to prebuild the Android
 				// libraries. If they happen to have NDK_ROOT set but not everything
 				// else, they will still get an error when trying to prebuild the
@@ -688,7 +652,7 @@ var runPrebuild = function(platform, config, arch, callback) {
 					callback();
 				}
 			} else {
-				// Sam: User reaches here only if they are on Windows and they specifically run `rapidgame prebuild android`
+				// User reaches here only if they are on Windows and they specifically run `rapidgame prebuild android`
 				logBuild("Build cancelled. You must prebuild the Android libraries in a Cygwin shell.", true);
 				callback();
 			}
@@ -1683,27 +1647,21 @@ module.exports = {
 	version: version
 };
 
+//
+//  To-do:
+//   - Mention how to use a manual download of cocos2d-x in readme.
+//   - Fix Mac project name search and replace so names with spaces work. (It used to...)
+//   - Regarding the linux build: http://stackoverflow.com/questions/21168141/can-not-install-packages-using-node-package-manager-in-ubuntu
+//   - Why did `sudo npm unlink rapidgame -g; sudo npm link .` fix "Error: Cannot find module 'path-extra'"?
+//   - Mac prebuild fails if the user has changed Xcode's temporary build directory to "relative to project". Here's some details:
+//       export TARGET_TEMP_DIR=/Users/user/Library/Developer/RapidGame/src/proj.ios_mac/build/cocos2dx-prebuilt.build/Debug/Mac.build
+//       export TEMP_DIR=/Users/user/Library/Developer/RapidGame/src/proj.ios_mac/build/cocos2dx-prebuilt.build/Debug/Mac.build
+//       export TEMP_FILES_DIR=/Users/user/Library/Developer/RapidGame/src/proj.ios_mac/build/cocos2dx-prebuilt.build/Debug/Mac.build
+//       export TEMP_FILE_DIR=/Users/user/Library/Developer/RapidGame/src/proj.ios_mac/build/cocos2dx-prebuilt.build/Debug/Mac.build
+//       /bin/sh -c /Users/user/Library/Developer/RapidGame/src/proj.ios_mac/build/cocos2dx-prebuilt.build/Debug/Mac.build/Script-419E8E9E18A9BB3400232A34.sh
+//   	outputDir=/Users/user/Library/Developer/RapidGame/src/proj.ios_mac/../../latest/cocos2d/x/lib/Debug-Mac/macosx
+//   	error: libtool: can't open file: /Users/user/Library/Developer/RapidGame/src/proj.ios_mac/build/Debug/*.a (No such file or directory)
+//		Maybe just need to set CONFIGURATION_BUILD_DIR, see: https://developer.apple.com/library/mac/documentation/DeveloperTools/Reference/XcodeBuildSettingRef/1-Build_Setting_Reference/build_setting_ref.html
+//
 
-/*
 
-To make a Cocos2d patch:
-
-	cd /tmp
-	cp -r ~/path/to/cocos2d-js-latest .
-	cd cocos2d-js-latest
-	find . -name .gitignore -delete
-	git init .
-	git add *
-	git commit -a
-	cp -r ~/path/to/cocos2d-js-patched/* .
-	git diff > patch
-	git diff --staged --binary >> patch
-
-	# (it may be possible without git add; try git help diff)
-
-To apply:
-
-	cd cocos2d-js-somewhere
-	git apply --whitespace=nowarn patch
-
-*/
