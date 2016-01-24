@@ -516,7 +516,7 @@ var setupPrebuild = function(platform, callback) {
 	// reset cocos2d dir
 	ver = path.join(cmd.prefix, version);
 	dest = path.join(ver, "cocos2d");
-	files = ["html", path.join("x", "include"), path.join("x", "java"), path.join("x", "script")];
+	files = ["html", path.join("x", "include"), path.join("x", "cmake"), path.join("x", "java"), path.join("x", "script")];
 	try {
 		for (i = 0; i < files.length; i += 1) {
 			src = path.join(dest, files[i]);
@@ -530,6 +530,11 @@ var setupPrebuild = function(platform, callback) {
 		logBuild("Error cleaning destination: " + dest, cmd.verbose);
 		logBuild(e, cmd.verbose);
 	}
+
+	// copy cmake files
+	dest = path.join(ver, "cocos2d", "x", "cmake");
+	src = path.join(srcRoot, "cmake");
+	copyRecursive(src, dest, false, true);
 
 	// copy cocos2d-html5
 	dest = path.join(ver, "cocos2d", "html");
@@ -706,6 +711,10 @@ var runPrebuild = function(platform, config, arch, callback) {
 				});
 			}
 		}
+	} else if (process.platform === "linux") {
+		prebuildLinux("Linux", config, arch, function(){
+			callback();
+		});
 	} else {
 		logBuild("No prebuild command written for " + process.platform + " yet", true);
 	}
@@ -733,41 +742,40 @@ var prebuildMac = function(platform, config, arch, callback) {
 };
 
 //
-// prebuild android
+// prebuild linux
 //
-var prebuildAndroid = function(config, arch, callback) {
-	var i, j,
-		configs = (config ? [config] : (cmd.minimal ? ["Debug"] : ["Debug", "Release"])),
-		archs = (cmd.minimal ? ["armeabi"] : ["armeabi", "armeabi-v7a", "x86"]);
+var prebuildLinux = function(platform, config, arch, callback) {
+	var i,
+		args,
+		configs = (config ? [config] : (cmd.minimal ? ["Debug"] : ["Debug", "Release"]));
 
 	// create builds array
 	builds = [];
-	if (process.platform === "win32") {
-		if (cmd.minimal) {
-			if (cmd.nostrip) {
-				builds.push(["non-stripped minimal (Debug armeabi)"]);
-			} else {
-				builds.push(["minimal (Debug armeabi)"]);
-			}
-		} else {
-			if (cmd.nostrip) {
-				builds.push(["non-stripped libraries for all platforms"]);
-			} else {
-				builds.push(["libraries for all platforms"]);
-			}
+	for (i = 0; i < configs.length; i += 1) {
+		args = [
+			".",
+			"-DDEBUG_MODE=" + (configs[i] === "Debug" ? "ON" : "OFF"),
+			"-DUSE_CHIPMUNK=OFF",
+			"-DUSE_BOX2D=OFF",
+			"-DUSE_BULLET=OFF",
+			"-DUSE_RECAST=OFF",
+			"-DUSE_WEBP=OFF",
+			"-DBUILD_EXTENSIONS=OFF",
+			"-DBUILD_EDITOR_SPINE=OFF",
+			"-DBUILD_EDITOR_COCOSTUDIO=OFF",
+			"-DBUILD_EDITOR_COCOSBUILDER=OFF",
+			"-DBUILD_CPP_TESTS=OFF",
+			"-DBUILD_LUA_LIBS=OFF",
+			"-DBUILD_LUA_TESTS=OFF",
+			"-DBUILD_JS_TESTS=OFF"
+		];
+		if (doJSB === false) {
+			args.push("-DBUILD_JS_LIBS=OFF");
 		}
-	} else {
-		for (i = 0; i < configs.length; i += 1) {
-			for (j = 0; j < archs.length; j += 1) {
-				if (cmd.nostrip) {
-					builds.push([configs[i], archs[j], "nostrip"]);
-				} else {
-					builds.push([configs[i], archs[j]]);
-				}
-			}
-		}
+		builds.push([configs[i], "cmake", args, false]);
+		builds.push([configs[i], "make", [], linkLinux]);
 	}
-	nextBuild("Android", callback);
+	nextBuild(platform, callback);
 };
 
 //
@@ -827,6 +835,44 @@ var prebuildWin = function(config, arch, callback) {
 
 	// start
 	nextBuild("Windows", callback);
+};
+
+//
+// prebuild android
+//
+var prebuildAndroid = function(config, arch, callback) {
+	var i, j,
+		configs = (config ? [config] : (cmd.minimal ? ["Debug"] : ["Debug", "Release"])),
+		archs = (cmd.minimal ? ["armeabi"] : ["armeabi", "armeabi-v7a", "x86"]);
+
+	// create builds array
+	builds = [];
+	if (process.platform === "win32") {
+		if (cmd.minimal) {
+			if (cmd.nostrip) {
+				builds.push(["non-stripped minimal (Debug armeabi)"]);
+			} else {
+				builds.push(["minimal (Debug armeabi)"]);
+			}
+		} else {
+			if (cmd.nostrip) {
+				builds.push(["non-stripped libraries for all platforms"]);
+			} else {
+				builds.push(["libraries for all platforms"]);
+			}
+		}
+	} else {
+		for (i = 0; i < configs.length; i += 1) {
+			for (j = 0; j < archs.length; j += 1) {
+				if (cmd.nostrip) {
+					builds.push([configs[i], archs[j], "nostrip"]);
+				} else {
+					builds.push([configs[i], archs[j]]);
+				}
+			}
+		}
+	}
+	nextBuild("Android", callback);
 };
 
 //
@@ -912,6 +958,12 @@ var startBuild = function(platform, callback, settings) {
 		args = settings[2];
 		settings[1] = "";
 		settings[2] = path.basename(args[0]);
+	} else if (platform === "Linux") {
+		dir = path.join(cmd.prefix, "src", "cocos2d-x");
+		command = settings[1];
+		args = settings[2];
+		settings[1] = "";
+		settings[2] = path.basename(args[0]);
 	}
 
 	logBuild("Building " + platform + " " + settings[0] +
@@ -989,6 +1041,21 @@ var linkWin = function(config, callback) {
 			logBuild(err, true);
 		}
 	});
+};
+
+//
+// link linux
+//
+var linkLinux = function(config, callback) {
+	var srcRoot = path.join(cmd.prefix, "src", "cocos2d-x"),
+		libDir = path.join(srcRoot, "lib"),
+		dest = path.join(cmd.prefix, version, "cocos2d", "x", "lib", config + "-linux", "x86");
+
+	// make output dir
+	wrench.mkdirSyncRecursive(dest);
+
+	// just copy static libraries
+	copyGlobbed(libDir, dest, "*.a");
 };
 
 //
