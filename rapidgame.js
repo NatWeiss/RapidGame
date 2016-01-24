@@ -453,7 +453,7 @@ var downloadCocos = function(callback) {
 			// Save downloaded version
 			fs.writeFileSync(downloaded, cocos2djsUrl);
 
-			src = path.join(dir, "cocos2d.patch");
+			src = path.join(dir, "ccx.patch");
 			patchSize = fs.statSync(src).size;
 			if (patchSize > 8) {
 				// Apply patch
@@ -753,17 +753,17 @@ var prebuildLinux = function(platform, config, arch, callback) {
 	builds = [];
 	for (i = 0; i < configs.length; i += 1) {
 		args = [
-			".",
+			path.join("..", ".."),
 			"-DDEBUG_MODE=" + (configs[i] === "Debug" ? "ON" : "OFF"),
 			//"-DUSE_CHIPMUNK=OFF",
 			//"-DUSE_BOX2D=OFF",
 			//"-DUSE_BULLET=OFF",
 			//"-DUSE_RECAST=OFF",
 			//"-DUSE_WEBP=OFF",
-			//"-DBUILD_EXTENSIONS=OFF",
-			//"-DBUILD_EDITOR_SPINE=OFF",
-			//"-DBUILD_EDITOR_COCOSTUDIO=OFF",
-			//"-DBUILD_EDITOR_COCOSBUILDER=OFF",
+			"-DBUILD_EXTENSIONS=OFF",
+			"-DBUILD_EDITOR_SPINE=OFF",
+			"-DBUILD_EDITOR_COCOSTUDIO=OFF",
+			"-DBUILD_EDITOR_COCOSBUILDER=OFF",
 			"-DBUILD_CPP_TESTS=OFF",
 			"-DBUILD_LUA_LIBS=OFF",
 			"-DBUILD_LUA_TESTS=OFF",
@@ -959,7 +959,8 @@ var startBuild = function(platform, callback, settings) {
 		settings[1] = "";
 		settings[2] = path.basename(args[0]);
 	} else if (platform === "Linux") {
-		dir = path.join(cmd.prefix, "src", "cocos2d-x");
+		dir = path.join(cmd.prefix, "src", "cocos2d-x", "build", "linux");
+		wrench.mkdirSyncRecursive(dir);
 		command = settings[1];
 		args = settings[2];
 		settings[1] = "";
