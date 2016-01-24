@@ -72,27 +72,38 @@ var run = function(args) {
 		.option("-t, --template <name>", "template (" + templates.join(", ") + ") [" + defaults.template + "]", defaults.template)
 		.option("-p, --prefix <name>", "library directory [" + defaults.prefix + "]", defaults.prefix)
 		.option("-f, --folder <path>", "output folder [" + defaults.dest + "]", defaults.dest)
-		//.option("-o, --orientation <orientation>", "orientation (" + orientations.join(", ") + ") [" + defaults.orientation + "]", defaults.orientation)
-		.option("--nostrip", "do not strip the prebuilt libraries", false)
+		.option("-v, --verbose", "be verbose", false)
 		.option("--minimal", "prebuild only debug libraries and use minimal architectures", false)
 		//.option("--i386", "on iphonesimulator, build i386 instead of x86_64", false)
-		.option("-v, --verbose", "be verbose", false);
+		.option("--nostrip", "do not strip the prebuilt libraries", false);
 
 	cmd
 		.command("create <engine> <project-name> <package-name>")
-		.description("     Create a new cross-platform game project [engines: " + engines.join(", ") + "]")
+		.description("     Create a new cross-platform game project")
 		.action(createProject);
 	commands.push("create");
 
 	cmd
 		.command("prebuild [platform]")
-		.description("                            Prebuild cocos2d-x static libraries [platforms: " + platforms.join(", ") + "]")
+		.description("                            Prebuild cocos2d-x static libraries and headers")
 		.action(prebuild);
 	commands.push("prebuild");
 
 	cmd
+		.command("clean")
+		.description("                            Clean the temporary build files")
+		.action(clean);
+	commands.push("clean");
+
+	cmd
+		.command("show")
+		.description("                            Show where static libraries and headers reside")
+		.action(showPrefix);
+	commands.push("show");
+
+	cmd
 		.command("init <directory>")
-		.description("                            Create a symlink in the given directory to the libraries")
+		.description("                            Create a symlink named 'lib' to the static libraries")
 		.action(init);
 	commands.push("init");
 
@@ -151,6 +162,63 @@ var init = function(directory) {
 };
 
 //
+// Clean the temp build files.
+//
+var clean = function(directory) {
+	var i,
+		dest,
+		files = [],
+		configs = ["Debug", "Release"];
+
+	if (!checkPrefix()) {
+		usage();
+		return 1;
+	}
+	
+	// linux
+	if (process.platform === "linux") {
+		for (i = 0; i < configs.length; i+=1) {
+			dest = path.join(cmd.prefix, "src", "cocos2d-x", "build", configs[i] + "-linux");
+			files.push(dest);
+		}
+	// darwin
+	} else if (process.platform === "darwin") {
+		dest = path.join(path.homedir(), "Library", "Developer", "Xcode", "DerivedData", "cocos2dx-prebuilt*");
+		files = glob.sync(dest);
+	// all other platforms
+	} else {
+		console.log("Haven't written this command for this platform yet: " + process.platform);
+		return 1;
+	}
+
+	// Remove dirs.
+	for (i = 0; i < files.length; i += 1) {
+		console.log("Removing temporary folder: " + files[i]);
+		try {
+			wrench.rmdirSyncRecursive(files[i], true);
+		} catch(e) {
+			logErr(e, cmd.verbose);
+		}
+	}
+};
+
+//
+// Show prefix.
+//
+var showPrefix = function(directory) {
+	var dest;
+
+	if (!checkPrefix()) {
+		return 1;
+	}
+	
+	dest = path.join(cmd.prefix, version);
+	console.log("Rapidgame lives here: " + cmd.prefix);
+	console.log("Latest static libs and headers: " + dest);
+	console.log("Static libs and headers have been built: " + (dirExists(dest) ? "YES" : "NO"));
+};
+
+//
 // Create project.
 //
 var createProject = function(engine, name, package) {
@@ -206,7 +274,7 @@ var createProject = function(engine, name, package) {
 	}
 	
 	// Start
-	report("start", cmd.engine + "/" + cmd.template);
+	logReport("start", cmd.engine + "/" + cmd.template);
 	console.log("Rapidly creating a game");
 	console.log("Engine: " + cmd.engine.charAt(0).toUpperCase() + cmd.engine.slice(1));
 	console.log("Template: " + cmd.template + (cmd.verbose ? " " + packageSrc : ""));
@@ -279,7 +347,7 @@ var createProject = function(engine, name, package) {
 			console.log("");
 		} catch(e) {
 		}
-		report("done");
+		logReport("done");
 		
 		// Auto prebuild
 		if (isCocos2d && !dirExists(path.join(cmd.prefix, version))) {
@@ -336,13 +404,13 @@ var prebuild = function(platform, config, arch) {
 		}
 
 		logBuild("Happily prebuilding " + platform, true);
-		report("start");
+		logReport("start");
 		
 		copySrcFiles(function() {
 			downloadCocos(function() {
 				setupPrebuild(platform, function() {
 					runPrebuild(platform, config, arch, function() {
-						report("done");
+						logReport("done");
 					});
 				});
 			});
@@ -1417,15 +1485,6 @@ var downloadUrl = function(url, dest, cb) {
 };
 
 //
-// reporting feature no longer used 
-//
-var report = (function() {
-	return function(action, label, value, path) {
-		return;
-	}
-}());
-
-//
 // check for upgrade
 //
 var checkUpdate = function() {
@@ -1462,21 +1521,6 @@ var checkUpdate = function() {
 	});
 	req.on("error", function(){});
 }
-
-//
-// show usage instructions
-//
-var usage = function() {
-	cmd.help();
-	usageExamples();
-};
-var usageExamples = function() {
-	console.log("  Examples:");
-	console.log("");
-	console.log("    $ " + cmdName + " create cocos2dx \"HeckYeah\" com.mycompany.heckyeah");
-	console.log("    $ " + cmdName + " prebuild");
-	console.log("");
-};
 
 //
 // append to the build log
@@ -1605,7 +1649,7 @@ var sed = function(search, replace, dest) {
 //
 var logErr = function(str) {
 	console.log(str);
-	report("error", str);
+	logReport("error", str);
 };
 
 //
@@ -1646,6 +1690,35 @@ var isWriteableDir = function(dir) {
 	return false;
 };
 
+//
+// reporting feature no longer used 
+//
+var logReport = (function() {
+	return function(action, label, value, path) {
+		return;
+	}
+}());
+
+//
+// show usage instructions
+//
+var usage = function() {
+	cmd.help();
+	usageExamples();
+};
+var usageExamples = function() {
+	console.log("  Engines:");
+	console.log("     " + engines.join(", "))
+	console.log("");
+	console.log("  Platforms:");
+	console.log("     all (default), " + platforms.join(", "))
+ 	console.log("");
+	console.log("  Examples:");
+	console.log("");
+	console.log("    " + cmdName + " create cocos2dx \"HeckYeah\" com.mycompany.heckyeah");
+	console.log("");
+};
+
 module.exports = {
 	run: run,
 	version: version
@@ -1653,6 +1726,8 @@ module.exports = {
 
 //
 //  To-do:
+//   - Finish orientation option:
+//		.option("-o, --orientation <orientation>", "orientation (" + orientations.join(", ") + ") [" + defaults.orientation + "]", defaults.orientation)
 //   - Mention how to use a manual download of cocos2d-x in readme.
 //   - Fix Mac project name search and replace so names with spaces work. (It used to...)
 //   - Regarding the linux build: http://stackoverflow.com/questions/21168141/can-not-install-packages-using-node-package-manager-in-ubuntu
