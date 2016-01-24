@@ -755,15 +755,15 @@ var prebuildLinux = function(platform, config, arch, callback) {
 		args = [
 			".",
 			"-DDEBUG_MODE=" + (configs[i] === "Debug" ? "ON" : "OFF"),
-			"-DUSE_CHIPMUNK=OFF",
-			"-DUSE_BOX2D=OFF",
-			"-DUSE_BULLET=OFF",
-			"-DUSE_RECAST=OFF",
-			"-DUSE_WEBP=OFF",
-			"-DBUILD_EXTENSIONS=OFF",
-			"-DBUILD_EDITOR_SPINE=OFF",
-			"-DBUILD_EDITOR_COCOSTUDIO=OFF",
-			"-DBUILD_EDITOR_COCOSBUILDER=OFF",
+			//"-DUSE_CHIPMUNK=OFF",
+			//"-DUSE_BOX2D=OFF",
+			//"-DUSE_BULLET=OFF",
+			//"-DUSE_RECAST=OFF",
+			//"-DUSE_WEBP=OFF",
+			//"-DBUILD_EXTENSIONS=OFF",
+			//"-DBUILD_EDITOR_SPINE=OFF",
+			//"-DBUILD_EDITOR_COCOSTUDIO=OFF",
+			//"-DBUILD_EDITOR_COCOSBUILDER=OFF",
 			"-DBUILD_CPP_TESTS=OFF",
 			"-DBUILD_LUA_LIBS=OFF",
 			"-DBUILD_LUA_TESTS=OFF",
@@ -1287,7 +1287,14 @@ var checkPrefix = function() {
 		}
 
 		// Try users's home dir if they didn't override the prefix setting
-		var newPrefix = path.join(path.homedir(), "Library", "Developer", "RapidGame");
+		var newPrefix;
+		if (process.platform === "linux") {
+			newPrefix = path.join(path.homedir(), ".rapidgame");
+		} else {
+			newPrefix = path.join(path.homedir(), "Library", "Developer", "RapidGame");
+		}
+		
+		// Make dir
 		wrench.mkdirSyncRecursive(newPrefix);
 		if (!isWriteableDir(newPrefix)) {
 			logErr("Cannot write files to alternate prefix directory: " + newPrefix);
