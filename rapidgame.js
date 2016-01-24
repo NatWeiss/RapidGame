@@ -434,6 +434,7 @@ var downloadCocos = function(callback) {
 
 		var globPath = path.join(dir, cocos2dDirGlob),
 			files = glob.sync(globPath),
+			patchSize,
 			cmd;
 		if (!files || files.length !== 1) {
 			logErr("Couldn't glob " + globPath);
@@ -448,21 +449,27 @@ var downloadCocos = function(callback) {
 			// Save downloaded version
 			fs.writeFileSync(downloaded, cocos2djsUrl);
 
-			// Apply latest patch
-			// (see comments at the end of this file for how to create the patch)
 			src = path.join(dir, "cocos2d.patch");
-			logBuild("Applying patch file: " + src, true);
+			patchSize = fs.statSync(src).size;
+			if (patchSize > 8) {
+				// Apply latest patch
+				// (see comments at the end of this file for how to create the patch)
+				logBuild("Applying patch file: " + src, true);
 
-			// for some reason git apply sometimes does not work and produces no output...
-			// (use the patch command instead)
-			cmd = "patch -p1 < ";
-			if (process.platform === "win32") {
-				cmd = "git apply --whitespace=nowarn ";
-			}
-			cmd += '"' + src + '"';
-			exec(cmd, {cwd: dest, env: process.env}, function(err){
+				// for some reason git apply sometimes does not work and produces no output...
+				// (use the patch command instead)
+				cmd = "patch -p1 < ";
+				if (process.platform === "win32") {
+					cmd = "git apply --whitespace=nowarn ";
+				}
+				cmd += '"' + src + '"';
+				exec(cmd, {cwd: dest, env: process.env}, function(err){
+					callback();
+				});
+			} else {
+				logBuild("Skipping patch file (" + patchSize + " bytes): " + src, true);
 				callback();
-			});
+			}
 		} catch(e) {
 			logErr("Couldn't move " + files[0] + " to " + dest)
 		}
@@ -1357,61 +1364,11 @@ var downloadUrl = function(url, dest, cb) {
 };
 
 //
-// auto bug reporting and insights
+// reporting feature no longer used 
 //
 var report = (function() {
-	var ua = require("universal-analytics"),
-		visitor;
-	
-	// Get visitor
-	var getVisitor = function() {
-		var uuid,
-			filename = path.join(cmd.prefix, ".id");
-
-		// Read UUID
-		try {
-			uuid = fs.readFileSync(filename).toString();
-		} catch(e) {
-		}
-		if (uuid && uuid.indexOf("false") >= 0) {
-			logBuild("Opted out of automatic bug reporting", true);
-			return null;
-		}
-	
-		// Generate UUID
-		if (!uuid || uuid.length < 32 || uuid.indexOf("-") < 0) {
-			console.log("");
-			console.log("  This tool automatically reports bugs & anonymous usage statistics.");
-			console.log("  You may opt-out of this feature by setting contents of the file '" + filename + "' to 'false'.");
-			console.log("");
-			uuid = require("node-uuid").v4();
-			try {
-				fs.writeFileSync(filename, uuid);
-			} catch(e) {
-			}
-		}
-		//console.log("UUID: " + uuid);
-		return ua("UA-597335-12", uuid);
-	};
-
 	return function(action, label, value, path) {
-		if (typeof visitor === "undefined") {
-			visitor = getVisitor();
-		}
-		if (visitor === null) {
-			return;
-		}
-
-		category = category || "unknownCategory";
-		action = action || "unknownAction";
-		label = label || "";
-		value = value || 0;
-		path = path || (category + "/" + action);
-		label.trim();
-		
-		//console.log("Report " + path + (label ? ": " + label : ""));
-		visitor.event(category, action, label, value, {p: path}, function (err) {
-		});
+		return;
 	}
 }());
 
