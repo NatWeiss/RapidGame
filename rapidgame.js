@@ -185,36 +185,29 @@ var init = function(directory) {
 // Clean the temp build files.
 //
 var clean = function(directory) {
-	var i,
-		dest,
-		files = [],
+	var i, j, dest, files = [], globbed = [],
 		configs = ["Debug", "Release"];
 
 	resolveDirs();
 
-	// linux
-	if (process.platform === "linux") {
-		for (i = 0; i < configs.length; i+=1) {
-			dest = path.join(cmd.src, "build", configs[i] + "-linux");
-			files.push(dest);
+	// List dirs to clean.
+	for (i = 0; i < configs.length; i += 1) {
+		globbed = glob.sync(path.join(cmd.src, "build", configs[i] + "-*"));
+		for (j = 0; j < globbed.length; j += 1) {
+			files.push(globbed[j]);
 		}
-	// darwin
-	} else if (process.platform === "darwin") {
-		dest = path.join(path.homedir(), "Library", "Developer", "Xcode", "DerivedData", "cocos2dx-prebuilt*");
-		files = glob.sync(dest);
-	// all other platforms
-	} else {
-		console.log("Haven't written this command for this platform yet: " + process.platform);
-		return 1;
+		files.push(path.join(cmd.src, "build", configs[i] + ".win32"));
 	}
 
 	// Remove dirs.
 	for (i = 0; i < files.length; i += 1) {
-		console.log("Removing temporary folder: " + files[i]);
-		try {
-			wrench.rmdirSyncRecursive(files[i], true);
-		} catch(e) {
-			logErr(e, cmd.verbose);
+		if (dirExists(files[i])) {
+			console.log("Cleaning: " + files[i]);
+			try {
+				wrench.rmdirSyncRecursive(files[i], true);
+			} catch(e) {
+				logErr(e, cmd.verbose);
+			}
 		}
 	}
 };
@@ -893,17 +886,7 @@ var prebuildMac = function(platform, config, arch, callback) {
 				}
 				
 				// Post-build function.
-				func = function(configPlatform, callback) {
-					var i, txt,
-						d = path.join(cmd.src, "build", configPlatform, "Build", "Products"),
-						files = [];
-					files = glob.sync(path.join(d, "**", "*.a"));
-					d = path.join(d, "list.txt");
-					txt = files.join("\n") + "\n";
-					logBuild("Writing file list:\n  " + d + "\n    " + files.join("\n    "));
-					fs.writeFileSync(d, txt);
-					callback();
-				};
+				func = linkMac;
 				funcArg = configs[i] + "-" + sdks[j];
 
 				// Push this build.
@@ -930,6 +913,21 @@ var prebuildMac = function(platform, config, arch, callback) {
 		}
 	}
 	nextBuild(platform, callback);
+};
+
+//
+// link mac
+//
+var linkMac = function(configPlatform, callback) {
+	var i, txt,
+		d = path.join(cmd.src, "build", configPlatform, "Build", "Products"),
+		files = [];
+	files = glob.sync(path.join(d, "**", "*.a"));
+	d = path.join(d, "list.txt");
+	txt = files.join("\n") + "\n";
+	logBuild("Writing file list:\n  " + d + "\n    " + files.join("\n    "));
+	fs.writeFileSync(d, txt);
+	callback();
 };
 
 //
@@ -974,6 +972,23 @@ var prebuildLinux = function(platform, config, arch, callback) {
 };
 
 //
+// link linux
+//
+var linkLinux = function(config, callback) {
+	var libDir = path.join(cmd.src, "build", config + "-linux", "lib"),
+		dest = path.join(cmd.output, "cocos2d", "x", "lib", config + "-Linux", "x86");
+
+	// make output dir
+	wrench.mkdirSyncRecursive(dest);
+
+	// just copy static libraries
+	copyGlobbed(libDir, dest, "*.a");
+	
+	// remember to call callback when finished
+	callback();
+};
+
+//
 // prebuild windows
 //
 var prebuildWin = function(config, arch, callback) {
@@ -1014,6 +1029,60 @@ var prebuildWin = function(config, arch, callback) {
 
 	// start
 	nextBuild("Windows", callback);
+};
+
+//
+// link windows
+//
+var linkWin = function(config, callback) {
+	var i,
+		command = path.basename(libExePath),
+		src = path.join(cmd.src, "build", config + ".win32"),
+		dest = path.join(cmd.output, "cocos2d", "x", "lib", config + "-win32", "x86"),
+		args = [
+			'/NOLOGO',
+			'/IGNORE:4006',
+			//'/OPT:REF',
+			//'/OPT:ICF',
+			//'/OUT:"' + path.join(dest, "libcocos2dx-prebuilt.lib") + '"',
+			//'"' + path.join(src, "*.lib") + '"'
+			'/OUT:' + path.join(dest, "libcocos2dx-prebuilt.lib"),
+			path.join(src, "*.lib")
+		];
+
+	// make output dir
+	wrench.mkdirSyncRecursive(dest);
+
+	// copy dlls and finish creating command
+	//copyGlobbed(path.join(src, "external", "lua", "luajit", "prebuilt", "win32"), dest, "*.dll");
+	copyGlobbed(src, dest, "*.dll");
+	copyGlobbed(src, dest, "glfw3.lib"); // possibly because of the new duplicate -2015.lib files, this is necessary...
+	copyGlobbed(src, dest, "glfw3-2015.lib");
+	copyGlobbed(src, dest, "libchipmunk.lib");
+	copyGlobbed(src, dest, "libchipmunk-2015.lib");
+	copyGlobbed(src, dest, "libjpeg.lib");
+	copyGlobbed(src, dest, "libjpeg-2015.lib");
+	copyGlobbed(src, dest, "libpng.lib");
+	copyGlobbed(src, dest, "libpng-2015.lib");
+	copyGlobbed(src, dest, "libtiff.lib");
+	copyGlobbed(src, dest, "libtiff-2015.lib");
+
+	// move unneeded file(s)
+	try {
+		// this must be done because both of these libpng.lib files contain pngwin.res and lib.exe errors with LNK1241
+		// (consider instead using /REMOVE option: https://msdn.microsoft.com/en-us/library/0xb6w1f8.aspx)
+		fs.renameSync(path.join(src, "libpng-2015.lib"), path.join(src, "libpng-2015.duplicate-lib"));
+	} catch(e) {
+	}
+
+	// execute
+	spawn(command, args, {cwd: path.dirname(libExePath), env: process.env}, function(err){
+		if (!err) {
+			callback();
+		} else {
+			logBuild(err, true);
+		}
+	});
 };
 
 //
@@ -1078,77 +1147,6 @@ var prebuildAndroid = function(config, arch, callback) {
 		}
 	}
 	nextBuild("Android", callback);
-};
-
-//
-// link linux
-//
-var linkLinux = function(config, callback) {
-	var libDir = path.join(cmd.src, "build", config + "-linux", "lib"),
-		dest = path.join(cmd.output, "cocos2d", "x", "lib", config + "-Linux", "x86");
-
-	// make output dir
-	wrench.mkdirSyncRecursive(dest);
-
-	// just copy static libraries
-	copyGlobbed(libDir, dest, "*.a");
-	
-	// remember to call callback when finished
-	callback();
-};
-
-//
-// link windows
-//
-var linkWin = function(config, callback) {
-	var i,
-		command = path.basename(libExePath),
-		src = path.join(cmd.src, "build", config + ".win32"),
-		dest = path.join(cmd.output, "cocos2d", "x", "lib", config + "-win32", "x86"),
-		args = [
-			'/NOLOGO',
-			'/IGNORE:4006',
-			//'/OPT:REF',
-			//'/OPT:ICF',
-			//'/OUT:"' + path.join(dest, "libcocos2dx-prebuilt.lib") + '"',
-			//'"' + path.join(src, "*.lib") + '"'
-			'/OUT:' + path.join(dest, "libcocos2dx-prebuilt.lib"),
-			path.join(src, "*.lib")
-		];
-
-	// make output dir
-	wrench.mkdirSyncRecursive(dest);
-
-	// copy dlls and finish creating command
-	//copyGlobbed(path.join(src, "external", "lua", "luajit", "prebuilt", "win32"), dest, "*.dll");
-	copyGlobbed(src, dest, "*.dll");
-	copyGlobbed(src, dest, "glfw3.lib"); // possibly because of the new duplicate -2015.lib files, this is necessary...
-	copyGlobbed(src, dest, "glfw3-2015.lib");
-	copyGlobbed(src, dest, "libchipmunk.lib");
-	copyGlobbed(src, dest, "libchipmunk-2015.lib");
-	copyGlobbed(src, dest, "libjpeg.lib");
-	copyGlobbed(src, dest, "libjpeg-2015.lib");
-	copyGlobbed(src, dest, "libpng.lib");
-	copyGlobbed(src, dest, "libpng-2015.lib");
-	copyGlobbed(src, dest, "libtiff.lib");
-	copyGlobbed(src, dest, "libtiff-2015.lib");
-
-	// move unneeded file(s)
-	try {
-		// this must be done because both of these libpng.lib files contain pngwin.res and lib.exe errors with LNK1241
-		// (consider instead using /REMOVE option: https://msdn.microsoft.com/en-us/library/0xb6w1f8.aspx)
-		fs.renameSync(path.join(src, "libpng-2015.lib"), path.join(src, "libpng-2015.duplicate-lib"));
-	} catch(e) {
-	}
-
-	// execute
-	spawn(command, args, {cwd: path.dirname(libExePath), env: process.env}, function(err){
-		if (!err) {
-			callback();
-		} else {
-			logBuild(err, true);
-		}
-	});
 };
 
 //
