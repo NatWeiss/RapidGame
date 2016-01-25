@@ -1096,11 +1096,13 @@ var prebuildAndroid = function(config, arch, callback) {
 	// create builds array
 	builds = [];
 	for (i = 0; i < configs.length; i += 1) {
-		// Always copy proj.android to dest in case there are new files (existing intermediate build files will remain intact).
+		// Copy proj.android to dest only if not exists (otherwise would remove intermediate build files).
 		src = path.join(cmd.prefix, "src", "proj.android");
 		dest = path.join(cmd.src, "build", configs[i] + "-Android");
-		logBuild("Copying " + src + " to " + dest, true);
-		copyRecursive(src, dest, false, true);
+		if (!dirExists(dest)) {
+			logBuild("Copying " + src + " to " + dest, true);
+			copyRecursive(src, dest, false, true);
+		}
 
 		// Set func.
 		func = linkAndroid;
