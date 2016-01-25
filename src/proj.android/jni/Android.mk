@@ -7,9 +7,9 @@ $(info APP_ABI=$(APP_ABI))
 $(info APP_OPTIM=$(APP_OPTIM))
 $(info APP_CPPFLAGS=$(APP_CPPFLAGS))
 
-$(call import-add-path,$(LOCAL_PATH)/../../cocos2d-x)
-$(call import-add-path,$(LOCAL_PATH)/../../cocos2d-x/external)
-$(call import-add-path,$(LOCAL_PATH)/../../cocos2d-x/cocos)
+$(call import-add-path,$(LOCAL_PATH)/../../..)
+$(call import-add-path,$(LOCAL_PATH)/../../../external)
+$(call import-add-path,$(LOCAL_PATH)/../../../cocos)
 
 LOCAL_MODULE := cocos2djs_shared
 
@@ -30,16 +30,16 @@ LOCAL_STATIC_LIBRARIES := cocos2dx_static
 #	cocos_curl_static cocos_freetype2_static spidermonkey_static websockets_static cocos_chipmunk_static \
 #	cocos_zlib_static
 
-#LOCAL_LDLIBS += -L $(LOCAL_PATH)/../../cocos2d-x/external/png/prebuilt/android/$(APP_ABI) -lpng
-#LOCAL_LDLIBS += -L $(LOCAL_PATH)/../../cocos2d-x/external/jpeg/prebuilt/android/$(APP_ABI) -ljpeg
-#LOCAL_LDLIBS += -L $(LOCAL_PATH)/../../cocos2d-x/external/tiff/prebuilt/android/$(APP_ABI) -ltiff
-#LOCAL_LDLIBS += -L $(LOCAL_PATH)/../../cocos2d-x/external/webp/prebuilt/android/$(APP_ABI) -lwebp
-#LOCAL_LDLIBS += -L $(LOCAL_PATH)/../../cocos2d-x/external/curl/prebuilt/android/$(APP_ABI) -lcurl #-lcrypto -lssl
-#LOCAL_LDLIBS += -L $(LOCAL_PATH)/../../cocos2d-x/external/freetype2/prebuilt/android/$(APP_ABI) -lfreetype
-#LOCAL_LDLIBS += -L $(LOCAL_PATH)/../../cocos2d-x/external/spidermonkey/prebuilt/android/$(APP_ABI) -ljs_static
-#LOCAL_LDLIBS += -L $(LOCAL_PATH)/../../cocos2d-x/external/websockets/prebuilt/android/$(APP_ABI) -lwebsockets
-#LOCAL_LDLIBS += -L $(LOCAL_PATH)/../../cocos2d-x/external/chipmunk/prebuilt/android/$(APP_ABI) -lchipmunk
-#LOCAL_LDLIBS += -L $(LOCAL_PATH)/../../cocos2d-x/external/zlib/prebuilt/android/$(APP_ABI) -lz
+#LOCAL_LDLIBS += -L $(LOCAL_PATH)/../../../external/png/prebuilt/android/$(APP_ABI) -lpng
+#LOCAL_LDLIBS += -L $(LOCAL_PATH)/../../../external/jpeg/prebuilt/android/$(APP_ABI) -ljpeg
+#LOCAL_LDLIBS += -L $(LOCAL_PATH)/../../../external/tiff/prebuilt/android/$(APP_ABI) -ltiff
+#LOCAL_LDLIBS += -L $(LOCAL_PATH)/../../../external/webp/prebuilt/android/$(APP_ABI) -lwebp
+#LOCAL_LDLIBS += -L $(LOCAL_PATH)/../../../external/curl/prebuilt/android/$(APP_ABI) -lcurl #-lcrypto -lssl
+#LOCAL_LDLIBS += -L $(LOCAL_PATH)/../../../external/freetype2/prebuilt/android/$(APP_ABI) -lfreetype
+#LOCAL_LDLIBS += -L $(LOCAL_PATH)/../../../external/spidermonkey/prebuilt/android/$(APP_ABI) -ljs_static
+#LOCAL_LDLIBS += -L $(LOCAL_PATH)/../../../external/websockets/prebuilt/android/$(APP_ABI) -lwebsockets
+#LOCAL_LDLIBS += -L $(LOCAL_PATH)/../../../external/chipmunk/prebuilt/android/$(APP_ABI) -lchipmunk
+#LOCAL_LDLIBS += -L $(LOCAL_PATH)/../../../external/zlib/prebuilt/android/$(APP_ABI) -lz
 
 # ---
 

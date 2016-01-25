@@ -549,7 +549,15 @@ var downloadCocos = function(callback) {
 var setupPrebuild = function(platform, callback) {
 	var dir, src, dest, i, files;
 
+	// Return if we are prebuilding a specific platform.
 	if (platform && platform !== "headers") {
+		logBuild("Not building headers", true);
+		callback();
+		return;
+	}
+	// Return if we have already prebuilt headers.
+	if (!platform && dirExists(path.join(cmd.output, "cocos2d", "x", "java", "mk"))) {
+		logBuild("Already built headers", true);
 		callback();
 		return;
 	}
@@ -628,15 +636,12 @@ var setupPrebuild = function(platform, callback) {
 	dest = path.join(dir, "cocos2d-x");
 	src = path.join(cmd.src, "cocos", "platform", "android", "java");
 	copyRecursive(src, dest);
-	// .mk and .a
-	dest = path.join(dir, "mk");
-	src = path.join(cmd.src);
-	copyGlobbed(src, dest, "*.mk");
-	copyGlobbed(src, path.join(cmd.output, "cocos2d", "x", "lib", "Debug-Android"), "*.a", "android", 1);
-	copyGlobbed(src, path.join(cmd.output, "cocos2d", "x", "lib", "Release-Android"), "*.a", "android", 1);
 
-	// # bonus: call android/strip on mk/*.a
+	// mk
+	dest = path.join(cmd.output, "cocos2d", "x", "java", "mk");
+	copyGlobbed(cmd.src, dest, "*.mk");
 
+	// clean up
 	files = ["proj.android", "cocos2d-js", path.join("cocos2d-x", "tools"), path.join("cocos2d-x", "templates"), path.join("cocos2d-x", "tests")];
 	for (i = 0; i < files.length; i += 1) {
 		wrench.rmdirSyncRecursive(path.join(dest, files[i]), true);
@@ -938,7 +943,7 @@ var prebuildLinux = function(platform, config, arch, callback) {
 	builds = [];
 	for (i = 0; i < configs.length; i += 1) {
 		dir = path.join(cmd.src, "build", configs[i] + "-linux");
-		funcArg = configs[i] + "-Linux";
+		funcArg = configs[i];// + "-Linux";
 		args = [
 			path.join("..", ".."),
 			"-DDEBUG_MODE=" + (configs[i] === "Debug" ? "ON" : "OFF"),
@@ -1015,15 +1020,24 @@ var prebuildWin = function(config, arch, callback) {
 // prebuild android
 //
 var prebuildAndroid = function(config, arch, callback) {
-	var i, j, dir, command, args = [], func = false, funcArg,
+	var i, j, src, dest, command, args = [], func, funcArg,
 		configs = (config ? [config] : (cmd.minimal ? ["Debug"] : ["Debug", "Release"])),
-		archs = (cmd.minimal ? ["armeabi"] : ["armeabi", "armeabi-v7a", "x86"]),
-		dir = path.join(cmd.prefix, "src", "proj.android");
+		archs = (cmd.minimal ? ["armeabi"] : ["armeabi", "armeabi-v7a", "x86"]);
 
 	// create builds array
 	builds = [];
 	for (i = 0; i < configs.length; i += 1) {
+		// Synchronously copy proj.android to dest.
+		src = path.join(cmd.prefix, "src", "proj.android");
+		dest = path.join(cmd.src, "build", configs[i] + "-Android");
+		if (!dirExists(dest)) {
+			//wrench.rmdirSyncRecursive(dest, true);
+			logBuild("Copying " + src + " to " + dest, true);
+			copyRecursive(src, dest, true);
+		}
+		func = linkAndroid;
 		funcArg = configs[i];
+
 		if (process.platform === "win32") {
 			// win32 uses make
 			command = "make";
@@ -1033,7 +1047,7 @@ var prebuildAndroid = function(config, arch, callback) {
 			} else {
 				args.push(cmd.nostrip ? ["nostrip"] : []);
 			}
-			builds.push([configs[i], command, dir, args, func, funcArg]);
+			builds.push([configs[i], command, dest, args, func, funcArg]);
 
 			/*if (cmd.minimal) {
 				if (cmd.nostrip) {
@@ -1051,7 +1065,7 @@ var prebuildAndroid = function(config, arch, callback) {
 		} else {
 			for (j = 0; j < archs.length; j += 1) {
 				// Mac and Linux use build.sh
-				command = path.join(dir, "build.sh");
+				command = path.join(dest, "build.sh");
 				args = [
 					archs[j],
 					configs[i]
@@ -1060,7 +1074,7 @@ var prebuildAndroid = function(config, arch, callback) {
 					args.push("nostrip");
 				}
 
-				builds.push([configs[i], command, dir, args, func, funcArg]);
+				builds.push([configs[i], command, dest, args, func, funcArg]);
 			}
 		}
 	}
@@ -1136,6 +1150,19 @@ var linkWin = function(config, callback) {
 			logBuild(err, true);
 		}
 	});
+};
+
+//
+// link android
+//
+var linkAndroid = function(config, callback) {
+	var dest;
+	
+	dest = path.join(cmd.output, "cocos2d", "x", "lib", "Debug-Android");
+	copyGlobbed(cmd.src, dest, "*.a", "android", 1);
+	
+	dest = path.join(cmd.output, "cocos2d", "x", "lib", "Release-Android");
+	copyGlobbed(cmd.src, dest, "*.a", "android", 1);
 };
 
 //
@@ -1767,6 +1794,7 @@ module.exports = {
 //   - Fix Mac project name search and replace so names with spaces work. (It used to...)
 //   - Finish orientation option:
 //		.option("-o, --orientation <orientation>", "orientation (" + orientations.join(", ") + ") [" + defaults.orientation + "]", defaults.orientation)
+//   - Consider calling android/strip on copied *.a
 //
 
 

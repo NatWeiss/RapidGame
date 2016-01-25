@@ -1,8 +1,9 @@
 #!/bin/bash
 
 # Directory of script
-PWD=$(dirname "$0")
-cd $PWD
+CWD=$(dirname "$0")
+#echo "CWD=${CWD}"
+cd $CWD
 
 # Build settings
 APP_PLATFORM="android-18"
@@ -43,8 +44,9 @@ fi
 #fi
 
 # Set module path
-CC_ROOT=$(cd ../cocos2d-x && pwd)
-SRC_ROOT=$(cd .. && pwd)
+CC_ROOT=$(cd ../.. && pwd)
+#SRC_ROOT=$(cd . && pwd)
+SRC_ROOT=$(CWD)
 UNAME=$(uname -s)
 NDK_MODULE_PATH="${CC_ROOT}:${CC_ROOT}/external:${SRC_ROOT}"
 echo "CC_ROOT=${CC_ROOT}"
@@ -84,7 +86,7 @@ fi
 echo "STRIP=${strip}"
 
 # Create build command
-CMD="${NDK_ROOT}/ndk-build --jobs=${CORES} -C ${PWD} NDK_MODULE_PATH=${NDK_MODULE_PATH} APP_PLATFORM=${APP_PLATFORM} APP_ABI=${arch}"
+CMD="${NDK_ROOT}/ndk-build --jobs=${CORES} -C ${CWD} NDK_MODULE_PATH=${NDK_MODULE_PATH} APP_PLATFORM=${APP_PLATFORM} APP_ABI=${arch}"
 echo "CMD=${CMD}"
 echo
 
@@ -120,7 +122,7 @@ echo "SRC=${src}"
 # To Nat: Yes, and I encountered the same problem when not running in root. I checked the symlink code in rapidgame.js and
 #         it seems you catch the permissions error exception without doing anything. It is okay to just have this line by itself
 #         now, but the first time someone creates a cocos2dx project, they MUST run with admin privileges, so that latest is created as a symlink.
-dest=../../latest/cocos2d/x/lib/${config}-Android/${arch}
+dest=../../../../latest/cocos2d/x/lib/${config}-Android/${arch}
 
 mkdir -p ${dest}
 dest=$(cd ${dest}; pwd)
