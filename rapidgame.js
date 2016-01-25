@@ -396,7 +396,7 @@ var prebuild = function(platform, config, arch) {
 	}
 
 	// initialize build log
-	cmd.buildLog = path.join(cmd.prefix, "build.log");
+	cmd.buildLog = path.join(cmd.prefix, "build-" + process.platform + ".log");
 	try {
 		fs.writeFileSync(cmd.buildLog, "");
 		console.log("Writing build log to: " + cmd.buildLog);
@@ -630,7 +630,7 @@ var setupPrebuild = function(platform, callback) {
 	copyRecursive(src, dest);
 	// .mk and .a
 	dest = path.join(dir, "mk");
-	src = path.join(cmd.prefix, "src");
+	src = path.join(cmd.src);
 	copyGlobbed(src, dest, "*.mk");
 	copyGlobbed(src, path.join(cmd.output, "cocos2d", "x", "lib", "Debug-Android"), "*.a", "android", 1);
 	copyGlobbed(src, path.join(cmd.output, "cocos2d", "x", "lib", "Release-Android"), "*.a", "android", 1);
@@ -891,17 +891,18 @@ var prebuildMac = function(platform, config, arch, callback) {
 				}
 				
 				// Post-build function.
-				func = function(config, callback) {
+				func = function(configPlatform, callback) {
 					var i, txt,
-						d = path.join(cmd.src, "build", config + "-" + platform, "Build", "Products", config),
+						d = path.join(cmd.src, "build", configPlatform, "Build", "Products"/*, config*/),
 						files = [];
-					console.log("config: " + config);
-					console.log("d: " + d);
-					files = glob.sync(path.join(d, "*.a"));
-					fs.writeFileSync(path.join(d, "list.txt"), files.join(" "));
+					files = glob.sync(path.join(d, "**", "*.a"));
+					d = path.join(d, "list.txt");
+					txt = files.join("\n") + "\n";
+					logBuild("Writing file list:\n  " + d + "\n    " + files.join("\n    "));
+					fs.writeFileSync(d, txt);
 					callback();
 				};
-				funcArg = configs[i];
+				funcArg = configs[i] + "-" + platform;
 
 				// Push this build.
 				builds.push([configs[i], command, dir, args, func, funcArg]);

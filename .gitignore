@@ -6,7 +6,7 @@ project.xcworkspace
 /src/cocos2d-x
 /node_modules
 /.id
-/build.log
+/build*.log
 /0.*
 /1.*
 /2.*
