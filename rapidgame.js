@@ -880,6 +880,13 @@ var prebuildLinux = function(platform, config, arch, callback) {
 	var i, dir, args, func, funcArg,
 		configs = (config ? [config] : (cmd.minimal ? ["Debug"] : ["Debug", "Release"]));
 
+	// Bail if not on Linux.
+	if (process.platform !== "linux") {
+		logBuild("Can only build " + platform + " on Linux", true);
+		callback();
+		return;
+	}
+
 	// create builds array
 	builds = [];
 	for (i = 0; i < configs.length; i += 1) {
