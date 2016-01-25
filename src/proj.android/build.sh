@@ -46,7 +46,7 @@ fi
 # Set module path
 CC_ROOT=$(cd ../.. && pwd)
 #SRC_ROOT=$(cd . && pwd)
-SRC_ROOT=$(CWD)
+SRC_ROOT=${CWD}
 UNAME=$(uname -s)
 NDK_MODULE_PATH="${CC_ROOT}:${CC_ROOT}/external:${SRC_ROOT}"
 echo "CC_ROOT=${CC_ROOT}"

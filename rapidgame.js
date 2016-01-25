@@ -1027,14 +1027,13 @@ var prebuildAndroid = function(config, arch, callback) {
 	// create builds array
 	builds = [];
 	for (i = 0; i < configs.length; i += 1) {
-		// Synchronously copy proj.android to dest.
+		// Always copy proj.android to dest in case there are new files (existing intermediate build files will remain intact).
 		src = path.join(cmd.prefix, "src", "proj.android");
 		dest = path.join(cmd.src, "build", configs[i] + "-Android");
-		if (!dirExists(dest)) {
-			//wrench.rmdirSyncRecursive(dest, true);
-			logBuild("Copying " + src + " to " + dest, true);
-			copyRecursive(src, dest, true);
-		}
+		logBuild("Copying " + src + " to " + dest, true);
+		copyRecursive(src, dest, false, true);
+
+		// Set func.
 		func = linkAndroid;
 		funcArg = configs[i];
 
@@ -1163,6 +1162,8 @@ var linkAndroid = function(config, callback) {
 	
 	dest = path.join(cmd.output, "cocos2d", "x", "lib", "Release-Android");
 	copyGlobbed(cmd.src, dest, "*.a", "android", 1);
+	
+	callback();
 };
 
 //
