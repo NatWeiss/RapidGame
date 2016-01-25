@@ -589,7 +589,7 @@ var setupPrebuild = function(platform, callback) {
 			wrench.mkdirSyncRecursive(src);
 		}
 	} catch(e) {
-		logBuild("Error cleaning destination: " + dest, cmd.verbose);
+		logBuild("Error cleaning destination", cmd.verbose);
 		logBuild(e, cmd.verbose);
 	}
 
@@ -893,7 +893,7 @@ var prebuildMac = function(platform, config, arch, callback) {
 				// Post-build function.
 				func = function(configPlatform, callback) {
 					var i, txt,
-						d = path.join(cmd.src, "build", configPlatform, "Build", "Products"/*, config*/),
+						d = path.join(cmd.src, "build", configPlatform, "Build", "Products"),
 						files = [];
 					files = glob.sync(path.join(d, "**", "*.a"));
 					d = path.join(d, "list.txt");
@@ -909,9 +909,9 @@ var prebuildMac = function(platform, config, arch, callback) {
 			
 				// Prepare link command.
 				command = "libtool";
-				dir = path.join(path.resolve(derivedDir), "Build", "Products", configs[i]);
-				dest = path.join(cmd.output, "cocos2d", "x", "lib", configs[i] + "-" + platform, sdk);
+				dir = path.join(path.resolve(derivedDir), "Build", "Products");
 
+				dest = path.join(cmd.output, "cocos2d", "x", "lib", configs[i] + "-" + platform, sdk);
 				wrench.mkdirSyncRecursive(dest);
 				dest = path.join(dest, "libcocos2dx-prebuilt.a");
 
