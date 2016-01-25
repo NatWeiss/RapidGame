@@ -34,7 +34,7 @@ var http = require("http"),
 		template: "TwoScene",
 		package: "org.mycompany.mygame",
 		dest: process.cwd(),
-		prefix: __dirname,
+		prefix: path.join(path.homedir(), ".rapidgame"),
 		orientation: orientations[0]
 	};
 
@@ -114,6 +114,9 @@ var run = function(args) {
 
 	if (!cmd.args.length) {
 		usage();
+	} else if (!checkPrefix()) {
+		usage();
+		return 1;
 	} else {
 		// Check if command exists
 		for (i = 0; i < commands.length; i += 1) {
@@ -135,10 +138,6 @@ var run = function(args) {
 var init = function(directory) {
 	var src, dest;
 
-	if (!checkPrefix()) {
-		usage();
-		return 1;
-	}
 	if (!dirExists(directory)) {
 		console.log("Output directory must exist: " + directory);
 		return 1;
@@ -169,11 +168,6 @@ var clean = function(directory) {
 		files = [],
 		configs = ["Debug", "Release"];
 
-	if (!checkPrefix()) {
-		usage();
-		return 1;
-	}
-	
 	// linux
 	if (process.platform === "linux") {
 		for (i = 0; i < configs.length; i+=1) {
@@ -205,13 +199,7 @@ var clean = function(directory) {
 // Show prefix.
 //
 var showPrefix = function(directory) {
-	var dest;
-
-	if (!checkPrefix()) {
-		return 1;
-	}
-	
-	dest = path.join(cmd.prefix, version);
+	var dest = path.join(cmd.prefix, version);
 	console.log("Rapidgame lives here: " + cmd.prefix);
 	console.log("Latest static libs and headers: " + dest);
 	console.log("Static libs and headers have been built: " + (dirExists(dest) ? "YES" : "NO"));
@@ -233,11 +221,6 @@ var createProject = function(engine, name, package) {
 		cmd.engine = engine.toString().toLowerCase();
 	
 	category = "createProject";
-	
-	if (!checkPrefix()) {
-		usage();
-		return 1;
-	}
 	
 	// Check engine and name
 	if (!cmd.engine || !name || !package) {
@@ -381,11 +364,6 @@ var prebuild = function(platform, config, arch) {
 	arch = arch || "";
 	if (platforms.indexOf(platform) < 0) {
 		platform = "";
-	}
-
-	if (!checkPrefix()) {
-		usage();
-		return 1;
 	}
 
 	// initialize build log
@@ -751,164 +729,18 @@ var runPrebuild = function(platform, config, arch, callback) {
 };
 
 //
-// prebuild mac
-//
-var prebuildMac = function(platform, config, arch, callback) {
-	var i, j, k,
-		sdks = (platform === "Mac" ? ["macosx"] : ["iphoneos", "iphonesimulator"]),
-		configs = (config ? [config] : (cmd.minimal ? ["Debug"] : ["Debug", "Release"])),
-		projs = ["cocos2dx-prebuilt"];
-
-	// create builds array
-	builds = [];
-	for (i = 0; i < configs.length; i += 1) {
-		for (j = 0; j < sdks.length; j += 1) {
-			for (k = 0; k < projs.length; k += 1) {
-				builds.push([configs[i], sdks[j], projs[k]]);
-			}
-		}
-	}
-	nextBuild(platform, callback);
-};
-
-//
-// prebuild linux
-//
-var prebuildLinux = function(platform, config, arch, callback) {
-	var i,
-		args,
-		configs = (config ? [config] : (cmd.minimal ? ["Debug"] : ["Debug", "Release"]));
-
-	// create builds array
-	builds = [];
-	for (i = 0; i < configs.length; i += 1) {
-		args = [
-			path.join("..", ".."),
-			"-DDEBUG_MODE=" + (configs[i] === "Debug" ? "ON" : "OFF"),
-			//"-DUSE_CHIPMUNK=OFF",
-			//"-DUSE_BOX2D=OFF",
-			//"-DUSE_BULLET=OFF",
-			//"-DUSE_RECAST=OFF",
-			//"-DUSE_WEBP=OFF",
-			"-DBUILD_EXTENSIONS=OFF",
-			"-DBUILD_EDITOR_SPINE=OFF",
-			"-DBUILD_EDITOR_COCOSTUDIO=OFF",
-			"-DBUILD_EDITOR_COCOSBUILDER=OFF",
-			"-DBUILD_CPP_TESTS=OFF",
-			"-DBUILD_LUA_LIBS=OFF",
-			"-DBUILD_LUA_TESTS=OFF",
-			"-DBUILD_JS_TESTS=OFF"
-		];
-		if (doJSB === false) {
-			args.push("-DBUILD_JS_LIBS=OFF");
-		}
-		builds.push([configs[i], "cmake", args, false]);
-		builds.push([configs[i], "make", [], linkLinux]);
-	}
-	nextBuild(platform, callback);
-};
-
-//
-// prebuild windows
-//
-var prebuildWin = function(config, arch, callback) {
-	var i, j, command, targets, args, projs = [],
-		base = path.join(cmd.prefix, "src", "cocos2d-x"),
-		configs = (config ? [config] : (cmd.minimal ? ["Debug"] : ["Debug", "Release"]));
-
-	// set VCTargetsPath
-	// (overcome error MSB4019: The imported project "C:\Microsoft.Cpp.Default.props" was not found.)
-	process.env["VCTargetsPath"] = vcTargetsPath;
-
-	// manually add bindings projects
-	//projs = glob.sync(path.join(base, "cocos", "scripting", "js-bindings", "proj.win32", "*.vcxproj")) || [];
-
-	// create builds
-	builds = [];
-	for (i = 0; i < configs.length; i += 1) {
-		command = msBuildExePath;
-		//targets = ["libcocos2d", "libjscocos2d", "libbox2d", "libbullet", "librecast", "libSpine"];
-		targets = ["libcocos2d"];
-		args = [
-			path.join(base, "build", "cocos2d-win32.sln"),
-			"/nologo",
-			"/maxcpucount:4",
-			"/t:" + targets.join(";"),
-			//"/p:VisualStudioVersion=12.0",
-			//"/p:PlatformTarget=x86",
-			//"/verbosity:diag",
-			//"/clp:ErrorsOnly",
-			//"/p:nowarn=4005",
-			//'/p:WarningLevel=0',
-			"/p:configuration=" + configs[i] + ";platform=Win32"
-		];
-
-		// do js build
-		if (doJSB) {
-			targets.push("libjscocos2d");
-		}
-
-		// main solution
-		builds.push([configs[i], command, args, projs.length == 0 ? linkWin : false]);
-
-		// additional projects
-		for (j = 0; j < projs.length; j+=1) {
-			args = [
-				projs[j],
-				"/nologo",
-	            "/maxcpucount:4",
-	        	"/p:configuration=" + configs[i]
-			];
-			builds.push([configs[i], command, args, (j == projs.length - 1) ? linkWin : false]);
-		}
-	}
-
-	// start
-	nextBuild("Windows", callback);
-};
-
-//
-// prebuild android
-//
-var prebuildAndroid = function(config, arch, callback) {
-	var i, j,
-		configs = (config ? [config] : (cmd.minimal ? ["Debug"] : ["Debug", "Release"])),
-		archs = (cmd.minimal ? ["armeabi"] : ["armeabi", "armeabi-v7a", "x86"]);
-
-	// create builds array
-	builds = [];
-	if (process.platform === "win32") {
-		if (cmd.minimal) {
-			if (cmd.nostrip) {
-				builds.push(["non-stripped minimal (Debug armeabi)"]);
-			} else {
-				builds.push(["minimal (Debug armeabi)"]);
-			}
-		} else {
-			if (cmd.nostrip) {
-				builds.push(["non-stripped libraries for all platforms"]);
-			} else {
-				builds.push(["libraries for all platforms"]);
-			}
-		}
-	} else {
-		for (i = 0; i < configs.length; i += 1) {
-			for (j = 0; j < archs.length; j += 1) {
-				if (cmd.nostrip) {
-					builds.push([configs[i], archs[j], "nostrip"]);
-				} else {
-					builds.push([configs[i], archs[j]]);
-				}
-			}
-		}
-	}
-	nextBuild("Android", callback);
-};
-
-//
 // launch the next build
 //
 var nextBuild = function(platform, callback){
+	// Show remaining builds.
+	if (cmd.verbose) {
+		logBuild("Remaining builds: ", true);
+		for (i = 0; i < builds.length; i+=1) {
+			logBuild("  Config: " + builds[i][0] + "\n  Dir: " + builds[i][2] + "\n  Command: " + builds[i][1] + " " + builds[i][3].join(" ") + "\n", true);
+		}
+	}
+
+	// Launch this build.
 	if (builds.length) {
 		startBuild(platform, callback, builds.shift());
 	} else {
@@ -920,88 +752,19 @@ var nextBuild = function(platform, callback){
 // start a given build
 //
 var startBuild = function(platform, callback, settings) {
-	var dir, command, args, config, sdk, proj, arch, targets, archSettings = [], platformSettings = [], xcodeSettings = [];
-	if (platform === "iOS" || platform === "Mac") {
-		config = settings[0];
-		sdk = settings[1];
-		proj = settings[2];
-		command = "xcodebuild";
-		dir = path.join(cmd.prefix, "src", "proj.ios_mac");
-		xcodeSettings = ["GCC_SYMBOLS_PRIVATE_EXTERN=NO"];
-		if (!cmd.nostrip) {
-			xcodeSettings.push("DEPLOYMENT_POSTPROCESSING=YES");
-			xcodeSettings.push("STRIP_INSTALLED_PRODUCT=YES");
-			xcodeSettings.push("STRIP_STYLE=non-global");
-		}
-		if (sdk === "iphoneos") {
-			if (cmd.minimal) {
-				archSettings = ["-arch", "armv7"];
-			} /*else {
-				platformSettings = [
-					"-destination", "platform=iOS,name=iPhone 6s",
-					"-destination-timeout", "5"
-				];
-			}*/
-		} else if (sdk === "iphonesimulator") {
-			platformSettings = [
-				"-destination", "platform=iphonesimulator,name=iPhone 6s",  // add "generic/" somewhere? is that why it doesn't run correctly on 5s?
-				"-destination-timeout", "5"
-			];
-			/*if (cmd.i386) {
-				archSettings = ["-arch", "i386"];
-			} else {
-				// why doesn't this make iphonesimulator libs have both i386 and x86_64? is one being stripped away?
-				//archSettings = ["-arch", "x86_64", "-arch", "i386"];
-				archSettings = ["-arch", "x86_64"];
-			}*/
-		}
-		args = [
-			"-project", path.join(dir, proj + ".xcodeproj"),
-			"-scheme", platform,
-			"-configuration", config,
-			"-sdk", sdk
-		];
-		args = args.concat(archSettings);
-		args = args.concat(platformSettings);
-		args = args.concat(xcodeSettings);
-	} else if (platform === "Android") {
-		dir = path.join(cmd.prefix, "src", "proj.android");
-		command = path.join(dir, "build.sh");
-		config = settings[0];
-		arch = settings[1];
-		args = [
-			arch,
-			config
-		];
-
-		if (process.platform === "win32") {
-			command = "make";
-			if (cmd.minimal) {
-				args = cmd.nostrip ? ["minimal-nostrip"] : ["minimal"];
-			} else {
-				args = cmd.nostrip ? ["nostrip"] : [];
-			}
-		}
-	} else if (platform === "Windows") {
-		dir = cmd.prefix;
-		command = settings[1];
-		args = settings[2];
-		settings[1] = "";
-		settings[2] = path.basename(args[0]);
-	} else if (platform === "Linux") {
-		dir = path.join(cmd.prefix, "src", "cocos2d-x", "build", settings[0] + "-linux");
-		wrench.mkdirSyncRecursive(dir);
-		command = settings[1];
-		args = settings[2];
-		settings[1] = command;
-		settings[2] = "";
-	}
+	var i,
+		config = settings[0],
+		command = settings[1],
+		dir = settings[2],
+		args = settings[3],
+		func = settings[4];
 
 	logBuild("Building " + platform +
-		(settings[0] ? " " + settings[0] : "") +
-		(settings[1] ? " " + settings[1] : "") +
-		(settings[2] ? " " + settings[2] : "") +
+		(config ? " " + config : "") +
+		(command ? " " + command : "") +
+		(dir ? " " + dir : "") +
 		"...", true);
+
 	spawn(command, args, {cwd: dir, env: process.env}, function(err){
 		var onFinished = function(){
 			logBuild("Succeeded.", true);
@@ -1019,6 +782,254 @@ var startBuild = function(platform, callback, settings) {
 			}
 		}
 	});
+};
+
+//
+// prebuild mac
+//
+var prebuildMac = function(platform, config, arch, callback) {
+	var i, j, k, dir, sdk, project, func,
+		sdks = (platform === "Mac" ? ["macosx"] : ["iphoneos", "iphonesimulator"]),
+		configs = (config ? [config] : (cmd.minimal ? ["Debug"] : ["Debug", "Release"])),
+		projs = [
+			path.join(cmd.prefix, "src", "cocos2d-x", "build", "cocos2d_libs.xcodeproj")
+		];
+	if (doJSB !== false) {
+		projs.push(path.join(cmd.prefix, "src", "cocos2d-x", "cocos", "scripting", "js-bindings", "proj.ios_mac", "cocos2d_js_bindings.xcodeproj"));
+	}
+
+	// create builds array
+	for (i = 0; i < configs.length; i += 1) {
+		for (j = 0; j < sdks.length; j += 1) {
+			for (k = 0; k < projs.length; k += 1) {
+				command = "xcodebuild";
+				dir = path.dirname(projs[k]);
+				sdk = sdks[j];
+				func = (k == projs.length - 1) ? linkMac : false;
+				args = [
+					"-project", path.basename(projs[k]),
+					"-configuration", configs[i],
+					"-sdk", sdk,
+					"-derivedDataPath", path.join(cmd.prefix, "src", "cocos2d-x", "build", configs[i] + "-" + platform)
+				];
+				if (k == 0) { // first proj is libcocos2d
+					//"-scheme", "\"libcocos2d " + platform + "\"", // this doesn't spawn correctly
+					args = args.concat(["-scheme", "libcocos2d " + platform]);
+				} else { // second proj is libjscocos2d
+					args = args.concat(["-scheme", "libjscocos2d " + platform]);
+				}
+				if (sdk === "iphoneos") {
+					if (cmd.minimal) {
+						args = args.concat(["-arch", "armv7"]);
+					} /*else {
+						args = args.concat([
+							"-destination", "platform=iOS,name=iPhone 6s",
+							"-destination-timeout", "5"
+						]);
+					}*/
+				} else if (sdk === "iphonesimulator") {
+					// des it need "generic/" in the destination? is that why it doesn't run correctly on 5s?
+					args = args.concat([
+						"-destination", "platform=iphonesimulator,name=iPhone 6s",
+						"-destination-timeout", "5"
+					]);
+					/*if (cmd.i386) {
+						args = args.concat(["-arch", "i386"]);
+					} else {
+						// why doesn't this make iphonesimulator libs have both i386 and x86_64? is one being stripped away?
+						//args = args.concat(["-arch", "x86_64", "-arch", "i386"]);
+						args = args.concat(["-arch", "x86_64"]);
+					}*/
+				}
+				
+				// final bit of command (xcode settings)
+				args.push("GCC_SYMBOLS_PRIVATE_EXTERN=NO");
+				args.push("OTHER_CPLUSPLUSFLAGS=-w");
+				if (!cmd.nostrip) {
+					args.push("DEPLOYMENT_POSTPROCESSING=YES");
+					args.push("STRIP_INSTALLED_PRODUCT=YES");
+					args.push("STRIP_STYLE=non-global");
+				}
+			
+				// Push this build.
+				builds.push([configs[i], command, dir, args, func]);
+			}
+		}
+	}
+	nextBuild(platform, callback);
+};
+
+//
+// prebuild linux
+//
+var prebuildLinux = function(platform, config, arch, callback) {
+	var i,
+		dir,
+		args,
+		configs = (config ? [config] : (cmd.minimal ? ["Debug"] : ["Debug", "Release"]));
+
+	// create builds array
+	builds = [];
+	for (i = 0; i < configs.length; i += 1) {
+		dir = path.join(cmd.prefix, "src", "cocos2d-x", "build", configs[i] + "-linux");
+		args = [
+			path.join("..", ".."),
+			"-DDEBUG_MODE=" + (configs[i] === "Debug" ? "ON" : "OFF"),
+			//"-DUSE_CHIPMUNK=OFF",
+			//"-DUSE_BOX2D=OFF",
+			//"-DUSE_BULLET=OFF",
+			//"-DUSE_RECAST=OFF",
+			//"-DUSE_WEBP=OFF",
+			"-DBUILD_EXTENSIONS=OFF",
+			"-DBUILD_EDITOR_SPINE=OFF",
+			"-DBUILD_EDITOR_COCOSTUDIO=OFF",
+			"-DBUILD_EDITOR_COCOSBUILDER=OFF",
+			"-DBUILD_CPP_TESTS=OFF",
+			"-DBUILD_LUA_LIBS=OFF",
+			"-DBUILD_LUA_TESTS=OFF",
+			"-DBUILD_JS_TESTS=OFF"
+		];
+		if (doJSB !== false) {
+			args.push("-DBUILD_JS_LIBS=ON");
+		} else {
+			args.push("-DBUILD_JS_LIBS=OFF");
+		}
+		wrench.mkdirSyncRecursive(dir);
+		builds.push([configs[i], "cmake", dir, args, false]);
+		builds.push([configs[i], "make", dir, [], linkLinux]);
+	}
+	nextBuild(platform, callback);
+};
+
+//
+// prebuild windows
+//
+var prebuildWin = function(config, arch, callback) {
+	var i, j, command, dir, args, func, targets, projs = [],
+		configs = (config ? [config] : (cmd.minimal ? ["Debug"] : ["Debug", "Release"]));
+
+	// set vc targets path
+	process.env["VCTargetsPath"] = vcTargetsPath;
+
+	// create builds
+	builds = [];
+	for (i = 0; i < configs.length; i += 1) {
+		command = msBuildExePath;
+		dir = path.homedir();// cmd.prefix;
+		func = (projs.length == 0) ? linkWin : false;
+		targets = ["libcocos2d"];
+		if (doJSB) {
+			targets.push("libjscocos2d");
+		}
+		args = [
+			path.join(cmd.prefix, "src", "cocos2d-x", "build", "cocos2d-win32.sln"),
+			"/nologo",
+			"/maxcpucount:4",
+			"/t:" + targets.join(";"),
+			//"/p:VisualStudioVersion=12.0",
+			//"/p:PlatformTarget=x86",
+			//"/verbosity:diag",
+			//"/clp:ErrorsOnly",
+			//"/p:nowarn=4005",
+			//'/p:WarningLevel=0',
+			"/p:configuration=" + configs[i] + ";platform=Win32"
+		];
+
+		// push this build
+		builds.push([configs[i], command, dir, args, func]);
+	}
+
+	// start
+	nextBuild("Windows", callback);
+};
+
+//
+// prebuild android
+//
+var prebuildAndroid = function(config, arch, callback) {
+	var i, j, dir, command, args = [], func = false,
+		configs = (config ? [config] : (cmd.minimal ? ["Debug"] : ["Debug", "Release"])),
+		archs = (cmd.minimal ? ["armeabi"] : ["armeabi", "armeabi-v7a", "x86"]),
+		dir = path.join(cmd.prefix, "src", "proj.android");
+
+	// create builds array
+	builds = [];
+	for (i = 0; i < configs.length; i += 1) {
+		if (process.platform === "win32") {
+			// win32 uses make
+			command = "make";
+			args = [];
+			if (cmd.minimal) {
+				args.push(cmd.nostrip ? ["minimal-nostrip"] : ["minimal"]);
+			} else {
+				args.push(cmd.nostrip ? ["nostrip"] : []);
+			}
+			builds.push([configs[i], command, dir, args, func]);
+
+			/*if (cmd.minimal) {
+				if (cmd.nostrip) {
+					builds.push([command, "non-stripped minimal (Debug armeabi)"]);
+				} else {
+					builds.push(["minimal (Debug armeabi)"]);
+				}
+			} else {
+				if (cmd.nostrip) {
+					builds.push(["non-stripped libraries for all platforms"]);
+				} else {
+					builds.push(["libraries for all platforms"]);
+				}
+			}*/
+		} else {
+			for (j = 0; j < archs.length; j += 1) {
+				// Mac and Linux use build.sh
+				command = path.join(dir, "build.sh");
+				args = [
+					archs[j],
+					configs[i]
+				];
+				if (cmd.nostrip) {
+					args.push("nostrip");
+				}
+
+				builds.push([configs[i], command, dir, args, func]);
+			}
+		}
+	}
+	nextBuild("Android", callback);
+};
+
+//
+// link mac
+//
+var linkMac = function(config, callback) {
+	/*var libDir = path.join(cmd.prefix, "src", "cocos2d-x", "build", config + "-linux", "lib"),
+		dest = path.join(cmd.prefix, version, "cocos2d", "x", "lib", config + "-Linux", "x86");
+
+	// make output dir
+	wrench.mkdirSyncRecursive(dest);
+
+	// just copy static libraries
+	copyGlobbed(libDir, dest, "*.a");*/
+	
+	// remember to call callback when finished
+	callback();
+};
+
+//
+// link linux
+//
+var linkLinux = function(config, callback) {
+	var libDir = path.join(cmd.prefix, "src", "cocos2d-x", "build", config + "-linux", "lib"),
+		dest = path.join(cmd.prefix, version, "cocos2d", "x", "lib", config + "-Linux", "x86");
+
+	// make output dir
+	wrench.mkdirSyncRecursive(dest);
+
+	// just copy static libraries
+	copyGlobbed(libDir, dest, "*.a");
+	
+	// remember to call callback when finished
+	callback();
 };
 
 //
@@ -1074,23 +1085,6 @@ var linkWin = function(config, callback) {
 			logBuild(err, true);
 		}
 	});
-};
-
-//
-// link linux
-//
-var linkLinux = function(config, callback) {
-	var libDir = path.join(cmd.prefix, "src", "cocos2d-x", "build", config + "-linux", "lib"),
-		dest = path.join(cmd.prefix, version, "cocos2d", "x", "lib", config + "-Linux", "x86");
-
-	// make output dir
-	wrench.mkdirSyncRecursive(dest);
-
-	// just copy static libraries
-	copyGlobbed(libDir, dest, "*.a");
-	
-	// remember to call callback when finished
-	callback();
 };
 
 //
@@ -1314,28 +1308,23 @@ var getLibExePath = function(cb) {
 // check that prefix directory is writeable
 //
 var checkPrefix = function() {
-	// Test prefix dir
+	// Test prefix dir.
 	if (!isWriteableDir(cmd.prefix)) {
+		// Complain if specified prefix dir.
 		if (cmd.prefix !== defaults.prefix) {
 			logErr("Cannot write files to prefix directory: " + cmd.prefix);
 			return false;
 		}
-
-		// Try users's home dir if they didn't override the prefix setting
-		var newPrefix;
-		if (process.platform === "linux") {
-			newPrefix = path.join(path.homedir(), ".rapidgame");
-		} else {
-			newPrefix = path.join(path.homedir(), "Library", "Developer", "RapidGame");
-		}
 		
 		// Make dir
-		wrench.mkdirSyncRecursive(newPrefix);
-		if (!isWriteableDir(newPrefix)) {
-			logErr("Cannot write files to alternate prefix directory: " + newPrefix);
+		wrench.mkdirSyncRecursive(defaults.prefix);
+		if (!isWriteableDir(defaults.prefix)) {
+			logErr("Cannot write files to default prefix directory: " + defaults.prefix);
 			return false;
 		}
-		cmd.prefix = newPrefix;
+		
+		// Success.
+		cmd.prefix = defaults.prefix;
 	}
 	if (cmd.verbose) {
 		console.log("Can successfully write files to prefix directory: " + cmd.prefix);
@@ -1726,21 +1715,10 @@ module.exports = {
 
 //
 //  To-do:
+//   - Make it easier to manually place cocos2d-x folder.
+//   - Fix Mac project name search and replace so names with spaces work. (It used to...)
 //   - Finish orientation option:
 //		.option("-o, --orientation <orientation>", "orientation (" + orientations.join(", ") + ") [" + defaults.orientation + "]", defaults.orientation)
-//   - Mention how to use a manual download of cocos2d-x in readme.
-//   - Fix Mac project name search and replace so names with spaces work. (It used to...)
-//   - Regarding the linux build: http://stackoverflow.com/questions/21168141/can-not-install-packages-using-node-package-manager-in-ubuntu
-//   - Why did `sudo npm unlink rapidgame -g; sudo npm link .` fix "Error: Cannot find module 'path-extra'"?
-//   - Mac prebuild fails if the user has changed Xcode's temporary build directory to "relative to project". Here's some details:
-//       export TARGET_TEMP_DIR=/Users/user/Library/Developer/RapidGame/src/proj.ios_mac/build/cocos2dx-prebuilt.build/Debug/Mac.build
-//       export TEMP_DIR=/Users/user/Library/Developer/RapidGame/src/proj.ios_mac/build/cocos2dx-prebuilt.build/Debug/Mac.build
-//       export TEMP_FILES_DIR=/Users/user/Library/Developer/RapidGame/src/proj.ios_mac/build/cocos2dx-prebuilt.build/Debug/Mac.build
-//       export TEMP_FILE_DIR=/Users/user/Library/Developer/RapidGame/src/proj.ios_mac/build/cocos2dx-prebuilt.build/Debug/Mac.build
-//       /bin/sh -c /Users/user/Library/Developer/RapidGame/src/proj.ios_mac/build/cocos2dx-prebuilt.build/Debug/Mac.build/Script-419E8E9E18A9BB3400232A34.sh
-//   	outputDir=/Users/user/Library/Developer/RapidGame/src/proj.ios_mac/../../latest/cocos2d/x/lib/Debug-Mac/macosx
-//   	error: libtool: can't open file: /Users/user/Library/Developer/RapidGame/src/proj.ios_mac/build/Debug/*.a (No such file or directory)
-//		Maybe just need to set CONFIGURATION_BUILD_DIR, see: https://developer.apple.com/library/mac/documentation/DeveloperTools/Reference/XcodeBuildSettingRef/1-Build_Setting_Reference/build_setting_ref.html
 //
 
 

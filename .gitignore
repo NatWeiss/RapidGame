@@ -1,6 +1,7 @@
 .DS_Store
 xcuserdata
 project.xcworkspace
+/src/cc*
 /src/downloaded.txt
 /src/cocos2d-x
 /node_modules
@@ -12,3 +13,7 @@ project.xcworkspace
 /templates/*/*/lib
 /*.patch
 /publish.sh
+libexepath.txt
+msbuildpath.txt
+vctargetspath.txt
+
