@@ -825,7 +825,7 @@ var startBuild = function(platform, callback, settings) {
 // prebuild mac
 //
 var prebuildMac = function(platform, config, arch, callback) {
-	var i, j, k, dir, sdk, project, func, funcArg, derivedDir, dest, linkSrc, linkDest,
+	var i, j, k, dir, project, func, funcArg, derivedDir, dest,
 		sdks = (platform === "Mac" ? ["macosx"] : ["iphoneos", "iphonesimulator"]),
 		configs = (config ? [config] : (cmd.minimal ? ["Debug"] : ["Debug", "Release"])),
 		projs = [
@@ -841,14 +841,11 @@ var prebuildMac = function(platform, config, arch, callback) {
 			for (k = 0; k < projs.length; k += 1) {
 				command = "xcodebuild";
 				dir = path.dirname(projs[k]);
-				derivedDir = path.join(cmd.src, "build", configs[i] + "-" + platform);
- 				sdk = sdks[j];
-				linkSrc = path.join(path.resolve(derivedDir), "Build", "Products", configs[i]);
-				linkDest = path.join(cmd.output, "cocos2d", "x", "lib", configs[i] + "-" + platform, sdk);
+				derivedDir = path.join(cmd.src, "build", configs[i] + "-" + sdks[j]);
 				args = [
 					"-project", path.basename(projs[k]),
 					"-configuration", configs[i],
-					"-sdk", sdk,
+					"-sdk", sdks[j],
 					"-derivedDataPath", path.resolve(derivedDir)
 				];
 				if (k == 0) { // first proj is libcocos2d
@@ -857,7 +854,7 @@ var prebuildMac = function(platform, config, arch, callback) {
 				} else { // second proj is libjscocos2d
 					args = args.concat(["-scheme", "libjscocos2d " + platform]);
 				}
-				if (sdk === "iphoneos") {
+				if (sdks[j] === "iphoneos") {
 					if (cmd.minimal) {
 						args = args.concat(["-arch", "armv7"]);
 					} /*else {
@@ -866,7 +863,7 @@ var prebuildMac = function(platform, config, arch, callback) {
 							"-destination-timeout", "5"
 						]);
 					}*/
-				} else if (sdk === "iphonesimulator") {
+				} else if (sdks[j] === "iphonesimulator") {
 					// des it need "generic/" in the destination? is that why it doesn't run correctly on 5s?
 					args = args.concat([
 						"-destination", "platform=iphonesimulator,name=iPhone 6s",
@@ -902,7 +899,7 @@ var prebuildMac = function(platform, config, arch, callback) {
 					fs.writeFileSync(d, txt);
 					callback();
 				};
-				funcArg = configs[i] + "-" + platform;
+				funcArg = configs[i] + "-" + sdks[j];
 
 				// Push this build.
 				builds.push([configs[i], command, dir, args, func, funcArg]);
@@ -911,7 +908,7 @@ var prebuildMac = function(platform, config, arch, callback) {
 				command = "libtool";
 				dir = path.join(path.resolve(derivedDir), "Build", "Products");
 
-				dest = path.join(cmd.output, "cocos2d", "x", "lib", configs[i] + "-" + platform, sdk);
+				dest = path.join(cmd.output, "cocos2d", "x", "lib", configs[i] + "-" + platform, sdks[j]);
 				wrench.mkdirSyncRecursive(dest);
 				dest = path.join(dest, "libcocos2dx-prebuilt.a");
 
