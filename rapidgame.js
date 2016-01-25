@@ -15,6 +15,7 @@ var http = require("http"),
 	packageJson = JSON.parse(fs.readFileSync(path.join(__dirname, "package.json"))),
 	cmdName = packageJson.name,
 	version = packageJson.version,
+	cocos2dxVer = "3.9",
 	cocos2dxUrl = "http://cdn.cocos2d-x.org/cocos2d-x-3.9.zip",
 	extractName = "cocos2d-x-3.9", // leave blank if cocos2d-x is properly zipped within a 'cocos2d-x/' folder
 	cocos2dDirGlob = "*ocos2d-x*",
@@ -36,7 +37,7 @@ var http = require("http"),
 		dest: process.cwd(),
 		prefix: path.join(path.homedir(), ".rapidgame"),
 		src: path.join(path.homedir(), ".rapidgame", "src", "cocos2d-x"),
-		output: path.join(path.homedir(), ".rapidgame", version),
+		output: path.join(path.homedir(), ".rapidgame", cocos2dxVer),
 		orientation: orientations[0]
 	};
 
@@ -136,12 +137,29 @@ var run = function(args) {
 	}
 };
 
+
+//
+// Resolve dirs.
+//
+var resolveDirs = function() {
+	if (cmd.prefix !== defaults.prefix) {
+		cmd.prefix = path.resolve(cmd.prefix);
+	}
+	if (cmd.src !== defaults.src) {
+		cmd.src = path.resolve(cmd.src);
+	}
+	if (cmd.output !== defaults.output) {
+		cmd.output = path.resolve(path.join(cmd.prefix, cmd.output));
+	}
+};
+
 //
 // Initialize the given directory.
 //
 var init = function(directory) {
 	var src, dest;
 
+	resolveDirs();
 	if (!dirExists(directory)) {
 		console.log("Output directory must exist: " + directory);
 		return 1;
@@ -171,6 +189,8 @@ var clean = function(directory) {
 		dest,
 		files = [],
 		configs = ["Debug", "Release"];
+
+	resolveDirs();
 
 	// linux
 	if (process.platform === "linux") {
@@ -203,6 +223,7 @@ var clean = function(directory) {
 // Show prefix.
 //
 var showPrefix = function(directory) {
+	resolveDirs();
 	console.log("Rapidgame lives here: " + cmd.prefix);
 	console.log("Latest static libs and headers: " + cmd.output);
 	console.log("Static libs and headers have been built: " + (dirExists(cmd.output) ? "YES" : "NO"));
@@ -226,6 +247,7 @@ var createProject = function(engine, name, package) {
 		packageSrc = "com.wizardfu." + cmd.template.toLowerCase();
 		cmd.engine = engine.toString().toLowerCase();
 	
+	resolveDirs();
 	category = "createProject";
 	
 	// Check engine and name
@@ -363,6 +385,7 @@ var createProject = function(engine, name, package) {
 // run the prebuild command
 //
 var prebuild = function(platform, config, arch) {
+	resolveDirs();
 	category = "prebuild";
 	platform = (platform || "");
 	platform = platform.toString().toLowerCase();
@@ -870,7 +893,7 @@ var prebuildMac = function(platform, config, arch, callback) {
 				// Post-build function.
 				func = function(config, callback) {
 					var i, txt,
-						d = path.join(path.resolve(cmd.src), "build", config + "-" + platform, "Build", "Products", config),
+						d = path.join(cmd.src, "build", config + "-" + platform, "Build", "Products", config),
 						files = [];
 					console.log("config: " + config);
 					console.log("d: " + d);
@@ -956,9 +979,6 @@ var prebuildWin = function(config, arch, callback) {
 
 	// set vc targets path
 	process.env["VCTargetsPath"] = vcTargetsPath;
-
-	logBuild("prebuildWin cmd.output: " + cmd.output, true);
-
 
 	// create builds
 	builds = [];
@@ -1072,8 +1092,8 @@ var linkLinux = function(config, callback) {
 var linkWin = function(config, callback) {
 	var i,
 		command = path.basename(libExePath),
-		src = path.join(path.resolve(cmd.src), "build", config + ".win32"),
-		dest = path.join(path.resolve(cmd.output), "cocos2d", "x", "lib", config + "-win32", "x86"),
+		src = path.join(cmd.src, "build", config + ".win32"),
+		dest = path.join(cmd.output, "cocos2d", "x", "lib", config + "-win32", "x86"),
 		args = [
 			'/NOLOGO',
 			'/IGNORE:4006',
@@ -1089,7 +1109,7 @@ var linkWin = function(config, callback) {
 	wrench.mkdirSyncRecursive(dest);
 
 	// copy dlls and finish creating command
-	//copyGlobbed(path.join(cmd.src, "external", "lua", "luajit", "prebuilt", "win32"), dest, "*.dll");
+	//copyGlobbed(path.join(src, "external", "lua", "luajit", "prebuilt", "win32"), dest, "*.dll");
 	copyGlobbed(src, dest, "*.dll");
 	copyGlobbed(src, dest, "glfw3.lib"); // possibly because of the new duplicate -2015.lib files, this is necessary...
 	copyGlobbed(src, dest, "glfw3-2015.lib");

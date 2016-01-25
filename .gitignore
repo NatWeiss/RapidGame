@@ -9,6 +9,9 @@ project.xcworkspace
 /build.log
 /0.*
 /1.*
+/2.*
+/3.*
+/4.*
 /latest
 /templates/*/*/lib
 /*.patch
