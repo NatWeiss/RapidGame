@@ -392,6 +392,7 @@ var prebuild = function(platform, config, arch) {
 	cmd.buildLog = path.join(cmd.prefix, "build-" + process.platform + ".log");
 	try {
 		fs.writeFileSync(cmd.buildLog, "");
+		logBuild("Happily prebuilding: " + platform, true);
 		console.log("Writing build log to: " + cmd.buildLog);
 	} catch(e) {
 		cmd.buildLog = "";
@@ -402,7 +403,6 @@ var prebuild = function(platform, config, arch) {
 			return;
 		}
 
-		logBuild("Happily prebuilding " + platform, true);
 		logReport("start");
 		
 		copySrcFiles(function() {
@@ -671,92 +671,28 @@ var runPrebuild = function(platform, config, arch, callback) {
 
 	if (platform === "headers") {
 		callback();
-	} else if (process.platform === "darwin") {
-		if (platform === "ios") {
+	} else if (platform === "mac") {
+		prebuildMac("Mac", config, arch, callback);
+	} else if (platform === "ios") {
+		prebuildMac("iOS", config, arch, callback);
+	} else if (platform === "linux") {
+		prebuildLinux("Linux", config, arch, callback);
+	} else if (platform === "windows") {
+		prebuildWin("Windows", config, arch, callback);
+	} else if (platform === "android") {
+		prebuildAndroid("Android", config, arch, callback);
+	} else {
+		prebuildMac("Mac", config, arch, function(){
 			prebuildMac("iOS", config, arch, function(){
-				callback();
-			});
-		} else if (platform === "mac") {
-			prebuildMac("Mac", config, arch, function(){
-				callback();
-			});
-		} else if (platform === "android") {
-			if ("NDK_ROOT" in process.env) {
-				prebuildAndroid(config, arch, function(){
-					callback();
-				});
-			} else {
-				logBuild("Android build cancelled. You need to setup additional programs to develop for Android. See the Android README on RapidGame's Github page.", true);
-				callback();
-			}
-		} else {
-			prebuildMac("Mac", config, arch, function(){
-				prebuildMac("iOS", config, arch, function(){
-					// See comments below for why this check is here.
-					if ("NDK_ROOT" in process.env) {
-						prebuildAndroid(config, arch, function(){
+				prebuildLinux("Linux", config, arch, function(){
+					prebuildWin("Windows", config, arch, function(){
+						prebuildAndroid("Android", config, arch, function(){
 							callback();
 						});
-					} else {
-						logBuild("Android build cancelled. You need to setup additional programs to develop for Android. See the Android README on RapidGame's Github page.", true);
-						callback();
-					}
-				});
-			});
-		}
-	} else if (process.platform === "win32") {
-		if (platform === "android") {
-			// All Cygwin terminals add TERM to their environment variables.
-			// Even though the value might vary ('cygwin' or 'xterm'), we can
-			// reasonably assume that someone running RapidGame in a shell with
-			// TERM as an environment variable is using Cygwin. Windows does
-			// not using this variable, which is why this check is used. The
-			// same check is applied when prebuilding without any arguments
-			// (see a few lines below).
-			if ("TERM" in process.env) {
-				// We can assume that if the user has setup NDK_ROOT, they
-				// have also setup everything else needed to prebuild the Android
-				// libraries. If they happen to have NDK_ROOT set but not everything
-				// else, they will still get an error when trying to prebuild the
-				// Android libraries, but it won't be as helpful.
-				if ("NDK_ROOT" in process.env) {
-					prebuildAndroid(config, arch, function(){
-						callback();
-					});
-				} else {
-					logBuild("Android build cancelled. You need to setup additional programs to develop for Android. See the Android README on RapidGame's Github page.", true);
-					callback();
-				}
-			} else {
-				// User reaches here only if they are on Windows and they specifically run `rapidgame prebuild android`
-				logBuild("Build cancelled. You must prebuild the Android libraries in a Cygwin shell.", true);
-				callback();
-			}
-		}
-		else if (platform === "windows") {
-			prebuildWin(config, arch, function(){
-				callback();
-			});
-		}
-		else {
-			if ("TERM" in process.env) {
-				prebuildWin(config, arch, function(){
-					prebuildAndroid(config, arch, function(){
-						callback();
 					});
 				});
-			} else {
-				prebuildWin(config, arch, function(){
-					callback();
-				});
-			}
-		}
-	} else if (process.platform === "linux") {
-		prebuildLinux("Linux", config, arch, function(){
-			callback();
+			});
 		});
-	} else {
-		logBuild("No prebuild command written for " + process.platform + " yet", true);
 	}
 };
 
@@ -794,8 +730,8 @@ var startBuild = function(platform, callback, settings) {
 
 	logBuild("Building: " + platform +
 		(config ? " " + config : "") +
-		(command ? " " + command : "") +
-		(dir ? " " + dir : ""),
+		(command ? " " + (cmd.verbose ? command : path.basename(command)) : "") +
+		((cmd.verbose && dir) ? " " + dir : ""),
 		true);
 
 	spawn(command, args, {cwd: path.resolve(dir), env: process.env}, function(err){
@@ -833,7 +769,14 @@ var prebuildMac = function(platform, config, arch, callback) {
 		projs.push(path.join(cmd.src, "cocos", "scripting", "js-bindings", "proj.ios_mac", "cocos2d_js_bindings.xcodeproj"));
 	}
 
-	// create builds array
+	// Bail if not on Mac.
+	if (process.platform !== "darwin") {
+		logBuild("Can only build " + platform + " on Mac", true);
+		callback();
+		return;
+	}
+
+	// Create builds array.
 	for (i = 0; i < configs.length; i += 1) {
 		for (j = 0; j < sdks.length; j += 1) {
 			for (k = 0; k < projs.length; k += 1) {
@@ -991,9 +934,16 @@ var linkLinux = function(config, callback) {
 //
 // prebuild windows
 //
-var prebuildWin = function(config, arch, callback) {
+var prebuildWin = function(platform, config, arch, callback) {
 	var i, j, command, dir, args, func, funcArg, targets, projs = [],
 		configs = (config ? [config] : (cmd.minimal ? ["Debug"] : ["Debug", "Release"]));
+
+	// Bail if not on Windows.
+	if (process.platform !== "win32") {
+		logBuild("Can only build win32 on Windows", true);
+		callback();
+		return;
+	}
 
 	// set vc targets path
 	process.env["VCTargetsPath"] = vcTargetsPath;
@@ -1088,10 +1038,25 @@ var linkWin = function(config, callback) {
 //
 // prebuild android
 //
-var prebuildAndroid = function(config, arch, callback) {
+var prebuildAndroid = function(platform, config, arch, callback) {
 	var i, j, src, dest, command, args = [], func, funcArg,
 		configs = (config ? [config] : (cmd.minimal ? ["Debug"] : ["Debug", "Release"])),
 		archs = (cmd.minimal ? ["armeabi"] : ["armeabi", "armeabi-v7a", "x86"]);
+
+	// Windows requires TERM environment variable (means running from cygwin)
+	if (process.platform === "win32" || !("TERM" in process.env)) {
+		logBuild("Can only build Android on Windows using a cygwin terminal", true);
+		callback();
+		return;
+	}
+	// All platforms require NDK_ROOT environment variable.
+	if (!("NDK_ROOT" in process.env)) {
+		logBuild("Can only build Android with a proper SDK and NDK installation.", true);
+		logBuild("(Missing NDK_ROOT environment variable.)", true);
+		logBuild("See: http://bit.ly/rapidgame-android-readme", true);
+		callback();
+		return;
+	}
 
 	// create builds array
 	builds = [];
