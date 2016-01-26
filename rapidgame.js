@@ -72,7 +72,7 @@ var run = function(args) {
 	cmd
 		.version(version)
 		.option("-v, --verbose", "be verbose", false)
-		.option("-p, --prefix <name>", "rapidgame home [" + defaults.prefix + "]", defaults.prefix)
+		.option("-p, --prefix <path>", "rapidgame home [" + defaults.prefix + "]", defaults.prefix)
 		.option("-s, --src <path>", "cocos2d-x home [" + defaults.src + "]", defaults.src)
 		.option("-o, --output <name>", "library output dir [" + defaults.output + "]", defaults.output)
 		.option("-t, --template <name>", "template [" + defaults.template + "]", defaults.template)
@@ -119,9 +119,6 @@ var run = function(args) {
 
 	if (!cmd.args.length) {
 		usage();
-	} else if (!checkPrefix()) {
-		usage();
-		return 1;
 	} else {
 		// Check if command exists
 		for (i = 0; i < commands.length; i += 1) {
@@ -137,6 +134,33 @@ var run = function(args) {
 	}
 };
 
+//
+// check that prefix directory is writeable
+//
+var checkPrefix = function() {
+	// Test prefix dir.
+	if (!isWriteableDir(cmd.prefix)) {
+		// Complain if specified prefix dir.
+		if (cmd.prefix !== defaults.prefix) {
+			logErr("Cannot write files to prefix directory: " + cmd.prefix);
+			return false;
+		}
+		
+		// Make dir
+		wrench.mkdirSyncRecursive(defaults.prefix);
+		if (!isWriteableDir(defaults.prefix)) {
+			logErr("Cannot write files to default prefix directory: " + defaults.prefix);
+			return false;
+		}
+		
+		// Success.
+		cmd.prefix = defaults.prefix;
+	}
+	if (cmd.verbose) {
+		console.log("Can successfully write files to prefix directory: " + cmd.prefix);
+	}
+	return true;
+};
 
 //
 // Resolve dirs.
@@ -144,13 +168,22 @@ var run = function(args) {
 var resolveDirs = function() {
 	if (cmd.prefix !== defaults.prefix) {
 		cmd.prefix = path.resolve(cmd.prefix);
+		if (!dirExists(cmd.prefix)) {
+			logBuild("Invalid prefix dir: " + cmd.prefix, true);
+			return false;
+		}
 	}
 	if (cmd.src !== defaults.src) {
 		cmd.src = path.resolve(cmd.src);
+		if (!dirExists(cmd.src)) {
+			logBuild("Invalid src dir: " + cmd.src, true);
+			return false;
+		}
 	}
 	if (cmd.output !== defaults.output) {
 		cmd.output = path.resolve(path.join(cmd.prefix, cmd.output));
 	}
+	return checkPrefix();
 };
 
 //
@@ -159,7 +192,7 @@ var resolveDirs = function() {
 var init = function(directory) {
 	var src, dest;
 
-	resolveDirs();
+	if (!resolveDirs()) {return 1;}
 	if (!dirExists(directory)) {
 		console.log("Output directory must exist: " + directory);
 		return 1;
@@ -188,7 +221,7 @@ var clean = function(directory) {
 	var i, j, dest, files = [], globbed = [],
 		configs = ["Debug", "Release"];
 
-	resolveDirs();
+	if (!resolveDirs()) {return 1;}
 
 	// List dirs to clean.
 	for (i = 0; i < configs.length; i += 1) {
@@ -216,7 +249,8 @@ var clean = function(directory) {
 // Show prefix.
 //
 var showPrefix = function(directory) {
-	resolveDirs();
+	if (!resolveDirs()) {return 1;}
+	
 	console.log("Rapidgame lives here: " + cmd.prefix);
 	console.log("Latest static libs and headers: " + cmd.output);
 	console.log("Static libs and headers have been built: " + (dirExists(cmd.output) ? "YES" : "NO"));
@@ -240,7 +274,7 @@ var createProject = function(engine, name, package) {
 		packageSrc = "com.wizardfu." + cmd.template.toLowerCase();
 		cmd.engine = engine.toString().toLowerCase();
 	
-	resolveDirs();
+	if (!resolveDirs()) {return 1;}
 	category = "createProject";
 	
 	// Check engine and name
@@ -378,7 +412,7 @@ var createProject = function(engine, name, package) {
 // run the prebuild command
 //
 var prebuild = function(platform, config, arch) {
-	resolveDirs();
+	if (!resolveDirs()) {return 1;}
 	category = "prebuild";
 	platform = (platform || "");
 	platform = platform.toString().toLowerCase();
@@ -1353,34 +1387,6 @@ var getLibExePath = function(cb) {
 		}
 	}
 	callback();
-};
-
-//
-// check that prefix directory is writeable
-//
-var checkPrefix = function() {
-	// Test prefix dir.
-	if (!isWriteableDir(cmd.prefix)) {
-		// Complain if specified prefix dir.
-		if (cmd.prefix !== defaults.prefix) {
-			logErr("Cannot write files to prefix directory: " + cmd.prefix);
-			return false;
-		}
-		
-		// Make dir
-		wrench.mkdirSyncRecursive(defaults.prefix);
-		if (!isWriteableDir(defaults.prefix)) {
-			logErr("Cannot write files to default prefix directory: " + defaults.prefix);
-			return false;
-		}
-		
-		// Success.
-		cmd.prefix = defaults.prefix;
-	}
-	if (cmd.verbose) {
-		console.log("Can successfully write files to prefix directory: " + cmd.prefix);
-	}
-	return true;
 };
 
 //
