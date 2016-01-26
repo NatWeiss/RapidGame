@@ -11,7 +11,7 @@ RapidGame is a commandline tool for Mac, Windows and Linux which:
 
 1. Prebuilds cocos2d-x libraries for Windows, Mac, Linux, iOS and Android for multiple architectures and configurations, virtually eliminating the need to ever rebuild.
 
-2. A game project templating system for creating cross-platform games for a variety of game engines, including cocos2d-x, Unity, Corona and Appcelerator Titanium. The default game template creates a simple Breakout clone with a menu and game scene.
+2. Creates cross-platform game projects from templates for a variety of game engines. Supports cocos2d-x, Unity, Corona and Appcelerator Titanium. The default game template creates a simple Breakout clone with a menu and game scene.
 
 Prefer somebody explaining and showing it? Check out the [overview video](http://youtu.be/SOJs2DwIxOU).
 
@@ -55,17 +55,15 @@ Or, a Unity game named "ZombieMatrix":
 
 	rapidgame create unity "ZombieMatrix" com.mycompany.zombiematrix
 
-For usage instructions:
+More:
 
 	rapidgame --help
 
-New to the cocos2d family of game engines? In general, cocos2d-x (`rapidgame create cocos2dx`) is C++ and cocos2d-js (`rapidgame create cocos2djs`) is Javascript.
 
+About Prebuilding
+-----------------
 
-More About Prebuilding
-----------------------
-
-The command to prebuild cocos2d-x static libraries used by cocos2d-js on native platforms:
+The command to prebuild cocos2d-x static libraries is:
 
 	rapidgame prebuild
 
