@@ -79,6 +79,14 @@ You can also specify a custom directory prefix where RapidGame stores it's files
 
 	rapidgame prebuild --prefix C:\somewhere
 
+Create a symlink in the current directory to the current static libraries:
+
+	rapidgame init .
+
+Or specify which prebuilt files to use:
+
+	rapidgame init . --dest 3.9-custom
+
 
 
 Development Platforms
