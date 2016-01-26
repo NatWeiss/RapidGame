@@ -6,6 +6,7 @@ $(info APP_PLATFORM=$(APP_PLATFORM))
 $(info APP_ABI=$(APP_ABI))
 $(info APP_OPTIM=$(APP_OPTIM))
 $(info APP_CPPFLAGS=$(APP_CPPFLAGS))
+$(info DO_JS=$(DO_JS))
 
 $(call import-add-path,$(LOCAL_PATH)/../../..)
 $(call import-add-path,$(LOCAL_PATH)/../../../external)

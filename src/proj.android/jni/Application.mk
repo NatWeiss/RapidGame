@@ -1,5 +1,5 @@
 APP_STL := gnustl_static
-APP_CPPFLAGS := -frtti -DCC_ENABLE_CHIPMUNK_INTEGRATION=1 -std=c++11 -fsigned-char -DCOCOS2D_JAVASCRIPT -w
+APP_CPPFLAGS := -frtti -std=c++11 -fsigned-char -w
 
 ifeq ($(CONFIG),Debug)
 	APP_OPTIM := debug
@@ -9,4 +9,6 @@ else
 	APP_CPPFLAGS += -DCOCOS2D_DEBUG=0
 endif
 
-
+ifeq ($(DO_JS),1)
+	APP_CPPFLAGS += -DCOCOS2D_JAVASCRIPT
+endif

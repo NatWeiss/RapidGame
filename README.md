@@ -19,7 +19,7 @@ Prefer somebody explaining and showing it? Check out the [overview video](http:/
 Create a Game in Under 30 Seconds
 ---------------------------------
 
-You'll first need [Node.js](http://nodejs.org/download/) and [Git](http://git-scm.com/downloads).
+You'll first need [Node.js](https://nodejs.org/en/download/) and [Git](http://git-scm.com/downloads).
 
 There's no need to clone this repo, just install RapidGame:
 
@@ -111,9 +111,9 @@ The cocos2d-x library prebuilder currently works on the following development pl
 Requirements
 ------------
 
-Mac OS X: Xcode 5 or newer, [Git](http://git-scm.com/downloads) and [Node.js](https://nodejs.org/en/download/).
+Mac: Xcode 5 or newer, [Git](http://git-scm.com/downloads) and [Node.js](https://nodejs.org/en/download/).
 
-Windows: Visual Studio 2012 or newer (get it for free [here](https://www.visualstudio.com/en-us/products/free-developer-offers-vs.aspx)), [Git](http://git-scm.com/downloads), and [Node.js](http://nodejs.org/download/). Read the [Windows Notes](#windows-notes) for additional notes you should be aware of.
+Windows: [Visual Studio](https://www.visualstudio.com/en-us/products/free-developer-offers-vs.aspx) 2012 or newer, [Git](http://git-scm.com/downloads), and [Node.js](https://nodejs.org/en/download/). Read the [Windows Notes](#windows-notes) for additional notes you should be aware of.
 
 Linux: run `cocos2d-x/build/install-deps-linux.sh` and that [Git](http://git-scm.com/downloads) and [Node.js](https://nodejs.org/en/download/) are installed.
 

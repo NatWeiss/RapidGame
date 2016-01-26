@@ -37,7 +37,7 @@ var http = require("http"),
 		dest: process.cwd(),
 		prefix: path.join(path.homedir(), ".rapidgame"),
 		src: path.join(path.homedir(), ".rapidgame", "src", "cocos2d-x"),
-		output: path.join(path.homedir(), ".rapidgame", cocos2dxVer),
+		dest: path.join(path.homedir(), ".rapidgame", cocos2dxVer),
 		orientation: orientations[0]
 	};
 
@@ -74,7 +74,7 @@ var run = function(args) {
 		.option("-v, --verbose", "be verbose", false)
 		.option("-p, --prefix <path>", "rapidgame home [" + defaults.prefix + "]", defaults.prefix)
 		.option("-s, --src <path>", "cocos2d-x home [" + defaults.src + "]", defaults.src)
-		.option("-o, --output <name>", "library output dir [" + defaults.output + "]", defaults.output)
+		.option("-d, --dest <name>", "library destination [" + defaults.dest + "]", defaults.dest)
 		.option("-t, --template <name>", "template [" + defaults.template + "]", defaults.template)
 		.option("-f, --folder <path>", "output folder of created project [" + defaults.dest + "]", defaults.dest)
 		.option("--minimal", "prebuild only debug libraries and use minimal architectures", false)
@@ -180,8 +180,8 @@ var resolveDirs = function() {
 			return false;
 		}
 	}
-	if (cmd.output !== defaults.output) {
-		cmd.output = path.resolve(path.join(cmd.prefix, cmd.output));
+	if (cmd.dest !== defaults.dest) {
+		cmd.dest = path.resolve(path.join(cmd.prefix, cmd.dest));
 	}
 	return checkPrefix();
 };
@@ -201,7 +201,7 @@ var init = function(directory) {
 	// Create lib symlink
 	// Windows "EPERM: operation not permitted" probably means user needs to Run As Administrator
 	// http://stackoverflow.com/questions/4051883/batch-script-how-to-check-for-admin-rights
-	src = cmd.output;
+	src = cmd.dest;
 	dest = path.join(directory, "lib");
 	console.log("Symlinking" + (cmd.verbose ? ": " + dest + " -> " + src : " lib folder"));
 	try {
@@ -252,8 +252,8 @@ var showPrefix = function(directory) {
 	if (!resolveDirs()) {return 1;}
 	
 	console.log("Rapidgame lives here: " + cmd.prefix);
-	console.log("Latest static libs and headers: " + cmd.output);
-	console.log("Static libs and headers have been built: " + (dirExists(cmd.output) ? "YES" : "NO"));
+	console.log("Latest static libs and headers: " + cmd.dest);
+	console.log("Static libs and headers have been built: " + (dirExists(cmd.dest) ? "YES" : "NO"));
 	if (cmd.src != defaults.src) {
 		console.log("src: " + cmd.src);
 	}
@@ -387,7 +387,7 @@ var createProject = function(engine, name, package) {
 		logReport("done");
 		
 		// Auto prebuild
-		if (isCocos2d && !dirExists(cmd.output)) {
+		if (isCocos2d && !dirExists(cmd.dest)) {
 			console.log("");
 			console.log("Static libraries must be prebuilt");
 			prebuild();
@@ -583,7 +583,7 @@ var setupPrebuild = function(platform, callback) {
 		return;
 	}
 	// Return if we have already prebuilt headers.
-	if (!platform && dirExists(path.join(cmd.output, "cocos2d", "x", "java", "mk"))) {
+	if (!platform && dirExists(path.join(cmd.dest, "cocos2d", "x", "java", "mk"))) {
 		logBuild("Already built headers", true);
 		callback();
 		return;
@@ -592,7 +592,7 @@ var setupPrebuild = function(platform, callback) {
 	logBuild("Checking if symlinks can be created", true);
 
 	// symlink ./latest -> ./version
-	src = path.basename(cmd.output);
+	src = path.basename(cmd.dest);
 	dest = path.join(cmd.prefix, "latest");
 	try {
 		fs.unlinkSync(dest);
@@ -612,7 +612,7 @@ var setupPrebuild = function(platform, callback) {
 	logBuild("Copying header files...", true);
 
 	// reset cocos2d dir
-	dest = path.join(cmd.output, "cocos2d");
+	dest = path.join(cmd.dest, "cocos2d");
 	files = ["html", path.join("x", "include"), path.join("x", "cmake"), path.join("x", "java"), path.join("x", "script")];
 	try {
 		for (i = 0; i < files.length; i += 1) {
@@ -629,17 +629,17 @@ var setupPrebuild = function(platform, callback) {
 	}
 
 	// copy cmake files
-	dest = path.join(cmd.output, "cocos2d", "x", "cmake");
+	dest = path.join(cmd.dest, "cocos2d", "x", "cmake");
 	src = path.join(cmd.src, "cmake");
 	copyRecursive(src, dest, false, true);
 
 	// copy cocos2d-html5
-	dest = path.join(cmd.output, "cocos2d", "html");
+	dest = path.join(cmd.dest, "cocos2d", "html");
 	src = path.join(cmd.src, "web");
 	copyRecursive(src, dest, false, true);
 
 	// copy headers
-	dir = dest = path.join(cmd.output, "cocos2d", "x", "include");
+	dir = dest = path.join(cmd.dest, "cocos2d", "x", "include");
 	src = cmd.src;
 	copyGlobbed(src, dest, '*.h');
 	copyGlobbed(src, dest, '*.hpp');
@@ -654,18 +654,18 @@ var setupPrebuild = function(platform, callback) {
 	}
 
 	// jsb
-	dest = path.join(cmd.output, "cocos2d", "x", "script");
+	dest = path.join(cmd.dest, "cocos2d", "x", "script");
 	src = path.join(cmd.src, "cocos", "scripting", "js-bindings", "script");
 	copyGlobbed(src, dest, '*.js');
 
 	// java
-	dir = path.join(cmd.output, "cocos2d", "x", "java");
+	dir = path.join(cmd.dest, "cocos2d", "x", "java");
 	dest = path.join(dir, "cocos2d-x");
 	src = path.join(cmd.src, "cocos", "platform", "android", "java");
 	copyRecursive(src, dest);
 
 	// mk
-	dest = path.join(cmd.output, "cocos2d", "x", "java", "mk");
+	dest = path.join(cmd.dest, "cocos2d", "x", "java", "mk");
 	copyGlobbed(cmd.src, dest, "*.mk");
 
 	// clean up
@@ -696,7 +696,7 @@ var runPrebuild = function(platform, config, arch, callback) {
 
 	// check whether to prebuild javascript bindings
 	try{
-		var configDest = path.join(cmd.output, "cocos2d", "x", "include", "cocos", "base", "ccConfig.h"),
+		var configDest = path.join(cmd.dest, "cocos2d", "x", "include", "cocos", "base", "ccConfig.h"),
 			ccConfig = fs.readFileSync(configDest).toString().trim();
 		doJSB = (ccConfig.indexOf("CC_ENABLE_SCRIPT_BINDING 1") >= 0);
 		console.log("Prebuild Javascript bindings: " + (doJSB ? "yes" : "no"));
@@ -873,7 +873,7 @@ var prebuildMac = function(platform, config, arch, callback) {
 				command = "libtool";
 				dir = path.join(path.resolve(derivedDir), "Build", "Products");
 
-				dest = path.join(cmd.output, "cocos2d", "x", "lib", configs[i] + "-" + platform, sdks[j]);
+				dest = path.join(cmd.dest, "cocos2d", "x", "lib", configs[i] + "-" + platform, sdks[j]);
 				wrench.mkdirSyncRecursive(dest);
 				dest = path.join(dest, "libcocos2dx-prebuilt.a");
 
@@ -960,7 +960,7 @@ var prebuildLinux = function(platform, config, arch, callback) {
 //
 var linkLinux = function(config, callback) {
 	var libDir = path.join(cmd.src, "build", config + "-linux", "lib"),
-		dest = path.join(cmd.output, "cocos2d", "x", "lib", config + "-Linux", "x86");
+		dest = path.join(cmd.dest, "cocos2d", "x", "lib", config + "-Linux", "x86");
 
 	// make output dir
 	wrench.mkdirSyncRecursive(dest);
@@ -1029,7 +1029,7 @@ var linkWin = function(config, callback) {
 	var i,
 		command = path.basename(libExePath),
 		src = path.join(cmd.src, "build", config + ".win32"),
-		dest = path.join(cmd.output, "cocos2d", "x", "lib", config + "-win32", "x86"),
+		dest = path.join(cmd.dest, "cocos2d", "x", "lib", config + "-win32", "x86"),
 		args = [
 			'/NOLOGO',
 			'/IGNORE:4006',
@@ -1105,10 +1105,13 @@ var prebuildAndroid = function(platform, config, arch, callback) {
 		// Copy proj.android to dest only if not exists (otherwise would remove intermediate build files).
 		src = path.join(cmd.prefix, "src", "proj.android");
 		dest = path.join(cmd.src, "build", configs[i] + "-Android");
-		if (!dirExists(dest)) {
-			logBuild("Copying " + src + " to " + dest, true);
-			copyRecursive(src, dest, false, true);
-		}
+
+		// Always copy latest jni and build.sh and makefile.
+		logBuild("Copying " + src + " to " + dest, true);
+		wrench.mkdirSyncRecursive(dest);
+		copyGlobbed(src, dest, "build.sh");
+		copyGlobbed(src, dest, "makefile");
+		copyGlobbed(path.join(src, "jni"), path.join(dest, "jni"), "*");
 
 		// Set func.
 		func = linkAndroid;
@@ -1122,6 +1125,9 @@ var prebuildAndroid = function(platform, config, arch, callback) {
 				args.push(cmd.nostrip ? ["minimal-nostrip"] : ["minimal"]);
 			} else {
 				args.push(cmd.nostrip ? ["nostrip"] : []);
+			}
+			if (!doJSB) {
+				args.push("nojs");
 			}
 			builds.push([configs[i], command, dest, args, func, funcArg]);
 
@@ -1149,6 +1155,9 @@ var prebuildAndroid = function(platform, config, arch, callback) {
 				if (cmd.nostrip) {
 					args.push("nostrip");
 				}
+				if (!doJSB) {
+					args.push("nojs");
+				}
 
 				builds.push([configs[i], command, dest, args, func, funcArg]);
 			}
@@ -1163,10 +1172,10 @@ var prebuildAndroid = function(platform, config, arch, callback) {
 var linkAndroid = function(config, callback) {
 	var dest;
 	
-	dest = path.join(cmd.output, "cocos2d", "x", "lib", "Debug-Android");
+	dest = path.join(cmd.dest, "cocos2d", "x", "lib", "Debug-Android");
 	copyGlobbed(cmd.src, dest, "*.a", "android", 1);
 	
-	dest = path.join(cmd.output, "cocos2d", "x", "lib", "Release-Android");
+	dest = path.join(cmd.dest, "cocos2d", "x", "lib", "Release-Android");
 	copyGlobbed(cmd.src, dest, "*.a", "android", 1);
 	
 	callback();

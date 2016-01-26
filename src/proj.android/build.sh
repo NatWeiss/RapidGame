@@ -17,9 +17,15 @@ if [ "$2" == "release" ] || [ "$2" == "Release" ]; then
 else
 	config="Debug"
 fi
+if [ "$2" == "nojs" ] || [ "$3" == "nojs" ]; then
+	do_js="0"
+else
+	do_js="1"
+fi
 echo "PLATFORM=${APP_PLATFORM}"
 echo "ARCH=${arch}"
 echo "CONFIG=${config}"
+echo "DO_JS=${do_js}"
 
 # Get number of CPU cores
 CORES=${NUMBER_OF_PROCESSORS}
@@ -86,12 +92,13 @@ fi
 echo "STRIP=${strip}"
 
 # Create build command
+export CONFIG="${config}"
+export DO_JS="${do_js}"
 CMD="${NDK_ROOT}/ndk-build --jobs=${CORES} -C ${CWD} NDK_MODULE_PATH=${NDK_MODULE_PATH} APP_PLATFORM=${APP_PLATFORM} APP_ABI=${arch}"
 echo "CMD=${CMD}"
 echo
 
 # NDK build
-export CONFIG="${config}"
 echo "Building ${APP_PLATFORM} ${arch} ${config}..."
 $CMD
 res="$?"
