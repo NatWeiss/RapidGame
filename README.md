@@ -87,6 +87,13 @@ Or specify which prebuilt files to use:
 
 	rapidgame init . --dest 3.9-custom
 
+Or show all the directories RapidGame might use:
+
+	rapidgame show
+	
+		Rapidgame lives here: /Users/nat/.rapidgame
+		Latest static libs and headers: /Users/nat/.rapidgame/3.9
+		Static libs and headers have been built: YES
 
 
 Development Platforms
