@@ -54,7 +54,8 @@ CC_ROOT=$(cd ../.. && pwd)
 #SRC_ROOT=$(cd . && pwd)
 SRC_ROOT=${CWD}
 UNAME=$(uname -s)
-NDK_MODULE_PATH="${CC_ROOT}:${CC_ROOT}/external:${SRC_ROOT}"
+#NDK_MODULE_PATH="${CC_ROOT}:${CC_ROOT}/external:${SRC_ROOT}"
+NDK_MODULE_PATH="${CC_ROOT}"
 echo "CC_ROOT=${CC_ROOT}"
 echo "NDK_MODULE_PATH=${NDK_MODULE_PATH}"
 
