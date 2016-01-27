@@ -1085,7 +1085,7 @@ var prebuildAndroid = function(platform, config, arch, callback) {
 		archs = (cmd.minimal ? ["armeabi"] : ["armeabi", "armeabi-v7a", "x86"]);
 
 	// Windows requires TERM environment variable (means running from cygwin)
-	if (process.platform === "win32" || !("TERM" in process.env)) {
+	if (process.platform === "win32" && !("TERM" in process.env)) {
 		logBuild("Can only build Android on Windows using a cygwin terminal", true);
 		callback();
 		return;
@@ -1131,19 +1131,19 @@ var prebuildAndroid = function(platform, config, arch, callback) {
 			}
 			builds.push([configs[i], command, dest, args, func, funcArg]);
 
-			/*if (cmd.minimal) {
-				if (cmd.nostrip) {
-					builds.push([command, "non-stripped minimal (Debug armeabi)"]);
-				} else {
-					builds.push(["minimal (Debug armeabi)"]);
-				}
-			} else {
-				if (cmd.nostrip) {
-					builds.push(["non-stripped libraries for all platforms"]);
-				} else {
-					builds.push(["libraries for all platforms"]);
-				}
-			}*/
+			//if (cmd.minimal) {
+			//	if (cmd.nostrip) {
+			//		builds.push([command, "non-stripped minimal (Debug armeabi)"]);
+			//	} else {
+			//		builds.push(["minimal (Debug armeabi)"]);
+			//	}
+			//} else {
+			//	if (cmd.nostrip) {
+			//		builds.push(["non-stripped libraries for all platforms"]);
+			//	} else {
+			//		builds.push(["libraries for all platforms"]);
+			//	}
+			//}
 		} else {
 			for (j = 0; j < archs.length; j += 1) {
 				// Mac and Linux use build.sh
@@ -1743,6 +1743,22 @@ var isWriteableDir = function(dir) {
 	} catch(e) {
 	}
 	return false;
+};
+
+//
+// a function to make paths cygwin-friendly
+//
+var cygwinDir = function(str) {
+	// cygwin needs c:\something => /cygdrive/c/something
+	if (process.platform === "win32" && ("TERM" in process.env)) {
+		str = str.replace(/\\/g, "/");
+		str = str.replace(/c:/i, "/cygdrive/c");
+		str = str.replace(/d:/i, "/cygdrive/d");
+		str = str.replace(/e:/i, "/cygdrive/e");
+		str = str.replace(/f:/i, "/cygdrive/f");
+		str = str.replace(/g:/i, "/cygdrive/g");
+	}
+	return str;
 };
 
 //
