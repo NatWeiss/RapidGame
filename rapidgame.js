@@ -1789,6 +1789,7 @@ module.exports = {
 
 //
 //  To-do:
+//   - Skip release build for iphonesimulator.
 //   - Fix Mac project name search and replace so names with spaces work. (It used to...)
 //   - Finish orientation option:
 //		.option("-o, --orientation <orientation>", "orientation (" + orientations.join(", ") + ") [" + defaults.orientation + "]", defaults.orientation)
