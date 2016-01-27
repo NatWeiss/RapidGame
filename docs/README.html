@@ -37,100 +37,20 @@
         
       
         
-        <p>RapidGame is a commandline tool for Mac and Windows (Linux support is planned) which:</p>
+        <p>RapidGame is a commandline tool for Mac, Windows and Linux which:</p>
 <ol>
-<li><p>Prebuilds cocos2d-x libraries and cocos2d-js bindings for Mac, iOS, Android and Windows for multiple architectures and configurations, virtually eliminating the need to ever rebuild cocos2d-x or the Javascript bindings.</p>
+<li><p>Prebuilds cocos2d-x libraries for Windows, Mac, Linux, iOS and Android for multiple architectures and configurations, virtually eliminating the need to ever rebuild.</p>
 </li>
-<li><p>A game project templating system for creating cross-platform games for a variety of game engines, including cocos2d-x, cocos2d-js, Unity, Corona and Appcelerator Titanium. The default game template creates a simple Breakout clone with a menu and game scene.</p>
+<li><p>Creates cross-platform game projects from templates for a variety of game engines. Supports cocos2d-x, Unity, Corona and Appcelerator Titanium. The default game template creates a simple Breakout clone with a menu and game scene.</p>
 </li>
 </ol>
 <p>Prefer somebody explaining and showing it? Check out the <a href="http://youtu.be/SOJs2DwIxOU">overview video</a>.</p>
-
-<!--
-<h2 id="build-status-https-img-shields-io-badge-version-0-9-9-blue-svg-">Build Status <img src="https://img.shields.io/badge/version-0.9.9-blue.svg" alt=""></h2>
-<p>Refer here to get an overview of what platforms you can and cannot build for based on the most recent release of RapidGame. As certain platforms (e.g. iOS and Android) can have devices with different CPU architectures on them, if there is a problem building for a particular architecture, it will be included as a separate table entry from the other architectures of that platform.</p>
-<h3 id="windows">Windows</h3>
-<table>
-<thead>
-<tr>
-<th></th>
-<th style="text-align:center">Win32</th>
-<th style="text-align:center">Android</th>
-<th style="text-align:center">Android-x86</th>
-<th style="text-align:center">HTML5</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>cocos2d-x</td>
-<td style="text-align:center"><img src="https://img.shields.io/badge/build-passing-brightgreen.svg" alt=""></td>
-<td style="text-align:center"><img src="https://img.shields.io/badge/build-passing-brightgreen.svg" alt=""></td>
-<td style="text-align:center"><img src="https://img.shields.io/badge/build-failing-red.svg" alt=""></td>
-<td style="text-align:center"><img src="https://img.shields.io/badge/build-skipped-yellowgreen.svg" alt=""></td>
-</tr>
-<tr>
-<td>cocos2d-js</td>
-<td style="text-align:center"><img src="https://img.shields.io/badge/build-failing-red.svg" alt=""></td>
-<td style="text-align:center"><img src="https://img.shields.io/badge/build-failing-red.svg" alt=""></td>
-<td style="text-align:center"><img src="https://img.shields.io/badge/build-failing-red.svg" alt=""></td>
-<td style="text-align:center"><img src="https://img.shields.io/badge/build-passing-brightgreen.svg" alt=""></td>
-</tr>
-</tbody>
-</table>
-<h3 id="mac">Mac</h3>
-<table>
-<thead>
-<tr>
-<th></th>
-<th style="text-align:center">Mac</th>
-<th style="text-align:center">iOS</th>
-<th style="text-align:center">Android</th>
-<th style="text-align:center">Android-x86</th>
-<th style="text-align:center">HTML5</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>cocos2d-x</td>
-<td style="text-align:center"><img src="https://img.shields.io/badge/build-passing-brightgreen.svg" alt=""></td>
-<td style="text-align:center"><img src="https://img.shields.io/badge/build-passing-brightgreen.svg" alt=""></td>
-<td style="text-align:center"><img src="https://img.shields.io/badge/build-passing-brightgreen.svg" alt=""></td>
-<td style="text-align:center"><img src="https://img.shields.io/badge/build-unknown-lightgrey.svg" alt=""></td>
-<td style="text-align:center"><img src="https://img.shields.io/badge/build-skipped-yellowgreen.svg" alt=""></td>
-</tr>
-<tr>
-<td>cocos2d-js</td>
-<td style="text-align:center"><img src="https://img.shields.io/badge/build-unknown-lightgrey.svg" alt=""></td>
-<td style="text-align:center"><img src="https://img.shields.io/badge/build-unknown-lightgrey.svg" alt=""></td>
-<td style="text-align:center"><img src="https://img.shields.io/badge/build-unknown-lightgrey.svg" alt=""></td>
-<td style="text-align:center"><img src="https://img.shields.io/badge/build-unknown-lightgrey.svg" alt=""></td>
-<td style="text-align:center"><img src="https://img.shields.io/badge/build-passing-brightgreen.svg" alt=""></td>
-</tr>
-</tbody>
-</table>
--->
-
-<h2 id="updates">Updates</h2>
-
-        
-      
-        
-        <ul>
-<li>June 2, 2015: Can now prebuild Android on Windows thanks to <a href="https://github.com/samoersnaes">Samuel Ørsnæs</a>.</li>
-<li>May 4, 2015: Upgraded to cocos2d-x 3.6 / cocos2d-js 3.6.</li>
-<li>Mar 15, 2015: Fixed another bug related to MSBuild path on Windows (thanks, <a href="https://github.com/adamyocum">Adam Yocum</a>). Fixed the cocos2d-x Android template.</li>
-<li>Feb 24, 2015: Now has separate cocos2d-x and cocos2d-js templates. Fixed a bug on Windows: “Unable to find MSBuild path.” Still a few Windows-specific kinks to work out in the next version.</li>
-<li>Feb 19, 2015: Fixed a bug in Xcode projects (reference to script folder).</li>
-<li>Feb 7, 2015: Prebuilder updated for cocos2d-js 3.2 final / cocos2d-x 3.3.</li>
-<li>Dec 28, 2014: Prebuilder updated for cocos2d-js 3.2 rc0 / cocos2d-x 3.3.</li>
-<li>Aug 14, 2014: Prebuilder updated for cocos2d-js 3.0 rc2 / cocos2d-x 3.2.</li>
-</ul>
 <h2 id="create-a-game-in-under-30-seconds">Create a Game in Under 30 Seconds</h2>
 
         
       
         
-        <p>You’ll first need <a href="http://nodejs.org/download/">Node.js</a> and <a href="http://git-scm.com/downloads">Git</a>. Add git to your PATH as well.</p>
+        <p>You’ll first need <a href="https://nodejs.org/en/download/">Node.js</a> and <a href="http://git-scm.com/downloads">Git</a>.</p>
 <p>There’s no need to clone this repo, just install RapidGame:</p>
 
         
@@ -138,14 +58,14 @@
         
       
         
-        <p>Or, on Windows leave off the <code>sudo</code>:</p>
+        <p>Or, on Windows leave off the <code>sudo</code> and ensure that <code>git</code> is a part of your PATH:</p>
 
         
           <div class='highlight'><pre><span class="hljs-built_in">npm</span> install rapidgame -g</pre></div>
         
       
         
-        <p>And, create a cocos2d-x game named “HeckYeah”. Make sure to run this command as administrator if you’re using Windows:</p>
+        <p>And, create a cocos2d-x game named “HeckYeah” (run this as administrator on Windows):</p>
 
         
           <div class='highlight'><pre>rapidgame create cocos2dx <span class="hljs-string">"HeckYeah"</span> org.myorg.heckyeah</pre></div>
@@ -159,24 +79,148 @@
         
       
         
-        <p>For usage instructions:</p>
+        <p>More:</p>
 
         
           <div class='highlight'><pre>rapidgame --help</pre></div>
-
-        <p>Keep in mind if you are completely new to the cocos2d family that creating a cocos2d-x project (<code>rapidgame create cocos2dx</code>) means your project code will be in C++, while building a cocos2d-js project (<code>rapidgame create cocos2djs</code>) allows you to develop your game in Javascript as well as C++ if you wish.</p>
         
       
         
-        <h2 id="requirements">Requirements</h2>
+        <h2 id="about-prebuilding">About Prebuilding</h2>
 
         
       
         
-        <p>Mac OS X: Xcode 5 or newer, <a href="http://git-scm.com/downloads">Git</a> and <a href="http://nodejs.org/download/">Node.js</a>.</p>
-<p>Windows: <strong>Visual Studio 2012 or newer</strong> (get it for free <a href="https://www.visualstudio.com/en-us/products/free-developer-offers-vs.aspx">here</a>), <a href="http://git-scm.com/downloads">Git</a>, and <a href="http://nodejs.org/download/">Node.js</a>. Read the <a href="#windows-notes">Windows Notes</a> for additional notes you should be aware of.</p>
-<p>Linux: Not yet supported. Are you a cocos2d-x Linux master with some experience with Javascript? Please help out! rapidgame.js almost supports Linux, just need to hook up the system calls to prebuild and archive the libraries.</p>
-<p>If you want to make Android games, read the <a href="http://htmlpreview.github.io/?https://github.com/NatWeiss/RapidGame/blob/master/templates/cocos2dx/TwoScene/Projects/android/README.html">Android README</a> or <a href="https://www.youtube.com/watch?v=5PWEtjvhX1k">watch the video</a> to find out what you'll need for Android development.</p>
+        <p>The command to prebuild cocos2d-x static libraries is:</p>
+
+        
+          <div class='highlight'><pre>rapidgame prebuild</pre></div>
+        
+      
+        
+        <p>When the command is finished, you’ll have a directory (<code>~/.rapidgame</code> on Mac or Linux, and <code>C:\Users\[USERNAME]\.rapidgame</code> on Windows) with headers, java files, make files and prebuilt library files for all buildable architectures and configurations available on the current development platform.</p>
+<p>You can specify which platform you want to prebuild:</p>
+
+        
+          <div class='highlight'><pre>rapidgame prebuild mac
+rapidgame prebuild ios
+rapidgame prebuild windows
+rapidgame prebuild linux
+rapidgame prebuild android</pre></div>
+        
+      
+        
+        <p>Or refresh the headers:</p>
+
+        
+          <div class='highlight'><pre>rapidgame prebuild headers</pre></div>
+        
+      
+        
+        <p>You can specify a custom cocos2d-x source root:</p>
+
+        
+          <div class='highlight'><pre>rapidgame prebuild --src path/to/cocos2d-x</pre></div>
+        
+      
+        
+        <p>And even tag the prebuilt directory name differently:</p>
+
+        
+          <div class='highlight'><pre>rapidgame prebuild --dest <span class="hljs-number">3.9</span>-custom</pre></div>
+        
+      
+        
+        <p>The following command uses a custom cocos2d-x source root and places the resultant libraries in <code>~/.rapidgame/3.9-custom</code>:</p>
+
+        
+          <div class='highlight'><pre>rapidgame prebuild --src path/to/custom/cocos2d-x --dest <span class="hljs-number">3.9</span>-custom</pre></div>
+        
+      
+        
+        <p>You can also specify a custom directory prefix where RapidGame stores it’s files:</p>
+
+        
+          <div class='highlight'><pre>rapidgame prebuild --prefix <span class="hljs-attribute">C</span>:\somewhere</pre></div>
+        
+      
+        
+        <p>Create a symlink in the current directory to the current static libraries:</p>
+
+        
+          <div class='highlight'><pre>rapidgame init .</pre></div>
+        
+      
+        
+        <p>Or specify which prebuilt files to use:</p>
+
+        
+          <div class='highlight'><pre>rapidgame init . --dest <span class="hljs-number">3.9</span>-custom</pre></div>
+        
+      
+        
+        <p>Or show all the directories RapidGame might use:</p>
+
+        
+          <div class='highlight'><pre>rapidgame show
+
+	Rapidgame lives <span class="hljs-attribute">here</span>: <span class="hljs-regexp">/Users/nat/</span>.rapidgame
+	Latest static libs <span class="hljs-keyword">and</span> <span class="hljs-attribute">headers</span>: <span class="hljs-regexp">/Users/nat/</span>.rapidgame/<span class="hljs-number">3.9</span>
+	Static libs <span class="hljs-keyword">and</span> headers have been <span class="hljs-attribute">built</span>: YES</pre></div>
+        
+      
+        
+        <h2 id="development-platforms">Development Platforms</h2>
+
+        
+      
+        
+        <p>RapidGame can be used on any platform that is capable of running Node.js.</p>
+<p>The cocos2d-x library prebuilder currently works on the following development platforms:</p>
+<ul>
+<li>Mac</li>
+<li>Windows</li>
+<li>Linux</li>
+</ul>
+<h2 id="requirements">Requirements</h2>
+
+        
+      
+        
+        <p>Mac: Xcode 5 or newer, <a href="http://git-scm.com/downloads">Git</a> and <a href="https://nodejs.org/en/download/">Node.js</a>.</p>
+<p>Windows: <a href="https://www.visualstudio.com/en-us/products/free-developer-offers-vs.aspx">Visual Studio</a> 2012 or newer, <a href="http://git-scm.com/downloads">Git</a>, and <a href="https://nodejs.org/en/download/">Node.js</a>. Read the <a href="#windows-notes">Windows Notes</a> for additional notes you should be aware of.</p>
+<p>Linux: run <code>cocos2d-x/build/install-deps-linux.sh</code> and that <a href="http://git-scm.com/downloads">Git</a> and <a href="https://nodejs.org/en/download/">Node.js</a> are installed.</p>
+<p>Android (any platform): you’ll need to install the Android <a href="http://developer.android.com/sdk/installing/">SDK</a> and <a href="http://developer.android.com/tools/sdk/ndk/">NDK</a>, then run the SDK Manager and install the latest <em>Tools</em>, <em>Platform Tools</em> and <em>Build-tools</em>. Finally, make sure that the environment variable <code>NDK_ROOT</code> is the path to the NDK.</p>
+<h2 id="windows-notes">Windows Notes</h2>
+
+        
+      
+        
+        <ol>
+<li><strong>The <code>rapidgame create</code> or <code>rapidgame prebuild</code> command must be run as administrator.</strong> This allows symlinks to be properly created.</li>
+<li>If you have freshly installed Visual Studio, then you will need to run it once in order for it to download the necessary build tools.</li>
+<li>To prebuild Android libraries, please set the <code>NDK_ROOT</code> environment variable. You can do this permanently for all command prompt sessions by going: Computer &gt; Properties &gt; Advanced System Settings &gt; Environment System Variables. Confirm this with <code>echo %PATH%</code> or just try to run <code>ndk-build</code> from any directory.</li>
+</ol>
+<h2 id="updates">Updates</h2>
+
+        
+      
+        
+        <ul>
+<li>Jan 27, 2016: Linux support. Can specify cocos2d-x source folder. Simplified Android prebuild so it doesn’t require cygwin on Windows.</li>
+<li>Jan 10, 2016: Updated to cocos2d-x 3.9.</li>
+<li>Aug 17, 2015: Fixes for Visual Studio 2015.</li>
+<li>Aug 11, 2015: On Windows, the path to MSBuild.exe, Lib.exe and VCTargetsPath can be set manually in case they cannot be automatically located.</li>
+<li>Aug 2, 2015: Upgraded to cocos2d-x 3.7 (cocos2d-js and cocos2d-x have now been merged into just cocos2d-x).</li>
+<li>Jun 2, 2015: Can now prebuild Android on Windows thanks to <a href="https://github.com/samoersnaes">Samuel Ørsnæs</a>.</li>
+<li>May 4, 2015: Upgraded to cocos2d-x 3.6 / cocos2d-js 3.6.</li>
+<li>Mar 15, 2015: Fixed another bug related to MSBuild path on Windows (thanks, <a href="https://github.com/adamyocum">Adam Yocum</a>). Fixed the cocos2d-x Android template.</li>
+<li>Feb 24, 2015: Now has separate cocos2d-x and cocos2d-js templates. Fixed a bug on Windows: “Unable to find MSBuild path.”</li>
+<li>Feb 19, 2015: Fixed a bug in Xcode projects (reference to script folder).</li>
+<li>Feb 7, 2015: Prebuilder updated for cocos2d-js 3.2 final / cocos2d-x 3.3.</li>
+<li>Dec 28, 2014: Prebuilder updated for cocos2d-js 3.2 rc0 / cocos2d-x 3.3.</li>
+<li>Aug 14, 2014: Prebuilder updated for cocos2d-js 3.0 rc2 / cocos2d-x 3.2.</li>
+</ul>
 <h2 id="eliminate-grunt-work">Eliminate Grunt Work</h2>
 
         
@@ -201,7 +245,7 @@
 <li>Physics</li>
 <li>HTTP game servers (HTML5-based platforms)</li>
 </ol>
-<p>The project creator makes a copy of one of the templates, does a search and replace on the game title &amp; package name, then installs any required modules. Viola. Your own rapidly-created game ready to go. Here’s some example output from running the project creator:</p>
+<p>The project creator makes a copy of one of the templates, does a search and replace on the game title &amp; package name, then installs any required modules. Viola. Your own rapidly-created game ready to go. Here is some example output from running the project creator:</p>
 
         
           <div class='highlight'><pre>$ rapidgame create Corona <span class="hljs-string">"SwordBall"</span> org.myorg.swordball
@@ -219,16 +263,16 @@ Done
         
       
         
-        <p>The library prebuilder creates static libraries that virtually eliminate build times for the cocos2d-x engine (the native portion of cocos2d-js). With hundreds of source files to be compiled, building cocos2d-x for just one platform can take at least five minutes. This can be a real time sink, especially when switching from the simulator to device triggers a rebuild.</p>
-<p>The prebuilder automatically downloads the latest cocos2d-js, patches it to ensure that it is bug-free, then prebuilds cocos2d-x for all possible platforms, configurations and architectures. It is then possible to compile and link native cocos2d-x games in seconds. Even better, the project creator will absolutely symlink to the location of the prebuilt libraries so your game projects stay lightweight and can be moved easily.</p>
+        <p>The library prebuilder creates static libraries that virtually eliminate build times for the cocos2d-x engine. With hundreds of source files to be compiled, building cocos2d-x for just one platform can take at least five minutes. This can be a real time sink, especially when switching from the simulator to device triggers a rebuild.</p>
+<p>The prebuilder can use a custom cocos2d-x root folder, or automatically download, patch and prebuild the latest version of cocos2d-x. It will then be possible to compile and link native cocos2d-x games in seconds. Even better, the project creator will absolutely symlink to the location of the prebuilt libraries so that game projects stay lightweight and can be moved easily. A regular cocos2d-x game project directory can be half a gigabyte or more. A RapidGame project is a couple megabytes.</p>
 <h2 id="what-s-the-difference-between-a-rapidgame-project-and-a-normal-cocos2d-x-project-">What’s the difference between a RapidGame project and a “normal” cocos2d-x project?</h2>
 
         
       
         
-        <p>A project created by RapidGame uses exactly the same underlying API as cocos2d-x / cocos2d-js. One can still get the running scene, for example, like this <code>cc.director.getRunningScene()</code> (Javascript) or this <code>cocos2d::Director::getInstance()-&gt;getRunningScene()</code> (C++).</p>
+        <p>A project created by RapidGame uses exactly the same underlying API as cocos2d-x / cocos2d-js. One can still get the running scene, for example, like this <code>cocos2d::Director::getInstance()-&gt;getRunningScene()</code> (C++) or this <code>cc.director.getRunningScene()</code> (Javascript).</p>
 <p>RapidGame extends upon the cocos2d-js API with the <a href="http://htmlpreview.github.io/?https://github.com/NatWeiss/RapidGame/blob/master/docs/Game.html">Game</a> object. This object provides methods which are commonly used in game development, but were missing from cocos2d-js at the time of writing. <code>Game.rand(5)</code>, for example, returns a random integer between 0 and 5.</p>
-<p>While the underlying API stays the same, the file / folder structure of a project created by RapidGame is different than that of a “normal” cocos2d-js project. A normal project is created with the <code>cocos</code> command:</p>
+<p>While the underlying API stays the same, the file / folder structure of a project created by RapidGame is different than that of a “normal” cocos2d-x project. A normal project is created with the <code>cocos</code> command:</p>
 
         
           <div class='highlight'><pre>cocos <span class="hljs-keyword">new</span> -p com.mycompany.mygame -l js -d MyGame</pre></div>
@@ -246,60 +290,18 @@ tools/ - Miscellaneous tools</pre></div>
         
       
         
-        <p>By contrast, a RapidGame project is only 2 MB (because it symlinks to cocos2d-js and the prebuilt cocos2d-x libraries) and has a more organized folder structure:</p>
+        <p>By contrast, a RapidGame project is only 2 MB (because it symlinks to the prebuilt cocos2d-x libraries) and has a more organized folder structure:</p>
 
         
           <div class='highlight'><pre>Assets/ - The game assets <span class="hljs-keyword">and</span> Javascript files
-lib/ - A symlink to the prebuilt cocos2d-x libraries <span class="hljs-keyword">and</span> cocos2d-js
+lib/ - A symlink to the prebuilt cocos2d-x libraries
 Projects/ - The project files <span class="hljs-keyword">for</span> the game
 Server/ - The server which provides an API <span class="hljs-keyword">and</span> serves files <span class="hljs-keyword">for</span> the HTML5 version <span class="hljs-keyword">of</span> the game (cocos2d-js only)</pre></div>
         
       
         
-        <p>Inside the project files there are other differences. Take the Xcode project as an example. The normal cocos2d-js project is setup to build all of cocos2d-x, depends on several sub-projects (Targets &gt; Build Phases &gt; Target Dependencies) and references several <strong>User Header Search Paths</strong> (example: <code>$(SRCROOT)/../../js-bindings/cocos2d-x</code>) within the <code>frameworks</code> folder.</p>
+        <p>Inside the project files there are other differences. Take the Xcode project as an example. The normal cocos2d-x project is setup to build all of cocos2d-x, depends on several sub-projects (Targets &gt; Build Phases &gt; Target Dependencies) and references several <strong>User Header Search Paths</strong> (example: <code>$(SRCROOT)/../../js-bindings/cocos2d-x</code>) within the <code>frameworks</code> folder.</p>
 <p>The RapidGame project is more efficient, relying on the symlinked <code>lib</code> folder. Instead of depending on sub-projects and rebuilding all of cocos2d-x, it uses two <strong>Other Linker Flags</strong> to include the prebuilt cocos2d-x libraries (<code>-lcocos2dx-prebuilt</code>) and specifies an additional <strong>Library Search Path</strong> in which to find them: <code>$(SRCROOT)/../lib/cocos2d/x/lib/$(CONFIGURATION)-iOS/$(PLATFORM_NAME)</code>. <strong>User Header Search Paths</strong> also use the symlink, <code>$(SRCROOT)/../lib/cocos2d/x/include/cocos</code>, so that by simply swapping the <code>lib</code> folder one can upgrade to a newer prebuilt version of cocos2d-js/x.</p>
-<h2 id="more-about-prebuilding">More About Prebuilding</h2>
-
-        
-      
-        
-        <p>The command to prebuild cocos2d-x static libraries used by cocos2d-js on native platforms:</p>
-
-        
-          <div class='highlight'><pre>rapidgame prebuild</pre></div>
-        
-      
-        
-        <p>When the command is finished, you’ll have a directory (<code>~/Library/Developer/RapidGame</code> on Mac and <code>C:\Users\[USERNAME]\AppData\Roaming\npm\node_modules\rapidgame</code> on Windows) with include files, java files, make files, Javascript bindings and library files for iOS, Mac, Android and Windows (varies depending on host OS) in Debug and Release mode for all available architectures.</p>
-<h2 id="development-platforms">Development Platforms</h2>
-
-        
-      
-        
-        <p>RapidGame can be used on any platform that is capable of running Node.js.</p>
-<p>The cocos2d-x library prebuilder currently works on the following development platforms:</p>
-<ul>
-<li>Mac</li>
-<li>Windows</li>
-</ul>
-<p>Linux support is planned.</p>
-<h2 id="android-notes">Android Notes</h2>
-
-        
-      
-        
-        <p>A detailed guide has been written specifically for how to build Android projects using RapidGame. You can read it <a href="http://htmlpreview.github.io/?https://github.com/NatWeiss/RapidGame/blob/master/templates/cocos2dx/TwoScene/Projects/android/README.html">here</a>, or alternatively find it in your cocos2d-x/js project as <code>[APPNAME]/Projects/android/README.html</code>.</p>
-<h2 id="windows-notes">Windows Notes</h2>
-
-        
-      
-        
-        <ol>
-<li>The <code>rapidgame create</code> command must be run in an admin console. This allows symlinks to be properly created, otherwise what should be symlinks will become regular folders and the command will fail.</li>
-<li>To compile the Android libraries successfully, <code>rapidgame prebuild</code> must be run via <a href="https://www.cygwin.com">Cygwin</a>. Read about all the specific requirements in the <a href="http://htmlpreview.github.io/?https://github.com/NatWeiss/RapidGame/blob/master/templates/cocos2dx/TwoScene/Projects/android/README.html">Android README</a>, or <a href="https://www.youtube.com/watch?v=5PWEtjvhX1k">watch the video</a> instead.</li>
-<li>Windows cannot build the cocos2d-x libraries or cocos2d-js bindings for iOS and Mac. If you want to use RapidGame to develop for these platforms, you must use a Mac.</li>
-</ol>
-<p>Thanks to <a href="https://github.com/samoersnaes">Samuel Ørsnæs</a> for getting the Android build working in Windows!</p>
 <h2 id="custom-cocos2d-x-js-projects">Custom cocos2d-x/js Projects</h2>
 
         
@@ -347,11 +349,11 @@ Server/ - The server which provides an API <span class="hljs-keyword">and</span>
 </li>
 <li><p>Use the name of your game throughout your game project. RapidGame will automatically search and replace the title in most types of source and project files.</p>
 </li>
-<li><p>If you’d like a file or directory renamed, make sure it starts with your game’s title. For example, if you have <code>ZombieMatrix.xcodeproj</code> it will get changed to <code>MyNewGame.xcodeproj</code>.</p>
+<li><p>If you prefer for a file or directory renamed, make sure it starts with your game’s title. For example, if you have <code>ZombieMatrix.xcodeproj</code> it will get changed to <code>MyNewGame.xcodeproj</code>.</p>
 </li>
-<li><p>Whenever there’s an instance of your package name, replace the beginning with <code>com.wizardfu.</code>, lowercase the title and remove any punctuation, so <code>com.mycompany.zombierevolution</code> becomes <code>com.wizardfu.zombierevolution</code>. This will get changed by the templating system when creating new game projects.</p>
+<li><p>Whenever there is an instance of your package name, replace the beginning with <code>com.wizardfu.</code>, lowercase the title and remove any punctuation, so <code>com.mycompany.zombierevolution</code> becomes <code>com.wizardfu.zombierevolution</code>. This will get changed by the templating system when creating new game projects.</p>
 </li>
-<li><p>Copy your game template to the <code>templates/&lt;engine&gt;</code> directory of RapidGame. On Mac / Linux this is <code>/usr/local/lib/node_modules/rapidgame</code>. You can use the <code>npm prefix -g</code> command to determine where Node modules are installed on your system. If you’re on Mac OS X, the template is for Unity and it’s called “ZombieMatrix” then the final directory would be <code>/usr/local/lib/node_modules/rapidgame/templates/unity/ZombieMatrix/</code>.</p>
+<li><p>Copy your game template to the <code>templates/&lt;engine&gt;</code> directory of RapidGame. On Mac / Linux this is <code>/usr/local/lib/node_modules/rapidgame</code>. You can use the <code>npm prefix -g</code> command to determine where Node modules are installed on your system. If you’re on Mac OS X, the template is for Unity and it is called “ZombieMatrix” then the final directory would be <code>/usr/local/lib/node_modules/rapidgame/templates/unity/ZombieMatrix/</code>.</p>
 </li>
 <li><p>Your template is now ready for testing. Try it out like this: <code>rapidgame create &lt;engine&gt; MyNewGame com.mycompany.mynewgame -t &quot;ZombieMatrix&quot;</code>.</p>
 </li>
