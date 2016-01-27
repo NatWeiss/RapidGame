@@ -229,7 +229,16 @@ var clean = function(directory) {
 		for (j = 0; j < globbed.length; j += 1) {
 			files.push(globbed[j]);
 		}
-		files.push(path.join(cmd.src, "build", configs[i] + ".win32"));
+	}
+
+	// Add Windows dirs to list.
+	globbed = glob.sync(path.join(cmd.src, "**", "Debug.win32"));
+	for (j = 0; j < globbed.length; j += 1) {
+		files.push(globbed[j]);
+	}
+	globbed = glob.sync(path.join(cmd.src, "**", "Release.win32"));
+	for (j = 0; j < globbed.length; j += 1) {
+		files.push(globbed[j]);
 	}
 
 	// Remove dirs.
