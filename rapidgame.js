@@ -1125,7 +1125,7 @@ var prebuildAndroid = function(platform, config, arch, callback) {
 		dest = path.join(cmd.src, "build", configs[i] + "-Android");
 
 		// Always copy latest Android build files.
-		logBuild("Copying " + src + " to " + dest, true);
+		logBuild("Copying " + src + " to " + dest, false);
 		wrench.mkdirSyncRecursive(dest);
 		//copyGlobbed(src, dest, "build.sh");
 		//copyGlobbed(src, dest, "makefile");
@@ -1168,7 +1168,7 @@ var linkAndroid = function(configArch, callback) {
 		src = path.join(cmd.src, "build", config + "-Android", "obj", "local", arch);
 		dest = path.join(cmd.dest, "cocos2d", "x", "lib", config + "-Android", arch);
 		
-		logBuild("Copying Android libraries from " + src + " to " + dest, true);
+		logBuild("Copying Android libraries from " + src + " to " + dest, false);
 		copyGlobbed(src, dest, "*.a");
 	} else {
 		logBuild("Failed to link Android because couldn't get config and arch from: " + configArch, true);
