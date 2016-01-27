@@ -1080,21 +1080,30 @@ var linkWin = function(config, callback) {
 // prebuild android
 //
 var prebuildAndroid = function(platform, config, arch, callback) {
-	var i, j, src, dest, command, args = [], func, funcArg,
+	var i, j, src, dest, command, args = [], func, funcArg, ndkToolchainVersion = "",
 		configs = (config ? [config] : (cmd.minimal ? ["Debug"] : ["Debug", "Release"])),
-		archs = (cmd.minimal ? ["armeabi"] : ["armeabi", "armeabi-v7a", "x86"]);
+		archs = (cmd.minimal ? ["armeabi"] : ["armeabi", "armeabi-v7a", "x86"]),
+		toolchains = ["4.9", "4.8", "4.7"];
 
-	// Windows requires TERM environment variable (means running from cygwin)
-	if (process.platform === "win32" && !("TERM" in process.env)) {
-		logBuild("Can only build Android on Windows using a cygwin terminal", true);
-		callback();
-		return;
-	}
 	// All platforms require NDK_ROOT environment variable.
 	if (!("NDK_ROOT" in process.env)) {
 		logBuild("Can only build Android with a proper SDK and NDK installation.", true);
 		logBuild("(Missing NDK_ROOT environment variable.)", true);
 		logBuild("See: http://bit.ly/rapidgame-android-readme", true);
+		callback();
+		return;
+	}
+	
+	// Determine which toolchain to use.
+	for (i = 0; i < toolchains.length; i += 1) {
+		if (dirExists(path.join(process.env["NDK_ROOT"], "toolchains", "arm-linux-androideabi-" + toolchains[i]))) {
+			ndkToolchainVersion = toolchains[i];
+			break;
+		}
+	}
+	if (ndkToolchainVersion.length <= 0) {
+		logBuild("No suitable toolchain version found in: " + path.join(process.env["NDK_ROOT"], "toolchains"), true);
+		logBuild("Acceptable versions: " + toolchains.join(", "), true);
 		callback();
 		return;
 	}
@@ -1106,61 +1115,30 @@ var prebuildAndroid = function(platform, config, arch, callback) {
 		src = path.join(cmd.prefix, "src", "proj.android");
 		dest = path.join(cmd.src, "build", configs[i] + "-Android");
 
-		// Always copy latest jni and build.sh and makefile.
+		// Always copy latest Android build files.
 		logBuild("Copying " + src + " to " + dest, true);
 		wrench.mkdirSyncRecursive(dest);
-		copyGlobbed(src, dest, "build.sh");
-		copyGlobbed(src, dest, "makefile");
+		//copyGlobbed(src, dest, "build.sh");
+		//copyGlobbed(src, dest, "makefile");
 		copyGlobbed(path.join(src, "jni"), path.join(dest, "jni"), "*");
 
 		// Set func.
 		func = linkAndroid;
-		funcArg = configs[i];
 
-		if (process.platform === "win32") {
-			// win32 uses make
-			command = "make";
-			args = [];
-			if (cmd.minimal) {
-				args.push(cmd.nostrip ? ["minimal-nostrip"] : ["minimal"]);
-			} else {
-				args.push(cmd.nostrip ? ["nostrip"] : []);
-			}
-			if (!doJSB) {
-				args.push("nojs");
-			}
+		for (j = 0; j < archs.length; j += 1) {
+			// Run the ndk-build.
+			command = path.join(process.env["NDK_ROOT"], "ndk-build" + (process.platform === "win32" ? ".cmd" : ""));
+			args = [
+				"-C", dest,
+				"NDK_TOOLCHAIN_VERSION=" + ndkToolchainVersion,
+				"NDK_MODULE_PATH=" + cmd.src,
+				"APP_PLATFORM=" + "android-18",
+				"APP_ABI=" + archs[j],
+				"CONFIG=" + configs[i],
+				"DO_JS=" + (doJSB ? "1" : "0")
+			];
+			funcArg = configs[i] + "-" + archs[j];
 			builds.push([configs[i], command, dest, args, func, funcArg]);
-
-			//if (cmd.minimal) {
-			//	if (cmd.nostrip) {
-			//		builds.push([command, "non-stripped minimal (Debug armeabi)"]);
-			//	} else {
-			//		builds.push(["minimal (Debug armeabi)"]);
-			//	}
-			//} else {
-			//	if (cmd.nostrip) {
-			//		builds.push(["non-stripped libraries for all platforms"]);
-			//	} else {
-			//		builds.push(["libraries for all platforms"]);
-			//	}
-			//}
-		} else {
-			for (j = 0; j < archs.length; j += 1) {
-				// Mac and Linux use build.sh
-				command = path.join(dest, "build.sh");
-				args = [
-					archs[j],
-					configs[i]
-				];
-				if (cmd.nostrip) {
-					args.push("nostrip");
-				}
-				if (!doJSB) {
-					args.push("nojs");
-				}
-
-				builds.push([configs[i], command, dest, args, func, funcArg]);
-			}
 		}
 	}
 	nextBuild("Android", callback);
@@ -1169,16 +1147,48 @@ var prebuildAndroid = function(platform, config, arch, callback) {
 //
 // link android
 //
-var linkAndroid = function(config, callback) {
-	var dest;
+var linkAndroid = function(configArch, callback) {
+	var a, src, dest, config = "", arch = "";
 	
+	// Copy these prebuilt files.
+	a = configArch.split("-");
+	if (a.length >= 2) {
+		config = a[0];
+		arch = a[1];
+
+		src = path.join(cmd.src, "build", config + "-Android", "obj", "local", arch);
+		dest = path.join(cmd.dest, "cocos2d", "x", "lib", config + "-Android", arch);
+		
+		logBuild("Copying Android libraries from " + src + " to " + dest, true);
+		copyGlobbed(src, dest, "*.a");
+	} else {
+		logBuild("Failed to link Android because couldn't get config and arch from: " + configArch, true);
+	}
+
+	// Copy other prebuilt libs.
 	dest = path.join(cmd.dest, "cocos2d", "x", "lib", "Debug-Android");
-	copyGlobbed(cmd.src, dest, "*.a", "android", 1);
-	
+	copyGlobbed(path.join(cmd.src, "external"), dest, "*.a", "android", 1);
 	dest = path.join(cmd.dest, "cocos2d", "x", "lib", "Release-Android");
-	copyGlobbed(cmd.src, dest, "*.a", "android", 1);
+	copyGlobbed(path.join(cmd.src, "external"), dest, "*.a", "android", 1);
 	
 	callback();
+
+// build.sh used to combine all the .a files into one libcocos2dx-prebuilt.a like this:
+/*
+ar=$(ndk-which ar)
+strip=$(ndk-which strip)
+lib="libcocos2dx-prebuilt.a"
+rm -f ${dest}/${lib}
+for dir in audioengine_static  cocos2dx_internal_static  cocos_extension_static  cocos_ui_static  cocostudio_static  spine_static \
+	box2d_static  cocos2dxandroid_static  cocos_flatbuffers_static  cocosbuilder_static  bullet_static  cocos3d_static \
+	cocos_network_static  cocosdenshion_static  recast_static
+do
+	${ar} rs ${dest}/${lib} $(find ${src}/${dir} -name *.o)
+	if [ "$3" != "nostrip" ]; then
+		${strip} -x ${dest}/${lib}
+	fi
+done
+*/
 };
 
 //
@@ -1743,22 +1753,6 @@ var isWriteableDir = function(dir) {
 	} catch(e) {
 	}
 	return false;
-};
-
-//
-// a function to make paths cygwin-friendly
-//
-var cygwinDir = function(str) {
-	// cygwin needs c:\something => /cygdrive/c/something
-	if (process.platform === "win32" && ("TERM" in process.env)) {
-		str = str.replace(/\\/g, "/");
-		str = str.replace(/c:/i, "/cygdrive/c");
-		str = str.replace(/d:/i, "/cygdrive/d");
-		str = str.replace(/e:/i, "/cygdrive/e");
-		str = str.replace(/f:/i, "/cygdrive/f");
-		str = str.replace(/g:/i, "/cygdrive/g");
-	}
-	return str;
 };
 
 //

@@ -117,13 +117,21 @@ Windows: [Visual Studio](https://www.visualstudio.com/en-us/products/free-develo
 
 Linux: run `cocos2d-x/build/install-deps-linux.sh` and that [Git](http://git-scm.com/downloads) and [Node.js](https://nodejs.org/en/download/) are installed.
 
-Android (any platform): please read the [Android README](http://htmlpreview.github.io/?https://github.com/NatWeiss/RapidGame/blob/master/templates/cocos2dx/TwoScene/Projects/android/README.html) or [watch the video](https://www.youtube.com/watch?v=5PWEtjvhX1k) to find out what you will need for Android development.
+Android (any platform): you'll need to install the Android [SDK](http://developer.android.com/sdk/installing/) and [NDK](http://developer.android.com/tools/sdk/ndk/), then run the SDK Manager and install the latest *Tools*, *Platform Tools* and *Build-tools*. Finally, make sure that the environment variable `NDK_ROOT` is the path to the NDK.
+
+
+Windows Notes
+-------------
+
+1. **The `rapidgame create` or `rapidgame prebuild` command must be run as administrator.** This allows symlinks to be properly created.
+2. If you have freshly installed Visual Studio, then you will need to run it once in order for it to download the necessary build tools.
+3. To prebuild Android libraries, please set the `NDK_ROOT` environment variable. You can do this permanently for all command prompt sessions by going: Computer > Properties > Advanced System Settings > Environment System Variables. Confirm this with `echo %PATH%` or just try to run `ndk-build` from any directory.
 
 
 Updates
 -------
 
-* Coming soon: Linux support. Also can specify cocos2d-x source folder.
+* Jan 27, 2016: Linux support. Can specify cocos2d-x source folder. Simplified Android prebuild so it doesn't require cygwin on Windows.
 * Jan 10, 2016: Updated to cocos2d-x 3.9.
 * Aug 17, 2015: Fixes for Visual Studio 2015.
 * Aug 11, 2015: On Windows, the path to MSBuild.exe, Lib.exe and VCTargetsPath can be set manually in case they cannot be automatically located.
@@ -136,23 +144,6 @@ Updates
 * Feb 7, 2015: Prebuilder updated for cocos2d-js 3.2 final / cocos2d-x 3.3.
 * Dec 28, 2014: Prebuilder updated for cocos2d-js 3.2 rc0 / cocos2d-x 3.3.
 * Aug 14, 2014: Prebuilder updated for cocos2d-js 3.0 rc2 / cocos2d-x 3.2.
-
-
-Windows Notes
--------------
-
-1. **The `rapidgame create` or `rapidgame prebuild` command must be run as administrator.** This allows symlinks to be properly created.
-2. If you have freshly installed Visual Studio, then you will need to run it once in order for it to download the necessary build tools.
-3. To compile the Android libraries successfully, `rapidgame prebuild` must be run via [Cygwin](https://www.cygwin.com). Read about all the specific requirements in the [Android README](http://htmlpreview.github.io/?https://github.com/NatWeiss/RapidGame/blob/master/templates/cocos2dx/TwoScene/Projects/android/README.html), or [watch the video](https://www.youtube.com/watch?v=5PWEtjvhX1k) instead.
-4. Windows cannot build the cocos2d-x libraries or cocos2d-js bindings for iOS and Mac. If you want to use RapidGame to develop for these platforms, you must use a Mac.
-
-Thanks to [Samuel Ørsnæs](https://github.com/samoersnaes) for originally getting the Android build working in Windows.
-
-
-Android Notes
--------------
-
-A detailed guide has been written specifically for how to build Android projects using RapidGame. You can read it [here](http://htmlpreview.github.io/?https://github.com/NatWeiss/RapidGame/blob/master/templates/cocos2dx/TwoScene/Projects/android/README.html), or alternatively find it in your cocos2d-x/js project as `[APPNAME]/Projects/android/README.html`.
 
 
 Eliminate Grunt Work

@@ -1,9 +1,15 @@
-Version 0.9.14 - January 12, 2015
+Version 1.0.0 - January 26, 2016
+
+	Linux support.
+	Can specify cocos2d-x source folder.
+	Simplified Android prebuild so it doesn't require cygwin on Windows.
+
+Version 0.9.14 - January 12, 2016
 
 	Fixed prebuild on Windows.
 	Started automatic detection of whether to prebuild Javascript bindings by checking cocos/base/ccConfig.h.
 
-Version 0.9.13 - January 10, 2015
+Version 0.9.13 - January 10, 2016
 
 	Updated to cocos2d-x 3.9.
 
