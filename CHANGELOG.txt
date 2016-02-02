@@ -1,3 +1,7 @@
+Version 1.0.1 - February 1, 2016
+
+	Fixed cocos2d-x patching.
+
 Version 1.0.0 - January 26, 2016
 
 	Linux support.

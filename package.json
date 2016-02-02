@@ -1,6 +1,6 @@
 {
   "name": "rapidgame",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A cross-platform commandline tool that prebuilds cocos2d-x libraries for Windows, Mac, Linux, Android and iOS. Also a game templating system.",
   "author": {
     "name": "Nathanael Weiss",
@@ -55,8 +55,7 @@
     "CHANGELOG.txt",
     "LICENSE",
     "README.md",
-    "src/cocos2d.patch",
-    "src/proj.android",
-    "src/proj.ios_mac"
+    "src/ccx.patch",
+    "src/proj.android"
   ]
 }

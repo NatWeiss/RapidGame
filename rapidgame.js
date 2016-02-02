@@ -537,12 +537,12 @@ var downloadCocos = function(callback) {
 
 		var globPath = path.join(dir, cocos2dDirGlob),
 			files = glob.sync(globPath),
-			patchSize,
-			cmd;
+			patchSize, src, command;
 		if (!files || files.length !== 1) {
 			logErr("Couldn't glob " + globPath);
 			return;
 		}
+		files[0] = path.normalize(files[0]);
 
 		// Rename extract dir
 		try {
@@ -551,8 +551,14 @@ var downloadCocos = function(callback) {
 
 			// Save downloaded version
 			fs.writeFileSync(downloaded, cocos2dxUrl);
+		} catch(e) {
+			logErr("Couldn't move " + files[0] + " to " + dest);
+			logErr(e);
+		}
 
-			src = path.join(dir, "ccx.patch");
+		// apply patch
+		src = path.join(__dirname, "src", "ccx.patch");
+		try {
 			patchSize = fs.statSync(src).size;
 			if (patchSize > 8) {
 				// Apply patch
@@ -561,12 +567,12 @@ var downloadCocos = function(callback) {
 
 				// for some reason git apply sometimes does not work and produces no output...
 				// (use the patch command instead)
-				cmd = "patch -p1 < ";
+				command = "patch -p1 < ";
 				if (process.platform === "win32") {
-					cmd = "git apply --whitespace=nowarn ";
+					command = "git apply --whitespace=nowarn ";
 				}
-				cmd += '"' + src + '"';
-				exec(cmd, {cwd: dest, env: process.env}, function(err){
+				command += '"' + src + '"';
+				exec(command, {cwd: dest, env: process.env}, function(err){
 					callback();
 				});
 			} else {
@@ -574,7 +580,9 @@ var downloadCocos = function(callback) {
 				callback();
 			}
 		} catch(e) {
-			logErr("Couldn't move " + files[0] + " to " + dest)
+			logErr("Couldn't apply patch: " + src);
+			logErr(e);
+			callback();
 		}
 	});
 };
