@@ -1,3 +1,8 @@
+Version 1.0.2 - February 8, 2016
+
+	When prebuilding cocos2d-x for Linux, it also copies prebuilt static libraries from external/.
+	Fixed project create command.
+
 Version 1.0.1 - February 1, 2016
 
 	Fixed cocos2d-x patching.
