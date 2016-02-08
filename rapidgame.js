@@ -929,7 +929,8 @@ var linkMac = function(configPlatform, callback) {
 // prebuild linux
 //
 var prebuildLinux = function(platform, config, arch, callback) {
-	var i, dir, args, func, funcArg,
+	var i, j, dir, args, func, funcArg,
+		archs = [/*"i386", */"x86_64"], // a second arch would currently clobber the first arch's intermediate files
 		configs = (config ? [config] : (cmd.minimal ? ["Debug"] : ["Debug", "Release"]));
 
 	// Bail if not on Linux.
@@ -941,34 +942,37 @@ var prebuildLinux = function(platform, config, arch, callback) {
 
 	// create builds array
 	builds = [];
-	for (i = 0; i < configs.length; i += 1) {
-		dir = path.join(cmd.src, "build", configs[i] + "-linux");
-		funcArg = configs[i];// + "-Linux";
-		args = [
-			path.join("..", ".."),
-			"-DDEBUG_MODE=" + (configs[i] === "Debug" ? "ON" : "OFF"),
-			//"-DUSE_CHIPMUNK=OFF",
-			//"-DUSE_BOX2D=OFF",
-			//"-DUSE_BULLET=OFF",
-			//"-DUSE_RECAST=OFF",
-			//"-DUSE_WEBP=OFF",
-			"-DBUILD_EXTENSIONS=OFF",
-			"-DBUILD_EDITOR_SPINE=OFF",
-			"-DBUILD_EDITOR_COCOSTUDIO=OFF",
-			"-DBUILD_EDITOR_COCOSBUILDER=OFF",
-			"-DBUILD_CPP_TESTS=OFF",
-			"-DBUILD_LUA_LIBS=OFF",
-			"-DBUILD_LUA_TESTS=OFF",
-			"-DBUILD_JS_TESTS=OFF"
-		];
-		if (doJSB !== false) {
-			args.push("-DBUILD_JS_LIBS=ON");
-		} else {
-			args.push("-DBUILD_JS_LIBS=OFF");
+	for (j = 0; j < archs.length; j += 1) {
+		for (i = 0; i < configs.length; i += 1) {
+			dir = path.join(cmd.src, "build", configs[i] + "-linux");
+			funcArg = configs[i] + "-" + archs[j];
+			args = [
+				path.join("..", ".."),
+				//-DCMAKE_BUILD_TYPE=Debug
+				"-DDEBUG_MODE=" + (configs[i] === "Debug" ? "ON" : "OFF"),
+				//"-DUSE_CHIPMUNK=OFF",
+				//"-DUSE_BOX2D=OFF",
+				//"-DUSE_BULLET=OFF",
+				//"-DUSE_RECAST=OFF",
+				//"-DUSE_WEBP=OFF",
+				"-DBUILD_EXTENSIONS=OFF",
+				"-DBUILD_EDITOR_SPINE=OFF",
+				"-DBUILD_EDITOR_COCOSTUDIO=OFF",
+				"-DBUILD_EDITOR_COCOSBUILDER=OFF",
+				"-DBUILD_CPP_TESTS=OFF",
+				"-DBUILD_LUA_LIBS=OFF",
+				"-DBUILD_LUA_TESTS=OFF",
+				"-DBUILD_JS_TESTS=OFF"
+			];
+			if (doJSB !== false) {
+				args.push("-DBUILD_JS_LIBS=ON");
+			} else {
+				args.push("-DBUILD_JS_LIBS=OFF");
+			}
+			wrench.mkdirSyncRecursive(dir);
+			builds.push([configs[i], "cmake", dir, args, false, false]);
+			builds.push([configs[i], "make", dir, [], linkLinux, funcArg]);
 		}
-		wrench.mkdirSyncRecursive(dir);
-		builds.push([configs[i], "cmake", dir, args, false, false]);
-		builds.push([configs[i], "make", dir, [], linkLinux, funcArg]);
 	}
 	nextBuild(platform, callback);
 };
@@ -976,15 +980,29 @@ var prebuildLinux = function(platform, config, arch, callback) {
 //
 // link linux
 //
-var linkLinux = function(config, callback) {
-	var libDir = path.join(cmd.src, "build", config + "-linux", "lib"),
-		dest = path.join(cmd.dest, "cocos2d", "x", "lib", config + "-Linux", "x86");
+var linkLinux = function(configArch, callback) {
+	var a, src, dest, config = "", arch = "", bits = "";
 
-	// make output dir
-	wrench.mkdirSyncRecursive(dest);
+	// Copy these prebuilt files.
+	a = configArch.split("-");
+	if (a.length >= 2) {
+		config = a[0];
+		arch = a[1];
+		bits = (arch === "x86_64" ? "64-bit" : "32-bit");
 
-	// just copy static libraries
-	copyGlobbed(libDir, dest, "*.a");
+		// copy libcocos2d.a
+		src = path.join(cmd.src, "build", config + "-linux", "lib");
+		dest = path.join(cmd.dest, "cocos2d", "x", "lib", config + "-Linux", arch);
+		logBuild("Copying Linux libraries from " + src + " to " + dest, false);
+		copyGlobbed(src, dest, "*.a");
+
+		// copy other prebuilt libraries
+		src = path.join(cmd.src, "external");
+		logBuild("Copying Linux libraries from " + src + " to " + dest, false);
+		copyGlobbed(src, dest, "*.a", path.join("prebuilt", "linux", bits), "none");
+	} else {
+		logBuild("Failed to link Linux because couldn't get config and arch from: " + configArch, true);
+	}
 	
 	// remember to call callback when finished
 	callback();
@@ -1464,7 +1482,9 @@ var copyGlobbed = function(src, dest, pattern, grep, depth) {
 		}
 		file = path.relative(src, files[i]);
 		//logBuild(path.relative(cmd.prefix, files[i]) + " -> " + path.relative(cmd.prefix, path.join(dest, file)));
-		if (depth == 1) {
+		if (depth === "none") {
+			file = path.basename(file);
+		} else if (depth == 1) {
 			file = path.join(path.basename(path.dirname(file)), path.basename(file));
 		}
 		file = path.join(dest, file);
