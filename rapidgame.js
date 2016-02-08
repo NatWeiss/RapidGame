@@ -271,8 +271,9 @@ var showPrefix = function(directory) {
 //
 // Create project.
 //
+
 var createProject = function(engine, name, package) {
-	var dir = path.join(cmd.folder, name),
+	var dir = path.join(process.cwd(), name),
 		src,
 		dest,
 		fileCount,
