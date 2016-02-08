@@ -1000,6 +1000,9 @@ var linkLinux = function(configArch, callback) {
 		src = path.join(cmd.src, "external");
 		logBuild("Copying Linux libraries from " + src + " to " + dest, false);
 		copyGlobbed(src, dest, "*.a", path.join("prebuilt", "linux", bits), "none");
+		src = path.join(cmd.src, "external");
+		logBuild("Copying Linux libraries from " + src + " to " + dest, false);
+		copyGlobbed(src, dest, "*.so", path.join("prebuilt", bits), "none");
 	} else {
 		logBuild("Failed to link Linux because couldn't get config and arch from: " + configArch, true);
 	}
