@@ -1616,7 +1616,7 @@ var checkUpdate = function() {
 						if (cmdName.indexOf("pro") >= 0) {
 							console.log("\tcd " + __dirname + " && npm update");
 						} else {
-							console.log("\tsudo npm update " + cmdName + " -g");
+							console.log("\t" + (process.platform === "win32" ? "" : "sudo ") + "npm update " + cmdName + " -g");
 						}
 						console.log(" ");
 					}
