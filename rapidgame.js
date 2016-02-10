@@ -30,6 +30,9 @@ var http = require("http"),
 	libExePath,
 	vcTargetsPath,
 	doJSB = false,
+	doPhysics = false,
+	doNavmesh = false,
+	doWebp = false,
 	defaults = {
 		engine: "cocos2dx",
 		template: "TwoScene",
@@ -717,7 +720,13 @@ var runPrebuild = function(platform, config, arch, callback) {
 		var configDest = path.join(cmd.dest, "cocos2d", "x", "include", "cocos", "base", "ccConfig.h"),
 			ccConfig = fs.readFileSync(configDest).toString().trim();
 		doJSB = (ccConfig.indexOf("CC_ENABLE_SCRIPT_BINDING 1") >= 0);
-		console.log("Prebuild Javascript bindings: " + (doJSB ? "yes" : "no"));
+		doPhysics = (ccConfig.indexOf("CC_USE_PHYSICS 1") >= 0);
+		doNavmesh = (ccConfig.indexOf("CC_USE_NAVMESH 1") >= 0);
+		doWebp = (ccConfig.indexOf("CC_USE_WEBP  1") >= 0);
+		console.log("Prebuild options:");
+		console.log("  Javascript bindings: " + (doJSB ? "yes" : "no"));
+		console.log("  Physics: " + (doPhysics ? "yes" : "no"));
+		console.log("  WebP: " + (doWebp ? "yes" : "no"));
 	} catch(e) {
 	}
 
@@ -948,13 +957,8 @@ var prebuildLinux = function(platform, config, arch, callback) {
 			funcArg = configs[i] + "-" + archs[j];
 			args = [
 				path.join("..", ".."),
-				//-DCMAKE_BUILD_TYPE=Debug
 				"-DDEBUG_MODE=" + (configs[i] === "Debug" ? "ON" : "OFF"),
-				//"-DUSE_CHIPMUNK=OFF",
-				//"-DUSE_BOX2D=OFF",
-				//"-DUSE_BULLET=OFF",
-				//"-DUSE_RECAST=OFF",
-				//"-DUSE_WEBP=OFF",
+				"-DBUILD_SHARED_LIBS=OFF",
 				"-DBUILD_EXTENSIONS=OFF",
 				"-DBUILD_EDITOR_SPINE=OFF",
 				"-DBUILD_EDITOR_COCOSTUDIO=OFF",
@@ -962,12 +966,31 @@ var prebuildLinux = function(platform, config, arch, callback) {
 				"-DBUILD_CPP_TESTS=OFF",
 				"-DBUILD_LUA_LIBS=OFF",
 				"-DBUILD_LUA_TESTS=OFF",
-				"-DBUILD_JS_TESTS=OFF"
+				"-DBUILD_JS_TESTS=OFF",
+				"-DUSE_BOX2D=OFF"
+				// USE_PREBUILT_LIBS=ON (use default here)
 			];
 			if (doJSB !== false) {
 				args.push("-DBUILD_JS_LIBS=ON");
 			} else {
 				args.push("-DBUILD_JS_LIBS=OFF");
+			}
+			if (doPhysics !== false) {
+				args.push("-DUSE_CHIPMUNK=ON");
+				args.push("-DUSE_BULLET=ON");
+			} else {
+				args.push("-DUSE_CHIPMUNK=OFF");
+				args.push("-DUSE_BULLET=OFF");
+			}
+			if (doNavmesh !== false) {
+				args.push("-DUSE_RECAST=ON");
+			} else {
+				args.push("-DUSE_RECAST=OFF");
+			}
+			if (doWebp !== false) {
+				args.push("-DUSE_WEBP=ON");
+			} else {
+				args.push("-DUSE_WEBP=OFF");
 			}
 			wrench.mkdirSyncRecursive(dir);
 			builds.push([configs[i], "cmake", dir, args, false, false]);
