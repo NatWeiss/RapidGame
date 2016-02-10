@@ -1,3 +1,8 @@
+Version 1.0.3 - February 9, 2016
+
+	Linux prebuild is smart enough to not build physics, bullet, recast and webp libs depending on ccConfig.h.
+	Linux prebuild copies .so files.
+
 Version 1.0.2 - February 8, 2016
 
 	When prebuilding cocos2d-x for Linux, it also copies prebuilt static libraries from external/.
