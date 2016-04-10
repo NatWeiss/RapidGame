@@ -22,14 +22,14 @@ doc:
 ver = cocos2d-x-3.9
 patch:
 	mkdir -p /tmp/ccx/cocos2d-x
-	cd /tmp/ccx/cocos2d-x && cp ~/Downloads/${ver}.zip . && unzip ${ver}.zip && rm ${ver}.zip
+	cd /tmp/ccx/cocos2d-x && cp ~/Downloads/${ver}.zip . && unzip -q ${ver}.zip && rm ${ver}.zip
 	#cd /tmp/ccx && unzip ${ver}.zip && mv ${ver} cocos2d-x && rm ${ver}.zip
 	find /tmp/ccx/cocos2d-x -name .gitignore -delete
 	#find /tmp/ccx/cocos2d-x -type f -exec chmod 644 {} +
 	git init /tmp/ccx/cocos2d-x
 	cd /tmp/ccx/cocos2d-x && git add * && git commit -a -m initial
 	rm -rf /tmp/ccx/cocos2d-x/plugin/plugins/facebook/proj.ios/FacebookSDK.framework
-	cp -afv src/cocos2d-x/* /tmp/ccx/cocos2d-x/
+	cp -af src/cocos2d-x/* /tmp/ccx/cocos2d-x/
 	cd /tmp/ccx/cocos2d-x && git -c core.filemode=false diff > patch # && git diff --staged --binary >> patch
 	mv /tmp/ccx/cocos2d-x/patch ./cocos2d.patch
 	rm -rf /tmp/ccx

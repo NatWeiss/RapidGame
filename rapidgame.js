@@ -6,6 +6,7 @@
 var http = require("http"),
 	path = require("path-extra"),
 	fs = require("fs"),
+	os = require("os"),
 	cmd = require("commander"),
 	replace = require("replace"),
 	download = require("download"),
@@ -994,7 +995,7 @@ var prebuildLinux = function(platform, config, arch, callback) {
 			}
 			wrench.mkdirSyncRecursive(dir);
 			builds.push([configs[i], "cmake", dir, args, false, false]);
-			builds.push([configs[i], "make", dir, [], linkLinux, funcArg]);
+			builds.push([configs[i], "make", dir, ["-j", parseInt(Math.max(4, os.cpus.length * 1.5))], linkLinux, funcArg]);
 		}
 	}
 	nextBuild(platform, callback);
@@ -1853,6 +1854,7 @@ module.exports = {
 
 //
 //  To-do:
+//   - Use latest instead of iPhone 6s
 //   - Skip release build for iphonesimulator.
 //   - Fix Mac project name search and replace so names with spaces work. (It used to...)
 //   - Finish orientation option:
