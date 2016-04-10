@@ -1490,7 +1490,10 @@ var copyRecursive = function(src, dest, filter, overwrite) {
 		options.exclude = excludeFilter;
 	}
 	copyCount = 0;
-	wrench.copyDirSyncRecursive(src, dest, options);
+	try {
+		wrench.copyDirSyncRecursive(src, dest, options);
+	} catch (e) {
+	}
 	return copyCount;
 };
 
@@ -1502,7 +1505,10 @@ var copyGlobbed = function(src, dest, pattern, grep, depth) {
 	pattern = path.join("**", pattern);
 	logBuild("  " + path.relative(cmd.prefix, path.join(src, pattern)) + " => " + path.relative(cmd.prefix, dest), cmd.verbose);
 
-	files = glob.sync(path.join(src, pattern));
+	try {
+		files = glob.sync(path.join(src, pattern));
+	} catch(e) {
+	}
 	for (i = 0; i < files.length; i += 1) {
 		if (grep && files[i].indexOf(grep) < 0) {
 			continue;
