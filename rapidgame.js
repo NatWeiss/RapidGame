@@ -1439,7 +1439,7 @@ var getLibExePath = function(cb) {
 				logBuild("LIB: " + libExePath, true);
 				cb(true);
 			} else {
-				console.log("Unable to locate lib.exe. Please set the contents of the following file to the absolute path to lib.exe:\n\n\t" + savePath + "\n\nExample: " + bases[0] + names[0]);
+				console.log("Unable to locate lib.exe. Please set the contents of the following file to the absolute path to lib.exe:\n\n\t" + savePath + "\n\nExample: " + bases[0] + names[0] + "lib.exe");
 				cb();
 			}
 		};
