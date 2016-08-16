@@ -6,7 +6,6 @@
 var http = require("http"),
 	path = require("path-extra"),
 	fs = require("fs"),
-	os = require("os"),
 	cmd = require("commander"),
 	replace = require("replace"),
 	download = require("download"),
@@ -1110,6 +1109,8 @@ var linkWin = function(config, callback) {
 	// copy dlls and finish creating command
 	//copyGlobbed(path.join(src, "external", "lua", "luajit", "prebuilt", "win32"), dest, "*.dll");
 	copyGlobbed(src, dest, "*.dll");
+	copyGlobbed(src, dest, "*.pdb");
+	copyGlobbed(src, dest, "*.exp");
 	copyGlobbed(src, dest, "glfw3.lib"); // possibly because of the new duplicate -2015.lib files, this is necessary...
 	copyGlobbed(src, dest, "glfw3-2015.lib");
 	copyGlobbed(src, dest, "libchipmunk.lib");
@@ -1476,7 +1477,6 @@ var getLibExePath = function(cb) {
 //
 var copyRecursive = function(src, dest, filter, overwrite) {
 	logBuild("cp -r " + path.relative(cmd.prefix, src) + " " + path.relative(cmd.prefix, dest), cmd.verbose);
-	
 	// copy using wrench
 	overwrite = overwrite || false;
 	var options = {
@@ -1504,10 +1504,10 @@ var copyGlobbed = function(src, dest, pattern, grep, depth) {
 	var i, j, file, files;
 	pattern = path.join("**", pattern);
 	logBuild("  " + path.relative(cmd.prefix, path.join(src, pattern)) + " => " + path.relative(cmd.prefix, dest), cmd.verbose);
-
 	try {
 		files = glob.sync(path.join(src, pattern));
 	} catch(e) {
+		logBuild(e, true);
 	}
 	for (i = 0; i < files.length; i += 1) {
 		if (grep && files[i].indexOf(grep) < 0) {
@@ -1860,7 +1860,6 @@ module.exports = {
 
 //
 //  To-do:
-//   - Use latest instead of iPhone 6s
 //   - Skip release build for iphonesimulator.
 //   - Fix Mac project name search and replace so names with spaces work. (It used to...)
 //   - Finish orientation option:
