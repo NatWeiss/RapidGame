@@ -21,4 +21,4 @@ msbuildpath.txt
 vctargetspath.txt
 RapidGame.xcodeproj
 /current
-
+/lib/

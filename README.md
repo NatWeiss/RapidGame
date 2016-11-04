@@ -111,11 +111,11 @@ The cocos2d-x library prebuilder currently works on the following development pl
 Requirements
 ------------
 
-Mac: Xcode 5 or newer, [Git](http://git-scm.com/downloads) and [Node.js](https://nodejs.org/en/download/).
+Mac: Xcode 5 or newer, and [Node.js](https://nodejs.org/en/download/).
 
-Windows: [Visual Studio](https://www.visualstudio.com/en-us/products/free-developer-offers-vs.aspx) 2012 or newer, [Git](http://git-scm.com/downloads), and [Node.js](https://nodejs.org/en/download/). Read the [Windows Notes](#windows-notes) for additional notes you should be aware of.
+Windows: [Visual Studio](https://www.visualstudio.com/en-us/products/free-developer-offers-vs.aspx) 2012 or newer, and [Node.js](https://nodejs.org/en/download/). Read the [Windows Notes](#windows-notes) for additional notes you should be aware of.
 
-Linux: run `cocos2d-x/build/install-deps-linux.sh` and that [Git](http://git-scm.com/downloads) and [Node.js](https://nodejs.org/en/download/) are installed.
+Linux: run `cocos2d-x/build/install-deps-linux.sh` and ensure that [Node.js](https://nodejs.org/en/download/) is installed.
 
 Android (any platform): you'll need to install the Android [SDK](http://developer.android.com/sdk/installing/) and [NDK](http://developer.android.com/tools/sdk/ndk/), then run the SDK Manager and install the latest *Tools*, *Platform Tools* and *Build-tools*. Finally, make sure that the environment variable `NDK_ROOT` is the path to the NDK.
 
@@ -131,6 +131,7 @@ Windows Notes
 Updates
 -------
 
+* Nov 3, 2016: Removed the feature of automatically downloading cocos2d-x source in favor of using the source folder specified by the user.
 * Jan 27, 2016: Linux support. Can specify cocos2d-x source folder. Simplified Android prebuild so it doesn't require cygwin on Windows.
 * Jan 10, 2016: Updated to cocos2d-x 3.9.
 * Aug 17, 2015: Fixes for Visual Studio 2015.

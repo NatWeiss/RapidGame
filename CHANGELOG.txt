@@ -1,3 +1,8 @@
+Version 1.0.5 - Nov 3, 2016
+
+	Removed the feature to automatically download cocos2d-x source in favor of using the source folder specified by the user.
+	Required node modules more light-weight.
+
 Version 1.0.3 - February 9, 2016
 
 	Linux prebuild is smart enough to not build physics, bullet, recast and webp libs depending on ccConfig.h.

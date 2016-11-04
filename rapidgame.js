@@ -8,17 +8,12 @@ var http = require("http"),
 	fs = require("fs"),
 	cmd = require("commander"),
 	replace = require("replace"),
-	download = require("download"),
 	glob = require("glob"),
 	wrench = require("wrench"),
 	child_process = require("child_process"),
 	packageJson = JSON.parse(fs.readFileSync(path.join(__dirname, "package.json"))),
 	cmdName = packageJson.name,
 	version = packageJson.version,
-	cocos2dxVer = "3.9",
-	cocos2dxUrl = "http://cdn.cocos2d-x.org/cocos2d-x-3.9.zip",
-	extractName = "cocos2d-x-3.9", // leave blank if cocos2d-x is properly zipped within a 'cocos2d-x/' folder
-	cocos2dDirGlob = "*ocos2d-x*",
 	category,
 	engines = [],
 	templates = [],
@@ -33,6 +28,7 @@ var http = require("http"),
 	doPhysics = false,
 	doNavmesh = false,
 	doWebp = false,
+	defaultDest = "lib",
 	defaults = {
 		engine: "cocos2dx",
 		template: "TwoScene",
@@ -40,7 +36,7 @@ var http = require("http"),
 		dest: process.cwd(),
 		prefix: path.join(path.homedir(), ".rapidgame"),
 		src: path.join(path.homedir(), ".rapidgame", "src", "cocos2d-x"),
-		dest: path.join(path.homedir(), ".rapidgame", cocos2dxVer),
+		dest: path.join(path.homedir(), ".rapidgame", defaultDest),
 		orientation: orientations[0]
 	};
 
@@ -74,24 +70,24 @@ var run = function(args) {
 	args = args || process.argv;
 	cmd
 		.version(version)
-		.option("-v, --verbose", "be verbose", false)
+		.option("-s, --src <path>", "cocos2d-x source path [" + defaults.src + "]", defaults.src)
+		.option("-d, --dest <name>", "destination folder name [" + defaultDest + "]", defaults.dest)
 		.option("-p, --prefix <path>", "rapidgame home [" + defaults.prefix + "]", defaults.prefix)
-		.option("-s, --src <path>", "cocos2d-x home [" + defaults.src + "]", defaults.src)
-		.option("-d, --dest <name>", "library destination [" + defaults.dest + "]", defaults.dest)
 		.option("-t, --template <name>", "template [" + defaults.template + "]", defaults.template)
 		.option("-f, --folder <path>", "output folder of created project [" + defaults.dest + "]", defaults.dest)
+		.option("-v, --verbose", "be verbose", false)
 		.option("--minimal", "prebuild only debug libraries and use minimal architectures", false)
 		//.option("--i386", "on iphonesimulator, build i386 instead of x86_64", false)
 		.option("--nostrip", "do not strip the prebuilt libraries", false);
 
 	cmd
-		.command("create <engine> <project-name> <package-name>")
-		.description("     Create a new cross-platform game project")
-		.action(createProject);
-	commands.push("create");
+		.command("show")
+		.description("                            Show where static libraries and headers reside")
+		.action(showPrefix);
+	commands.push("show");
 
 	cmd
-		.command("prebuild [platform]")
+		.command("prebuild <platform>")
 		.description("                            Prebuild cocos2d-x static libraries and headers")
 		.action(prebuild);
 	commands.push("prebuild");
@@ -103,16 +99,16 @@ var run = function(args) {
 	commands.push("clean");
 
 	cmd
-		.command("show")
-		.description("                            Show where static libraries and headers reside")
-		.action(showPrefix);
-	commands.push("show");
-
-	cmd
 		.command("init <directory>")
 		.description("                            Create a symlink named 'lib' to the static libraries")
 		.action(init);
 	commands.push("init");
+
+	cmd
+		.command("create <engine> <project-name> <package-name>")
+		.description("     Create a new cross-platform game project")
+		.action(createProject);
+	commands.push("create");
 
 	cmd.on("--help", usageExamples);
 
@@ -171,17 +167,22 @@ var checkPrefix = function() {
 var resolveDirs = function() {
 	if (cmd.prefix !== defaults.prefix) {
 		cmd.prefix = path.resolve(cmd.prefix);
-		if (!dirExists(cmd.prefix)) {
-			logBuild("Invalid prefix dir: " + cmd.prefix, true);
-			return false;
-		}
+	}
+	if (!dirExists(cmd.prefix)) {
+		logBuild("Invalid prefix dir: " + cmd.prefix, true);
+		return false;
 	}
 	if (cmd.src !== defaults.src) {
 		cmd.src = path.resolve(cmd.src);
-		if (!dirExists(cmd.src)) {
+	}
+	if (!dirExists(cmd.src)) {
+		if (cmd.src !== defaults.src) {
 			logBuild("Invalid src dir: " + cmd.src, true);
-			return false;
+		} else {
+			logBuild("Please specify a source directory with the -s option.", true);
+			//usage();
 		}
+		return false;
 	}
 	if (cmd.dest !== defaults.dest) {
 		cmd.dest = path.resolve(path.join(cmd.prefix, cmd.dest));
@@ -453,11 +454,9 @@ var prebuild = function(platform, config, arch) {
 		logReport("start");
 		
 		copySrcFiles(function() {
-			downloadCocos(function() {
-				setupPrebuild(platform, function() {
-					runPrebuild(platform, config, arch, function() {
-						logReport("done");
-					});
+			setupPrebuild(platform, function() {
+				runPrebuild(platform, config, arch, function() {
+					logReport("done");
 				});
 			});
 		});
@@ -478,117 +477,6 @@ var copySrcFiles = function(callback) {
 	}
 
 	callback();
-};
-
-//
-// download cocos2d-x source
-//
-var downloadCocos = function(callback) {
-	var dir = path.join(cmd.prefix, "src"),
-		src,
-		dest = cmd.src,
-		downloaded = path.join(cmd.prefix, "src", "downloaded.txt"),
-		doDownload = !dirExists(dest),
-		ver;
-
-	// no need to download if has a custom src
-	if (cmd.src !== defaults.src) {
-		callback();
-		return;
-	}
-
-	// check downloaded version
-	try{
-		ver = fs.readFileSync(downloaded).toString().trim();
-	} catch(e) {
-	}
-	if (ver !== cocos2dxUrl) {
-		if (typeof ver !== "undefined") {
-			logBuild("Current cocos2d-x URL: " + cocos2dxUrl, true);
-			logBuild("Downloaded cocos2d-x URL: " + ver, true);
-			logBuild("Re-downloading", true);
-		}
-		doDownload = true;
-		try {
-			wrench.rmdirSyncRecursive(dest, true);
-		} catch(e) {
-			logBuild(e, cmd.verbose);
-			// try again
-			try {wrench.rmdirSyncRecursive(dest, true);} catch(e) {}
-		}
-	}
-
-	// no need to download
-	if (!doDownload) {
-		callback();
-		return;
-	}
-
-	// warn about git existing
-	src = path.join(cmd.prefix, ".git");
-	if (dirExists(src)) {
-		logBuild("WARNING: Directory " + src + " may prevent cocos2d-x from being patched with git apply", true);
-	}
-	
-	// copy patch
-	copyGlobbed(path.join(__dirname, "src"), dir, "*.patch");
-
-	// download
-	downloadUrl(cocos2dxUrl, dir, function(success) {
-		if (!success) {
-			return;
-		}
-
-		var globPath = path.join(dir, cocos2dDirGlob),
-			files = glob.sync(globPath),
-			patchSize, src, command;
-		if (!files || files.length !== 1) {
-			logErr("Couldn't glob " + globPath);
-			return;
-		}
-		files[0] = path.normalize(files[0]);
-
-		// Rename extract dir
-		try {
-			logBuild("Moving " + files[0] + " to " + dest, true);
-			fs.renameSync(files[0], dest);
-
-			// Save downloaded version
-			fs.writeFileSync(downloaded, cocos2dxUrl);
-		} catch(e) {
-			logErr("Couldn't move " + files[0] + " to " + dest);
-			logErr(e);
-		}
-
-		// apply patch
-		src = path.join(__dirname, "src", "ccx.patch");
-		try {
-			patchSize = fs.statSync(src).size;
-			if (patchSize > 8) {
-				// Apply patch
-				// (see comments at the end of this file for how to create the patch)
-				logBuild("Applying patch file: " + src, true);
-
-				// for some reason git apply sometimes does not work and produces no output...
-				// (use the patch command instead)
-				command = "patch -p1 < ";
-				if (process.platform === "win32") {
-					command = "git apply --whitespace=nowarn ";
-				}
-				command += '"' + src + '"';
-				exec(command, {cwd: dest, env: process.env}, function(err){
-					callback();
-				});
-			} else {
-				logBuild("Skipping patch file (" + patchSize + " bytes): " + src, true);
-				callback();
-			}
-		} catch(e) {
-			logErr("Couldn't apply patch: " + src);
-			logErr(e);
-			callback();
-		}
-	});
 };
 
 //
@@ -848,13 +736,14 @@ var prebuildMac = function(platform, config, arch, callback) {
 					"-project", path.basename(projs[k]),
 					"-configuration", configs[i],
 					"-sdk", sdks[j],
-					"-derivedDataPath", path.resolve(derivedDir)
+					// derivedDataPath requires -scheme but the cc 3.9 proj seems to be missing schemes and therefore requires using -target
+					//"-derivedDataPath", path.resolve(derivedDir)
 				];
 				if (k == 0) { // first proj is libcocos2d
 					//"-scheme", "\"libcocos2d " + platform + "\"", // this doesn't spawn correctly
-					args = args.concat(["-scheme", "libcocos2d " + platform]);
+					args = args.concat(["-target", "libcocos2d " + platform]);
 				} else { // second proj is libjscocos2d
-					args = args.concat(["-scheme", "libjscocos2d " + platform]);
+					args = args.concat(["-target", "libjscocos2d " + platform]);
 				}
 				if (sdks[j] === "iphoneos") {
 					if (cmd.minimal) {
@@ -1596,31 +1485,6 @@ var excludeFilter = function(filename, dir){
 };
 
 //
-// download and extract a url to the given destination
-//
-var downloadUrl = function(url, dest, cb) {
-	// prefix the extract destination
-	if (extractName.length) {
-		dest = path.join(dest, extractName);
-		wrench.mkdirSyncRecursive(dest);
-	}
-	logBuild("Download destination: " + dest, true);
-	
-	// now download
-	logBuild("Downloading " + url + " please wait...", true);
-	var dl = new download({extract: true}).get(url, dest);
-	dl.run(function (err, files) {
-		if (err) {
-			logErr("Download error " + err);
-			cb(false);
-		} else {
-			logBuild("Download + extract finished ", true);
-			cb(true);
-		}
-	});
-};
-
-//
 // check for upgrade
 //
 var checkUpdate = function() {
@@ -1849,6 +1713,9 @@ var usageExamples = function() {
 	console.log("    Templates:             " + templates.join(", "));
 	console.log("");
 	console.log("  Examples:\n");
+	console.log("    " + cmdName + " show -s path/to/cocos2d-x/src/");
+	console.log("    " + cmdName + " prebuild -s path/to/cocos2d-x/src/");
+	console.log("    " + cmdName + " clean -s path/to/cocos2d-x/src/");
 	console.log("    " + cmdName + " create cocos2dx \"HeckYeah\" com.mycompany.heckyeah");
 	console.log("");
 };
