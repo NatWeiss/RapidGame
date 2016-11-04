@@ -47,33 +47,29 @@ About Prebuilding
 
 The command to prebuild cocos2d-x static libraries is:
 
-	rapidgame prebuild
+	rapidgame prebuild -s path/to/cocos2d-x/source/
 
 When the command is finished, you'll have a directory (`~/.rapidgame` on Mac or Linux, and `C:\Users\[USERNAME]\.rapidgame` on Windows) with headers, java files, make files and prebuilt library files for all buildable architectures and configurations available on the current development platform.
 
 You can specify which platform you want to prebuild:
 
-	rapidgame prebuild mac
-	rapidgame prebuild ios
-	rapidgame prebuild windows
-	rapidgame prebuild linux
-	rapidgame prebuild android
+	rapidgame prebuild mac -s ...
+	rapidgame prebuild ios -s ...
+	rapidgame prebuild windows -s ...
+	rapidgame prebuild linux -s ...
+	rapidgame prebuild android -s ...
 
 Or refresh the headers:
 
-	rapidgame prebuild headers
+	rapidgame prebuild headers -s ...
 
-You can specify a custom cocos2d-x source root:
+Use a different name for the destination folder:
 
-	rapidgame prebuild --src path/to/cocos2d-x
-
-And even tag the prebuilt directory name differently:
-
-	rapidgame prebuild --dest 3.9-custom
+	rapidgame prebuild -d 3.9-custom
 
 The following command uses a custom cocos2d-x source root and places the resultant libraries in `~/.rapidgame/3.9-custom`:
 
-	rapidgame prebuild --src path/to/custom/cocos2d-x --dest 3.9-custom
+	rapidgame prebuild -s path/to/custom/cocos2d-x -d 3.9-custom
 
 You can also specify a custom directory prefix where RapidGame stores it's files:
 
@@ -85,7 +81,7 @@ Create a symlink in the current directory to the current static libraries:
 
 Or specify which prebuilt files to use:
 
-	rapidgame init . --dest 3.9-custom
+	rapidgame init . -d 3.9-custom
 
 Or show all the directories RapidGame might use:
 
