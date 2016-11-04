@@ -6,6 +6,7 @@
 var http = require("http"),
 	path = require("path-extra"),
 	fs = require("fs"),
+	os = require("os"),
 	cmd = require("commander"),
 	replace = require("replace"),
 	glob = require("glob"),
@@ -66,7 +67,7 @@ templates = listDirectories(__dirname, "templates", "cocos2dx", "*");
 //
 var run = function(args) {
 	var i, commands = [], commandFound = false;
-	checkUpdate();
+	//checkUpdate();
 	args = args || process.argv;
 	cmd
 		.version(version)
@@ -137,7 +138,17 @@ var run = function(args) {
 // check that prefix directory is writeable
 //
 var checkPrefix = function() {
-	// Test prefix dir.
+	return true;
+};
+
+//
+// Resolve dirs.
+//
+var resolveDirs = function() {
+	// Resolve prefix.
+	if (cmd.prefix !== defaults.prefix) {
+		cmd.prefix = path.resolve(cmd.prefix);
+	}
 	if (!isWriteableDir(cmd.prefix)) {
 		// Complain if specified prefix dir.
 		if (cmd.prefix !== defaults.prefix) {
@@ -151,27 +162,19 @@ var checkPrefix = function() {
 			logErr("Cannot write files to default prefix directory: " + defaults.prefix);
 			return false;
 		}
-		
+	
 		// Success.
 		cmd.prefix = defaults.prefix;
-	}
-	if (cmd.verbose) {
-		console.log("Can successfully write files to prefix directory: " + cmd.prefix);
-	}
-	return true;
-};
-
-//
-// Resolve dirs.
-//
-var resolveDirs = function() {
-	if (cmd.prefix !== defaults.prefix) {
-		cmd.prefix = path.resolve(cmd.prefix);
+		if (cmd.verbose) {
+			console.log("Can successfully write files to prefix directory: " + cmd.prefix);
+		}
 	}
 	if (!dirExists(cmd.prefix)) {
 		logBuild("Invalid prefix dir: " + cmd.prefix, true);
 		return false;
 	}
+
+	// Resolve source.
 	if (cmd.src !== defaults.src) {
 		cmd.src = path.resolve(cmd.src);
 	}
@@ -184,10 +187,13 @@ var resolveDirs = function() {
 		}
 		return false;
 	}
+	
+	// Resolve dest.
 	if (cmd.dest !== defaults.dest) {
 		cmd.dest = path.resolve(path.join(cmd.prefix, cmd.dest));
 	}
-	return checkPrefix();
+	
+	return true;
 };
 
 //
@@ -736,14 +742,13 @@ var prebuildMac = function(platform, config, arch, callback) {
 					"-project", path.basename(projs[k]),
 					"-configuration", configs[i],
 					"-sdk", sdks[j],
-					// derivedDataPath requires -scheme but the cc 3.9 proj seems to be missing schemes and therefore requires using -target
-					//"-derivedDataPath", path.resolve(derivedDir)
+					"-derivedDataPath", path.resolve(derivedDir)
 				];
 				if (k == 0) { // first proj is libcocos2d
 					//"-scheme", "\"libcocos2d " + platform + "\"", // this doesn't spawn correctly
-					args = args.concat(["-target", "libcocos2d " + platform]);
+					args = args.concat(["-scheme", "libcocos2d " + platform]);
 				} else { // second proj is libjscocos2d
-					args = args.concat(["-target", "libjscocos2d " + platform]);
+					args = args.concat(["-scheme", "libjscocos2d " + platform]);
 				}
 				if (sdks[j] === "iphoneos") {
 					if (cmd.minimal) {
@@ -1487,7 +1492,7 @@ var excludeFilter = function(filename, dir){
 //
 // check for upgrade
 //
-var checkUpdate = function() {
+/*var checkUpdate = function() {
 	var req = http.get("http://registry.npmjs.org/rapidgame");
 	req.on("response", function(response) {
 		var oldVersion = packageJson.version.toString(),
@@ -1520,7 +1525,7 @@ var checkUpdate = function() {
 		});
 	});
 	req.on("error", function(){});
-}
+}*/
 
 //
 // append to the build log
