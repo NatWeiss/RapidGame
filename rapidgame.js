@@ -29,7 +29,6 @@ var http = require("http"),
 	doPhysics = false,
 	doNavmesh = false,
 	doWebp = false,
-	defaultDest = "lib",
 	defaults = {
 		engine: "cocos2dx",
 		template: "TwoScene",
@@ -37,7 +36,7 @@ var http = require("http"),
 		dest: process.cwd(),
 		prefix: path.join(path.homedir(), ".rapidgame"),
 		src: path.join(path.homedir(), ".rapidgame", "src", "cocos2d-x"),
-		dest: path.join(path.homedir(), ".rapidgame", defaultDest),
+		dest: path.join(path.homedir(), ".rapidgame", "lib"),
 		orientation: orientations[0]
 	};
 
@@ -72,7 +71,7 @@ var run = function(args) {
 	cmd
 		.version(version)
 		.option("-s, --src <path>", "cocos2d-x source path [" + defaults.src + "]", defaults.src)
-		.option("-d, --dest <name>", "destination folder name [" + defaultDest + "]", defaults.dest)
+		.option("-d, --dest <name>", "destination libraries path [" + defaults.dest + "]", defaults.dest)
 		.option("-p, --prefix <path>", "rapidgame home [" + defaults.prefix + "]", defaults.prefix)
 		.option("-t, --template <name>", "template [" + defaults.template + "]", defaults.template)
 		.option("-f, --folder <path>", "output folder of created project [" + defaults.dest + "]", defaults.dest)
@@ -190,7 +189,7 @@ var resolveDirs = function() {
 	
 	// Resolve dest.
 	if (cmd.dest !== defaults.dest) {
-		cmd.dest = path.resolve(path.join(cmd.prefix, cmd.dest));
+		cmd.dest = path.resolve(cmd.dest);
 	}
 	
 	return true;
@@ -271,8 +270,9 @@ var showPrefix = function(directory) {
 	if (!resolveDirs()) {return 1;}
 	
 	console.log("Rapidgame lives here: " + cmd.prefix);
-	console.log("Latest static libs and headers: " + cmd.dest);
-	console.log("Static libs and headers have been built: " + (dirExists(cmd.dest) ? "YES" : "NO"));
+	console.log("Prebuilt headers and libs path: " + cmd.dest);
+	console.log("Headers have been copied: " + (dirExists(path.join(cmd.dest, "cocos2d", "x", "include")) ? "YES" : "NO"));
+	console.log("Libraries have been built: " + (dirExists(path.join(cmd.dest, "cocos2d", "x", "lib")) ? "YES" : "NO"));
 	if (cmd.src != defaults.src) {
 		console.log("src: " + cmd.src);
 	}

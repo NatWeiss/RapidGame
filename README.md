@@ -19,9 +19,9 @@ Prefer somebody explaining and showing it? Check out the [overview video](http:/
 Create a Game in Under 30 Seconds
 ---------------------------------
 
-You'll first need [Node.js](https://nodejs.org/en/download/).
+You'll first need to install [Node.js](https://nodejs.org/en/download/).
 
-There's no need to clone this repo, just install RapidGame:
+Then, install RapidGame:
 
 	sudo npm install rapidgame -g
 
@@ -47,29 +47,29 @@ About Prebuilding
 
 The command to prebuild cocos2d-x static libraries is:
 
-	rapidgame prebuild -s path/to/cocos2d-x/source/
+	rapidgame prebuild -s path/to/cocos2d-x/
 
 When the command is finished, you'll have a directory (`~/.rapidgame` on Mac or Linux, and `C:\Users\[USERNAME]\.rapidgame` on Windows) with headers, java files, make files and prebuilt library files for all buildable architectures and configurations available on the current development platform.
 
 You can specify which platform you want to prebuild:
 
-	rapidgame prebuild mac -s ...
-	rapidgame prebuild ios -s ...
-	rapidgame prebuild windows -s ...
-	rapidgame prebuild linux -s ...
-	rapidgame prebuild android -s ...
+	rapidgame prebuild mac -s path/to/cocos2d-x/
+	rapidgame prebuild ios -s path/to/cocos2d-x/
+	rapidgame prebuild windows -s path/to/cocos2d-x/
+	rapidgame prebuild linux -s path/to/cocos2d-x/
+	rapidgame prebuild android -s path/to/cocos2d-x/
 
 Or refresh the headers:
 
-	rapidgame prebuild headers -s ...
+	rapidgame prebuild headers -s path/to/cocos2d-x/
 
-Use a different name for the destination folder:
+Use a different path for the destination libraries folder:
 
-	rapidgame prebuild -d 3.9-custom
+	rapidgame prebuild -d custom/destination/path/
 
-The following command uses a custom cocos2d-x source root and places the resultant libraries in `~/.rapidgame/3.9-custom`:
+The following command uses a custom cocos2d-x source root and places the resultant libraries in `~/my-cc-libs`:
 
-	rapidgame prebuild -s path/to/custom/cocos2d-x -d 3.9-custom
+	rapidgame prebuild -s path/to/custom/cocos2d-x -d ~/my-cc-libs
 
 You can also specify a custom directory prefix where RapidGame stores it's files:
 
@@ -81,15 +81,16 @@ Create a symlink in the current directory to the current static libraries:
 
 Or specify which prebuilt files to use:
 
-	rapidgame init . -d 3.9-custom
+	rapidgame init . -d ~/my-cc-libs
 
 Or show all the directories RapidGame might use:
 
 	rapidgame show
 	
 		Rapidgame lives here: /Users/nat/.rapidgame
-		Latest static libs and headers: /Users/nat/.rapidgame/3.9
-		Static libs and headers have been built: YES
+		Prebuilt headers and libs path: /Users/nat/.rapidgame/lib
+		Headers have been copied: YES
+		Libraries have been built: YES
 
 
 Development Platforms
@@ -107,9 +108,9 @@ The cocos2d-x library prebuilder currently works on the following development pl
 Requirements
 ------------
 
-Mac: Xcode 5 or newer, and [Node.js](https://nodejs.org/en/download/).
+Mac: Xcode 5+ and [Node.js](https://nodejs.org/en/download/).
 
-Windows: [Visual Studio](https://www.visualstudio.com/en-us/products/free-developer-offers-vs.aspx) 2012 or newer, and [Node.js](https://nodejs.org/en/download/). Read the [Windows Notes](#windows-notes) for additional notes you should be aware of.
+Windows: [Visual Studio](https://www.visualstudio.com/en-us/products/free-developer-offers-vs.aspx) 2012 or newer and [Node.js](https://nodejs.org/en/download/). Read the [Windows Notes](#windows-notes) for additional notes you should be aware of.
 
 Linux: run `cocos2d-x/build/install-deps-linux.sh` and ensure that [Node.js](https://nodejs.org/en/download/) is installed.
 
@@ -127,7 +128,7 @@ Windows Notes
 Updates
 -------
 
-* Nov 3, 2016: Removed the feature of automatically downloading cocos2d-x source in favor of using the source folder specified by the user.
+* Nov 3, 2016: Rapidgame node modules are lighter weight and no longer requires installing git. (Removed the feature of automatically downloading cocos2d-x source in favor of using the source folder specified by the user.)
 * Jan 27, 2016: Linux support. Can specify cocos2d-x source folder. Simplified Android prebuild so it doesn't require cygwin on Windows.
 * Aug 17, 2015: Fixes for Visual Studio 2015.
 * Aug 11, 2015: On Windows, the path to MSBuild.exe, Lib.exe and VCTargetsPath can be set manually in case they cannot be automatically located.

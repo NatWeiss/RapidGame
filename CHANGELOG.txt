@@ -1,3 +1,9 @@
+Version 1.0.6 - Nov 4, 2016
+
+	Fixed the automatic creation of the ~/.rapidgame folder.
+	The --dest option is a path (not a name) so it can be moved.
+	Updated readme.
+
 Version 1.0.5 - Nov 3, 2016
 
 	Removed the feature to automatically download cocos2d-x source in favor of using the source folder specified by the user.
