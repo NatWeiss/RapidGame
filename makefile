@@ -19,10 +19,16 @@ doc:
 	@src/docco/delete-between "<p>Created using" "this code.</p>" docs/MenuScene.html
 	@src/docco/delete-between "<p>Created using" "this code.</p>" docs/Server.html
 
-ver = cocos2d-x-3.9
+ver = cocos2d-x-3.14
 patch:
-	mkdir -p /tmp/ccx/cocos2d-x
-	cd /tmp/ccx/cocos2d-x && cp ~/Downloads/${ver}.zip . && unzip -q ${ver}.zip && rm ${ver}.zip
+	# 3.9
+	#mkdir -p /tmp/ccx/cocos2d-x
+	#cd /tmp/ccx/cocos2d-x && cp ~/Downloads/${ver}.zip . && unzip -q ${ver}.zip && rm ${ver}.zip
+	#mv /tmp/ccx/cocos2d-x/cocos2d-x* /tmp/ccx/cocos2d-x
+	# 3.14
+	mkdir -p /tmp/ccx/
+	cd /tmp/ccx && cp ~/Downloads/${ver}.zip . && unzip -q ${ver}.zip && rm ${ver}.zip
+	mv /tmp/ccx/cocos2d-x* /tmp/ccx/cocos2d-x
 	#cd /tmp/ccx && unzip ${ver}.zip && mv ${ver} cocos2d-x && rm ${ver}.zip
 	find /tmp/ccx/cocos2d-x -name .gitignore -delete
 	#find /tmp/ccx/cocos2d-x -type f -exec chmod 644 {} +
@@ -32,5 +38,5 @@ patch:
 	cp -af src/cocos2d-x/* /tmp/ccx/cocos2d-x/
 	cd /tmp/ccx/cocos2d-x && git -c core.filemode=false diff > patch # && git diff --staged --binary >> patch
 	mv /tmp/ccx/cocos2d-x/patch ./cocos2d.patch
-	rm -rf /tmp/ccx
+	#rm -rf /tmp/ccx
 	ls cocos2d.patch
